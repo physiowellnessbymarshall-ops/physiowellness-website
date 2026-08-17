@@ -1,0 +1,28 @@
+# Sistema operativo
+.DS_Store
+Thumbs.db
+
+# Editor
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Dependencias (si en futuro añadimos npm)
+node_modules/
+package-lock.json
+yarn.lock
+
+# Logs
+*.log
+npm-debug.log*
+
+# Archivos temporales
+.env
+.env.local
+*.tmp
+
+# Build output (si lo hay)
+dist/
+build/

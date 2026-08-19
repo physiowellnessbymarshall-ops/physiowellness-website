@@ -25,6 +25,137 @@ var prefersReducedMotion = window.matchMedia && window.matchMedia('(prefers-redu
   }catch(e){ console.warn('headerState', e); }
 })();
 
+/* ---------- desplegables de navegación y recorrido de reserva ----------
+   Patrón "disclosure" accesible: funciona con clic, toque y teclado.
+   Un mismo panel puede tener varios disparadores (p. ej. el CTA del header
+   y el botón fijo inferior de móvil comparten el panel de reserva).      */
+(function disclosures(){
+  try{
+    var toggles = Array.prototype.slice.call(document.querySelectorAll('[data-disclosure-toggle]'));
+    if(!toggles.length) return;
+
+    /* panel id -> {panel, triggers[]} */
+    var panels = {};
+    toggles.forEach(function(btn){
+      var id = btn.getAttribute('aria-controls');
+      var panel = id ? document.getElementById(id) : null;
+      if(!panel) return;
+      if(!panels[id]) panels[id] = {panel:panel, triggers:[]};
+      panels[id].triggers.push(btn);
+      btn.__disclosureId = id;
+    });
+
+    var isOpen = function(id){ return !panels[id].panel.hidden; };
+
+    var setState = function(id, open){
+      var entry = panels[id];
+      if(!entry) return;
+      entry.panel.hidden = !open;
+      entry.triggers.forEach(function(t){ t.setAttribute('aria-expanded', open ? 'true' : 'false'); });
+    };
+
+    var closeAll = function(except){
+      Object.keys(panels).forEach(function(id){
+        if(id !== except) setState(id, false);
+      });
+    };
+
+    var open = function(id){
+      /* solo un desplegable abierto a la vez */
+      closeAll(id);
+      /* un panel ajeno al menú móvil (la reserva) no puede convivir con él:
+         el menú ocupa toda la pantalla, así que se cierra antes de abrirlo */
+      var menu = document.getElementById('mobile-menu');
+      if(menu && !menu.contains(panels[id].panel)){
+        document.dispatchEvent(new CustomEvent('pw:closemobilemenu'));
+      }
+      setState(id, true);
+    };
+
+    var close = function(id, returnFocus){
+      if(!panels[id]) return;
+      setState(id, false);
+      if(returnFocus){
+        var trigger = panels[id].triggers.filter(function(t){ return t.offsetParent !== null; })[0]
+                   || panels[id].triggers[0];
+        if(trigger) trigger.focus();
+      }
+    };
+
+    toggles.forEach(function(btn){
+      var id = btn.__disclosureId;
+      if(!id) return;
+
+      btn.addEventListener('click', function(){
+        if(isOpen(id)) close(id, false); else open(id);
+      });
+
+      btn.addEventListener('keydown', function(e){
+        if(e.key === 'ArrowDown'){
+          e.preventDefault();
+          if(!isOpen(id)) open(id);
+          var first = panels[id].panel.querySelector('a,button');
+          if(first) first.focus();
+        } else if(e.key === 'ArrowUp' && isOpen(id)){
+          e.preventDefault();
+          close(id, false);
+        }
+      });
+    });
+
+    Object.keys(panels).forEach(function(id){
+      var panel = panels[id].panel;
+
+      /* cerrar al seleccionar una opción */
+      panel.querySelectorAll('a').forEach(function(a){
+        a.addEventListener('click', function(){ setState(id, false); });
+      });
+
+      /* botón de cierre explícito (hoja inferior de reserva en móvil) */
+      panel.querySelectorAll('[data-disclosure-close]').forEach(function(b){
+        b.addEventListener('click', function(){ close(id, true); });
+      });
+
+      /* Escape dentro del panel */
+      panel.addEventListener('keydown', function(e){
+        if(e.key === 'Escape'){ e.stopPropagation(); close(id, true); }
+      });
+    });
+
+    /* Escape global */
+    document.addEventListener('keydown', function(e){
+      if(e.key !== 'Escape') return;
+      Object.keys(panels).forEach(function(id){
+        if(isOpen(id)) close(id, true);
+      });
+    });
+
+    /* clic o toque fuera */
+    document.addEventListener('pointerdown', function(e){
+      Object.keys(panels).forEach(function(id){
+        if(!isOpen(id)) return;
+        var entry = panels[id];
+        if(entry.panel.contains(e.target)) return;
+        var onTrigger = entry.triggers.some(function(t){ return t.contains(e.target); });
+        if(onTrigger) return;
+        setState(id, false);
+      });
+    });
+
+    /* salir con el tabulador del grupo cierra el desplegable */
+    document.addEventListener('focusin', function(e){
+      Object.keys(panels).forEach(function(id){
+        if(!isOpen(id)) return;
+        var entry = panels[id];
+        if(entry.panel.contains(e.target)) return;
+        var onTrigger = entry.triggers.some(function(t){ return t.contains(e.target); });
+        if(onTrigger) return;
+        setState(id, false);
+      });
+    });
+  }catch(e){ console.warn('disclosures', e); }
+})();
+
 /* ---------- menú móvil a pantalla completa ---------- */
 (function mobileMenu(){
   try{
@@ -36,25 +167,56 @@ var prefersReducedMotion = window.matchMedia && window.matchMedia('(prefers-redu
     var open = function(){
       menu.classList.add('is-open');
       toggle.setAttribute('aria-expanded','true');
+      toggle.setAttribute('aria-label','Cerrar menú');
       document.body.style.overflow = 'hidden';
-      var firstLink = menu.querySelector('a');
-      if(firstLink) firstLink.focus();
+      if(close) close.focus();
     };
-    var closeMenu = function(){
+    var closeMenu = function(returnFocus){
       menu.classList.remove('is-open');
       toggle.setAttribute('aria-expanded','false');
+      toggle.setAttribute('aria-label','Abrir menú');
       document.body.style.overflow = '';
-      toggle.focus();
+      /* los acordeones vuelven a su estado cerrado */
+      menu.querySelectorAll('[data-disclosure-toggle]').forEach(function(btn){
+        var panel = document.getElementById(btn.getAttribute('aria-controls'));
+        if(panel){ panel.hidden = true; }
+        btn.setAttribute('aria-expanded','false');
+      });
+      if(returnFocus !== false) toggle.focus();
     };
 
     toggle.addEventListener('click', function(){
       if(menu.classList.contains('is-open')) closeMenu(); else open();
     });
-    if(close) close.addEventListener('click', closeMenu);
-    menu.querySelectorAll('a').forEach(function(a){ a.addEventListener('click', closeMenu); });
-    window.addEventListener('keydown', function(e){
-      if(e.key === 'Escape' && menu.classList.contains('is-open')) closeMenu();
+    if(close) close.addEventListener('click', function(){ closeMenu(); });
+
+    /* el recorrido de reserva se abre por encima: el menú se retira */
+    document.addEventListener('pw:closemobilemenu', function(){
+      if(menu.classList.contains('is-open')) closeMenu(false);
     });
+
+    /* cerrar al seleccionar cualquier enlace del menú */
+    menu.querySelectorAll('a').forEach(function(a){
+      a.addEventListener('click', function(){ closeMenu(false); });
+    });
+
+    menu.addEventListener('keydown', function(e){
+      if(e.key !== 'Escape') return;
+      /* si hay un acordeón abierto, Escape lo cierra primero */
+      var openAcc = menu.querySelector('[data-disclosure-toggle][aria-expanded="true"]');
+      if(openAcc) return;
+      closeMenu();
+    });
+
+    /* si se pasa a desktop con el menú abierto, se restablece el estado */
+    if(window.matchMedia){
+      var mq = window.matchMedia('(min-width:960px)');
+      var onChange = function(ev){
+        if(ev.matches && menu.classList.contains('is-open')) closeMenu(false);
+      };
+      if(mq.addEventListener) mq.addEventListener('change', onChange);
+      else if(mq.addListener) mq.addListener(onChange);
+    }
   }catch(e){ console.warn('mobileMenu', e); }
 })();
 
@@ -165,6 +327,73 @@ var prefersReducedMotion = window.matchMedia && window.matchMedia('(prefers-redu
     window.addEventListener('scroll', onScroll, {passive:true});
     window.addEventListener('resize', onScroll);
   }catch(e){ console.warn('methodSequence', e); }
+})();
+
+/* ---------- reseñas: fragmento recortado con lectura completa ----------
+   El texto íntegro siempre está en el HTML. Solo se recorta cuando de
+   verdad sobra texto, y el botón únicamente aparece en ese caso.        */
+(function quoteToggles(){
+  try{
+    var toggles = document.querySelectorAll('[data-quote-toggle]');
+    if(!toggles.length) return;
+
+    var setup = function(btn){
+      var quote = document.getElementById(btn.getAttribute('aria-controls'));
+      if(!quote) return;
+
+      /* con el recorte puesto, el texto sobra si el contenido desborda la caja */
+      quote.setAttribute('data-clamped','');
+      var overflows = quote.scrollHeight > quote.clientHeight + 1;
+
+      if(!overflows){
+        quote.removeAttribute('data-clamped');
+        btn.hidden = true;
+        return;
+      }
+      btn.hidden = false;
+      btn.setAttribute('aria-expanded','false');
+      btn.textContent = 'Leer completo';
+    };
+
+    /* la tipografía cambia el número de líneas: se mide cuando está lista */
+    if(document.fonts && document.fonts.ready){
+      document.fonts.ready.then(function(){
+        toggles.forEach(function(btn){
+          if(btn.getAttribute('aria-expanded') !== 'true') setup(btn);
+        });
+      });
+    }
+
+    toggles.forEach(function(btn){
+      setup(btn);
+      btn.addEventListener('click', function(){
+        var quote = document.getElementById(btn.getAttribute('aria-controls'));
+        if(!quote) return;
+        var open = btn.getAttribute('aria-expanded') === 'true';
+        if(open){
+          quote.setAttribute('data-clamped','');
+          btn.setAttribute('aria-expanded','false');
+          btn.textContent = 'Leer completo';
+        } else {
+          quote.removeAttribute('data-clamped');
+          btn.setAttribute('aria-expanded','true');
+          btn.textContent = 'Mostrar menos';
+        }
+      });
+    });
+
+    /* al cambiar el ancho, un fragmento puede dejar de necesitar recorte */
+    var t;
+    window.addEventListener('resize', function(){
+      clearTimeout(t);
+      t = setTimeout(function(){
+        toggles.forEach(function(btn){
+          if(btn.getAttribute('aria-expanded') === 'true') return;
+          setup(btn);
+        });
+      }, 200);
+    });
+  }catch(e){ console.warn('quoteToggles', e); }
 })();
 
 /* ---------- scroll suave al CTA secundario del hero ---------- */

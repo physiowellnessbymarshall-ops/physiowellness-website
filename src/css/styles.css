@@ -1087,3 +1087,301 @@ a:focus-visible,button:focus-visible,input:focus-visible{
 .page-servicios .expertise__cta:active,
 .page-servicios .needs__note-link:active{color:var(--pw-primary-900);}
 .page-servicios .breadcrumb a:hover{color:var(--pw-white);}
+
+
+/* ---------- 27. Tarifas (/es/tarifas/) ----------
+   Dirección visual de la página de tarifas.
+
+   Criterio: composición editorial asimétrica, cifras a gran escala y mucho
+   aire. Sin tabla ni cuadrícula de tarjetas comerciales iguales: cada bloque
+   de precio tiene el peso que le corresponde en el recorrido.
+
+   Los módulos de precio NO son interactivos: no llevan sombra, ni cursor de
+   mano, ni elevación al pasar el ratón. El único elemento clicable de cada
+   sección es su botón.
+
+   Todo lo que toca clases compartidas (.page-hero, .btn) va prefijado con
+   .page-tarifas para no afectar a la Home ni a /servicios.
+
+   Los precios se editan en tarifas.html, no aquí.                          */
+
+/* Cifras: ancho fijo para que precios y duraciones se alineen en vertical. */
+.page-tarifas .entry__num,
+.page-tarifas .entry__price,
+.page-tarifas .step__num,
+.page-tarifas .step__price,
+.page-tarifas .split__num,
+.page-tarifas .split__price,
+.page-tarifas .travel__num,
+.page-tarifas .hero-nums{
+  font-variant-numeric:tabular-nums;
+  font-feature-settings:"tnum" 1;
+}
+
+/* Botón secundario sobre fondo claro. El .btn--outline base está pensado para
+   fondo oscuro (borde blanco), así que aquí se reescribe. */
+.page-tarifas .help .btn--outline{
+  border-color:var(--pw-line);
+  color:var(--pw-primary-900);
+}
+.page-tarifas .help .btn--outline:hover{
+  border-color:var(--pw-accent);
+  background:rgba(38,152,136,.08);
+}
+
+/* ----- Hero tipográfico -----
+   Sin fotografía: el par titular + duraciones sostiene la composición. */
+.page-tarifas .hero-grid{display:grid;gap:var(--sp-12);}
+@media (min-width:960px){
+  .page-tarifas .hero-grid{
+    grid-template-columns:minmax(0,1.3fr) minmax(0,.7fr);
+    gap:var(--sp-16);
+    align-items:end;
+  }
+}
+
+.hero-nums{
+  display:flex;flex-wrap:wrap;align-items:baseline;gap:var(--sp-5);
+  line-height:.82;
+  font-size:clamp(3.25rem,13vw,6.5rem);
+  font-weight:500;
+  letter-spacing:-.02em;
+  color:transparent;
+  -webkit-text-stroke:1px rgba(143,217,201,.55);
+}
+/* Escalonado: cada cifra baja un poco respecto a la anterior. */
+.hero-nums__n:nth-child(2){transform:translateY(.14em);}
+.hero-nums__n:nth-child(3){transform:translateY(.28em);}
+
+@media (min-width:960px){
+  .hero-nums{
+    flex-direction:column;align-items:flex-end;
+    gap:0;
+    font-size:clamp(4.5rem,7.5vw,8rem);
+  }
+  .hero-nums__n:nth-child(2){transform:translateX(-1.1em);}
+  .hero-nums__n:nth-child(3){transform:translateX(-2.2em);}
+}
+/* Navegadores sin -webkit-text-stroke: relleno tenue en lugar de invisible. */
+@supports not (-webkit-text-stroke:1px currentColor){
+  .hero-nums{color:rgba(143,217,201,.28);}
+}
+
+/* ----- Orientación previa -----
+   Dos paneles asimétricos: el de primera visita pesa más porque es el punto
+   de partida habitual. */
+.pre-choice{padding-block:var(--sp-24);background:var(--pw-white);}
+.pre-choice__head{margin-bottom:var(--sp-12);}
+.pre-choice__grid{display:grid;gap:var(--sp-8);}
+@media (min-width:860px){
+  .pre-choice__grid{grid-template-columns:1.15fr .85fr;gap:var(--sp-12);align-items:start;}
+}
+
+.choice-card{
+  padding-top:var(--sp-6);
+  border-top:2px solid var(--pw-primary);
+}
+.choice-card:nth-child(2){border-top-color:var(--pw-line);}
+@media (min-width:860px){
+  .choice-card:nth-child(2){margin-top:var(--sp-10);}
+}
+.choice-card__title{font-size:var(--fs-h3);margin-bottom:var(--sp-4);}
+.choice-card__text{color:var(--pw-ink-70);max-width:44ch;}
+
+.tag-list{display:flex;flex-wrap:wrap;gap:var(--sp-2);margin-top:var(--sp-6);}
+.tag{
+  display:inline-flex;align-items:center;
+  padding:.4rem .85rem;
+  border:1px solid var(--pw-line);
+  font-size:var(--fs-label);
+  letter-spacing:.12em;text-transform:uppercase;font-weight:600;
+  color:var(--pw-primary);
+  font-variant-numeric:tabular-nums;
+}
+
+/* ----- Estructura común de las dos secciones de tarifas -----
+   Retícula asimétrica: enunciado a la izquierda, precios a la derecha. */
+.rates{padding-block:var(--sp-24);background:var(--pw-white);}
+.rates--home{background:var(--pw-mist);padding-bottom:var(--sp-16);}
+.rates__inner{display:grid;gap:var(--sp-10);}
+@media (min-width:960px){
+  .rates__inner{grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr);gap:var(--sp-16);align-items:start;}
+}
+.rates__lead{margin-top:var(--sp-5);}
+.rates__body{display:grid;gap:var(--sp-8);}
+.rates__actions{display:flex;flex-wrap:wrap;gap:var(--sp-4);margin-top:var(--sp-2);}
+
+/* ----- 01 · Puerta de entrada: primera sesión -----
+   Panel oscuro, la pieza de más peso de la página. */
+.entry{
+  display:grid;
+  grid-template-columns:auto 1fr;
+  align-items:end;
+  gap:var(--sp-4) var(--sp-8);
+  padding:var(--sp-8) var(--sp-6);
+  background:var(--pw-primary-900);
+  color:var(--pw-white);
+}
+@media (min-width:640px){
+  .entry{padding:var(--sp-10) var(--sp-8);gap:var(--sp-5) var(--sp-10);}
+}
+
+.entry__duration{grid-column:1;grid-row:1 / span 2;display:flex;align-items:baseline;gap:.4rem;}
+.entry__num{
+  font-size:clamp(3.5rem,10vw,5.5rem);
+  line-height:.8;font-weight:500;letter-spacing:-.03em;
+  color:#8fd9c9;
+}
+.entry__unit{font-size:var(--fs-small);color:rgba(255,255,255,.65);}
+
+.entry__title{grid-column:2;grid-row:1;font-size:var(--fs-h3);font-weight:500;}
+.entry__price{
+  grid-column:2;grid-row:2;
+  font-size:clamp(2rem,5vw,2.75rem);
+  line-height:1;font-weight:500;letter-spacing:-.02em;
+  color:var(--pw-white);
+}
+
+/* ----- 01 · Seguimiento: una modalidad, dos duraciones escalonadas ----- */
+.follow{padding-top:var(--sp-6);border-top:1px solid var(--pw-line);}
+.follow__title{
+  font-size:var(--fs-label);letter-spacing:.2em;text-transform:uppercase;
+  font-weight:600;color:var(--pw-ink-50);
+  margin-bottom:var(--sp-2);
+}
+.follow__list{display:grid;}
+
+.step{
+  display:grid;
+  grid-template-columns:auto 1fr auto;
+  align-items:baseline;
+  gap:var(--sp-4);
+  padding-block:var(--sp-6);
+  border-bottom:1px solid var(--pw-line);
+}
+/* El escalón: la segunda duración entra más adentro. */
+@media (min-width:640px){
+  .step + .step{padding-left:var(--sp-10);}
+}
+.step__num{
+  font-size:clamp(2.25rem,6vw,3rem);
+  line-height:.85;font-weight:500;letter-spacing:-.02em;
+  color:var(--pw-primary);
+  min-width:2.2ch;
+}
+.step__unit{font-size:var(--fs-small);color:var(--pw-ink-70);}
+.step__price{
+  font-size:clamp(1.5rem,3.5vw,2rem);
+  line-height:1;font-weight:500;
+  color:var(--pw-ink);
+  white-space:nowrap;
+}
+
+/* ----- 02 · A domicilio: panel dividido con los bloques desplazados -----
+   Composición deliberadamente distinta a la de la sección presencial. */
+.split{display:grid;}
+@media (min-width:860px){
+  .split{grid-template-columns:1fr 1fr;}
+}
+
+.split__panel{
+  padding:var(--sp-8) 0 var(--sp-8);
+  border-top:2px solid var(--pw-primary);
+}
+.split__panel + .split__panel{border-top-color:var(--pw-accent);}
+
+@media (min-width:860px){
+  .split__panel{padding-right:var(--sp-8);}
+  /* medianera compartida + desplazamiento vertical del segundo bloque */
+  .split__panel--offset{
+    padding-left:var(--sp-8);padding-right:0;
+    border-left:1px solid var(--pw-line);
+    margin-top:var(--sp-12);
+  }
+}
+
+.split__title{font-size:var(--fs-h3);font-weight:500;max-width:16ch;}
+.split__duration{display:flex;align-items:baseline;gap:.4rem;margin-top:var(--sp-6);}
+.split__num{
+  font-size:clamp(2.25rem,6vw,3rem);
+  line-height:.85;font-weight:500;letter-spacing:-.02em;
+  color:var(--pw-primary);
+}
+.split__unit{font-size:var(--fs-small);color:var(--pw-ink-70);}
+.split__price{
+  margin-top:var(--sp-4);
+  font-size:clamp(1.75rem,4.5vw,2.5rem);
+  line-height:1;font-weight:500;letter-spacing:-.02em;
+  color:var(--pw-ink);
+}
+
+/* ----- Condiciones del desplazamiento -----
+   Misma banda de fondo que la sección anterior y conector vertical: se lee
+   como el pie de las tarifas a domicilio. */
+.travel{padding-block:0 var(--sp-24);background:var(--pw-mist);}
+.travel__inner{position:relative;max-width:64ch;padding-top:var(--sp-16);}
+.travel__inner::before{
+  content:"";position:absolute;top:0;left:0;
+  width:1px;height:var(--sp-10);
+  background:var(--pw-accent);
+}
+.travel__title{font-size:var(--fs-h3);}
+.travel__text{margin-top:var(--sp-5);color:var(--pw-ink-70);font-size:var(--fs-lead);}
+
+.travel__highlights{display:grid;gap:var(--sp-5);margin-top:var(--sp-10);}
+@media (min-width:640px){ .travel__highlights{grid-template-columns:1fr 1fr;gap:var(--sp-8);} }
+.travel__highlight{
+  padding-top:var(--sp-4);
+  border-top:1px solid var(--pw-line);
+  color:var(--pw-ink-70);
+}
+.travel__num{
+  display:block;
+  font-size:clamp(1.5rem,4vw,2rem);
+  line-height:1.1;font-weight:500;letter-spacing:-.02em;
+  color:var(--pw-primary);
+  font-variant-numeric:tabular-nums;
+}
+
+/* ----- Bloque de ayuda ----- */
+.help{padding-block:var(--sp-24);background:var(--pw-white);}
+.help__inner{max-width:54ch;}
+.help__title{font-size:var(--fs-h2);}
+.help__text{margin-top:var(--sp-6);color:var(--pw-ink-70);font-size:var(--fs-lead);}
+.help__actions{display:flex;flex-wrap:wrap;gap:var(--sp-4);margin-top:var(--sp-8);}
+
+/* ----- Preguntas frecuentes -----
+   <details>/<summary> nativos: accesibles y funcionales sin JavaScript. */
+.faq{padding-block:var(--sp-24);background:var(--pw-mist);}
+.faq__inner{display:grid;gap:var(--sp-10);}
+@media (min-width:960px){
+  .faq__inner{grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr);gap:var(--sp-16);align-items:start;}
+}
+.faq__list{display:grid;}
+.faq__item{border-bottom:1px solid var(--pw-line);}
+.faq__item:first-child{border-top:1px solid var(--pw-line);}
+
+.faq__q{
+  display:flex;align-items:flex-start;justify-content:space-between;gap:var(--sp-6);
+  padding-block:var(--sp-5);
+  font-weight:500;
+  cursor:pointer;
+  list-style:none;
+  transition:color var(--dur-fast) var(--ease-out);
+}
+.faq__q::-webkit-details-marker{display:none;}
+.faq__q:hover{color:var(--pw-primary);}
+.faq__q::after{
+  content:"";flex:none;
+  width:11px;height:11px;margin-top:.42em;
+  background:
+    linear-gradient(var(--pw-primary),var(--pw-primary)) center/100% 1px no-repeat,
+    linear-gradient(var(--pw-primary),var(--pw-primary)) center/1px 100% no-repeat;
+  transition:transform var(--dur-fast) var(--ease-out);
+}
+.faq__item[open] .faq__q::after{transform:rotate(90deg);background-size:100% 1px,0 0;}
+.faq__q:focus-visible{outline:2px solid var(--pw-accent);outline-offset:3px;}
+.faq__a{padding-bottom:var(--sp-6);color:var(--pw-ink-70);max-width:62ch;}
+
+/* ----- CTA final: el eyebrow necesita centrarse en esta página ----- */
+.page-tarifas .cta-final__inner .eyebrow{justify-content:center;}

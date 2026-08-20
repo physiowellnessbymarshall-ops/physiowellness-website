@@ -1199,6 +1199,110 @@ a:focus-visible,button:focus-visible,input:focus-visible{
   font-variant-numeric:tabular-nums;
 }
 
+/* ----- Elige tu área: tarjetas editoriales -----
+   Inspirado en el ritmo de tarjeta grande + imagen tratada de Revo Studios,
+   sin copiar su paleta. Las cuatro enlazan al mismo panel #en-la-clinica
+   (no hay cuatro tarifas, solo cuatro puertas de entrada a la misma).
+   Bordes redondeados y grano son deliberados en esta sección: el resto de
+   la página mantiene el --radius:2px "clínico"; --radius-tile es una
+   excepción local, no un cambio del token global.
+   Nombrado .area-select/.area-tile (no .areas/.area-card) a propósito:
+   esas clases ya existen en styles.css §10 para el bloque "Las cuatro
+   áreas" de index.html — reutilizar el mismo nombre habría filtrado estos
+   estilos a la Home. Ver ASSET_SOURCES.md para el origen de las imágenes. */
+.page-tarifas .area-select{padding-block:var(--sp-24);background:var(--pw-white);}
+.page-tarifas .area-select__head{max-width:60ch;}
+.page-tarifas .area-select__grid{
+  --radius-tile:20px;
+  display:grid;gap:var(--sp-6);
+  margin-top:var(--sp-12);
+}
+@media (min-width:640px){
+  .page-tarifas .area-select__grid{grid-template-columns:1fr 1fr;}
+}
+@media (min-width:1100px){
+  .page-tarifas .area-select__grid{grid-template-columns:repeat(4,1fr);}
+}
+
+.page-tarifas .area-tile{
+  position:relative;
+  display:flex;flex-direction:column;
+  min-height:22rem;
+  border-radius:var(--radius-tile);
+  overflow:hidden;
+  color:var(--pw-white);
+  text-decoration:none;
+  isolation:isolate;
+  transition:transform var(--dur-med) var(--ease-out), box-shadow var(--dur-med) var(--ease-out);
+}
+.page-tarifas .area-tile:hover,
+.page-tarifas .area-tile:focus-visible{
+  transform:translateY(-4px);
+  box-shadow:0 18px 40px -20px rgba(18,32,29,.45);
+}
+.page-tarifas .area-tile:focus-visible{outline:2px solid var(--pw-accent);outline-offset:3px;}
+
+.page-tarifas .area-tile__media{
+  position:absolute;inset:0;z-index:-2;
+  display:block;
+}
+.page-tarifas .area-tile__media img{
+  width:100%;height:100%;
+  object-fit:cover;object-position:center;
+  filter:saturate(1.08) contrast(1.05) brightness(.92);
+  transition:transform var(--dur-slow) var(--ease-out);
+}
+.page-tarifas .area-tile:hover .area-tile__media img,
+.page-tarifas .area-tile:focus-visible .area-tile__media img{transform:scale(1.05);}
+
+/* Oscurecimiento inferior en degradado, para que el texto mantenga
+   contraste AA sobre cualquier foto. */
+.page-tarifas .area-tile__media::after{
+  content:"";position:absolute;inset:0;z-index:1;
+  background:linear-gradient(180deg,rgba(18,60,55,0) 35%,rgba(18,60,55,.55) 70%,rgba(18,60,55,.92) 100%);
+}
+/* Grano sutil: textura feTurbulence en SVG inline, sin petición de red. */
+.page-tarifas .area-tile::before{
+  content:"";position:absolute;inset:0;z-index:-1;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  mix-blend-mode:overlay;
+  opacity:.18;
+  pointer-events:none;
+}
+
+.page-tarifas .area-tile__body{
+  position:relative;z-index:1;
+  margin-top:auto;
+  display:flex;flex-direction:column;
+  gap:var(--sp-1);
+  padding:var(--sp-6);
+}
+.page-tarifas .area-tile__eyebrow{
+  font-size:var(--fs-label);letter-spacing:.2em;text-transform:uppercase;
+  font-weight:600;color:#8fd9c9;
+}
+.page-tarifas .area-tile__title{font-size:var(--fs-h3);font-weight:500;}
+.page-tarifas .area-tile__text{
+  font-size:var(--fs-small);color:rgba(255,255,255,.85);
+  max-width:28ch;
+}
+.page-tarifas .area-tile__cta{
+  display:inline-flex;align-items:center;gap:.5rem;
+  margin-top:var(--sp-4);
+  font-size:var(--fs-label);letter-spacing:.1em;text-transform:uppercase;
+  font-weight:600;color:var(--pw-white);
+}
+.page-tarifas .area-tile__cta svg{transition:transform var(--dur-fast) var(--ease-out);}
+.page-tarifas .area-tile:hover .area-tile__cta svg,
+.page-tarifas .area-tile:focus-visible .area-tile__cta svg{transform:translateX(3px);}
+
+@media (prefers-reduced-motion:reduce){
+  .page-tarifas .area-tile,.page-tarifas .area-tile__media img,.page-tarifas .area-tile__cta svg{transition:none;}
+  .page-tarifas .area-tile:hover,.page-tarifas .area-tile:focus-visible{transform:none;}
+  .page-tarifas .area-tile:hover .area-tile__media img,
+  .page-tarifas .area-tile:focus-visible .area-tile__media img{transform:none;}
+}
+
 /* ----- Estructura común de las dos secciones de tarifas -----
    Retícula asimétrica: enunciado a la izquierda, precios a la derecha. */
 .rates{padding-block:var(--sp-24);background:var(--pw-white);}
@@ -1208,6 +1312,7 @@ a:focus-visible,button:focus-visible,input:focus-visible{
   .rates__inner{grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr);gap:var(--sp-16);align-items:start;}
 }
 .rates__lead{margin-top:var(--sp-5);}
+.rates__note{margin-top:var(--sp-3);font-size:var(--fs-small);color:var(--pw-ink-70);}
 .rates__body{display:grid;gap:var(--sp-8);}
 .rates__actions{display:flex;flex-wrap:wrap;gap:var(--sp-4);margin-top:var(--sp-2);}
 
@@ -1241,6 +1346,13 @@ a:focus-visible,button:focus-visible,input:focus-visible{
   line-height:1;font-weight:500;letter-spacing:-.02em;
   color:var(--pw-white);
 }
+.entry__note{
+  grid-column:2;grid-row:3;
+  margin-top:var(--sp-1);
+  font-size:var(--fs-small);
+  color:rgba(255,255,255,.6);
+  max-width:46ch;
+}
 
 /* ----- 01 · Seguimiento: una modalidad, dos duraciones escalonadas ----- */
 .follow{padding-top:var(--sp-6);border-top:1px solid var(--pw-line);}
@@ -1250,19 +1362,26 @@ a:focus-visible,button:focus-visible,input:focus-visible{
   margin-bottom:var(--sp-2);
 }
 .follow__list{display:grid;}
+/* Cada duración es un <li> propio: el escalón (segunda duración más
+   adentro) se aplica al <li>, no a .step, porque .step es ahora el
+   <details> que contiene también los bonos. */
+.follow__list > li{border-bottom:1px solid var(--pw-line);}
+@media (min-width:640px){
+  .follow__list > li + li{padding-left:var(--sp-10);}
+}
 
-.step{
+.step{padding-block:var(--sp-2);}
+.step__summary{
   display:grid;
-  grid-template-columns:auto 1fr auto;
+  grid-template-columns:auto 1fr auto auto;
   align-items:baseline;
   gap:var(--sp-4);
-  padding-block:var(--sp-6);
-  border-bottom:1px solid var(--pw-line);
+  padding-block:var(--sp-4);
+  cursor:pointer;
+  list-style:none;
 }
-/* El escalón: la segunda duración entra más adentro. */
-@media (min-width:640px){
-  .step + .step{padding-left:var(--sp-10);}
-}
+.step__summary::-webkit-details-marker{display:none;}
+.step__summary:focus-visible{outline:2px solid var(--pw-accent);outline-offset:3px;}
 .step__num{
   font-size:clamp(2.25rem,6vw,3rem);
   line-height:.85;font-weight:500;letter-spacing:-.02em;
@@ -1275,6 +1394,43 @@ a:focus-visible,button:focus-visible,input:focus-visible{
   line-height:1;font-weight:500;
   color:var(--pw-ink);
   white-space:nowrap;
+}
+/* Botón "Bonos": mismo lenguaje de +/− que el acordeón de preguntas
+   frecuentes, a escala reducida. */
+.step__toggle{
+  display:inline-flex;align-items:center;gap:.4rem;
+  font-size:var(--fs-label);letter-spacing:.1em;text-transform:uppercase;
+  font-weight:600;color:var(--pw-primary);
+  transition:color var(--dur-fast) var(--ease-out);
+}
+.step__toggle::after{
+  content:"";flex:none;
+  width:9px;height:9px;
+  background:
+    linear-gradient(var(--pw-primary),var(--pw-primary)) center/100% 1px no-repeat,
+    linear-gradient(var(--pw-primary),var(--pw-primary)) center/1px 100% no-repeat;
+  transition:transform var(--dur-fast) var(--ease-out);
+}
+.step__summary:hover .step__toggle{color:var(--pw-accent);}
+.step[open] .step__toggle::after{transform:rotate(45deg);}
+
+.step__bonos{padding-bottom:var(--sp-5);}
+.bonos-list{display:grid;gap:var(--sp-1);}
+.bonos-list__row{
+  display:grid;
+  grid-template-columns:1fr auto auto;
+  align-items:baseline;gap:var(--sp-4);
+  padding-block:var(--sp-2);
+  border-top:1px solid var(--pw-line);
+}
+.bonos-list__n{font-weight:500;color:var(--pw-ink);}
+.bonos-list__unit{
+  color:var(--pw-ink-70);font-size:var(--fs-small);text-align:right;
+  font-variant-numeric:tabular-nums;
+}
+.bonos-list__total{
+  min-width:6ch;text-align:right;font-weight:500;color:var(--pw-primary);
+  font-variant-numeric:tabular-nums;
 }
 
 /* ----- 02 · A domicilio: panel dividido con los bloques desplazados -----
@@ -1342,6 +1498,36 @@ a:focus-visible,button:focus-visible,input:focus-visible{
   color:var(--pw-primary);
   font-variant-numeric:tabular-nums;
 }
+.conditions--travel{margin-top:var(--sp-10);max-width:60ch;}
+
+/* ----- Condiciones en acordeón (clínica y domicilio) -----
+   Mismo lenguaje +/− que .faq__q, a escala reducida, para no competir con
+   los precios que van encima. */
+.conditions{display:grid;}
+.cond__item{border-bottom:1px solid var(--pw-line);}
+.cond__item:first-child{border-top:1px solid var(--pw-line);}
+.cond__q{
+  display:flex;align-items:flex-start;justify-content:space-between;gap:var(--sp-6);
+  padding-block:var(--sp-4);
+  font-size:var(--fs-small);font-weight:600;letter-spacing:.01em;
+  color:var(--pw-ink);
+  cursor:pointer;list-style:none;
+  transition:color var(--dur-fast) var(--ease-out);
+}
+.cond__q::-webkit-details-marker{display:none;}
+.cond__q:hover{color:var(--pw-primary);}
+.cond__q::after{
+  content:"";flex:none;
+  width:9px;height:9px;margin-top:.3em;
+  background:
+    linear-gradient(var(--pw-primary),var(--pw-primary)) center/100% 1px no-repeat,
+    linear-gradient(var(--pw-primary),var(--pw-primary)) center/1px 100% no-repeat;
+  transition:transform var(--dur-fast) var(--ease-out);
+}
+.cond__item[open] .cond__q::after{transform:rotate(90deg);background-size:100% 1px,0 0;}
+.cond__q:focus-visible{outline:2px solid var(--pw-accent);outline-offset:3px;}
+.cond__a{padding-bottom:var(--sp-5);color:var(--pw-ink-70);font-size:var(--fs-small);max-width:60ch;}
+.cond__a p + p{margin-top:var(--sp-3);}
 
 /* ----- Bloque de ayuda ----- */
 .help{padding-block:var(--sp-24);background:var(--pw-white);}

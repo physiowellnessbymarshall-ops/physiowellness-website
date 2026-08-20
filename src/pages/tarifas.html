@@ -245,12 +245,80 @@
     </div>
   </section>
 
-  <!-- ============ 01 — En la clínica ============ -->
+  <!-- ============ Elige tu área ============
+       Cuatro tarjetas de acceso, no cuatro tarifas: Physiotherapy, Wellness,
+       Strength y Pilates comparten la misma tarifa en clínica (PRECIOS 2026),
+       así que las cuatro enlazan al mismo panel #en-la-clinica en vez de
+       repetir los precios cuatro veces. -->
+  <section class="area-select" id="areas">
+    <div class="container">
+      <div class="area-select__head" data-reveal>
+        <h2 class="section-heading">Elige tu área</h2>
+        <p class="section-lead">Physiotherapy, Wellness, Strength y Pilates comparten la misma tarifa en clínica. Elige tu área para ver los precios.</p>
+      </div>
+
+      <div class="area-select__grid">
+        <a class="area-tile" href="#en-la-clinica" data-reveal style="--i:0">
+          <span class="area-tile__media">
+            <img src="../assets/img/hero-clinic.webp" alt="" loading="lazy">
+          </span>
+          <span class="area-tile__body">
+            <span class="area-tile__eyebrow">01</span>
+            <span class="area-tile__title">Physiotherapy</span>
+            <span class="area-tile__text">Recuperar, tratar y volver a funcionar mejor.</span>
+            <span class="area-tile__cta">Ver tarifas <svg width="14" height="10" viewBox="0 0 14 10" fill="none" aria-hidden="true"><path d="M1 5h12M8 1l4 4-4 4" stroke="currentColor" stroke-width="1.4"/></svg></span>
+          </span>
+        </a>
+
+        <a class="area-tile" href="#en-la-clinica" data-reveal style="--i:1">
+          <span class="area-tile__media">
+            <img src="../assets/img/local/local-lounge.jpg" alt="" loading="lazy">
+          </span>
+          <span class="area-tile__body">
+            <span class="area-tile__eyebrow">02</span>
+            <span class="area-tile__title">Wellness</span>
+            <span class="area-tile__text">Cuidar, recuperar y optimizar el cuerpo.</span>
+            <span class="area-tile__cta">Ver tarifas <svg width="14" height="10" viewBox="0 0 14 10" fill="none" aria-hidden="true"><path d="M1 5h12M8 1l4 4-4 4" stroke="currentColor" stroke-width="1.4"/></svg></span>
+          </span>
+        </a>
+
+        <a class="area-tile" href="#en-la-clinica" data-reveal style="--i:2">
+          <span class="area-tile__media">
+            <img src="../assets/img/local/local-gym.jpg" alt="" loading="lazy">
+          </span>
+          <span class="area-tile__body">
+            <span class="area-tile__eyebrow">03</span>
+            <span class="area-tile__title">Strength</span>
+            <span class="area-tile__text">Desarrollar fuerza, capacidad física y rendimiento.</span>
+            <span class="area-tile__cta">Ver tarifas <svg width="14" height="10" viewBox="0 0 14 10" fill="none" aria-hidden="true"><path d="M1 5h12M8 1l4 4-4 4" stroke="currentColor" stroke-width="1.4"/></svg></span>
+          </span>
+        </a>
+
+        <a class="area-tile" href="#en-la-clinica" data-reveal style="--i:3">
+          <span class="area-tile__media">
+            <img src="../assets/img/local/local-pilates.jpg" alt="" loading="lazy">
+          </span>
+          <span class="area-tile__body">
+            <span class="area-tile__eyebrow">04</span>
+            <span class="area-tile__title">Pilates</span>
+            <span class="area-tile__text">Mejorar control, movilidad, estabilidad y alineación.</span>
+            <span class="area-tile__cta">Ver tarifas <svg width="14" height="10" viewBox="0 0 14 10" fill="none" aria-hidden="true"><path d="M1 5h12M8 1l4 4-4 4" stroke="currentColor" stroke-width="1.4"/></svg></span>
+          </span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 01 — En la clínica ============
+       Panel único de tarifas en clínica: fuente de los precios que enlazan
+       las cuatro tarjetas de "Elige tu área". Cifras y condiciones según
+       PRECIOS 2026 (src/content/tarifas.md). -->
   <section class="rates" id="en-la-clinica">
     <div class="container rates__inner">
       <div class="rates__head" data-reveal>
         <p class="eyebrow section-eyebrow">01 — En la clínica</p>
         <h2 class="section-heading">Sesiones presenciales</h2>
+        <p class="section-lead rates__lead">Misma tarifa para Physiotherapy, Wellness, Strength y Pilates.</p>
       </div>
 
       <div class="rates__body">
@@ -261,28 +329,85 @@
             <span class="entry__num">60</span>
             <span class="entry__unit">minutos</span>
           </p>
-          <h3 class="entry__title">Primera sesión</h3>
+          <h3 class="entry__title">Valoración y sesión inicial</h3>
           <p class="entry__price">100 €</p>
+          <p class="entry__note">Obligatoria en tu primera visita, con independencia del área. No se realizan sesiones sin valoración previa. Se factura aparte y no se descuenta de los bonos.</p>
         </article>
 
-        <!-- Seguimiento: una sola modalidad con dos duraciones, escalonadas. -->
+        <!-- Seguimiento: una sola modalidad con dos duraciones, escalonadas.
+             Cada duración es un <details> propio: el precio se lee sin abrir
+             nada y los bonos de 4/8/12 sesiones quedan un paso más allá, para
+             no sobrecargar el primer vistazo. -->
         <section class="follow" data-reveal style="--i:2" aria-labelledby="follow-title">
-          <h3 class="follow__title" id="follow-title">Seguimiento</h3>
+          <h3 class="follow__title" id="follow-title">Sesión individual</h3>
           <ul class="follow__list">
-            <li class="step">
-              <span class="step__num">30</span>
-              <span class="step__unit">minutos</span>
-              <span class="step__price">50 €</span>
+            <li>
+              <details class="step">
+                <summary class="step__summary">
+                  <span class="step__num">30</span>
+                  <span class="step__unit">minutos</span>
+                  <span class="step__price">50 €</span>
+                  <span class="step__toggle">Bonos</span>
+                </summary>
+                <div class="step__bonos">
+                  <ul class="bonos-list">
+                    <li class="bonos-list__row"><span class="bonos-list__n">4 sesiones</span><span class="bonos-list__unit">47,50 €/sesión</span><span class="bonos-list__total">190 €</span></li>
+                    <li class="bonos-list__row"><span class="bonos-list__n">8 sesiones</span><span class="bonos-list__unit">45 €/sesión</span><span class="bonos-list__total">360 €</span></li>
+                    <li class="bonos-list__row"><span class="bonos-list__n">12 sesiones</span><span class="bonos-list__unit">43,75 €/sesión</span><span class="bonos-list__total">525 €</span></li>
+                  </ul>
+                </div>
+              </details>
             </li>
-            <li class="step">
-              <span class="step__num">50</span>
-              <span class="step__unit">minutos</span>
-              <span class="step__price">80 €</span>
+            <li>
+              <details class="step">
+                <summary class="step__summary">
+                  <span class="step__num">50</span>
+                  <span class="step__unit">minutos</span>
+                  <span class="step__price">80 €</span>
+                  <span class="step__toggle">Bonos</span>
+                </summary>
+                <div class="step__bonos">
+                  <ul class="bonos-list">
+                    <li class="bonos-list__row"><span class="bonos-list__n">4 sesiones</span><span class="bonos-list__unit">76 €/sesión</span><span class="bonos-list__total">304 €</span></li>
+                    <li class="bonos-list__row"><span class="bonos-list__n">8 sesiones</span><span class="bonos-list__unit">72 €/sesión</span><span class="bonos-list__total">576 €</span></li>
+                    <li class="bonos-list__row"><span class="bonos-list__n">12 sesiones</span><span class="bonos-list__unit">70 €/sesión</span><span class="bonos-list__total">840 €</span></li>
+                  </ul>
+                </div>
+              </details>
             </li>
           </ul>
         </section>
 
-        <div class="rates__actions" data-reveal style="--i:3">
+        <!-- Condiciones de la tarifa en clínica, en acordeones para no
+             sobrecargar la sección de precios con texto legal. -->
+        <div class="conditions" data-reveal style="--i:3">
+          <details class="cond__item" name="cond-clinica">
+            <summary class="cond__q">Bonos: condiciones</summary>
+            <div class="cond__a">
+              <p>Los bonos son combinables entre Fisioterapia, Strength y Pilates, de modo que puedes adaptar cada sesión a lo que necesites en cada momento.</p>
+              <p>Son válidos únicamente para sesiones en clínica, tienen una validez de 2 meses desde la fecha de compra y se abonan íntegramente en el momento de la compra. Son personales e intransferibles y no admiten devolución una vez iniciados (se entiende iniciado un bono al consumir la primera sesión).</p>
+            </div>
+          </details>
+
+          <details class="cond__item" name="cond-clinica">
+            <summary class="cond__q">Suplementos</summary>
+            <div class="cond__a">
+              <p>Recargo nocturno, para sesiones que empiezan a partir de las 20 h: <strong>+20 €</strong>.</p>
+              <p>Recargo de fin de semana y festivos: <strong>+20 €</strong>.</p>
+              <p>Los recargos son acumulables entre sí y se aplican también a las sesiones consumidas con bono, abonándose aparte en el momento de la sesión.</p>
+            </div>
+          </details>
+
+          <details class="cond__item" name="cond-clinica">
+            <summary class="cond__q">Reservas y cancelaciones</summary>
+            <div class="cond__a">
+              <p>Las cancelaciones deben comunicarse con una antelación mínima de 24 h entre semana (lunes a viernes, excepto festivos) o 48 h en fin de semana y festivos.</p>
+              <p>Las sesiones canceladas fuera de plazo y las ausencias sin aviso previo se consideran realizadas, salvo causa médica o de fuerza mayor acreditada.</p>
+            </div>
+          </details>
+        </div>
+
+        <div class="rates__actions" data-reveal style="--i:4">
           <a class="btn btn--primary" href="https://www.docfav.com/portal/physio-wellness-by-marshall" target="_blank" rel="noopener">Reservar en la clínica</a>
         </div>
       </div>
@@ -291,13 +416,15 @@
 
   <!-- ============ 02 — A domicilio ============
        Modalidad independiente: no es una quinta área junto a Physiotherapy,
-       Wellness, Strength y Pilates. -->
+       Wellness, Strength y Pilates. Según PRECIOS 2026, el servicio a
+       domicilio cubre Physiotherapy, Wellness y Strength; no incluye Pilates. -->
   <section class="rates rates--home" id="a-domicilio">
     <div class="container rates__inner">
       <div class="rates__head" data-reveal>
         <p class="eyebrow section-eyebrow">02 — A domicilio</p>
         <h2 class="section-heading">Nos desplazamos hasta ti</h2>
         <p class="section-lead rates__lead">También puedes realizar tu primera sesión o un seguimiento de fisioterapia a domicilio.</p>
+        <p class="rates__note">Disponible para Physiotherapy, Wellness y Strength. El servicio de Pilates no está disponible a domicilio.</p>
       </div>
 
       <div class="rates__body">
@@ -350,6 +477,33 @@
             <span class="travel__num">+10 €</span> por cada 10 km adicionales de ida
           </li>
         </ul>
+
+        <!-- Resto de condiciones a domicilio, en acordeones. -->
+        <div class="conditions conditions--travel" data-reveal>
+          <details class="cond__item" name="cond-domicilio">
+            <summary class="cond__q">Zona de cobertura</summary>
+            <div class="cond__a">
+              <p>Las visitas a domicilio incluyen el desplazamiento dentro de un radio de 10 km desde Avinguda Camí dels Capellans, 79 (local 3), Sitges. El importe total de la sesión, incluido el desplazamiento, se comunica y se acepta antes de confirmar la visita.</p>
+            </div>
+          </details>
+
+          <details class="cond__item" name="cond-domicilio">
+            <summary class="cond__q">Suplementos</summary>
+            <div class="cond__a">
+              <p>Recargo nocturno, para sesiones que empiezan a partir de las 20 h: <strong>+20 €</strong>.</p>
+              <p>Recargo de fin de semana y festivos: <strong>+20 €</strong>.</p>
+              <p>Los recargos son acumulables entre sí y se suman al precio de la sesión.</p>
+            </div>
+          </details>
+
+          <details class="cond__item" name="cond-domicilio">
+            <summary class="cond__q">Reservas, cancelaciones y pago</summary>
+            <div class="cond__a">
+              <p>Misma antelación mínima de cancelación que en clínica: 24 h entre semana o 48 h en fin de semana y festivos.</p>
+              <p>Las sesiones a domicilio se contratan de forma individual y se abonan antes de cada sesión, incluidos los suplementos que correspondan. Los bonos de la tarifa de clínica no son válidos a domicilio.</p>
+            </div>
+          </details>
+        </div>
       </div>
     </div>
   </section>

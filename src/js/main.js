@@ -263,6 +263,86 @@ var prefersReducedMotion = window.matchMedia && window.matchMedia('(prefers-redu
   }catch(e){ console.warn('heroExitTransition', e); }
 })();
 
+/* ---------- hero de página con imagen (Tarifas y futuras internas) ----------
+   Función aparte del hero de la Home (heroReady/heroExitTransition arriba)
+   para no arriesgar ninguna regresión ahí: mismo lenguaje de movimiento
+   (entrada suave, ligero zoom de la imagen al hacer scroll), aplicado a
+   .page-hero--media. */
+(function pageHeroMedia(){
+  try{
+    var hero = document.querySelector('.page-hero--media');
+    if(!hero) return;
+
+    requestAnimationFrame(function(){
+      requestAnimationFrame(function(){ hero.classList.add('is-ready'); });
+    });
+
+    if(prefersReducedMotion) return;
+    var media = hero.querySelector('.page-hero__media img');
+    if(!media) return;
+
+    var onScroll = function(){
+      var vh = window.innerHeight;
+      var progress = Math.min(Math.max(window.scrollY / vh, 0), 1);
+      media.style.transform = 'scale(' + (1.04 + progress * 0.05) + ')';
+    };
+    onScroll();
+    window.addEventListener('scroll', onScroll, {passive:true});
+    window.addEventListener('resize', onScroll);
+  }catch(e){ console.warn('pageHeroMedia', e); }
+})();
+
+/* ---------- "Elige tu área": panel activo + contexto asociado ----------
+   Cada panel es un <button aria-pressed> que marca el área elegida; el
+   enlace "Ver tarifas" de cada panel sigue siendo un <a href="#en-la-clinica">
+   real y funciona igual sin JavaScript (las cuatro áreas ya comparten el
+   mismo precio, visible más abajo, con el texto fijo "Tarifa en clínica
+   compartida por las cuatro áreas." que NO cambia con la selección). Esto
+   solo añade: el estado seleccionado (aria-pressed + clase is-selected, con
+   su borde/insignia/texto propios) y la actualización del panel de contexto
+   lateral/apilado (nombre del área, descripción de enfoque y CTA), que
+   orienta sobre el enfoque de cada área, no sobre un precio distinto. */
+(function areaSelector(){
+  try{
+    var tiles = document.querySelectorAll('.area-tile[data-area]');
+    var context = document.getElementById('area-context');
+    if(!tiles.length) return;
+
+    var contextTitle = context ? context.querySelector('.area-context__title') : null;
+    var contextText = context ? context.querySelector('.area-context__text') : null;
+    var contextCta = context ? context.querySelector('.area-context__cta') : null;
+
+    var selectArea = function(tile){
+      var area = tile.getAttribute('data-area');
+      var desc = tile.getAttribute('data-desc') || '';
+
+      tiles.forEach(function(t){
+        var btn = t.querySelector('.area-tile__select');
+        var selected = t === tile;
+        t.classList.toggle('is-selected', selected);
+        if(btn) btn.setAttribute('aria-pressed', selected ? 'true' : 'false');
+      });
+
+      if(contextTitle) contextTitle.textContent = area;
+      if(contextText) contextText.textContent = desc;
+      if(contextCta) contextCta.textContent = 'Ver tarifas de ' + area;
+    };
+
+    tiles.forEach(function(tile){
+      var btn = tile.querySelector('.area-tile__select');
+      var cta = tile.querySelector('.area-tile__cta');
+      if(btn) btn.addEventListener('click', function(){ selectArea(tile); });
+      if(cta) cta.addEventListener('click', function(){ selectArea(tile); });
+    });
+
+    /* Conecta el área ya marcada en el HTML (is-selected, Physiotherapy)
+       con el contexto de la tarifa desde la primera carga, sin esperar a
+       un clic: label y panel de contexto quedan sincronizados de entrada. */
+    var initialTile = document.querySelector('.area-tile.is-selected') || tiles[0];
+    if(initialTile) selectArea(initialTile);
+  }catch(e){ console.warn('areaSelector', e); }
+})();
+
 /* ---------- revelado de la sección de transición (siguiente bloque) ---------- */
 (function revealOnScroll(){
   try{
@@ -410,4 +490,28 @@ var prefersReducedMotion = window.matchMedia && window.matchMedia('(prefers-redu
       });
     });
   }catch(e){ console.warn('smoothAnchor', e); }
+})();
+
+/* ---------- Acordeón de botones reales: FAQ y condiciones a domicilio ----------
+   Ambos usan el mismo patrón: <button aria-expanded aria-controls> junto a
+   un panel con [hidden]. Sin JavaScript, el botón queda con
+   aria-expanded="false" y el panel permanece oculto (contenido igualmente
+   presente en el HTML, solo no visible), así que no hay contenido que
+   dependa exclusivamente de este script. No toca los acordeones de bonos y
+   condiciones de "En la clínica" (Fase 5), que siguen siendo
+   <details>/<summary> nativos. */
+(function realButtonAccordions(){
+  try{
+    var buttons = document.querySelectorAll('.faq__q, #desplazamiento .cond__q');
+    if(!buttons.length) return;
+
+    buttons.forEach(function(btn){
+      btn.addEventListener('click', function(){
+        var panel = document.getElementById(btn.getAttribute('aria-controls'));
+        var expanded = btn.getAttribute('aria-expanded') === 'true';
+        btn.setAttribute('aria-expanded', expanded ? 'false' : 'true');
+        if(panel) panel.hidden = expanded;
+      });
+    });
+  }catch(e){ console.warn('realButtonAccordions', e); }
 })();

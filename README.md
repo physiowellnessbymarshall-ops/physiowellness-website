@@ -10,6 +10,7 @@ physiowellness-web/
 ├── src/
 │   ├── pages/              Páginas internas (método, servicios, tarifas, contacto)
 │   ├── components/         Componentes reutilizables (header, footer, nav, botones)
+│   ├── content/            Datos editables (tarifas, condiciones, URL de reserva)
 │   ├── css/                Estilos (sistema de diseño, componentes, responsive)
 │   ├── js/                 JavaScript (interactividad, animaciones, forms)
 │   └── assets/             Imágenes, fuentes, iconos
@@ -36,7 +37,7 @@ physiowellness-web/
 - [x] **Home** (`index.html`) — prototipo funcional
 - [ ] **El Método** (`src/pages/metodo.html`)
 - [ ] **Servicios** (`src/pages/servicios.html`)
-- [ ] **Tarifas** (`src/pages/tarifas.html`)
+- [x] **Tarifas** (`src/pages/tarifas.html`) — prototipo funcional
 - [ ] **Contacto** (`src/pages/contacto.html`)
 
 ## 🎨 Sistema de diseño

@@ -19,7 +19,17 @@
      desactivado del todo (no solo falla), nunca se añade la clase
      .is-visible y el contenido —incluidos precios— quedaría invisible.
      Este override solo aplica sin JS y solo en esta página. -->
-<noscript><style>[data-reveal]{opacity:1!important;transform:none!important;}</style></noscript>
+<noscript><style>
+  [data-reveal]{opacity:1!important;transform:none!important;}
+  /* Los acordeones de FAQ y condiciones a domicilio son <button aria-expanded>
+     + panel [hidden], controlados por main.js (realButtonAccordions). Sin
+     JavaScript el atributo hidden nunca se retira y ese contenido —incluye
+     zona de cobertura, suplementos y condiciones de reserva— quedaría
+     inaccesible. Se muestra siempre en ese caso; los acordeones nativos
+     <details>/<summary> de "En la clínica" no necesitan este override. */
+  #desplazamiento .cond__a[hidden],
+  .faq__a[hidden]{display:block!important;}
+</style></noscript>
 </head>
 <body class="page-tarifas">
 
@@ -87,8 +97,8 @@
           </div>
 
           <div class="booking-panel__list">
-            <a href="https://www.docfav.com/portal/physio-wellness-by-marshall" target="_blank" rel="noopener">Primera consulta presencial</a>
-            <a href="https://www.docfav.com/portal/physio-wellness-by-marshall" target="_blank" rel="noopener">Primera consulta a domicilio</a>
+            <a href="https://www.docfav.com/portal/physio-wellness-by-marshall" target="_blank" rel="noopener">Primera visita en clínica</a>
+            <a href="https://www.docfav.com/portal/physio-wellness-by-marshall" target="_blank" rel="noopener">Primera visita a domicilio</a>
             <a href="https://www.docfav.com/portal/physio-wellness-by-marshall" target="_blank" rel="noopener">Seguimiento de 30 minutos</a>
             <a href="https://www.docfav.com/portal/physio-wellness-by-marshall" target="_blank" rel="noopener">Seguimiento de 50 minutos</a>
             <a href="https://www.docfav.com/portal/physio-wellness-by-marshall" target="_blank" rel="noopener">Seguimiento a domicilio de 50 minutos</a>
@@ -373,21 +383,26 @@
         <p class="section-lead rates__lead">Misma tarifa para Fisioterapia, Bienestar, Fuerza y Pilates.</p>
         <p class="rates__selected" id="area-selected-label">
           <svg width="12" height="10" viewBox="0 0 12 10" fill="none" aria-hidden="true"><path d="M1 5l3 3 7-7" stroke="currentColor" stroke-width="1.6"/></svg>
-          <span class="rates__selected-text"></span>
+          <span class="rates__selected-text">Tarifa en clínica compartida por las cuatro áreas.</span>
         </p>
       </div>
 
       <div class="rates__body">
         <!-- Puerta de entrada: panel oscuro, cifra y precio a gran escala.
-             No es clicable; el CTA de la sección es el único interactivo. -->
+             Incluye su propio CTA ("Reservar primera visita"); el CTA
+             general de la sección ("Reservar en la clínica") cubre también
+             el seguimiento. "Primera visita" agrupa valoración inicial +
+             primera sesión como un único concepto, no como productos
+             separados. -->
         <article class="entry" data-reveal style="--i:1">
           <p class="entry__duration">
             <span class="entry__num">60</span>
             <span class="entry__unit">minutos</span>
           </p>
-          <h3 class="entry__title">Valoración y sesión inicial</h3>
+          <h3 class="entry__title">Primera visita</h3>
           <p class="entry__price">100 €</p>
-          <p class="entry__note">Obligatoria en tu primera visita, con independencia del área. No se realizan sesiones sin valoración previa. Se factura aparte y no se descuenta de los bonos.</p>
+          <p class="entry__note">Incluye la valoración inicial y la primera sesión de tratamiento. Es obligatoria antes de cualquier seguimiento, con independencia del área, y se factura aparte, sin descontarse de los bonos.</p>
+          <a class="btn btn--outline btn--sm entry__cta" href="https://www.docfav.com/portal/physio-wellness-by-marshall" target="_blank" rel="noopener">Reservar primera visita</a>
         </article>
 
         <!-- Seguimiento: una sola modalidad con dos duraciones, escalonadas.
@@ -500,7 +515,7 @@
       <div class="rates__head" data-reveal>
         <p class="eyebrow eyebrow--on-dark section-eyebrow">02 — A domicilio</p>
         <h2 class="section-heading">Nos desplazamos hasta ti</h2>
-        <p class="section-lead rates__lead">También puedes realizar tu primera sesión o un seguimiento de fisioterapia a domicilio.</p>
+        <p class="section-lead rates__lead">También puedes realizar tu primera visita o un seguimiento de fisioterapia a domicilio.</p>
         <p class="rates__note">Disponible para Fisioterapia, Bienestar y Fuerza. El servicio de Pilates no está disponible a domicilio.</p>
         <!-- FASE 7B: foto con licencia verificable, documentada en
              ASSET_SOURCES.md. Puramente ambiental (aria-hidden): no ilustra
@@ -515,7 +530,7 @@
              la medianera. Composición distinta a la de la sección presencial. -->
         <div class="split" data-reveal style="--i:1">
           <article class="split__panel">
-            <h3 class="split__title">Primera sesión a domicilio</h3>
+            <h3 class="split__title">Primera visita a domicilio</h3>
             <p class="split__duration">
               <span class="split__num">60</span>
               <span class="split__unit">minutos</span>

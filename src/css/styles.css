@@ -1366,8 +1366,16 @@ a:focus-visible,button:focus-visible,input:focus-visible{
 .page-tarifas .area-tile__eyebrow{
   font-size:var(--fs-label);letter-spacing:.2em;text-transform:uppercase;
   font-weight:600;color:#8fd9c9;
+  /* El degradado inferior de .area-tile__media::after ya garantiza AA por
+     luminosidad, pero el matiz de cada foto (p. ej. tonos cálidos en
+     Bienestar) puede restar nitidez percibida al mismo verde. Una sombra
+     sutil iguala la legibilidad de la numeración en las cuatro fotos. */
+  text-shadow:0 1px 6px rgba(10,20,18,.5);
 }
-.page-tarifas .area-tile__title{font-size:clamp(1.5rem,2.6vw,2.25rem);font-weight:500;}
+.page-tarifas .area-tile__title{
+  font-size:clamp(1.5rem,2.6vw,2.25rem);font-weight:500;
+  text-shadow:0 1px 8px rgba(10,20,18,.4);
+}
 
 /* Insignia "Seleccionada": oculta por defecto, visible solo en el panel
    activo. Va acompañada de icono + texto, además del anillo del panel:
@@ -1455,7 +1463,10 @@ a:focus-visible,button:focus-visible,input:focus-visible{
    Panel oscuro, la pieza de más peso de la página. */
 .entry{
   display:grid;
-  grid-template-columns:auto 1fr;
+  /* minmax(0,1fr): sin el 0 explícito, el ancho automático de contenido
+     del CTA (nowrap, ver .entry__cta) obligaba a esta columna -y con ella
+     toda la tarjeta y la página- a desbordarse en viewports estrechos. */
+  grid-template-columns:auto minmax(0,1fr);
   align-items:end;
   gap:var(--sp-4) var(--sp-8);
   padding:var(--sp-8) var(--sp-6);
@@ -1487,6 +1498,12 @@ a:focus-visible,button:focus-visible,input:focus-visible{
   font-size:var(--fs-small);
   color:rgba(255,255,255,.6);
   max-width:46ch;
+}
+.entry__cta{
+  grid-column:2;grid-row:4;margin-top:var(--sp-3);width:fit-content;
+  /* Permite envolver en dos líneas si el espacio disponible es escaso,
+     en vez de heredar el nowrap de .btn y desbordar la columna. */
+  white-space:normal;
 }
 
 /* ----- 01 · Seguimiento: una modalidad, dos duraciones escalonadas ----- */
@@ -1848,12 +1865,10 @@ a:focus-visible,button:focus-visible,input:focus-visible{
   .page-tarifas .page-hero__scroll-cue span{animation:none;opacity:.5;}
 }
 
-/* ----- "Estás viendo: <área>" -----
-   Conecta visualmente el área elegida en #areas (Fase 4) con el contexto
-   de esta tarifa: chip con icono + texto, coherente con la insignia
-   "Seleccionada" de .area-tile__badge. main.js lo sincroniza tanto al
-   cargar (con el área ya marcada en el HTML) como en cada clic; si no hay
-   JS, el <span> queda vacío y el icono no ocupa espacio de más. */
+/* ----- "Tarifa en clínica compartida por las cuatro áreas" -----
+   Chip con icono + texto fijo en el HTML (Fase 2): no cambia al elegir un
+   área en #areas, para no sugerir que el precio varía. Coherente
+   visualmente con la insignia "Seleccionada" de .area-tile__badge. */
 .page-tarifas .rates__selected{
   display:inline-flex;align-items:center;gap:.45rem;
   margin-top:var(--sp-5);
@@ -1865,8 +1880,6 @@ a:focus-visible,button:focus-visible,input:focus-visible{
 }
 .page-tarifas .rates__selected svg{flex:none;}
 .page-tarifas .rates--home .rates__selected{background:rgba(255,255,255,.1);color:#8fd9c9;}
-.page-tarifas .rates__selected-text:empty{display:none;}
-.page-tarifas .rates__selected:has(.rates__selected-text:empty){display:none;}
 
 /* ----- Zona sticky en las dos secciones de tarifas -----
    El bloque de contexto (eyebrow, título, precio de entrada más próximo)

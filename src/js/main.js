@@ -296,15 +296,15 @@ var prefersReducedMotion = window.matchMedia && window.matchMedia('(prefers-redu
    Cada panel es un <button aria-pressed> que marca el área elegida; el
    enlace "Ver tarifas" de cada panel sigue siendo un <a href="#en-la-clinica">
    real y funciona igual sin JavaScript (las cuatro áreas ya comparten el
-   mismo precio, visible más abajo). Esto solo añade: el estado seleccionado
-   (aria-pressed + clase is-selected, con su borde/insignia/texto propios) y
-   la actualización del panel de contexto lateral/apilado y de la etiqueta
-   junto al precio. */
+   mismo precio, visible más abajo, con el texto fijo "Tarifa en clínica
+   compartida por las cuatro áreas." que NO cambia con la selección). Esto
+   solo añade: el estado seleccionado (aria-pressed + clase is-selected, con
+   su borde/insignia/texto propios) y la actualización del panel de contexto
+   lateral/apilado (nombre del área, descripción de enfoque y CTA), que
+   orienta sobre el enfoque de cada área, no sobre un precio distinto. */
 (function areaSelector(){
   try{
     var tiles = document.querySelectorAll('.area-tile[data-area]');
-    var label = document.getElementById('area-selected-label');
-    var labelText = label ? label.querySelector('.rates__selected-text') : null;
     var context = document.getElementById('area-context');
     if(!tiles.length) return;
 
@@ -323,7 +323,6 @@ var prefersReducedMotion = window.matchMedia && window.matchMedia('(prefers-redu
         if(btn) btn.setAttribute('aria-pressed', selected ? 'true' : 'false');
       });
 
-      if(labelText) labelText.textContent = 'Estás viendo la tarifa de ' + area + '.';
       if(contextTitle) contextTitle.textContent = area;
       if(contextText) contextText.textContent = desc;
       if(contextCta) contextCta.textContent = 'Ver tarifas de ' + area;

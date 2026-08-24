@@ -533,7 +533,7 @@ a:focus-visible,button:focus-visible,input:focus-visible{
   padding:var(--sp-6) var(--sp-8);
   transition:background-color var(--dur-fast) var(--ease-out);
 }
-.orient__item:hover{background:rgba(35,115,105,.06);}
+.orient__item:hover,.orient__item:focus-visible{background:rgba(35,115,105,.06);}
 .orient__item-text{font-size:1.02rem;max-width:34rem;}
 .orient__item-cta{
   display:inline-flex;align-items:center;gap:.5rem;
@@ -541,7 +541,7 @@ a:focus-visible,button:focus-visible,input:focus-visible{
   color:var(--pw-primary);white-space:nowrap;
 }
 .orient__item-cta svg{transition:transform var(--dur-fast) var(--ease-out);}
-.orient__item:hover .orient__item-cta svg{transform:translateX(4px);}
+.orient__item:hover .orient__item-cta svg,.orient__item:focus-visible .orient__item-cta svg{transform:translateX(4px);}
 .orient__note{
   margin-top:var(--sp-6);
   font-size:.9rem;color:var(--pw-ink-50);
@@ -568,6 +568,9 @@ a:focus-visible,button:focus-visible,input:focus-visible{
   scroll-margin-top:6rem;
 }
 .area-card:hover{background:var(--pw-primary-900);color:var(--pw-white);}
+.area-card__head{display:flex;flex-direction:column;gap:.5rem;}
+.area-card__num{font-size:.72rem;letter-spacing:.14em;color:var(--pw-primary);}
+.area-card:hover .area-card__num{color:#8fd9c9;}
 .area-card__title{font-size:1.5rem;font-weight:500;line-height:1.15;}
 .area-card__desc{font-size:.92rem;color:var(--pw-ink-70);flex-grow:1;}
 .area-card:hover .area-card__desc{color:rgba(255,255,255,.82);}
@@ -639,14 +642,18 @@ a:focus-visible,button:focus-visible,input:focus-visible{
   background:var(--pw-accent);
   transition:height .2s linear;
 }
-.method__steps{display:grid;gap:var(--sp-10);}
+.method__steps{display:grid;}
 .method-step{
   opacity:.4;
   transition:opacity var(--dur-med) var(--ease-out);
   display:grid;grid-template-columns:auto 1fr;column-gap:var(--sp-6);align-items:baseline;
+  padding-block:var(--sp-6);
+  border-top:1px solid var(--pw-line-on-dark);
 }
+.method-step:first-child{border-top:none;padding-top:0;}
+.method-step:last-child{padding-bottom:0;}
 .method-step.is-active{opacity:1;}
-.method-step__num{font-size:.75rem;letter-spacing:.14em;color:var(--pw-accent);}
+.method-step__num{font-size:.75rem;letter-spacing:.14em;color:#8fd9c9;}
 .method-step__en{font-size:clamp(1.4rem,3vw,2.1rem);font-weight:500;}
 .method-step__es{
   grid-column:2;
@@ -658,7 +665,6 @@ a:focus-visible,button:focus-visible,input:focus-visible{
 /* En móvil las fases se leen en vertical, sin barra ni sticky: nada retiene
    el scroll y todas las fases quedan legibles. */
 @media (max-width:859px){
-  .method__steps{gap:var(--sp-8);}
   .method-step{opacity:1;}
 }
 
@@ -693,14 +699,22 @@ a:focus-visible,button:focus-visible,input:focus-visible{
   color:var(--pw-accent);
 }
 
-/* ---------- 13. Equipo profesional ---------- */
-.team{padding-block:var(--sp-32);background:var(--pw-white);}
-.team__head{max-width:40rem;margin-bottom:var(--sp-16);}
-.team__grid{display:grid;gap:var(--sp-8);grid-template-columns:1fr;}
+/* ---------- 13. Equipo profesional ----------
+   Retrato y texto en horizontal a partir de tablet: reequilibra la
+   proporción retrato/texto y evita que la sección ocupe una franja
+   vertical excesiva, sobre todo en móvil (ratio 3/4 en vez de 4/5). */
+.team{padding-block:var(--sp-24);background:var(--pw-white);}
+.team__head{max-width:40rem;margin-bottom:var(--sp-12);}
+.team__grid{display:grid;gap:var(--sp-10);grid-template-columns:1fr;}
 @media (min-width:640px){ .team__grid{grid-template-columns:repeat(2,1fr);} }
 .team-card{display:flex;flex-direction:column;gap:var(--sp-4);}
-.team-card__media{aspect-ratio:4/5;overflow:hidden;background:var(--pw-mist);}
+.team-card__media{aspect-ratio:3/4;overflow:hidden;background:var(--pw-mist);}
 .team-card__media img{width:100%;height:100%;object-fit:cover;}
+@media (min-width:640px){
+  .team-card{flex-direction:row;align-items:flex-start;gap:var(--sp-6);}
+  .team-card__media{flex:0 0 38%;}
+  .team-card__body{flex:1 1 auto;padding-top:.2rem;}
+}
 .team-card__name{font-size:1.15rem;font-weight:500;line-height:1.55;letter-spacing:normal;margin-top:.2rem;}
 .team-card__role{
   font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;color:var(--pw-accent);
@@ -735,15 +749,30 @@ a:focus-visible,button:focus-visible,input:focus-visible{
 .facility__item img{width:100%;height:100%;object-fit:cover;object-position:center;transition:transform var(--dur-med) var(--ease-out);}
 .facility__item--tall img{object-position:center 35%;}
 .facility__item:hover img{transform:scale(1.04);}
+/* Composición "bento" asimétrica a partir de tablet grande: una pieza
+   protagonista (2x2) más un banner y dos piezas cuadradas, para dar más
+   presencia al espacio sin recortar la galería a una tira uniforme. */
+@media (min-width:860px){
+  .facility__grid{
+    grid-template-columns:repeat(4,1fr);
+    grid-template-rows:repeat(2,1fr);
+    aspect-ratio:2/1;
+  }
+  .facility__item{aspect-ratio:auto;}
+  .facility__item:nth-child(1){grid-column:1/3;grid-row:1/3;}
+  .facility__item:nth-child(2){grid-column:3/5;grid-row:1/2;}
+  .facility__item:nth-child(3){grid-column:3/4;grid-row:2/3;}
+  .facility__item:nth-child(4){grid-column:4/5;grid-row:2/3;}
+}
 
 /* ---------- 15. Reseñas reales ---------- */
 .testimonials{padding-block:var(--sp-32);background:var(--pw-white);}
 .testimonials__head{max-width:40rem;margin-bottom:var(--sp-16);}
 .testimonials__grid{display:grid;gap:1px;background:var(--pw-line);border:1px solid var(--pw-line);grid-template-columns:1fr;}
 @media (min-width:860px){ .testimonials__grid{grid-template-columns:repeat(3,1fr);} }
-.testimonial-card{background:var(--pw-white);padding:var(--sp-8) var(--sp-6);display:flex;flex-direction:column;gap:var(--sp-4);}
-.testimonial-card__quote{font-size:1rem;line-height:1.6;color:var(--pw-ink);}
-.testimonial-card__quote::before{content:"“";}
+.testimonial-card{background:var(--pw-white);padding:var(--sp-10) var(--sp-8);display:flex;flex-direction:column;gap:var(--sp-5);}
+.testimonial-card__quote{font-size:1.05rem;line-height:1.68;color:var(--pw-ink);}
+.testimonial-card__quote::before{content:"“";color:var(--pw-primary);font-size:1.3em;line-height:0;vertical-align:-.3em;margin-right:.04em;}
 .testimonial-card__quote::after{content:"”";}
 /* El fragmento se recorta a 5 líneas solo si hay JS para desplegarlo;
    sin JS el texto completo se lee siempre. */
@@ -760,12 +789,12 @@ a:focus-visible,button:focus-visible,input:focus-visible{
 .testimonial-card__more:hover{color:var(--pw-accent);}
 .testimonial-card__author{
   font-size:.78rem;letter-spacing:.06em;text-transform:uppercase;color:var(--pw-ink-50);
-  margin-top:auto;padding-top:var(--sp-4);
+  margin-top:auto;padding-top:var(--sp-5);border-top:1px solid var(--pw-line);
 }
 .testimonials__source{margin-top:var(--sp-6);font-size:.78rem;color:var(--pw-ink-50);}
 
 /* ---------- 16. Ubicación y contacto ---------- */
-.contact{padding-block:var(--sp-32);background:var(--pw-white);}
+.contact{padding-block:var(--sp-32);background:var(--pw-mist);border-block:1px solid var(--pw-line);}
 .contact__grid{display:grid;gap:var(--sp-16);}
 @media (min-width:960px){ .contact__grid{grid-template-columns:1fr 1fr;gap:var(--sp-24);} }
 .contact__head{margin-bottom:var(--sp-8);}
@@ -777,7 +806,7 @@ a:focus-visible,button:focus-visible,input:focus-visible{
 .contact__detail{display:flex;flex-direction:column;gap:.15rem;padding-block:var(--sp-4);border-top:1px solid var(--pw-line);}
 .contact__detail strong{font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;color:var(--pw-accent);}
 .contact__detail a,.contact__detail span{font-size:.98rem;}
-.contact__map{aspect-ratio:4/3;border:1px solid var(--pw-line);overflow:hidden;background:var(--pw-mist);}
+.contact__map{aspect-ratio:4/3;max-height:28rem;border:1px solid var(--pw-line);overflow:hidden;background:var(--pw-white);}
 /* el mapa no captura el scroll de la página: para interactuar está
    "Cómo llegar", que abre Google Maps */
 .contact__map iframe{width:100%;height:100%;border:0;pointer-events:none;}
@@ -1088,6 +1117,20 @@ a:focus-visible,button:focus-visible,input:focus-visible{
 .page-servicios .needs__note-link:active{color:var(--pw-primary-900);}
 .page-servicios .breadcrumb a:hover{color:var(--pw-white);}
 
+/* ---------- 26b. Acabado de Home ----------
+   Mismo criterio de contraste AA que en /servicios (ver comentario arriba):
+   --pw-accent no llega a 4.5:1 sobre fondos claros para texto pequeño, así
+   que aquí también se usa --pw-primary. Todo va prefijado con `.page-home`
+   para no afectar a Servicios ni a Tarifas, que reutilizan estas mismas
+   clases (.eyebrow, .first-visit__step). */
+.page-home .eyebrow:not(.eyebrow--on-dark){color:var(--pw-primary);}
+.page-home .eyebrow:not(.eyebrow--on-dark)::before{background:var(--pw-primary);}
+.page-home .first-visit__step::before{color:var(--pw-primary);}
+
+/* Estado activo del botón, igual que en /servicios: el foco visible global
+   ya cubre a/button; esto añade el "clic" táctil que faltaba en Home. */
+.page-home .btn:active{transform:translateY(1px);}
+
 
 /* ---------- 27. Tarifas (/es/tarifas/) ----------
    Dirección visual de la página de tarifas.
@@ -1112,8 +1155,7 @@ a:focus-visible,button:focus-visible,input:focus-visible{
 .page-tarifas .step__price,
 .page-tarifas .split__num,
 .page-tarifas .split__price,
-.page-tarifas .travel__num,
-.page-tarifas .hero-nums{
+.page-tarifas .travel__num{
   font-variant-numeric:tabular-nums;
   font-feature-settings:"tnum" 1;
 }
@@ -1129,63 +1171,50 @@ a:focus-visible,button:focus-visible,input:focus-visible{
   background:rgba(38,152,136,.08);
 }
 
-/* ----- Hero tipográfico -----
-   Sin fotografía: el par titular + duraciones sostiene la composición. */
+/* ----- Hero: composición de texto -----
+   FASE 7B: se retiran las cifras de duración (hero-nums) y con ellas la
+   segunda columna que ocupaban. Un único bloque de texto, más estrecho que
+   el contenedor (ver .page-hero__title/.page-hero__text, §19), deja más
+   foto exclusiva visible a la derecha en escritorio. */
 .page-tarifas .hero-grid{display:grid;gap:var(--sp-12);}
-@media (min-width:960px){
-  .page-tarifas .hero-grid{
-    grid-template-columns:minmax(0,1.3fr) minmax(0,.7fr);
-    gap:var(--sp-16);
-    align-items:end;
-  }
-}
-
-.hero-nums{
-  display:flex;flex-wrap:wrap;align-items:baseline;gap:var(--sp-5);
-  line-height:.82;
-  font-size:clamp(3.25rem,13vw,6.5rem);
-  font-weight:500;
-  letter-spacing:-.02em;
-  color:transparent;
-  -webkit-text-stroke:1px rgba(143,217,201,.55);
-}
-/* Escalonado: cada cifra baja un poco respecto a la anterior. */
-.hero-nums__n:nth-child(2){transform:translateY(.14em);}
-.hero-nums__n:nth-child(3){transform:translateY(.28em);}
-
-@media (min-width:960px){
-  .hero-nums{
-    flex-direction:column;align-items:flex-end;
-    gap:0;
-    font-size:clamp(4.5rem,7.5vw,8rem);
-  }
-  .hero-nums__n:nth-child(2){transform:translateX(-1.1em);}
-  .hero-nums__n:nth-child(3){transform:translateX(-2.2em);}
-}
-/* Navegadores sin -webkit-text-stroke: relleno tenue en lugar de invisible. */
-@supports not (-webkit-text-stroke:1px currentColor){
-  .hero-nums{color:rgba(143,217,201,.28);}
-}
 
 /* ----- Orientación previa -----
    Dos paneles asimétricos: el de primera visita pesa más porque es el punto
    de partida habitual. */
 .pre-choice{padding-block:var(--sp-24);background:var(--pw-white);}
 .pre-choice__head{margin-bottom:var(--sp-12);}
-.pre-choice__grid{display:grid;gap:var(--sp-8);}
+.pre-choice__grid{display:grid;gap:var(--sp-10);}
 @media (min-width:860px){
-  .pre-choice__grid{grid-template-columns:1.15fr .85fr;gap:var(--sp-12);align-items:start;}
+  .pre-choice__grid{grid-template-columns:1.4fr .6fr;gap:var(--sp-16);align-items:start;}
 }
 
 .choice-card{
   padding-top:var(--sp-6);
   border-top:2px solid var(--pw-primary);
 }
-.choice-card:nth-child(2){border-top-color:var(--pw-line);}
+.choice-card--secondary{border-top-color:var(--pw-line);}
 @media (min-width:860px){
-  .choice-card:nth-child(2){margin-top:var(--sp-10);}
+  .choice-card--secondary{margin-top:var(--sp-16);}
 }
+.choice-card__step{
+  font-size:var(--fs-label);
+  letter-spacing:.12em;text-transform:uppercase;font-weight:600;
+  color:var(--pw-primary);
+  margin-bottom:var(--sp-3);
+}
+.choice-card--secondary .choice-card__step{color:var(--pw-ink-50);}
 .choice-card__title{font-size:var(--fs-h3);margin-bottom:var(--sp-4);}
+.choice-card--primary .choice-card__title{font-size:var(--fs-h2);}
+.choice-card__duration{
+  display:flex;align-items:baseline;gap:.2em;
+  margin-bottom:var(--sp-5);line-height:.85;
+}
+.choice-card__num{
+  font-size:clamp(2.75rem,6vw,4.5rem);
+  font-weight:500;letter-spacing:-.02em;
+  color:var(--pw-primary);
+}
+.choice-card__unit{font-size:var(--fs-label);color:var(--pw-ink-70);}
 .choice-card__text{color:var(--pw-ink-70);max-width:44ch;}
 
 .tag-list{display:flex;flex-wrap:wrap;gap:var(--sp-2);margin-top:var(--sp-6);}
@@ -1212,35 +1241,66 @@ a:focus-visible,button:focus-visible,input:focus-visible{
    estilos a la Home. Ver ASSET_SOURCES.md para el origen de las imágenes. */
 .page-tarifas .area-select{padding-block:var(--sp-24);background:var(--pw-white);}
 .page-tarifas .area-select__head{max-width:60ch;}
+
+/* ----- FASE 4: layout de paneles + contexto lateral -----
+   En escritorio ancho, la rejilla 2×2 de paneles vive junto a un panel de
+   contexto pegajoso (sticky) que refleja el área activa. En estrecho, el
+   contexto se apila justo debajo de la rejilla: mismo contenido, sin
+   posicionamiento especial. */
+.page-tarifas .area-select__layout{margin-top:var(--sp-12);}
+@media (min-width:1100px){
+  .page-tarifas .area-select__layout{
+    display:grid;
+    grid-template-columns:minmax(0,1fr) minmax(240px,300px);
+    gap:var(--sp-10);
+    align-items:start;
+  }
+}
+
 .page-tarifas .area-select__grid{
   --radius-tile:20px;
   display:grid;gap:var(--sp-6);
-  margin-top:var(--sp-12);
 }
 @media (min-width:640px){
   .page-tarifas .area-select__grid{grid-template-columns:1fr 1fr;}
 }
+/* FASE 6: de 4 puertas estrechas a 2×2 puertas grandes — "paneles
+   fotográficos de mayor escala" en vez de una cuadrícula pequeña. */
 @media (min-width:1100px){
-  .page-tarifas .area-select__grid{grid-template-columns:repeat(4,1fr);}
+  .page-tarifas .area-select__grid{gap:var(--sp-8);}
 }
 
+/* .area-tile ya no es un enlace: es un contenedor con dos elementos
+   interactivos propios (el botón de selección y el enlace "Ver tarifas"),
+   así que el estado hover/foco se engancha con :focus-within, no con
+   :focus-visible sobre el propio contenedor. */
 .page-tarifas .area-tile{
   position:relative;
   display:flex;flex-direction:column;
-  min-height:22rem;
+  min-height:26rem;
   border-radius:var(--radius-tile);
   overflow:hidden;
   color:var(--pw-white);
-  text-decoration:none;
   isolation:isolate;
   transition:transform var(--dur-med) var(--ease-out), box-shadow var(--dur-med) var(--ease-out);
 }
 .page-tarifas .area-tile:hover,
-.page-tarifas .area-tile:focus-visible{
+.page-tarifas .area-tile:focus-within{
   transform:translateY(-4px);
   box-shadow:0 18px 40px -20px rgba(18,32,29,.45);
 }
-.page-tarifas .area-tile:focus-visible{outline:2px solid var(--pw-accent);outline-offset:3px;}
+@media (min-width:1100px){
+  .page-tarifas .area-tile{min-height:32rem;}
+}
+
+/* Estado seleccionado: anillo + insignia + texto, nunca solo color. */
+.page-tarifas .area-tile.is-selected{
+  box-shadow:0 0 0 3px var(--pw-white), 0 0 0 5px var(--pw-primary);
+}
+.page-tarifas .area-tile.is-selected:hover,
+.page-tarifas .area-tile.is-selected:focus-within{
+  box-shadow:0 0 0 3px var(--pw-white), 0 0 0 5px var(--pw-primary), 0 18px 40px -20px rgba(18,32,29,.45);
+}
 
 .page-tarifas .area-tile__media{
   position:absolute;inset:0;z-index:-2;
@@ -1252,8 +1312,20 @@ a:focus-visible,button:focus-visible,input:focus-visible{
   filter:saturate(1.08) contrast(1.05) brightness(.92);
   transition:transform var(--dur-slow) var(--ease-out);
 }
+/* FASE 7C: cada tarjeta usa su propia fotografía (ver ASSET_SOURCES.md),
+   así que cada una necesita su propio encuadre -nunca el mismo recorte
+   centrado-: el contenedor es más estrecho que la foto (recorta lados),
+   así que el eje horizontal es el que hay que ajustar por imagen. */
+.page-tarifas .area-tile[data-area="Fisioterapia"] .area-tile__media img{object-position:58% 32%;}
+.page-tarifas .area-tile[data-area="Pilates"] .area-tile__media img{object-position:42% 30%;}
+.page-tarifas .area-tile[data-area="Fuerza"] .area-tile__media img{object-position:46% 35%;}
+.page-tarifas .area-tile[data-area="Bienestar"] .area-tile__media img{object-position:70% 32%;}
+@media (max-width:639px){
+  .page-tarifas .area-tile[data-area="Fisioterapia"] .area-tile__media img{object-position:65% 28%;}
+  .page-tarifas .area-tile[data-area="Bienestar"] .area-tile__media img{object-position:78% 30%;}
+}
 .page-tarifas .area-tile:hover .area-tile__media img,
-.page-tarifas .area-tile:focus-visible .area-tile__media img{transform:scale(1.05);}
+.page-tarifas .area-tile:focus-within .area-tile__media img{transform:scale(1.05);}
 
 /* Oscurecimiento inferior en degradado, para que el texto mantenga
    contraste AA sobre cualquier foto. */
@@ -1274,34 +1346,97 @@ a:focus-visible,button:focus-visible,input:focus-visible{
   position:relative;z-index:1;
   margin-top:auto;
   display:flex;flex-direction:column;
+  align-items:flex-start;
   gap:var(--sp-1);
   padding:var(--sp-6);
+}
+
+/* Botón semántico: ocupa el eyebrow + título, con área de toque generosa.
+   Reset de estilos nativos de <button> para heredar la tipografía del panel. */
+.page-tarifas .area-tile__select{
+  display:flex;flex-direction:column;align-items:flex-start;gap:var(--sp-1);
+  background:none;border:none;padding:var(--sp-1) 0;margin:0;
+  font:inherit;color:inherit;text-align:left;
+  cursor:pointer;
+  width:100%;
+}
+.page-tarifas .area-tile__select:focus-visible{
+  outline:2px solid var(--pw-accent);outline-offset:4px;
 }
 .page-tarifas .area-tile__eyebrow{
   font-size:var(--fs-label);letter-spacing:.2em;text-transform:uppercase;
   font-weight:600;color:#8fd9c9;
 }
-.page-tarifas .area-tile__title{font-size:var(--fs-h3);font-weight:500;}
+.page-tarifas .area-tile__title{font-size:clamp(1.5rem,2.6vw,2.25rem);font-weight:500;}
+
+/* Insignia "Seleccionada": oculta por defecto, visible solo en el panel
+   activo. Va acompañada de icono + texto, además del anillo del panel:
+   tres recursos distintos del color para marcar la selección. */
+.page-tarifas .area-tile__badge{
+  display:none;
+  align-items:center;gap:.4em;
+  margin-top:var(--sp-1);
+  padding:.3rem .65rem;
+  border-radius:999px;
+  background:var(--pw-white);
+  color:var(--pw-primary-900);
+  font-size:var(--fs-label);letter-spacing:.08em;text-transform:uppercase;font-weight:700;
+}
+.page-tarifas .area-tile.is-selected .area-tile__badge{display:inline-flex;}
+
 .page-tarifas .area-tile__text{
   font-size:var(--fs-small);color:rgba(255,255,255,.85);
-  max-width:28ch;
+  max-width:32ch;
+}
+@media (min-width:1100px){
+  .page-tarifas .area-tile__body{padding:var(--sp-8);}
+  .page-tarifas .area-tile__text{font-size:var(--fs-body);}
 }
 .page-tarifas .area-tile__cta{
   display:inline-flex;align-items:center;gap:.5rem;
   margin-top:var(--sp-4);
+  padding:.25rem 0;
   font-size:var(--fs-label);letter-spacing:.1em;text-transform:uppercase;
   font-weight:600;color:var(--pw-white);
 }
+.page-tarifas .area-tile__cta:focus-visible{
+  outline:2px solid var(--pw-accent);outline-offset:4px;
+}
 .page-tarifas .area-tile__cta svg{transition:transform var(--dur-fast) var(--ease-out);}
 .page-tarifas .area-tile:hover .area-tile__cta svg,
-.page-tarifas .area-tile:focus-visible .area-tile__cta svg{transform:translateX(3px);}
+.page-tarifas .area-tile:focus-within .area-tile__cta svg{transform:translateX(3px);}
 
 @media (prefers-reduced-motion:reduce){
   .page-tarifas .area-tile,.page-tarifas .area-tile__media img,.page-tarifas .area-tile__cta svg{transition:none;}
-  .page-tarifas .area-tile:hover,.page-tarifas .area-tile:focus-visible{transform:none;}
+  .page-tarifas .area-tile:hover,.page-tarifas .area-tile:focus-within{transform:none;}
   .page-tarifas .area-tile:hover .area-tile__media img,
-  .page-tarifas .area-tile:focus-visible .area-tile__media img{transform:none;}
+  .page-tarifas .area-tile:focus-within .area-tile__media img{transform:none;}
 }
+
+/* ----- Panel de contexto -----
+   Refleja el área activa: mismo contenido que las 4 puertas, sin datos
+   nuevos. En escritorio ancho queda fijo (sticky) junto a la rejilla; en
+   estrecho se apila justo debajo, como una quinta ficha de la misma serie. */
+.page-tarifas .area-context{
+  margin-top:var(--sp-8);
+  padding:var(--sp-8);
+  border:1px solid var(--pw-line);
+  background:var(--pw-mist);
+}
+@media (min-width:1100px){
+  .page-tarifas .area-context{
+    margin-top:0;
+    position:sticky;top:var(--sp-10);
+  }
+}
+.page-tarifas .area-context__eyebrow{
+  font-size:var(--fs-label);letter-spacing:.16em;text-transform:uppercase;font-weight:600;
+  color:var(--pw-primary);
+  margin-bottom:var(--sp-2);
+}
+.page-tarifas .area-context__title{font-size:var(--fs-h3);margin-bottom:var(--sp-3);}
+.page-tarifas .area-context__text{color:var(--pw-ink-70);margin-bottom:var(--sp-6);}
+.page-tarifas .area-context__cta{width:100%;justify-content:center;}
 
 /* ----- Estructura común de las dos secciones de tarifas -----
    Retícula asimétrica: enunciado a la izquierda, precios a la derecha. */
@@ -1362,46 +1497,75 @@ a:focus-visible,button:focus-visible,input:focus-visible{
   margin-bottom:var(--sp-2);
 }
 .follow__list{display:grid;}
-/* Cada duración es un <li> propio: el escalón (segunda duración más
-   adentro) se aplica al <li>, no a .step, porque .step es ahora el
-   <details> que contiene también los bonos. */
+/* Cada duración es un <li> propio. FASE 7B: se retira el escalón que
+   desplazaba la segunda fila (rompía el eje común pedido para 30'/50'). */
 .follow__list > li{border-bottom:1px solid var(--pw-line);}
-@media (min-width:640px){
-  .follow__list > li + li{padding-left:var(--sp-10);}
-}
 
 .step{padding-block:var(--sp-2);}
 .step__summary{
   display:grid;
-  grid-template-columns:auto 1fr auto auto;
+  /* Tres zonas estables (Duración / Precio / Control), con anchos en rem
+     -no en ch, que se calcula sobre el font-size del <summary>, no el de
+     cada span hijo, y se queda corto para cifras a gran escala-. minmax()
+     reserva sitio de sobra para "50 minutos"/"80 €" en cualquier idioma
+     de longitud similar, y el gap evita que se toquen aunque el contenido
+     crezca. */
+  grid-template-areas:"duration price toggle";
+  grid-template-columns:minmax(10rem,1fr) minmax(5.5rem,auto) auto;
   align-items:baseline;
-  gap:var(--sp-4);
+  column-gap:var(--sp-6);
   padding-block:var(--sp-4);
   cursor:pointer;
   list-style:none;
 }
 .step__summary::-webkit-details-marker{display:none;}
 .step__summary:focus-visible{outline:2px solid var(--pw-accent);outline-offset:3px;}
+.step__duration{
+  grid-area:duration;
+  display:flex;align-items:baseline;gap:.5rem;
+  min-width:0;
+}
 .step__num{
   font-size:clamp(2.25rem,6vw,3rem);
   line-height:.85;font-weight:500;letter-spacing:-.02em;
   color:var(--pw-primary);
-  min-width:2.2ch;
+  font-variant-numeric:tabular-nums;
 }
-.step__unit{font-size:var(--fs-small);color:var(--pw-ink-70);}
+.step__unit{font-size:var(--fs-small);color:var(--pw-ink-70);white-space:nowrap;}
 .step__price{
+  grid-area:price;
   font-size:clamp(1.5rem,3.5vw,2rem);
   line-height:1;font-weight:500;
   color:var(--pw-ink);
   white-space:nowrap;
+  font-variant-numeric:tabular-nums;
+  justify-self:start;
 }
 /* Botón "Bonos": mismo lenguaje de +/− que el acordeón de preguntas
    frecuentes, a escala reducida. */
 .step__toggle{
+  grid-area:toggle;
   display:inline-flex;align-items:center;gap:.4rem;
   font-size:var(--fs-label);letter-spacing:.1em;text-transform:uppercase;
   font-weight:600;color:var(--pw-primary);
+  white-space:nowrap;
+  justify-self:end;
   transition:color var(--dur-fast) var(--ease-out);
+}
+/* Móvil: la fila "Duración | Precio | Control" ya no cabe en tres columnas
+   cómodas, así que se redistribuye en dos filas manteniendo el mismo orden
+   de lectura (duración arriba; precio y control abajo, alineados a los
+   extremos). Sin position:absolute y con el mismo gap en todas las filas. */
+@media (max-width:639px){
+  .step__summary{
+    grid-template-areas:
+      "duration duration"
+      "price toggle";
+    grid-template-columns:1fr auto;
+    row-gap:var(--sp-2);
+    column-gap:var(--sp-4);
+  }
+  .step__price{justify-self:start;}
 }
 .step__toggle::after{
   content:"";flex:none;
@@ -1502,14 +1666,22 @@ a:focus-visible,button:focus-visible,input:focus-visible{
 
 /* ----- Condiciones en acordeón (clínica y domicilio) -----
    Mismo lenguaje +/− que .faq__q, a escala reducida, para no competir con
-   los precios que van encima. */
+   los precios que van encima. Dos patrones conviven a propósito: en clínica
+   (Fase 5) cada condición sigue siendo un <details>/<summary> nativo, sin
+   tocar; en domicilio (Fase 6) es <button aria-expanded aria-controls>
+   real, así que .cond__q reutiliza estos mismos estilos sobre ambas
+   etiquetas y las reglas de icono cubren [open] (details) y
+   [aria-expanded="true"] (button). */
 .conditions{display:grid;}
 .cond__item{border-bottom:1px solid var(--pw-line);}
 .cond__item:first-child{border-top:1px solid var(--pw-line);}
+.cond__item-heading{margin:0;font:inherit;}
 .cond__q{
   display:flex;align-items:flex-start;justify-content:space-between;gap:var(--sp-6);
+  width:100%;
   padding-block:var(--sp-4);
-  font-size:var(--fs-small);font-weight:600;letter-spacing:.01em;
+  background:none;border:none;margin:0;
+  font-size:var(--fs-small);font-weight:600;letter-spacing:.01em;text-align:left;
   color:var(--pw-ink);
   cursor:pointer;list-style:none;
   transition:color var(--dur-fast) var(--ease-out);
@@ -1524,7 +1696,8 @@ a:focus-visible,button:focus-visible,input:focus-visible{
     linear-gradient(var(--pw-primary),var(--pw-primary)) center/1px 100% no-repeat;
   transition:transform var(--dur-fast) var(--ease-out);
 }
-.cond__item[open] .cond__q::after{transform:rotate(90deg);background-size:100% 1px,0 0;}
+.cond__item[open] .cond__q::after,
+.cond__q[aria-expanded="true"]::after{transform:rotate(90deg);background-size:100% 1px,0 0;}
 .cond__q:focus-visible{outline:2px solid var(--pw-accent);outline-offset:3px;}
 .cond__a{padding-bottom:var(--sp-5);color:var(--pw-ink-70);font-size:var(--fs-small);max-width:60ch;}
 .cond__a p + p{margin-top:var(--sp-3);}
@@ -1537,7 +1710,8 @@ a:focus-visible,button:focus-visible,input:focus-visible{
 .help__actions{display:flex;flex-wrap:wrap;gap:var(--sp-4);margin-top:var(--sp-8);}
 
 /* ----- Preguntas frecuentes -----
-   <details>/<summary> nativos: accesibles y funcionales sin JavaScript. */
+   Acordeón con <button aria-expanded>: reset de estilos nativos de botón
+   para heredar la misma composición visual que antes tenía <summary>. */
 .faq{padding-block:var(--sp-24);background:var(--pw-mist);}
 .faq__inner{display:grid;gap:var(--sp-10);}
 @media (min-width:960px){
@@ -1546,16 +1720,18 @@ a:focus-visible,button:focus-visible,input:focus-visible{
 .faq__list{display:grid;}
 .faq__item{border-bottom:1px solid var(--pw-line);}
 .faq__item:first-child{border-top:1px solid var(--pw-line);}
+.faq__item-heading{margin:0;font:inherit;}
 
 .faq__q{
   display:flex;align-items:flex-start;justify-content:space-between;gap:var(--sp-6);
+  width:100%;
   padding-block:var(--sp-5);
-  font-weight:500;
+  background:none;border:none;margin:0;
+  font:inherit;font-weight:500;text-align:left;
+  color:var(--pw-ink);
   cursor:pointer;
-  list-style:none;
   transition:color var(--dur-fast) var(--ease-out);
 }
-.faq__q::-webkit-details-marker{display:none;}
 .faq__q:hover{color:var(--pw-primary);}
 .faq__q::after{
   content:"";flex:none;
@@ -1565,9 +1741,247 @@ a:focus-visible,button:focus-visible,input:focus-visible{
     linear-gradient(var(--pw-primary),var(--pw-primary)) center/1px 100% no-repeat;
   transition:transform var(--dur-fast) var(--ease-out);
 }
-.faq__item[open] .faq__q::after{transform:rotate(90deg);background-size:100% 1px,0 0;}
+.faq__q[aria-expanded="true"]::after{transform:rotate(90deg);background-size:100% 1px,0 0;}
 .faq__q:focus-visible{outline:2px solid var(--pw-accent);outline-offset:3px;}
 .faq__a{padding-bottom:var(--sp-6);color:var(--pw-ink-70);max-width:62ch;}
 
 /* ----- CTA final: el eyebrow necesita centrarse en esta página ----- */
 .page-tarifas .cta-final__inner .eyebrow{justify-content:center;}
+.page-tarifas .cta-final{
+  padding-bottom:var(--sp-16);
+  background:
+    radial-gradient(120% 100% at 50% 0%, rgba(38,152,136,.28) 0%, rgba(38,152,136,0) 60%),
+    var(--pw-primary-900);
+}
+/* La franja final ya cierra en verde oscuro igual que el footer: se acorta el
+   colchón combinado (cta-final + footer) para que la transición no se lea
+   como una gran banda vacía sin contenido. */
+.page-tarifas .site-footer{padding-top:var(--sp-10);}
+
+/* ==========================================================================
+   FASE 6 — Rediseño editorial de Tarifas
+   Hero inmersivo, puertas de área a mayor escala, ruptura oscura en
+   "a domicilio" y bloque de ayuda con imagen. Sigue el mismo criterio de
+   scoping que el resto del archivo: todo lo que toca .page-hero, .help,
+   .rates--home o .btn va prefijado con .page-tarifas.
+   ========================================================================== */
+
+/* ----- Hero inmersivo -----
+   FASE 7B: min-height sube de 74vh a 82vh y el scrim superior se aclara
+   ligeramente (antes ocultaba parte de la foto reutilizada de la Home; con
+   una foto exclusiva de Tarifas conviene que se lea mejor). El texto sigue
+   protegido por text-shadow + el degradado lateral de .page-hero__media::after. */
+.page-tarifas .page-hero--media{
+  min-height:82vh;
+  display:flex;align-items:flex-end;
+  overflow:hidden;
+  background:var(--pw-primary-900);
+}
+@media (max-width:639px){
+  /* En móvil evitamos un hero excesivamente alto: cabe el titular, el
+     contexto y el CTA sin pantalla vacía. */
+  .page-tarifas .page-hero--media{min-height:0;padding-top:6.5rem;}
+}
+.page-tarifas .page-hero__media{
+  position:absolute;inset:0;
+}
+.page-tarifas .page-hero__media img{
+  width:100%;height:100%;
+  object-fit:cover;object-position:center 30%;
+  filter:saturate(1.05) contrast(1.02);
+  transform:scale(1.04);
+  transition:transform .6s var(--ease-out);
+}
+.page-tarifas .page-hero__media::after{
+  content:"";position:absolute;inset:0;z-index:1;
+  background:
+    linear-gradient(180deg, rgba(18,32,29,.4) 0%, rgba(18,32,29,.24) 40%, rgba(18,32,29,.86) 100%),
+    linear-gradient(90deg, rgba(18,60,55,.4) 0%, rgba(18,60,55,0) 55%);
+}
+/* Red de seguridad de legibilidad: el título y el texto se apoyan en el
+   scrim de arriba, pero una sombra sutil evita que una zona clara de la
+   foto (p. ej. la pared del fondo) comprometa el contraste del texto
+   blanco, sin necesidad de oscurecer más la fotografía en sí. */
+.page-tarifas .page-hero--media .page-hero__title,
+.page-tarifas .page-hero--media .page-hero__text p{
+  text-shadow:0 2px 10px rgba(10,20,18,.45);
+}
+.page-tarifas .page-hero--media .page-hero__inner{
+  position:relative;z-index:1;
+  padding-block:clamp(9rem,20vh,12rem) clamp(4.5rem,9vh,6rem);
+  width:100%;
+}
+@media (max-width:639px){
+  /* FASE 4: en el hero compacto de móvil (min-height:0, ver arriba) este
+     padding-block heredado del hero de escritorio (hasta 20vh arriba) se
+     suma al padding-top del contenedor y empuja el CTA secundario hasta
+     quedar tapado por el book-bar fijo inferior. Se sustituye por
+     valores fijos y moderados propios de este layout. */
+  .page-tarifas .page-hero--media .page-hero__inner{
+    padding-block:0 2.5rem;
+  }
+}
+
+/* Indicación de scroll discreta. Puramente decorativa: no añade destino
+   nuevo (ya replica el CTA secundario "Necesito ayuda para elegir"), así
+   que queda fuera del foco de teclado y oculta a lectores de pantalla. */
+.page-tarifas .page-hero__scroll-cue{
+  position:absolute;left:50%;bottom:var(--sp-8);
+  transform:translateX(-50%);
+  width:1px;height:var(--sp-12);
+  display:none;
+}
+.page-tarifas .page-hero__scroll-cue span{
+  display:block;width:100%;height:100%;
+  background:linear-gradient(180deg, rgba(255,255,255,.7), rgba(255,255,255,0));
+  animation:pw-scroll-cue 1.8s var(--ease-out) infinite;
+}
+@media (min-width:860px){ .page-tarifas .page-hero__scroll-cue{display:block;} }
+@keyframes pw-scroll-cue{
+  0%{transform:scaleY(0);transform-origin:top;opacity:0;}
+  40%{transform:scaleY(1);transform-origin:top;opacity:1;}
+  60%{transform:scaleY(1);transform-origin:bottom;opacity:1;}
+  100%{transform:scaleY(0);transform-origin:bottom;opacity:0;}
+}
+@media (prefers-reduced-motion:reduce){
+  .page-tarifas .page-hero__media img{transition:none;transform:none;}
+  .page-tarifas .page-hero__scroll-cue span{animation:none;opacity:.5;}
+}
+
+/* ----- "Estás viendo: <área>" -----
+   Conecta visualmente el área elegida en #areas (Fase 4) con el contexto
+   de esta tarifa: chip con icono + texto, coherente con la insignia
+   "Seleccionada" de .area-tile__badge. main.js lo sincroniza tanto al
+   cargar (con el área ya marcada en el HTML) como en cada clic; si no hay
+   JS, el <span> queda vacío y el icono no ocupa espacio de más. */
+.page-tarifas .rates__selected{
+  display:inline-flex;align-items:center;gap:.45rem;
+  margin-top:var(--sp-5);
+  padding:.4rem .8rem;
+  border-radius:999px;
+  background:var(--pw-mist);
+  font-size:var(--fs-label);letter-spacing:.06em;text-transform:uppercase;
+  font-weight:600;color:var(--pw-primary);
+}
+.page-tarifas .rates__selected svg{flex:none;}
+.page-tarifas .rates--home .rates__selected{background:rgba(255,255,255,.1);color:#8fd9c9;}
+.page-tarifas .rates__selected-text:empty{display:none;}
+.page-tarifas .rates__selected:has(.rates__selected-text:empty){display:none;}
+
+/* ----- Zona sticky en las dos secciones de tarifas -----
+   El bloque de contexto (eyebrow, título, precio de entrada más próximo)
+   se queda anclado mientras se recorren bonos y condiciones al lado. */
+@media (min-width:960px){
+  .page-tarifas .rates__head{position:sticky;top:6rem;align-self:start;}
+}
+
+/* ----- "A domicilio": ruptura oscura -----
+   Antes compartía el mismo --pw-mist que "En la clínica" con apenas
+   contraste; ahora es un cambio de fondo real que marca el paso de
+   sesiones presenciales a desplazamiento, con un motivo lineal propio
+   (ver comentario en tarifas.html). FASE 7 añade además una fotografía
+   con licencia verificada (ver ASSET_SOURCES.md); el motivo lineal se
+   mantiene como capa decorativa detrás del texto. */
+.page-tarifas .rates--home{
+  position:relative;
+  overflow:hidden;
+  background:var(--pw-primary-900);
+  color:var(--pw-white);
+}
+.page-tarifas .rates--home__motif{
+  position:absolute;right:-4%;bottom:-6%;z-index:0;
+  width:min(46vw,26rem);height:auto;
+  color:rgba(143,217,201,.14);
+  pointer-events:none;
+}
+.page-tarifas .rates--home .rates__inner{position:relative;z-index:1;}
+.page-tarifas .rates--home .rates__lead,
+.page-tarifas .rates--home .rates__note{color:rgba(255,255,255,.72);}
+.page-tarifas .rates--home .split__panel{border-top-color:#8fd9c9;}
+.page-tarifas .rates--home .split__panel + .split__panel{border-top-color:var(--pw-accent);}
+.page-tarifas .rates--home .split__panel--offset{border-left-color:var(--pw-line-on-dark);}
+.page-tarifas .rates--home .split__title{color:var(--pw-white);}
+.page-tarifas .rates--home .split__num{color:#8fd9c9;}
+.page-tarifas .rates--home .split__unit{color:rgba(255,255,255,.65);}
+.page-tarifas .rates--home .split__price{color:var(--pw-white);}
+@media (max-width:1099px){
+  /* El motivo queda detrás del contenido en pantallas estrechas: se
+     atenúa aún más para no interferir con la lectura de los precios. */
+  .page-tarifas .rates--home__motif{opacity:.6;}
+}
+
+/* ----- Fotografía de "A domicilio" (FASE 7) -----
+   Puramente ambiental (aria-hidden, sin texto superpuesto), así que no
+   lleva velo de degradado ni grano: aquí no cumplirían ninguna función
+   visual. Solo reencuadre + la misma gradación cálida y unificadora que
+   el resto de fotografía de la página. */
+.page-tarifas .rates__portrait{
+  margin-top:var(--sp-8);
+  /* FASE 7C: foto propia del cliente (hombre con camilla de tratamiento) —
+     aspect-ratio ajustado a las dimensiones reales del archivo, igual que
+     el propio recorte de origen, para que se vea el hombre completo y la
+     camilla sin recortar nada por los lados. */
+  aspect-ratio:1122/1402;
+  overflow:hidden;
+  border-radius:2px;
+}
+.page-tarifas .rates__portrait img{
+  width:100%;height:100%;
+  object-fit:cover;object-position:center;
+  filter:saturate(1.05) contrast(1.04) brightness(.97);
+}
+@media (min-width:960px){
+  .page-tarifas .rates__portrait{margin-top:var(--sp-10);}
+}
+
+/* ----- Bloque de ayuda: dos columnas con imagen -----
+   FASE 6: banner de texto centrado → dos columnas con imagen.
+   FASE 7B: se retiró la fotografía (repetía local-lounge.jpg) por un
+   grafismo tipográfico sin foto.
+   FASE 7C: vuelve a llevar fotografía, esta vez propia del cliente (ver
+   ASSET_SOURCES.md), distinta de las cuatro tarjetas de #areas. */
+.page-tarifas .help{padding-block:0;background:var(--pw-white);}
+.page-tarifas .help__inner{
+  display:grid;gap:var(--sp-10);
+  padding-block:var(--sp-16);
+  max-width:var(--container);
+}
+@media (min-width:860px){
+  .page-tarifas .help__inner{
+    grid-template-columns:.9fr 1.1fr;
+    gap:var(--sp-16);
+    align-items:center;
+    padding-block:var(--sp-24);
+  }
+}
+.page-tarifas .help__media{
+  position:relative;
+  aspect-ratio:4/3;
+  overflow:hidden;
+  border-radius:var(--radius-tile,20px);
+}
+@media (min-width:860px){
+  .page-tarifas .help__media{aspect-ratio:3/4;}
+}
+.page-tarifas .help__media img{
+  width:100%;height:100%;
+  object-fit:cover;object-position:center 20%;
+  filter:saturate(1.05) contrast(1.04) brightness(.97);
+}
+@media (max-width:639px){
+  .page-tarifas .help__media img{object-position:center 15%;}
+}
+.page-tarifas .help__body{max-width:44ch;}
+.page-tarifas .help__eyebrow{margin-bottom:var(--sp-4);}
+.page-tarifas .help .help__title{font-size:var(--fs-h2);}
+.page-tarifas .help .help__text{margin-top:var(--sp-6);color:var(--pw-ink-70);font-size:var(--fs-lead);}
+.page-tarifas .help .help__actions{display:flex;flex-wrap:wrap;gap:var(--sp-4);margin-top:var(--sp-8);}
+/* Enlace terciario: mismo destino que antes ("Ver todos los servicios"),
+   pero ya no compite en peso con el CTA de reserva ni con WhatsApp. */
+.page-tarifas .help__link{
+  display:inline-block;margin-top:var(--sp-5);
+  font-size:var(--fs-small);font-weight:600;
+  color:var(--pw-primary);
+  text-decoration:underline;text-underline-offset:.2em;
+}
+.page-tarifas .help__link:hover{color:var(--pw-accent);}

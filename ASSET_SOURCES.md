@@ -1,60 +1,129 @@
 # Procedencia de imágenes
 
-Registro de las imágenes usadas en `/es/tarifas/` (sección `#areas`, FASE 4).
-Sigue el mismo criterio que pide el resto del repositorio: nada se usa sin
-poder explicar de dónde sale.
+Registro de las imágenes usadas en `/es/tarifas/`. Sigue el mismo criterio que
+pide el resto del repositorio: nada se usa sin poder explicar de dónde sale.
 
-## Tarjetas de área (`#areas`)
+## Tarjetas de área (`#areas`, FASE 4 · optimizado en FASE 7 · stock en FASE 7B · fotografía propia en FASE 7C)
 
-Las cuatro tarjetas reutilizan fotografía **propia** de la clínica, ya
-presente en el repositorio desde antes de esta página. No se ha descargado,
-buscado ni incorporado ninguna imagen nueva: no hacía falta, porque el
-material existente ya encajaba con cada área.
+Hasta la FASE 7 las cuatro tarjetas reutilizaban fotografía de instalaciones
+(propia del centro). La FASE 7B las sustituyó por cuatro fotos de stock con
+licencia verificada (Pexels/Unsplash), una escena humana por área.
 
-| Área          | Archivo                                    | Autor / origen                          | Licencia                        | Modificación aplicada |
-| ------------- | ------------------------------------------- | ---------------------------------------- | -------------------------------- | ---------------------- |
-| Physiotherapy | `src/assets/img/hero-clinic.webp`           | Physio Wellness by Marshall (fotografía propia del centro, ya usada como hero de `index.html`) | Propiedad de Physio Wellness; sin restricción de uso interno | Ninguna al archivo. Tratamiento visual aplicado en CSS (ver abajo). |
-| Wellness      | `src/assets/img/local/local-lounge.jpg`     | Physio Wellness by Marshall (zona de espera del centro, ya usada en la galería de `index.html`) | Propiedad de Physio Wellness | CSS únicamente |
-| Strength      | `src/assets/img/local/local-gym.jpg`        | Physio Wellness by Marshall (sala de entrenamiento de fuerza, ya usada en `index.html`) | Propiedad de Physio Wellness | CSS únicamente |
-| Pilates       | `src/assets/img/local/local-pilates.jpg`    | Physio Wellness by Marshall (sala de pilates con reformer, ya usada en `index.html`) | Propiedad de Physio Wellness | CSS únicamente |
+La FASE 7C **descarta esas cuatro fotos de stock** y las sustituye por
+fotografía **aportada directamente por el cliente** (Marshall), adjuntada en
+la conversación de esta fase — no son fotos propias del centro tomadas en
+sus instalaciones (no hay indicios de que sea la clínica real de Physio
+Wellness ni su equipo), sino fotografía de referencia que el propio cliente
+ha elegido para cada disciplina. No procede de ningún banco de stock, así
+que no hay URL de licencia que documentar: el cliente es quien decide y
+aporta el archivo.
 
-Como son fotografías propias del negocio, no aplica ninguna licencia de
-terceros ni atribución: Physio Wellness ya es titular del material.
+| Área         | Archivo servido | Origen | Descripción de la escena |
+| ------------ | ---------------- | ------ | -------------------------- |
+| Fisioterapia | `src/assets/img/stock/area-physio-720.webp` / `-1440.webp` | Aportada por el cliente (FASE 7C) | Fisioterapeuta explorando/tratando el hombro-brazo de un paciente mayor sentado, en sala de tratamiento. |
+| Bienestar    | `src/assets/img/stock/area-wellness-720.webp` / `-1440.webp` | Aportada por el cliente (FASE 7C) | Mujer recibiendo terapia de luz roja (panel LED), sentada en un banco. |
+| Fuerza       | `src/assets/img/stock/area-strength-720.webp` / `-1440.webp` | Aportada por el cliente (FASE 7C) | Mujer haciendo un ejercicio de fuerza con kettlebell, apoyando el pie sobre un cajón. |
+| Pilates      | `src/assets/img/stock/area-pilates-720.webp` / `-1440.webp` | Aportada por el cliente (FASE 7C) | Sesión de reformer: un usuario tumbado en la máquina, guiado por la instructora de pie. |
 
-### Tratamiento visual (CSS, no destructivo)
+Fecha de incorporación: 2026-08-21. Los nombres de archivo (`area-physio`,
+`area-wellness`, `area-strength`, `area-pilates`) se mantienen de la FASE 7B
+por continuidad interna del repositorio; ya no describen fotos de stock,
+solo identifican a qué tarjeta pertenece cada archivo.
 
-No se ha usado ninguna herramienta de edición de imagen (no se ha añadido
-ninguna dependencia para eso, según se pidió). El "look" propio de la
-colección se logra en `src/css/styles.css`, sección 27, sobre el `<img>`
-original, sin generar copias nuevas del archivo:
+### Transformaciones aplicadas (las cuatro)
 
-- `filter: saturate() contrast() brightness()` — ligera unificación de color
-  y contraste entre las cuatro fotos, tomadas en momentos distintos.
-- Superposición mediante `linear-gradient` (oscurecimiento inferior en
-  `--pw-primary-900` con transparencia) para que el título y el texto de la
-  tarjeta mantengan contraste AA sobre cualquier foto.
-- Grano sutil vía un `::after` con una textura `feTurbulence` en SVG inline
-  (`data:image/svg+xml`), en `mix-blend-mode:overlay` y opacidad muy baja.
-  No es un archivo nuevo: es una textura generada por CSS, sin petición de
-  red ni hotlink.
-- Reencuadre mediante `object-fit:cover` + `object-position`, sin recortar el
-  archivo original.
+Ninguna gradación de color: son fotos ya coherentes entre sí (misma sesión,
+misma paleta cálida/terracota), aportadas para usarse **tal cual**, sin
+inventar ni "arreglar" nada por encima. Único proceso Pillow aplicado:
 
-Esta vía se eligió en vez de editar los `.jpg`/`.webp` directamente porque el
-proyecto no tiene ninguna herramienta de edición de imagen instalada y no se
-quería añadir una dependencia solo para esto. El resultado es reversible y
-no genera assets duplicados.
+1. **Redimensionado** a los dos anchos responsivos del sitio (720w y, dado
+   que el archivo original mide 1448×1086, el ancho grande se limita a
+   1440w reales en vez de forzar un upscale) — exportado a WebP calidad 82,
+   `method=6`.
+2. **Encuadre** (`object-position` en `styles.css`): como el contenedor de
+   cada tarjeta es más estrecho que la foto (recorta los laterales, no
+   arriba/abajo), cada imagen tiene su propio valor horizontal de
+   `object-position` para que se vea el sujeto principal, en vez de un
+   recorte centrado igual para las cuatro. Ver `.area-tile[data-area="…"]
+   .area-tile__media img` en `styles.css`.
 
-## "A domicilio"
+El tratamiento visual en CSS que ya describía este archivo (scrim en
+`linear-gradient`, grano `feTurbulence` en `::after`, `object-fit:cover`)
+sigue aplicado sin cambios sobre las cuatro imágenes nuevas.
 
-No lleva imagen. El brief permitía **como máximo** una foto para esta
-sección, no la exigía. No existe en el repositorio ninguna fotografía propia
-que represente "ir a casa del paciente", y no se ha buscado ni descargado
-material de stock para no arriesgar una licencia no verificable en esta
-sesión de trabajo. La sección se resuelve de forma gráfica (paneles de
-color y tipografía a gran escala), coherente con el resto de la página.
+### Imágenes de fases anteriores
 
-**Pendiente:** si se quiere una fotografía dedicada para "A domicilio", debe
-aportarla el cliente (fotografía propia) o encargarse expresamente una
-búsqueda de banco de imágenes con licencia verificable, y documentarse aquí
-con archivo, autor, URL original, licencia y modificaciones antes de usarse.
+Las fotos de stock de la FASE 7B (Karolina Grabowska/Pexels 4506071, Yan
+Krukau/Pexels 5793895, Vitaly Gariev/Unsplash Qh0JrqT9hqU, Flexity/Pexels
+31509827) han quedado sustituidas por los archivos de esta tabla — mismos
+nombres de archivo, contenido nuevo, así que no queda ningún fichero
+huérfano que borrar de esa fase.
+
+`src/assets/img/hero-clinic.webp`, `src/assets/img/local/local-lounge-*.webp`,
+`local-gym-*.webp` y `local-pilates-*.webp` (fotografía propia del centro,
+anterior a la FASE 7) **no se han borrado**: siguen usándose en `index.html`
+(hero y galería) y no se toca ninguna otra página en esta fase.
+
+## Hero de página (`#hero`, FASE 7B — nueva)
+
+Hasta la FASE 7B el hero de Tarifas reutilizaba `hero-clinic.webp`, la misma
+foto que la Home y que la antigua tarjeta "Physiotherapy". La FASE 7B pide
+una imagen **exclusiva** de esta página, así que se ha buscado y verificado
+una nueva.
+
+| Campo | Detalle |
+| ----- | ------- |
+| Archivo servido | `src/assets/img/stock/hero-tarifas-1600.webp` (1600×1066) y `-2400.webp` (2400×1600) |
+| Plataforma | Pexels |
+| Autor | Yan Krukau (usuario `yankrukov`) |
+| URL de la foto | `https://www.pexels.com/photo/5793700/` (título: "Woman in White Long Sleeve Shirt Stretching Woman's Arm" — sesión de valoración/movilidad guiada de hombro y brazo) |
+| Licencia | Pexels License, libre uso comercial, sin atribución obligatoria |
+| Fecha de verificación y descarga | 2026-08-21 |
+| Motivo de la elección | Valoración/tratamiento guiado con luz natural cálida, coherente con "Todo claro antes de reservar" y con el resto de fotos nuevas de esta fase; no coincide con ninguna otra imagen de la página. |
+| Transformaciones aplicadas | Misma gradación de color que el resto de FASE 7B (ver arriba). Exportado a 1600w/2400w (más ancho que las tarjetas de área por ser banner a sangre completa) a WebP calidad 82. |
+| Integración en la página | `.page-hero__media img`, con `srcset`/`sizes`, `width`/`height` reservados y `loading="eager"` + `fetchpriority="high"` (LCP del hero). Se retiran las cifras decorativas "60/50/30 min" (`.hero-nums`) que antes compartían composición con el titular: la duración real sigue viva en las tarjetas de `#areas` y en las tarifas, así que no se pierde ningún dato. El hueco que dejan permite que la foto ocupe más composición (`min-height` de 74vh a 82vh, scrim superior aclarado). |
+
+## "A domicilio" (`#a-domicilio`, FASE 7 · stock en FASE 7B · fotografía propia en FASE 7C)
+
+Hasta la FASE 6 esta sección no llevaba fotografía. La FASE 7 y la FASE 7B
+usaron fotos de stock con licencia verificada (persona mayor haciendo
+ejercicio asistido, y después una escena de recepción en la puerta).
+
+La FASE 7C **descarta esa foto de stock** y la sustituye por una fotografía
+aportada directamente por el cliente: un hombre llevando un maletín/camilla
+de tratamiento plegable a la puerta de una vivienda — la escena literal de
+"nos desplazamos hasta ti".
+
+| Campo | Detalle |
+| ----- | ------- |
+| Archivo servido | `src/assets/img/stock/domicilio-visita-720.webp` (720×900) y `-1122.webp` (1122×1402) |
+| Origen | Aportada por el cliente (FASE 7C), adjuntada en la conversación de esta fase |
+| Fecha de incorporación | 2026-08-21 |
+| Transformaciones aplicadas | Ninguna gradación de color ni recorte: se usa tal cual la aportó el cliente. Único proceso: redimensionado a 720w/1122w (el ancho grande se limita al ancho real del archivo, 1122 px, en vez de forzar un upscale a 1440) y exportación a WebP calidad 82, `method=6`. `aspect-ratio` de `.rates__portrait` en `styles.css` se ha actualizado a la proporción real del archivo (1122/1402), igual que la del propio archivo, así que la foto se muestra completa, sin recortar al hombre ni la camilla por ningún lado. |
+| Integración en la página | `#a-domicilio .rates__head`, `<figure class="rates__portrait" aria-hidden="true">` con `srcset`/`sizes`, `width`/`height` reservados y `loading="lazy"`. Puramente ambiental, sin degradado ni grano. |
+
+Los ficheros de la foto de stock de la FASE 7B (Pexels 6647028, RDNE Stock
+project) han quedado sustituidos por el archivo de esta tabla —mismo nombre
+base, contenido y proporción nuevos—, así que no queda ningún fichero
+huérfano que borrar de esa fase.
+
+## Bloque de ayuda (`#ayuda`, FASE 6 con foto → FASE 7B sin foto → FASE 7C con fotografía propia)
+
+La FASE 6 añadió una foto de stock (`local-lounge.jpg`, zona de espera) a
+este bloque, que la FASE 7B retiró por repetirse con la tarjeta de Wellness
+de esa misma fase, sustituyéndola por un grafismo tipográfico (el "?" del
+titular) sin fotografía.
+
+La FASE 7C vuelve a llevar fotografía: el cliente ha aportado una foto
+específica para sustituir ese grafismo (mujer sentada mirando el móvil),
+pensada para "¿No sabes qué sesión elegir?" — consultar desde el móvil antes
+de reservar. Al ser una foto nueva y propia, ya no coincide con ninguna otra
+imagen de la página.
+
+| Campo | Detalle |
+| ----- | ------- |
+| Archivo servido | `src/assets/img/stock/ayuda-decide-720.webp` (720×960) y `-1086.webp` (1086×1448) |
+| Origen | Aportada por el cliente (FASE 7C), adjuntada en la conversación de esta fase |
+| Fecha de incorporación | 2026-08-21 |
+| Transformaciones aplicadas | Ninguna gradación de color: se usa tal cual. Redimensionado a 720w/1086w (ancho grande limitado al ancho real del archivo) y exportación a WebP calidad 82, `method=6`. |
+| Integración en la página | `<figure class="help__media" aria-hidden="true">` con `srcset`/`sizes`, `width`/`height` reservados y `loading="lazy"`. `object-position` con sesgo hacia la parte superior de la foto (`center 20%` en escritorio, `center 15%` en móvil) para mantener visibles la cara y el móvil incluso cuando el contenedor recorta la imagen. |

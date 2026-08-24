@@ -14,6 +14,12 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Jost:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../css/styles.css">
+<!-- FASE 4: [data-reveal] (§7 de styles.css, compartido con Home) parte de
+     opacity:0 y depende de main.js para mostrarse. Si JavaScript está
+     desactivado del todo (no solo falla), nunca se añade la clase
+     .is-visible y el contenido —incluidos precios— quedaría invisible.
+     Este override solo aplica sin JS y solo en esta página. -->
+<noscript><style>[data-reveal]{opacity:1!important;transform:none!important;}</style></noscript>
 </head>
 <body class="page-tarifas">
 
@@ -178,8 +184,23 @@
        para no romper el responsive al editar.
        ========================================================================== -->
 
-  <!-- ============ Hero de página ============ -->
-  <section class="page-hero">
+  <!-- ============ Hero de página ============
+       FASE 6: imagen reutilizada de la Home (hero-clinic.webp) con scrim
+       oscuro en la paleta de marca.
+       FASE 7B: imagen exclusiva de Tarifas (ver ASSET_SOURCES.md) —
+       valoración/tratamiento guiado, ya no comparte foto con la Home ni con
+       la puerta "Fisioterapia". Se retiran las cifras de duración
+       (hero-nums): eran decorativas y quedaban descompensadas ahora que la
+       foto gana presencia; la duración real ya vive en las tarjetas de
+       #areas y en las tarifas. La entrada y la salida al hacer scroll
+       reutilizan el mismo lenguaje de movimiento que el hero de la Home
+       (heroExitTransition en main.js), en una función aparte para no tocar
+       el comportamiento de la Home. -->
+  <section class="page-hero page-hero--media" id="hero">
+    <div class="page-hero__media" aria-hidden="true">
+      <img src="../assets/img/stock/hero-tarifas-1600.webp" srcset="../assets/img/stock/hero-tarifas-1600.webp 1600w, ../assets/img/stock/hero-tarifas-2400.webp 2400w" sizes="100vw" alt="" loading="eager" fetchpriority="high" width="2400" height="1600">
+    </div>
+
     <div class="container page-hero__inner">
       <nav class="breadcrumb page-hero__breadcrumb" aria-label="Ruta de navegación" data-reveal>
         <ol>
@@ -196,7 +217,7 @@
           </div>
 
           <div class="page-hero__text" data-reveal style="--i:2">
-            <p>Consulta las opciones disponibles y elige tu sesión según sea tu primera visita o un seguimiento. Si no sabes cuál necesitas, te ayudamos a decidirlo.</p>
+            <p>Compara tipo de sesión, duración, precio y modalidad —en clínica o a domicilio— antes de reservar. Si no sabes cuál necesitas, te ayudamos a decidirlo.</p>
           </div>
 
           <div class="page-hero__actions" data-reveal style="--i:3">
@@ -204,16 +225,11 @@
             <a class="btn btn--outline" href="#ayuda">Necesito ayuda para elegir</a>
           </div>
         </div>
-
-        <!-- Las duraciones como recurso gráfico. Decorativo: la información
-             real vive en las secciones de tarifas, así que se oculta a los
-             lectores de pantalla para no duplicar la lectura. -->
-        <p class="hero-nums" aria-hidden="true" data-reveal style="--i:2">
-          <span class="hero-nums__n">60</span>
-          <span class="hero-nums__n">30</span>
-          <span class="hero-nums__n">50</span>
-        </p>
       </div>
+
+      <a class="page-hero__scroll-cue" href="#antes-de-elegir" aria-hidden="true" tabindex="-1">
+        <span></span>
+      </a>
     </div>
   </section>
 
@@ -225,15 +241,15 @@
       </div>
 
       <div class="pre-choice__grid">
-        <article class="choice-card" data-reveal>
+        <article class="choice-card choice-card--primary" data-reveal>
+          <p class="choice-card__step">01</p>
           <h3 class="choice-card__title">Primera visita</h3>
+          <p class="choice-card__duration"><span class="choice-card__num">60</span><span class="choice-card__unit">min</span></p>
           <p class="choice-card__text">Si es la primera vez que vienes a Physio Wellness, reserva una primera sesión de 60 minutos. Este tiempo nos permite conocer tu caso, realizar una valoración inicial y definir cómo continuar.</p>
-          <ul class="tag-list">
-            <li class="tag">60 minutos</li>
-          </ul>
         </article>
 
-        <article class="choice-card" data-reveal style="--i:1">
+        <article class="choice-card choice-card--secondary" data-reveal style="--i:1">
+          <p class="choice-card__step">02</p>
           <h3 class="choice-card__title">Seguimiento</h3>
           <p class="choice-card__text">Si ya has realizado una primera sesión, puedes reservar un seguimiento de 30 o 50 minutos. Si no sabes qué duración corresponde a tu caso, consúltanos antes de reservar.</p>
           <ul class="tag-list">
@@ -246,65 +262,101 @@
   </section>
 
   <!-- ============ Elige tu área ============
-       Cuatro tarjetas de acceso, no cuatro tarifas: Physiotherapy, Wellness,
-       Strength y Pilates comparten la misma tarifa en clínica (PRECIOS 2026),
-       así que las cuatro enlazan al mismo panel #en-la-clinica en vez de
-       repetir los precios cuatro veces. -->
+       Selector accesible, no cuatro tarifas: Fisioterapia, Bienestar,
+       Fuerza y Pilates comparten la misma tarifa en clínica (PRECIOS
+       2026). Cada panel es un botón (aria-pressed) que marca el área activa
+       y actualiza el panel de contexto lateral/apilado; el enlace
+       "Ver tarifas" de cada panel sigue siendo un <a> real, así que
+       funciona sin JavaScript (las cuatro áreas ya comparten el mismo
+       precio, visible más abajo en #en-la-clinica). -->
   <section class="area-select" id="areas">
     <div class="container">
       <div class="area-select__head" data-reveal>
         <h2 class="section-heading">Elige tu área</h2>
-        <p class="section-lead">Physiotherapy, Wellness, Strength y Pilates comparten la misma tarifa en clínica. Elige tu área para ver los precios.</p>
+        <p class="section-lead">Fisioterapia, Bienestar, Fuerza y Pilates comparten la misma tarifa en clínica. Elige tu área para ver los precios.</p>
       </div>
 
-      <div class="area-select__grid">
-        <a class="area-tile" href="#en-la-clinica" data-reveal style="--i:0">
-          <span class="area-tile__media">
-            <img src="../assets/img/hero-clinic.webp" alt="" loading="lazy">
-          </span>
-          <span class="area-tile__body">
-            <span class="area-tile__eyebrow">01</span>
-            <span class="area-tile__title">Physiotherapy</span>
-            <span class="area-tile__text">Recuperar, tratar y volver a funcionar mejor.</span>
-            <span class="area-tile__cta">Ver tarifas <svg width="14" height="10" viewBox="0 0 14 10" fill="none" aria-hidden="true"><path d="M1 5h12M8 1l4 4-4 4" stroke="currentColor" stroke-width="1.4"/></svg></span>
-          </span>
-        </a>
+      <div class="area-select__layout">
+        <div class="area-select__grid" role="group" aria-label="Elige tu área">
+          <div class="area-tile is-selected" data-area="Fisioterapia" data-desc="Recuperar, tratar y volver a funcionar mejor." data-reveal style="--i:0">
+            <span class="area-tile__media" aria-hidden="true">
+              <img src="../assets/img/stock/area-physio-1440.webp" srcset="../assets/img/stock/area-physio-720.webp 720w, ../assets/img/stock/area-physio-1440.webp 1440w" sizes="(min-width: 700px) 50vw, 100vw" alt="" loading="lazy" width="1440" height="960">
+            </span>
+            <span class="area-tile__body">
+              <button type="button" class="area-tile__select" aria-pressed="true" aria-controls="area-context">
+                <span class="area-tile__eyebrow">01</span>
+                <span class="area-tile__title">Fisioterapia</span>
+              </button>
+              <span class="area-tile__badge">
+                <svg width="12" height="10" viewBox="0 0 12 10" fill="none" aria-hidden="true"><path d="M1 5l3 3 7-7" stroke="currentColor" stroke-width="1.6"/></svg>
+                Seleccionada
+              </span>
+              <span class="area-tile__text">Recuperar, tratar y volver a funcionar mejor.</span>
+              <a class="area-tile__cta" href="#en-la-clinica">Ver tarifas <svg width="14" height="10" viewBox="0 0 14 10" fill="none" aria-hidden="true"><path d="M1 5h12M8 1l4 4-4 4" stroke="currentColor" stroke-width="1.4"/></svg></a>
+            </span>
+          </div>
 
-        <a class="area-tile" href="#en-la-clinica" data-reveal style="--i:1">
-          <span class="area-tile__media">
-            <img src="../assets/img/local/local-lounge.jpg" alt="" loading="lazy">
-          </span>
-          <span class="area-tile__body">
-            <span class="area-tile__eyebrow">02</span>
-            <span class="area-tile__title">Wellness</span>
-            <span class="area-tile__text">Cuidar, recuperar y optimizar el cuerpo.</span>
-            <span class="area-tile__cta">Ver tarifas <svg width="14" height="10" viewBox="0 0 14 10" fill="none" aria-hidden="true"><path d="M1 5h12M8 1l4 4-4 4" stroke="currentColor" stroke-width="1.4"/></svg></span>
-          </span>
-        </a>
+          <div class="area-tile" data-area="Bienestar" data-desc="Cuidar, recuperar y optimizar el cuerpo." data-reveal style="--i:1">
+            <span class="area-tile__media" aria-hidden="true">
+              <img src="../assets/img/stock/area-wellness-1440.webp" srcset="../assets/img/stock/area-wellness-720.webp 720w, ../assets/img/stock/area-wellness-1440.webp 1440w" sizes="(min-width: 700px) 50vw, 100vw" alt="" loading="lazy" width="1440" height="960">
+            </span>
+            <span class="area-tile__body">
+              <button type="button" class="area-tile__select" aria-pressed="false" aria-controls="area-context">
+                <span class="area-tile__eyebrow">02</span>
+                <span class="area-tile__title">Bienestar</span>
+              </button>
+              <span class="area-tile__badge">
+                <svg width="12" height="10" viewBox="0 0 12 10" fill="none" aria-hidden="true"><path d="M1 5l3 3 7-7" stroke="currentColor" stroke-width="1.6"/></svg>
+                Seleccionada
+              </span>
+              <span class="area-tile__text">Cuidar, recuperar y optimizar el cuerpo.</span>
+              <a class="area-tile__cta" href="#en-la-clinica">Ver tarifas <svg width="14" height="10" viewBox="0 0 14 10" fill="none" aria-hidden="true"><path d="M1 5h12M8 1l4 4-4 4" stroke="currentColor" stroke-width="1.4"/></svg></a>
+            </span>
+          </div>
 
-        <a class="area-tile" href="#en-la-clinica" data-reveal style="--i:2">
-          <span class="area-tile__media">
-            <img src="../assets/img/local/local-gym.jpg" alt="" loading="lazy">
-          </span>
-          <span class="area-tile__body">
-            <span class="area-tile__eyebrow">03</span>
-            <span class="area-tile__title">Strength</span>
-            <span class="area-tile__text">Desarrollar fuerza, capacidad física y rendimiento.</span>
-            <span class="area-tile__cta">Ver tarifas <svg width="14" height="10" viewBox="0 0 14 10" fill="none" aria-hidden="true"><path d="M1 5h12M8 1l4 4-4 4" stroke="currentColor" stroke-width="1.4"/></svg></span>
-          </span>
-        </a>
+          <div class="area-tile" data-area="Fuerza" data-desc="Desarrollar fuerza, capacidad física y rendimiento." data-reveal style="--i:2">
+            <span class="area-tile__media" aria-hidden="true">
+              <img src="../assets/img/stock/area-strength-1440.webp" srcset="../assets/img/stock/area-strength-720.webp 720w, ../assets/img/stock/area-strength-1440.webp 1440w" sizes="(min-width: 700px) 50vw, 100vw" alt="" loading="lazy" width="1440" height="810">
+            </span>
+            <span class="area-tile__body">
+              <button type="button" class="area-tile__select" aria-pressed="false" aria-controls="area-context">
+                <span class="area-tile__eyebrow">03</span>
+                <span class="area-tile__title">Fuerza</span>
+              </button>
+              <span class="area-tile__badge">
+                <svg width="12" height="10" viewBox="0 0 12 10" fill="none" aria-hidden="true"><path d="M1 5l3 3 7-7" stroke="currentColor" stroke-width="1.6"/></svg>
+                Seleccionada
+              </span>
+              <span class="area-tile__text">Desarrollar fuerza, capacidad física y rendimiento.</span>
+              <a class="area-tile__cta" href="#en-la-clinica">Ver tarifas <svg width="14" height="10" viewBox="0 0 14 10" fill="none" aria-hidden="true"><path d="M1 5h12M8 1l4 4-4 4" stroke="currentColor" stroke-width="1.4"/></svg></a>
+            </span>
+          </div>
 
-        <a class="area-tile" href="#en-la-clinica" data-reveal style="--i:3">
-          <span class="area-tile__media">
-            <img src="../assets/img/local/local-pilates.jpg" alt="" loading="lazy">
-          </span>
-          <span class="area-tile__body">
-            <span class="area-tile__eyebrow">04</span>
-            <span class="area-tile__title">Pilates</span>
-            <span class="area-tile__text">Mejorar control, movilidad, estabilidad y alineación.</span>
-            <span class="area-tile__cta">Ver tarifas <svg width="14" height="10" viewBox="0 0 14 10" fill="none" aria-hidden="true"><path d="M1 5h12M8 1l4 4-4 4" stroke="currentColor" stroke-width="1.4"/></svg></span>
-          </span>
-        </a>
+          <div class="area-tile" data-area="Pilates" data-desc="Mejorar control, movilidad, estabilidad y alineación." data-reveal style="--i:3">
+            <span class="area-tile__media" aria-hidden="true">
+              <img src="../assets/img/stock/area-pilates-1440.webp" srcset="../assets/img/stock/area-pilates-720.webp 720w, ../assets/img/stock/area-pilates-1440.webp 1440w" sizes="(min-width: 700px) 50vw, 100vw" alt="" loading="lazy" width="1440" height="756">
+            </span>
+            <span class="area-tile__body">
+              <button type="button" class="area-tile__select" aria-pressed="false" aria-controls="area-context">
+                <span class="area-tile__eyebrow">04</span>
+                <span class="area-tile__title">Pilates</span>
+              </button>
+              <span class="area-tile__badge">
+                <svg width="12" height="10" viewBox="0 0 12 10" fill="none" aria-hidden="true"><path d="M1 5l3 3 7-7" stroke="currentColor" stroke-width="1.6"/></svg>
+                Seleccionada
+              </span>
+              <span class="area-tile__text">Mejorar control, movilidad, estabilidad y alineación.</span>
+              <a class="area-tile__cta" href="#en-la-clinica">Ver tarifas <svg width="14" height="10" viewBox="0 0 14 10" fill="none" aria-hidden="true"><path d="M1 5h12M8 1l4 4-4 4" stroke="currentColor" stroke-width="1.4"/></svg></a>
+            </span>
+          </div>
+        </div>
+
+        <aside class="area-context" id="area-context" aria-live="polite" data-reveal style="--i:4">
+          <p class="area-context__eyebrow">Área seleccionada</p>
+          <h3 class="area-context__title">Fisioterapia</h3>
+          <p class="area-context__text">Recuperar, tratar y volver a funcionar mejor.</p>
+          <a class="btn btn--primary area-context__cta" href="#en-la-clinica">Ver tarifas de Fisioterapia</a>
+        </aside>
       </div>
     </div>
   </section>
@@ -318,7 +370,11 @@
       <div class="rates__head" data-reveal>
         <p class="eyebrow section-eyebrow">01 — En la clínica</p>
         <h2 class="section-heading">Sesiones presenciales</h2>
-        <p class="section-lead rates__lead">Misma tarifa para Physiotherapy, Wellness, Strength y Pilates.</p>
+        <p class="section-lead rates__lead">Misma tarifa para Fisioterapia, Bienestar, Fuerza y Pilates.</p>
+        <p class="rates__selected" id="area-selected-label">
+          <svg width="12" height="10" viewBox="0 0 12 10" fill="none" aria-hidden="true"><path d="M1 5l3 3 7-7" stroke="currentColor" stroke-width="1.6"/></svg>
+          <span class="rates__selected-text"></span>
+        </p>
       </div>
 
       <div class="rates__body">
@@ -344,8 +400,10 @@
             <li>
               <details class="step">
                 <summary class="step__summary">
-                  <span class="step__num">30</span>
-                  <span class="step__unit">minutos</span>
+                  <span class="step__duration">
+                    <span class="step__num">30</span>
+                    <span class="step__unit">minutos</span>
+                  </span>
                   <span class="step__price">50 €</span>
                   <span class="step__toggle">Bonos</span>
                 </summary>
@@ -361,8 +419,10 @@
             <li>
               <details class="step">
                 <summary class="step__summary">
-                  <span class="step__num">50</span>
-                  <span class="step__unit">minutos</span>
+                  <span class="step__duration">
+                    <span class="step__num">50</span>
+                    <span class="step__unit">minutos</span>
+                  </span>
                   <span class="step__price">80 €</span>
                   <span class="step__toggle">Bonos</span>
                 </summary>
@@ -384,7 +444,7 @@
           <details class="cond__item" name="cond-clinica">
             <summary class="cond__q">Bonos: condiciones</summary>
             <div class="cond__a">
-              <p>Los bonos son combinables entre Fisioterapia, Strength y Pilates, de modo que puedes adaptar cada sesión a lo que necesites en cada momento.</p>
+              <p>Los bonos son combinables entre Fisioterapia, Fuerza y Pilates, de modo que puedes adaptar cada sesión a lo que necesites en cada momento.</p>
               <p>Son válidos únicamente para sesiones en clínica, tienen una validez de 2 meses desde la fecha de compra y se abonan íntegramente en el momento de la compra. Son personales e intransferibles y no admiten devolución una vez iniciados (se entiende iniciado un bono al consumir la primera sesión).</p>
             </div>
           </details>
@@ -415,16 +475,39 @@
   </section>
 
   <!-- ============ 02 — A domicilio ============
-       Modalidad independiente: no es una quinta área junto a Physiotherapy,
-       Wellness, Strength y Pilates. Según PRECIOS 2026, el servicio a
-       domicilio cubre Physiotherapy, Wellness y Strength; no incluye Pilates. -->
+       Modalidad independiente: no es una quinta área junto a Fisioterapia,
+       Bienestar, Fuerza y Pilates. Según PRECIOS 2026, el servicio a
+       domicilio cubre Fisioterapia, Bienestar y Fuerza; no incluye Pilates.
+
+       Ruptura visual (FASE 6): fondo oscuro (antes mist) frente al panel
+       claro de "En la clínica".
+       FASE 7: primera foto con licencia verificable para esta sección
+       (persona mayor haciendo ejercicio asistido en un salón real).
+       FASE 7B: se sustituye por una foto distinta — recepción/llegada a la
+       puerta de casa — para que no coincida con ninguna otra imagen de la
+       página; documentado en ASSET_SOURCES.md. Se buscó también vídeo corto
+       en bucle de esta misma escena (llegada/recepción a domicilio) pero no
+       se encontró ningún candidato con licencia verificable que encajara;
+       se mantiene foto, tal y como prevé el criterio de esta fase para ese
+       caso. -->
   <section class="rates rates--home" id="a-domicilio">
+    <svg class="rates--home__motif" viewBox="0 0 200 200" fill="none" aria-hidden="true" focusable="false">
+      <path d="M20 110 L100 40 L180 110" stroke="currentColor" stroke-width="1.4"/>
+      <path d="M40 95 V170 H160 V95" stroke="currentColor" stroke-width="1.4"/>
+      <path d="M85 170 V125 H115 V170" stroke="currentColor" stroke-width="1.4"/>
+    </svg>
     <div class="container rates__inner">
       <div class="rates__head" data-reveal>
-        <p class="eyebrow section-eyebrow">02 — A domicilio</p>
+        <p class="eyebrow eyebrow--on-dark section-eyebrow">02 — A domicilio</p>
         <h2 class="section-heading">Nos desplazamos hasta ti</h2>
         <p class="section-lead rates__lead">También puedes realizar tu primera sesión o un seguimiento de fisioterapia a domicilio.</p>
-        <p class="rates__note">Disponible para Physiotherapy, Wellness y Strength. El servicio de Pilates no está disponible a domicilio.</p>
+        <p class="rates__note">Disponible para Fisioterapia, Bienestar y Fuerza. El servicio de Pilates no está disponible a domicilio.</p>
+        <!-- FASE 7B: foto con licencia verificable, documentada en
+             ASSET_SOURCES.md. Puramente ambiental (aria-hidden): no ilustra
+             un servicio ni sustituye al texto de precios. -->
+        <figure class="rates__portrait" data-reveal style="--i:1" aria-hidden="true">
+          <img src="../assets/img/stock/domicilio-visita-1122.webp" srcset="../assets/img/stock/domicilio-visita-720.webp 720w, ../assets/img/stock/domicilio-visita-1122.webp 1122w" sizes="(min-width: 960px) 38vw, 100vw" alt="" loading="lazy" width="1122" height="1402">
+        </figure>
       </div>
 
       <div class="rates__body">
@@ -478,54 +561,74 @@
           </li>
         </ul>
 
-        <!-- Resto de condiciones a domicilio, en acordeones. -->
+        <!-- Resto de condiciones a domicilio, en acordeón con botones reales
+             (mismo patrón accesible que #preguntas-frecuentes: aria-expanded
+             + aria-controls + panel role="region", en vez de <details>). -->
         <div class="conditions conditions--travel" data-reveal>
-          <details class="cond__item" name="cond-domicilio">
-            <summary class="cond__q">Zona de cobertura</summary>
-            <div class="cond__a">
+          <div class="cond__item">
+            <h3 class="cond__item-heading">
+              <button type="button" class="cond__q" aria-expanded="false" aria-controls="cond-domicilio-a-1" id="cond-domicilio-q-1">Zona de cobertura</button>
+            </h3>
+            <div class="cond__a" id="cond-domicilio-a-1" role="region" aria-labelledby="cond-domicilio-q-1" hidden>
               <p>Las visitas a domicilio incluyen el desplazamiento dentro de un radio de 10 km desde Avinguda Camí dels Capellans, 79 (local 3), Sitges. El importe total de la sesión, incluido el desplazamiento, se comunica y se acepta antes de confirmar la visita.</p>
             </div>
-          </details>
+          </div>
 
-          <details class="cond__item" name="cond-domicilio">
-            <summary class="cond__q">Suplementos</summary>
-            <div class="cond__a">
+          <div class="cond__item">
+            <h3 class="cond__item-heading">
+              <button type="button" class="cond__q" aria-expanded="false" aria-controls="cond-domicilio-a-2" id="cond-domicilio-q-2">Suplementos</button>
+            </h3>
+            <div class="cond__a" id="cond-domicilio-a-2" role="region" aria-labelledby="cond-domicilio-q-2" hidden>
               <p>Recargo nocturno, para sesiones que empiezan a partir de las 20 h: <strong>+20 €</strong>.</p>
               <p>Recargo de fin de semana y festivos: <strong>+20 €</strong>.</p>
               <p>Los recargos son acumulables entre sí y se suman al precio de la sesión.</p>
             </div>
-          </details>
+          </div>
 
-          <details class="cond__item" name="cond-domicilio">
-            <summary class="cond__q">Reservas, cancelaciones y pago</summary>
-            <div class="cond__a">
+          <div class="cond__item">
+            <h3 class="cond__item-heading">
+              <button type="button" class="cond__q" aria-expanded="false" aria-controls="cond-domicilio-a-3" id="cond-domicilio-q-3">Reservas, cancelaciones y pago</button>
+            </h3>
+            <div class="cond__a" id="cond-domicilio-a-3" role="region" aria-labelledby="cond-domicilio-q-3" hidden>
               <p>Misma antelación mínima de cancelación que en clínica: 24 h entre semana o 48 h en fin de semana y festivos.</p>
               <p>Las sesiones a domicilio se contratan de forma individual y se abonan antes de cada sesión, incluidos los suplementos que correspondan. Los bonos de la tarifa de clínica no son válidos a domicilio.</p>
             </div>
-          </details>
+          </div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- ============ Bloque de ayuda ============ -->
+  <!-- ============ Bloque de ayuda ============
+       Rediseño FASE 6: pausa humana entre precios y condiciones.
+       FASE 7C: fotografía propia del cliente (ver ASSET_SOURCES.md),
+       sustituye el grafismo "?" de la FASE 7B. -->
   <section class="help" id="ayuda">
-    <div class="container help__inner" data-reveal>
-      <h2 class="section-heading help__title">¿No sabes qué sesión elegir?</h2>
-      <p class="help__text">Explícanos si es tu primera visita o un seguimiento y te ayudaremos a identificar la opción que debes seleccionar antes de reservar.</p>
+    <div class="container help__inner">
+      <figure class="help__media" data-reveal aria-hidden="true">
+        <img src="../assets/img/stock/ayuda-decide-1086.webp" srcset="../assets/img/stock/ayuda-decide-720.webp 720w, ../assets/img/stock/ayuda-decide-1086.webp 1086w" sizes="(min-width: 700px) 40vw, 100vw" alt="" loading="lazy" width="1086" height="1448">
+      </figure>
+      <div class="help__body" data-reveal style="--i:1">
+        <p class="eyebrow help__eyebrow">Una pausa antes de reservar</p>
+        <h2 class="section-heading help__title">¿No sabes qué sesión elegir?</h2>
+        <p class="help__text">Cuéntanos si es tu primera visita o un seguimiento: te ayudamos a identificar la sesión que debes reservar en DocFav. Si lo prefieres resolver antes por escrito, escríbenos por WhatsApp.</p>
 
-      <div class="help__actions">
-        <a class="btn btn--primary" href="https://wa.me/34644678344" target="_blank" rel="noopener">Consultar por WhatsApp</a>
-        <a class="btn btn--outline" href="servicios.html" data-route="servicios">Ver todos los servicios</a>
+        <div class="help__actions">
+          <a class="btn btn--primary" href="https://www.docfav.com/portal/physio-wellness-by-marshall" target="_blank" rel="noopener">Reservar cita</a>
+          <a class="btn btn--outline" href="https://wa.me/34644678344" target="_blank" rel="noopener">Consultar por WhatsApp</a>
+        </div>
+        <a class="help__link" href="servicios.html" data-route="servicios">Ver todos los servicios</a>
       </div>
     </div>
   </section>
 
   <!-- ============ Preguntas frecuentes ============
-       Acordeón accesible con <details>/<summary> nativos: funciona con teclado
-       y lectores de pantalla sin JavaScript. No usa el sistema de disclosures
-       de la navegación, que se cierra al hacer clic fuera y no es adecuado
-       para contenido de lectura. -->
+       Acordeón con botones reales (no <details>/<summary>): cada pregunta es
+       un <button aria-expanded aria-controls>, la respuesta es un panel con
+       role="region" aria-labelledby enlazado al botón. El estado inicial
+       (cerrado, con aria-expanded="false" y el panel oculto vía [hidden]) es
+       el mismo sin JavaScript; main.js añade el toggle y no depende de
+       :target ni de scripts de terceros. -->
   <section class="faq" id="preguntas-frecuentes">
     <div class="container faq__inner">
       <div class="faq__head" data-reveal>
@@ -533,33 +636,41 @@
       </div>
 
       <div class="faq__list" data-reveal style="--i:1">
-        <details class="faq__item" name="faq">
-          <summary class="faq__q">¿Qué debo reservar si es mi primera visita?</summary>
-          <div class="faq__a">
+        <div class="faq__item">
+          <h3 class="faq__item-heading">
+            <button type="button" class="faq__q" aria-expanded="false" aria-controls="faq-a-1" id="faq-q-1">¿Qué debo reservar si es mi primera visita?</button>
+          </h3>
+          <div class="faq__a" id="faq-a-1" role="region" aria-labelledby="faq-q-1" hidden>
             <p>Si es la primera vez que vienes a Physio Wellness, reserva una primera sesión de 60 minutos. Este tiempo nos permite conocer tu caso, realizar una valoración inicial y definir cómo continuar.</p>
           </div>
-        </details>
+        </div>
 
-        <details class="faq__item" name="faq">
-          <summary class="faq__q">¿Cómo sé si necesito un seguimiento de 30 o de 50 minutos?</summary>
-          <div class="faq__a">
+        <div class="faq__item">
+          <h3 class="faq__item-heading">
+            <button type="button" class="faq__q" aria-expanded="false" aria-controls="faq-a-2" id="faq-q-2">¿Cómo sé si necesito un seguimiento de 30 o de 50 minutos?</button>
+          </h3>
+          <div class="faq__a" id="faq-a-2" role="region" aria-labelledby="faq-q-2" hidden>
             <p>Si ya has realizado una primera sesión, puedes reservar un seguimiento de 30 o 50 minutos. Si no sabes qué duración corresponde a tu caso, consúltanos antes de reservar.</p>
           </div>
-        </details>
+        </div>
 
-        <details class="faq__item" name="faq">
-          <summary class="faq__q">¿Cómo se calcula el desplazamiento a domicilio?</summary>
-          <div class="faq__a">
+        <div class="faq__item">
+          <h3 class="faq__item-heading">
+            <button type="button" class="faq__q" aria-expanded="false" aria-controls="faq-a-3" id="faq-q-3">¿Cómo se calcula el desplazamiento a domicilio?</button>
+          </h3>
+          <div class="faq__a" id="faq-a-3" role="region" aria-labelledby="faq-q-3" hidden>
             <p>El desplazamiento en Sitges y hasta 10 km está incluido. A partir de esta distancia se añade un suplemento de 10 € por cada tramo adicional de 10 km de ida, calculado según Google Maps.</p>
           </div>
-        </details>
+        </div>
 
-        <details class="faq__item" name="faq">
-          <summary class="faq__q">¿Dónde se completa la reserva?</summary>
-          <div class="faq__a">
+        <div class="faq__item">
+          <h3 class="faq__item-heading">
+            <button type="button" class="faq__q" aria-expanded="false" aria-controls="faq-a-4" id="faq-q-4">¿Dónde se completa la reserva?</button>
+          </h3>
+          <div class="faq__a" id="faq-a-4" role="region" aria-labelledby="faq-q-4" hidden>
             <p>La reserva se completa en DocFav, donde puedes consultar las opciones disponibles y elegir la sesión. Si necesitas ayuda para decidir cuál corresponde a tu caso, escríbenos por WhatsApp antes de reservar.</p>
           </div>
-        </details>
+        </div>
       </div>
     </div>
   </section>

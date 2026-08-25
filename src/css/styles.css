@@ -1998,3 +1998,98 @@ a:focus-visible,button:focus-visible,input:focus-visible{
   text-decoration:underline;text-underline-offset:.2em;
 }
 .page-tarifas .help__link:hover{color:var(--pw-accent);}
+
+/* ==========================================================================
+   Página de área de servicio (Fisioterapia y futuras: Wellness/Fuerza/Pilates)
+   Componentes nuevos para src/pages/servicios/*.html. Reutilizan tokens,
+   .container, .eyebrow, .section-eyebrow/-heading/-lead y .first-visit__steps
+   ya existentes; solo se define aquí lo que no tenía equivalente reutilizable.
+   ========================================================================== */
+
+/* Corrección AA: mismo criterio ya aplicado en .page-home y .page-servicios
+   para los números de .first-visit__step (--pw-accent no llega a AA). */
+.page-physio .first-visit__step::before{color:var(--pw-primary);}
+
+/* ----- "Cuándo empezar por aquí": texto + fotografía de referencia -----
+   Bloque asimétrico a dos columnas, no una tarjeta ni un hero: en móvil la
+   imagen va primero como apoyo visual, luego el texto. */
+.service-context{padding-block:var(--sp-24);background:var(--pw-white);}
+.service-context__grid{display:grid;gap:var(--sp-12);}
+.service-context__text .area-block__text{max-width:56ch;}
+.service-photo{
+  order:-1;
+  margin:0;
+  aspect-ratio:4/3;
+  overflow:hidden;
+  border-radius:var(--radius-tile,20px);
+}
+.service-photo img{
+  width:100%;height:100%;
+  object-fit:cover;object-position:center 30%;
+  filter:saturate(1.05) contrast(1.04) brightness(.97);
+}
+@media (min-width:860px){
+  .service-context__grid{
+    grid-template-columns:1.1fr .9fr;
+    gap:var(--sp-20);
+    align-items:center;
+  }
+  .service-photo{order:0;aspect-ratio:3/4;}
+}
+
+/* ----- Subespecialidades: lista editorial, no cuadrícula de tarjetas -----
+   Líneas separadas por borde, numeración tipográfica en vez de iconos;
+   en pantallas grandes se reparten en dos columnas manteniendo el orden
+   de lectura por filas. */
+.specialty-list{padding-block:var(--sp-24);background:var(--pw-mist);border-block:1px solid var(--pw-line);}
+.specialty-list__head{max-width:60ch;}
+.specialty-list__items{
+  list-style:none;margin:var(--sp-12) 0 0;padding:0;
+  display:grid;
+}
+.specialty-item{
+  display:grid;
+  grid-template-columns:auto 1fr;
+  column-gap:var(--sp-8);
+  row-gap:var(--sp-2);
+  padding-block:var(--sp-6);
+  border-top:1px solid var(--pw-line);
+}
+.specialty-list__items li:last-child{border-bottom:1px solid var(--pw-line);}
+.specialty-item__num{
+  grid-row:1 / 3;
+  font-family:var(--font-base);
+  font-size:var(--fs-label);
+  color:var(--pw-primary);
+  padding-top:.2em;
+}
+.specialty-item__title{
+  grid-column:2;
+  font-size:1.05rem;
+  font-weight:600;
+  color:var(--pw-ink);
+}
+.specialty-item__desc{
+  grid-column:2;
+  color:var(--pw-ink-70);
+  max-width:52ch;
+}
+@media (min-width:860px){
+  .specialty-list__items{
+    grid-template-columns:1fr 1fr;
+    column-gap:var(--sp-16);
+  }
+  .specialty-item{padding-block:var(--sp-8);}
+}
+
+/* ----- Cómo es el proceso -----
+   Reutiliza .first-visit__steps fuera de .first-visit; solo hace falta el
+   encabezado propio de la sección. */
+.process{padding-block:var(--sp-24);background:var(--pw-white);}
+.process__head{max-width:60ch;margin-bottom:var(--sp-10);}
+.process .first-visit__steps{max-width:var(--container);}
+
+/* ----- Fisioterapia a domicilio + enlace a tarifas -----
+   Mismo fondo y ritmo que el bloque equivalente de Servicios; separa el
+   aviso de "a domicilio" del enlace general a tarifas sin usar tarjetas. */
+.home-care-note{padding-block:var(--sp-20);background:var(--pw-mist);border-block:1px solid var(--pw-line);}

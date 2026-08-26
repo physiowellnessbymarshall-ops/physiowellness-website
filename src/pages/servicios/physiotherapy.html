@@ -194,12 +194,12 @@
        ========================================================================== -->
 
   <!-- ============ Hero de página ============
-       Sin foto propia todavía para Fisioterapia (ver ASSET_SOURCES.md): en
-       vez de reutilizar la foto de la Home o forzar una imagen que no
-       encaja, se usa el mismo hero editorial sin media que ya tiene
-       Servicios (.page-hero), como alternativa digna hasta que exista una
-       fotografía exclusiva. -->
-  <section class="page-hero">
+       FASE 8: hero editorial a dos columnas propio de Fisioterapia
+       (.page-physio .page-hero--split): contenido a la izquierda, foto a
+       la derecha en escritorio; en móvil el contenido y los CTA van
+       primero y la foto queda después, sin recortes agresivos. Foto
+       verificada en ASSET_SOURCES.md (Pexels, licencia comercial libre). -->
+  <section class="page-hero page-hero--split">
     <div class="container page-hero__inner">
       <nav class="breadcrumb page-hero__breadcrumb" aria-label="Ruta de navegación" data-reveal>
         <ol>
@@ -209,53 +209,47 @@
         </ol>
       </nav>
 
-      <div data-reveal style="--i:1">
-        <p class="eyebrow eyebrow--on-dark page-hero__eyebrow">Fisioterapia</p>
-        <h1 class="page-hero__title">Recuperar, tratar y volver a funcionar mejor.</h1>
-      </div>
+      <div class="page-hero__grid">
+        <div class="page-hero__content">
+          <div data-reveal style="--i:1">
+            <p class="eyebrow eyebrow--on-dark page-hero__eyebrow">Fisioterapia</p>
+            <h1 class="page-hero__title">Recuperar, tratar y volver a funcionar mejor</h1>
+          </div>
 
-      <div class="page-hero__text" data-reveal style="--i:2">
-        <p>La fisioterapia es el punto de partida cuando existe dolor, una lesión, una limitación o una situación que necesita valoración profesional.</p>
-        <p>No hace falta llegar con un diagnóstico cerrado. La valoración inicial sirve precisamente para eso: entender tu caso antes de decidir cómo tratarlo.</p>
-      </div>
+          <div class="page-hero__text" data-reveal style="--i:2">
+            <p>No hace falta llegar con un diagnóstico cerrado: la primera visita sirve para valorar tu dolor, lesión o limitación y decidir juntos cómo tratarlo.</p>
+          </div>
 
-      <div data-reveal style="--i:3">
-        <div class="page-hero__actions">
-          <a class="btn btn--primary" href="https://www.docfav.com/portal/physio-wellness-by-marshall" target="_blank" rel="noopener">Reservar primera visita</a>
-          <a class="btn btn--outline" href="https://wa.me/34644678344" target="_blank" rel="noopener">Escríbenos por WhatsApp</a>
+          <div data-reveal style="--i:3">
+            <div class="page-hero__actions">
+              <a class="btn btn--primary" href="https://www.docfav.com/portal/physio-wellness-by-marshall" target="_blank" rel="noopener">Reservar primera visita</a>
+              <a class="btn btn--outline btn--wrap" href="https://wa.me/34644678344" target="_blank" rel="noopener">¿No sabes qué reservar? Escríbenos</a>
+            </div>
+            <p class="page-hero__micro">Primera visita de 60 minutos · En clínica o a domicilio · Necesaria antes de los seguimientos</p>
+          </div>
         </div>
-        <p class="page-hero__micro">Centro en Sitges · Primera visita obligatoria antes de cualquier seguimiento</p>
+
+        <figure class="page-hero__photo" data-reveal style="--i:2">
+          <img src="../../assets/img/stock/hero-fisio-1440.webp" srcset="../../assets/img/stock/hero-fisio-720.webp 720w, ../../assets/img/stock/hero-fisio-1440.webp 1440w" sizes="(min-width:860px) 40vw, 100vw" alt="Fisioterapeuta ayudando a una paciente a elevar la pierna durante una valoración de movilidad, en una sala con luz natural." width="1440" height="960" loading="eager" fetchpriority="high">
+        </figure>
       </div>
     </div>
   </section>
 
-  <!-- ============ Franja de confianza ============
-       Reutiliza tal cual .trust/.trust__list de la Home, con contenido
-       propio de esta área: los datos del profesional responsable y las
-       cifras ya publicadas en index.html (equipo), sin añadir nada nuevo. -->
-  <section class="trust" aria-label="Datos del área de Fisioterapia">
-    <ul class="container trust__list" data-reveal>
-      <li class="trust__item">Marçal Ramirez Roig, fisioterapeuta responsable del área</li>
-      <li class="trust__item">Colegiado número 14.599</li>
-      <li class="trust__item">Más de 10 años de experiencia</li>
-      <li class="trust__item">Más de 1.500 pacientes acompañados</li>
-    </ul>
-  </section>
-
-  <!-- ============ Cuándo tiene sentido empezar por aquí ============
+  <!-- ============ Cuándo empezar por Fisioterapia ============
        Bloque editorial a dos columnas: texto + fotografía de referencia ya
        usada y documentada en ASSET_SOURCES.md (área Fisioterapia de
        Tarifas). No es fotografía del centro ni del equipo real: es
        imagen de referencia aportada por el cliente para esta disciplina,
-       reutilizada aquí en vez de encargar o buscar una nueva. -->
+       reutilizada aquí en vez de encargar o buscar una nueva. Titular y
+       texto distintos del hero a propósito, para no repetir el mensaje. -->
   <section class="service-context" id="cuando-empezar">
     <div class="container service-context__grid">
       <div class="service-context__text" data-reveal>
-        <p class="eyebrow section-eyebrow">Cuándo empezar por aquí</p>
-        <h2 class="section-heading">Cuando el dolor, una lesión o una limitación interrumpen tu día a día.</h2>
+        <p class="eyebrow section-eyebrow">Cuándo empezar por Fisioterapia</p>
+        <h2 class="section-heading">El primer paso es entender qué está limitando tu día a día</h2>
         <div class="area-block__text">
-          <p>Buscamos comprender qué está pasando, recuperar función y definir un proceso adaptado a tu situación, combinando tratamiento, movimiento, ejercicios y recomendaciones cuando sea necesario.</p>
-          <p>La valoración inicial es obligatoria para todos los usuarios, con independencia del área, y no la sustituye ningún informe médico o derivación previa.</p>
+          <p>Antes de tratar, hacemos una valoración inicial: qué te duele, cómo te limita y qué esperas conseguir. Es el punto de partida para todo el mundo, sea cual sea tu caso, y a partir de ahí el proceso puede combinar tratamiento, movimiento, ejercicios y recomendaciones según lo que necesites.</p>
         </div>
       </div>
       <figure class="service-photo" data-reveal style="--i:1" aria-hidden="true">
@@ -264,16 +258,62 @@
     </div>
   </section>
 
-  <!-- ============ Subespecialidades ============
-       Lista editorial, no una cuadrícula de seis tarjetas iguales: mismas
-       seis subespecialidades ya publicadas en servicios.html, con una
-       línea descriptiva deliberadamente genérica (sin nombrar patologías
-       ni prometer resultados, a falta de contenido clínico confirmado). -->
-  <section class="specialty-list" id="subespecialidades">
+  <!-- ============ Problemas y ámbitos que abordamos ============
+       Sustituye la antigua franja de confianza (nombre propio, colegiación,
+       años de experiencia, pacientes atendidos): esos datos no tienen
+       todavía una fuente global verificada ni un sitio adecuado en el
+       sitio, así que se retiran en vez de recolocarse sin más. En su lugar,
+       título estático + una única línea de conceptos ya existentes en el
+       contenido de la página (ver .service-context y .specialty-list más
+       abajo), en movimiento continuo tipo cinta. Sin patologías nuevas. -->
+  <section class="problem-ticker" aria-label="Problemas y ámbitos que abordamos">
+    <div class="container problem-ticker__head" data-reveal>
+      <h2 class="section-heading">Problemas y ámbitos que abordamos</h2>
+      <button type="button" class="problem-ticker__toggle" aria-pressed="false">
+        <span class="problem-ticker__toggle-icon" aria-hidden="true"></span>
+        <span class="problem-ticker__toggle-label">Pausar animación</span>
+      </button>
+    </div>
+    <div class="problem-ticker__viewport">
+      <div class="problem-ticker__rail">
+        <ul class="problem-ticker__list">
+          <li class="problem-ticker__item">Dolor y limitación funcional</li>
+          <li class="problem-ticker__item">Recuperación tras una lesión</li>
+          <li class="problem-ticker__item">Recuperación después de una cirugía</li>
+          <li class="problem-ticker__item">Procesos musculoesqueléticos</li>
+          <li class="problem-ticker__item">Procesos neurológicos</li>
+          <li class="problem-ticker__item">Procesos oncológicos</li>
+          <li class="problem-ticker__item">Suelo pélvico</li>
+          <li class="problem-ticker__item">Piel y tejido conectivo</li>
+        </ul>
+        <ul class="problem-ticker__list" aria-hidden="true">
+          <li class="problem-ticker__item">Dolor y limitación funcional</li>
+          <li class="problem-ticker__item">Recuperación tras una lesión</li>
+          <li class="problem-ticker__item">Recuperación después de una cirugía</li>
+          <li class="problem-ticker__item">Procesos musculoesqueléticos</li>
+          <li class="problem-ticker__item">Procesos neurológicos</li>
+          <li class="problem-ticker__item">Procesos oncológicos</li>
+          <li class="problem-ticker__item">Suelo pélvico</li>
+          <li class="problem-ticker__item">Piel y tejido conectivo</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ Ámbitos en los que podemos ayudarte ============
+       Lista editorial, no una cuadrícula de seis tarjetas iguales: mismos
+       seis ámbitos ya publicados en servicios.html, con una línea
+       descriptiva deliberadamente genérica (sin nombrar patologías, sin
+       prometer curación, desaparición del dolor, plazos ni resultados
+       garantizados, a falta de contenido clínico confirmado). El eyebrow
+       ya no dice "Subespecialidades": esa palabra podía leerse como una
+       acreditación profesional formal que no es lo que se quiere comunicar
+       aquí, así que se sustituye por un enunciado puramente descriptivo. -->
+  <section class="specialty-list" id="ambitos-fisioterapia">
     <div class="container">
       <div class="specialty-list__head" data-reveal>
-        <p class="eyebrow section-eyebrow">Subespecialidades</p>
-        <h2 class="section-heading">Seis formas de trabajar dentro de la misma área.</h2>
+        <p class="eyebrow section-eyebrow">Ámbitos de fisioterapia</p>
+        <h2 class="section-heading">Ámbitos en los que podemos ayudarte</h2>
         <p class="section-lead">Todas parten del mismo proceso: entender tu punto de partida, adaptar el tratamiento y ayudarte a avanzar con un objetivo claro.</p>
       </div>
 
@@ -312,14 +352,40 @@
     </div>
   </section>
 
+  <!-- ============ Relación entre las áreas ============
+       Bloque breve, redactado en condicional ("puede ser", "según tu
+       situación y evolución", "puede continuar"): no es una promesa
+       clínica ni un recorrido obligatorio, solo explica que Fisioterapia
+       puede dar paso a otras áreas cuando corresponda. Sustituye a la
+       antigua sección "Relación con Bienestar, Fuerza y Pilates Reformer"
+       (basada en .orient con 3 enlaces): esa versión enlazaba a
+       wellness.html/strength.html/pilates.html, que todavía no existen
+       como páginas reales, así que aquí no se repite ese enlace. El único
+       enlace de este bloque va a Servicios (../servicios.html), ruta real
+       ya existente en esta misma página (ver cabecera/breadcrumb).
+       PENDIENTE: texto sujeto a validación clínica por parte de Physio
+       Wellness antes de publicarse de forma definitiva. -->
+  <section class="area-relation" aria-label="Relación entre las áreas de Physio Wellness">
+    <div class="container area-relation__inner" data-reveal>
+      <p class="eyebrow section-eyebrow">Relación entre áreas</p>
+      <p class="area-relation__text">La fisioterapia puede ser el punto de partida. Según tu situación y evolución, el proceso puede continuar con trabajo de bienestar, fuerza o Pilates Reformer para recuperar movimiento, ganar capacidad y mantener los avances.</p>
+      <a class="area-relation__cta" href="../servicios.html">Ver todas las áreas →</a>
+    </div>
+  </section>
+
   <!-- ============ Cómo es el proceso ============
        Reutiliza .first-visit__steps (ya usado en Home y Servicios) con los
-       mismos pasos, sin inventar ningún paso nuevo. -->
+       mismos pasos, sin inventar ningún paso nuevo. La antigua franja de
+       confianza (nombre propio, colegiación, años de experiencia, número
+       de pacientes) se ha retirado de esta página: son datos que deben
+       vivir en un único sitio con fuente global verificada (p. ej. Equipo
+       en Home) y no se recolocan aquí todavía para no duplicar/desincronizar
+       esa información. -->
   <section class="process" id="como-es-el-proceso">
     <div class="container">
       <div class="process__head" data-reveal>
         <p class="eyebrow section-eyebrow">Cómo es el proceso</p>
-        <h2 class="section-heading">Cinco pasos, desde la primera visita.</h2>
+        <h2 class="section-heading">Cinco pasos, desde la primera visita</h2>
       </div>
 
       <ol class="first-visit__steps" data-reveal style="--i:1">
@@ -362,7 +428,7 @@
     <div class="container">
       <div class="testimonials__head" data-reveal>
         <p class="eyebrow section-eyebrow">Reseña</p>
-        <h2 class="section-heading">La experiencia de un paciente real.</h2>
+        <h2 class="section-heading">La experiencia de un paciente real</h2>
       </div>
 
       <div class="testimonials__grid" data-reveal>
@@ -375,29 +441,18 @@
     </div>
   </section>
 
-  <!-- ============ Ayuda antes de reservar ============
-       Reutiliza .first-visit (Home/Servicios) sin la columna de pasos:
-       aquí el segundo bloque no aporta información nueva. WhatsApp se
-       mantiene siempre en btn--outline y DocFav en btn--primary, mismo
-       criterio que en el resto del proyecto. -->
-  <section class="first-visit" id="ayuda">
-    <div class="container">
-      <div class="first-visit__intro" data-reveal>
-        <p class="eyebrow section-eyebrow">Antes de reservar</p>
-        <h2 class="section-heading">¿No sabes si esto es lo que necesitas?</h2>
-        <p class="section-lead first-visit__lead">No hace falta llegar con un tratamiento elegido. Cuéntanos qué te ocurre y te orientamos antes de que reserves.</p>
-        <div class="first-visit__actions">
-          <a class="btn btn--primary" href="https://www.docfav.com/portal/physio-wellness-by-marshall" target="_blank" rel="noopener">Reservar primera visita</a>
-          <a class="btn btn--outline" href="https://wa.me/34644678344" target="_blank" rel="noopener">Escríbenos por WhatsApp</a>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ============ CTA final ============ -->
+  <!-- ============ CTA final ============
+       Antes había aquí un segundo bloque (.first-visit "¿No sabes si esto
+       es lo que necesitas?") justo encima de este CTA final: mismo mensaje
+       de fondo y los mismos dos botones repetidos sin nada entre medio,
+       a diferencia de Home/Servicios donde .first-visit y .cta-final
+       siempre están separados por más contenido. Se retira para no
+       duplicar la misma llamada a la acción dos veces seguidas; su
+       contenido único (los 5 pasos) ya vive en la sección "Cómo es el
+       proceso" de esta misma página. -->
   <section class="cta-final">
     <div class="container cta-final__inner" data-reveal>
-      <h2 class="cta-final__title">Tu siguiente paso empieza por entender tu caso.</h2>
+      <h2 class="cta-final__title">Tu siguiente paso empieza por entender tu caso</h2>
       <p class="cta-final__lead">Si tienes dolor, una lesión o no sabes por dónde empezar, la primera visita es el punto de partida.</p>
       <div class="cta-final__actions">
         <a class="btn btn--primary" href="https://www.docfav.com/portal/physio-wellness-by-marshall" target="_blank" rel="noopener">Reservar cita online</a>

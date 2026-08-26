@@ -218,47 +218,107 @@
     </div>
   </section>
 
-  <!-- ============ Selector: "¿qué necesitas ahora?" ============ -->
-  <section class="needs" id="orientacion">
+  <!-- ==========================================================================
+       MAPA DE TARJETAS — carrusel de áreas (#orientacion).
+
+       Componente reutilizable: .area-carousel. El contenido de cada tarjeta
+       vive solo en el <li>; la posición visual (tamaño, desplazamiento,
+       opacidad, orden) la decide el CSS a partir de data-position, así que
+       una futura fase de avance cíclico solo tendrá que reescribir ese
+       atributo en los 5 <li>, sin tocar el resto del marcado.
+
+       pos   área                     data-route   imagen (stock)
+        0    Fisioterapia             physiotherapy  area-physio
+        1    Bienestar                wellness       area-wellness
+        2    Fuerza y readaptación    strength       area-strength
+       -2    Pilates Reformer         pilates        area-pilates
+       -1    Fisioterapia a domicilio domicilio      domicilio-visita
+
+       Textos, imágenes y rutas reutilizados tal cual del resto del proyecto
+       (claims de .area-block, tarjetas .area-tile de tarifas.html, mapa de
+       rutas de arriba). "Pilates Reformer" y "Fuerza y readaptación" son los
+       nombres de tarjeta indicados para este carrusel; el resto del sitio
+       sigue usando "Pilates" y "Fuerza" para el área.
+       ========================================================================== -->
+  <section class="area-carousel" id="orientacion">
     <div class="container">
-      <div class="needs__head" data-reveal>
+      <div class="area-carousel__head" data-reveal>
         <h2 class="section-heading">¿Qué necesitas ahora?</h2>
-        <p class="section-lead needs__lead">No tienes que conocer el nombre de un tratamiento para empezar. Elige la situación que más se acerque a lo que necesitas y descubre qué área puede ayudarte.</p>
+        <p class="section-lead area-carousel__lead">No tienes que conocer el nombre de un tratamiento para empezar. Elige la situación que más se acerque a lo que necesitas y descubre qué área puede ayudarte.</p>
       </div>
 
-      <div class="needs__grid">
-        <a class="need-card" href="#physiotherapy" data-reveal style="--i:0">
-          <span class="need-card__num">01</span>
-          <h3 class="need-card__title">Me duele algo, tengo una lesión o estoy recuperándome</h3>
-          <p class="need-card__desc">Si el dolor, una lesión o una limitación está interfiriendo en tu día a día, Physiotherapy puede ser el punto de partida.</p>
-          <span class="need-card__cta">Explorar Physiotherapy <svg width="14" height="10" viewBox="0 0 14 10" fill="none" aria-hidden="true"><path d="M1 5h12M8 1l4 4-4 4" stroke="currentColor" stroke-width="1.4"/></svg></span>
-        </a>
+      <div class="area-carousel__viewport" data-reveal>
+        <ul class="area-carousel__track">
+          <li class="area-carousel__card" data-position="0">
+            <a class="area-carousel__card-link" href="servicios/physiotherapy.html" data-route="physiotherapy">
+              <span class="area-carousel__media">
+                <img class="area-carousel__img area-carousel__img--physio" src="../assets/img/stock/area-physio-1440.webp" srcset="../assets/img/stock/area-physio-720.webp 720w, ../assets/img/stock/area-physio-1440.webp 1440w" sizes="(min-width: 1024px) 21rem, 60vw" alt="" loading="lazy" width="1440" height="960">
+              </span>
+              <span class="area-carousel__body">
+                <span class="area-carousel__title">Fisioterapia</span>
+                <span class="area-carousel__desc">Recuperar, tratar y volver a funcionar mejor.</span>
+                <span class="area-carousel__cta">Ver servicio <svg width="14" height="10" viewBox="0 0 14 10" fill="none" aria-hidden="true"><path d="M1 5h12M8 1l4 4-4 4" stroke="currentColor" stroke-width="1.4"/></svg></span>
+              </span>
+            </a>
+          </li>
 
-        <a class="need-card" href="#wellness" data-reveal style="--i:1">
-          <span class="need-card__num">02</span>
-          <h3 class="need-card__title">Quiero recuperarme y cuidar mi cuerpo</h3>
-          <p class="need-card__desc">Si buscas reducir tensión, favorecer la recuperación o incorporar un cuidado corporal específico, descubre el área de Wellness.</p>
-          <span class="need-card__cta">Explorar Wellness <svg width="14" height="10" viewBox="0 0 14 10" fill="none" aria-hidden="true"><path d="M1 5h12M8 1l4 4-4 4" stroke="currentColor" stroke-width="1.4"/></svg></span>
-        </a>
+          <li class="area-carousel__card" data-position="1">
+            <a class="area-carousel__card-link" href="servicios/wellness.html" data-route="wellness">
+              <span class="area-carousel__media">
+                <img class="area-carousel__img area-carousel__img--wellness" src="../assets/img/stock/area-wellness-1440.webp" srcset="../assets/img/stock/area-wellness-720.webp 720w, ../assets/img/stock/area-wellness-1440.webp 1440w" sizes="(min-width: 1024px) 15.5rem, 60vw" alt="" loading="lazy" width="1440" height="960">
+              </span>
+              <span class="area-carousel__body">
+                <span class="area-carousel__title">Bienestar</span>
+                <span class="area-carousel__desc">Cuidar, recuperar y optimizar el cuerpo.</span>
+                <span class="area-carousel__cta">Ver servicio <svg width="14" height="10" viewBox="0 0 14 10" fill="none" aria-hidden="true"><path d="M1 5h12M8 1l4 4-4 4" stroke="currentColor" stroke-width="1.4"/></svg></span>
+              </span>
+            </a>
+          </li>
 
-        <a class="need-card" href="#strength" data-reveal style="--i:2">
-          <span class="need-card__num">03</span>
-          <h3 class="need-card__title">Quiero ganar fuerza o mejorar mi rendimiento</h3>
-          <p class="need-card__desc">Si quieres desarrollar tus capacidades, volver a moverte con confianza o preparar mejor tu cuerpo, empieza por Strength.</p>
-          <span class="need-card__cta">Explorar Strength <svg width="14" height="10" viewBox="0 0 14 10" fill="none" aria-hidden="true"><path d="M1 5h12M8 1l4 4-4 4" stroke="currentColor" stroke-width="1.4"/></svg></span>
-        </a>
+          <li class="area-carousel__card" data-position="2">
+            <a class="area-carousel__card-link" href="servicios/strength.html" data-route="strength">
+              <span class="area-carousel__media">
+                <img class="area-carousel__img area-carousel__img--strength" src="../assets/img/stock/area-strength-1440.webp" srcset="../assets/img/stock/area-strength-720.webp 720w, ../assets/img/stock/area-strength-1440.webp 1440w" sizes="(min-width: 1024px) 10.5rem, 60vw" alt="" loading="lazy" width="1440" height="810">
+              </span>
+              <span class="area-carousel__body">
+                <span class="area-carousel__title">Fuerza y readaptación</span>
+                <span class="area-carousel__desc">Desarrollar fuerza, capacidad física y rendimiento.</span>
+                <span class="area-carousel__cta">Ver servicio <svg width="14" height="10" viewBox="0 0 14 10" fill="none" aria-hidden="true"><path d="M1 5h12M8 1l4 4-4 4" stroke="currentColor" stroke-width="1.4"/></svg></span>
+              </span>
+            </a>
+          </li>
 
-        <a class="need-card" href="#pilates" data-reveal style="--i:3">
-          <span class="need-card__num">04</span>
-          <h3 class="need-card__title">Quiero mejorar movilidad, control y estabilidad</h3>
-          <p class="need-card__desc">Si buscas moverte con mayor control, mejorar tu estabilidad y trabajar la alineación corporal, descubre Pilates.</p>
-          <span class="need-card__cta">Explorar Pilates <svg width="14" height="10" viewBox="0 0 14 10" fill="none" aria-hidden="true"><path d="M1 5h12M8 1l4 4-4 4" stroke="currentColor" stroke-width="1.4"/></svg></span>
-        </a>
+          <li class="area-carousel__card" data-position="-2">
+            <a class="area-carousel__card-link" href="servicios/pilates.html" data-route="pilates">
+              <span class="area-carousel__media">
+                <img class="area-carousel__img area-carousel__img--pilates" src="../assets/img/stock/area-pilates-1440.webp" srcset="../assets/img/stock/area-pilates-720.webp 720w, ../assets/img/stock/area-pilates-1440.webp 1440w" sizes="(min-width: 1024px) 10.5rem, 60vw" alt="" loading="lazy" width="1440" height="756">
+              </span>
+              <span class="area-carousel__body">
+                <span class="area-carousel__title">Pilates Reformer</span>
+                <span class="area-carousel__desc">Mejorar control, movilidad, estabilidad y alineación.</span>
+                <span class="area-carousel__cta">Ver servicio <svg width="14" height="10" viewBox="0 0 14 10" fill="none" aria-hidden="true"><path d="M1 5h12M8 1l4 4-4 4" stroke="currentColor" stroke-width="1.4"/></svg></span>
+              </span>
+            </a>
+          </li>
+
+          <li class="area-carousel__card" data-position="-1">
+            <a class="area-carousel__card-link" href="servicios/fisioterapia-a-domicilio.html" data-route="domicilio">
+              <span class="area-carousel__media">
+                <img class="area-carousel__img area-carousel__img--domicilio" src="../assets/img/stock/domicilio-visita-1122.webp" srcset="../assets/img/stock/domicilio-visita-720.webp 720w, ../assets/img/stock/domicilio-visita-1122.webp 1122w" sizes="(min-width: 1024px) 15.5rem, 60vw" alt="" loading="lazy" width="1122" height="1402">
+              </span>
+              <span class="area-carousel__body">
+                <span class="area-carousel__title">Fisioterapia a domicilio</span>
+                <span class="area-carousel__desc">También puedes realizar tu primera visita o un seguimiento de fisioterapia a domicilio.</span>
+                <span class="area-carousel__cta">Ver servicio <svg width="14" height="10" viewBox="0 0 14 10" fill="none" aria-hidden="true"><path d="M1 5h12M8 1l4 4-4 4" stroke="currentColor" stroke-width="1.4"/></svg></span>
+              </span>
+            </a>
+          </li>
+        </ul>
       </div>
 
-      <div class="needs__note" data-reveal>
-        <p class="needs__note-text">¿Te identificas con más de una opción? Es normal. Las áreas no funcionan como compartimentos cerrados y podemos ayudarte a decidir por dónde empezar.</p>
-        <a class="needs__note-link" href="#primera-consulta">Necesito orientación →</a>
+      <div class="area-carousel__note" data-reveal>
+        <p class="area-carousel__note-text">¿Te identificas con más de una opción? Es normal. Las áreas no funcionan como compartimentos cerrados y podemos ayudarte a decidir por dónde empezar.</p>
+        <a class="area-carousel__note-link" href="#primera-consulta">Necesito orientación →</a>
       </div>
     </div>
   </section>
@@ -277,7 +337,7 @@
       <article class="area-block" id="physiotherapy" data-reveal>
         <div class="area-block__main">
           <p class="eyebrow section-eyebrow">Physiotherapy</p>
-          <h3 class="area-block__claim">Recuperar, tratar y volver a funcionar mejor.</h3>
+          <h3 class="area-block__claim">Recuperar, tratar y volver a funcionar mejor</h3>
           <div class="area-block__text">
             <p>La fisioterapia es el punto de partida cuando existe dolor, una lesión, una limitación o una situación que necesita valoración profesional.</p>
             <p>Buscamos comprender qué está pasando, recuperar función y definir un proceso adaptado a tu situación, combinando tratamiento, movimiento, ejercicios y recomendaciones cuando sea necesario.</p>
@@ -304,7 +364,7 @@
       <article class="area-block" id="wellness" data-reveal>
         <div class="area-block__main">
           <p class="eyebrow section-eyebrow">Wellness</p>
-          <h3 class="area-block__claim">Cuidar, recuperar y optimizar el cuerpo.</h3>
+          <h3 class="area-block__claim">Cuidar, recuperar y optimizar el cuerpo</h3>
           <div class="area-block__text">
             <p>Wellness reúne servicios orientados al cuidado y la recuperación corporal. No es una experiencia de spa ni sustituye una valoración fisioterapéutica cuando existe una lesión.</p>
             <p>Es una opción para quienes buscan un trabajo corporal específico, favorecer la recuperación o incorporar un cuidado complementario.</p>
@@ -330,7 +390,7 @@
       <article class="area-block area-block--reverse" id="strength" data-reveal>
         <div class="area-block__main">
           <p class="eyebrow section-eyebrow">Strength</p>
-          <h3 class="area-block__claim">Desarrollar fuerza, capacidad física y rendimiento.</h3>
+          <h3 class="area-block__claim">Desarrollar fuerza, capacidad física y rendimiento</h3>
           <div class="area-block__text">
             <p>Strength está pensado para personas que quieren construir una base física más sólida, recuperar capacidades o mejorar su rendimiento.</p>
             <p>El trabajo se adapta al punto de partida de cada persona y puede incluir ejercicios de fuerza, movilidad y stretching dentro de un proceso con objetivos definidos.</p>
@@ -357,7 +417,7 @@
       <article class="area-block area-block--wide" id="pilates" data-reveal>
         <div class="area-block__main">
           <p class="eyebrow section-eyebrow">Pilates</p>
-          <h3 class="area-block__claim">Mejorar control, movilidad, estabilidad y alineación.</h3>
+          <h3 class="area-block__claim">Mejorar control, movilidad, estabilidad y alineación</h3>
           <div class="area-block__text">
             <p>Pilates propone un trabajo guiado sobre la forma en la que te mueves. El objetivo no es repetir una clase genérica, sino desarrollar mayor control corporal, movilidad y estabilidad desde tu punto de partida.</p>
             <p>Puede funcionar como práctica propia o complementar otros procesos de recuperación y mejora física.</p>

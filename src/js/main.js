@@ -573,3 +573,209 @@ var prefersReducedMotion = window.matchMedia && window.matchMedia('(prefers-redu
     });
   }catch(e){ console.warn('realButtonAccordions', e); }
 })();
+
+/* ---------- Carrusel de áreas (Servicios) ----------
+   .area-carousel__card ya trae su composición (tamaño, desplazamiento,
+   opacidad, orden) resuelta por CSS a partir de data-position (ver
+   styles.css, sección 20). El DOM mantiene siempre el mismo orden fijo
+   (physio, wellness, strength, pilates, domicilio); lo único que cambia es
+   qué posición (-2..2) le corresponde a cada tarjeta según cuál esté
+   activa, así que avanzar/retroceder/saltar es solo reescribir el
+   data-position de las 5 tarjetas — el CSS anima el resto por su cuenta. */
+(function areaCarousel(){
+  try{
+    var root = document.querySelector('.area-carousel');
+    if(!root) return;
+    var viewport = root.querySelector('.area-carousel__viewport');
+    var track = root.querySelector('.area-carousel__track');
+    if(!viewport || !track) return;
+    var cards = Array.prototype.slice.call(track.children);
+    var total = cards.length;
+    if(total < 2) return;
+    var half = Math.floor(total / 2);
+
+    var activeIndex = cards.findIndex(function(card){
+      return card.getAttribute('data-position') === '0';
+    });
+    if(activeIndex === -1) activeIndex = 0;
+
+    function applyPositions(){
+      cards.forEach(function(card, domIndex){
+        var pos = ((domIndex - activeIndex + half) % total + total) % total - half;
+        card.setAttribute('data-position', String(pos));
+      });
+    }
+
+    function goTo(domIndex){
+      var target = ((domIndex % total) + total) % total;
+      if(target === activeIndex) return;
+      activeIndex = target;
+      applyPositions();
+    }
+    function next(){ goTo(activeIndex + 1); }
+    function prev(){ goTo(activeIndex - 1); }
+
+    /* -- Autoplay: cada 2.5-3s, solo mientras la sección esté visible y no
+       esté en pausa por interacción del usuario. -- */
+    var AUTOPLAY_MS = 2800;
+    var RESUME_DELAY_MS = 900;
+    var timer = null;
+    var resumeTimer = null;
+    var isVisible = false;
+    var isPaused = false;
+
+    function startAutoplay(){
+      if(timer || !isVisible || isPaused || prefersReducedMotion) return;
+      timer = setInterval(next, AUTOPLAY_MS);
+    }
+    function stopAutoplay(){
+      if(timer){ clearInterval(timer); timer = null; }
+    }
+    function pause(){
+      isPaused = true;
+      clearTimeout(resumeTimer);
+      stopAutoplay();
+    }
+    function resume(){
+      isPaused = false;
+      clearTimeout(resumeTimer);
+      resumeTimer = setTimeout(startAutoplay, RESUME_DELAY_MS);
+    }
+
+    if('IntersectionObserver' in window){
+      var io = new IntersectionObserver(function(entries){
+        entries.forEach(function(entry){
+          isVisible = entry.isIntersecting;
+          if(isVisible) startAutoplay(); else stopAutoplay();
+        });
+      }, { threshold: .4 });
+      io.observe(root);
+    } else {
+      isVisible = true;
+      startAutoplay();
+    }
+
+    /* -- Pausa por hover, foco y pestaña inactiva; reanudación controlada. -- */
+    root.addEventListener('pointerenter', pause);
+    root.addEventListener('pointerleave', function(){
+      if(!isDragging) resume();
+    });
+    root.addEventListener('focusin', pause);
+    root.addEventListener('focusout', function(){
+      setTimeout(function(){
+        if(!isDragging && !root.contains(document.activeElement)) resume();
+      }, 50);
+    });
+    document.addEventListener('visibilitychange', function(){
+      if(document.hidden) pause(); else resume();
+    });
+
+    /* -- Selección por clic: una tarjeta lateral centra en vez de navegar;
+       la tarjeta activa conserva su enlace normal. -- */
+    var wasDragged = false;
+    cards.forEach(function(card){
+      var link = card.querySelector('.area-carousel__card-link');
+      if(!link) return;
+      link.addEventListener('click', function(e){
+        if(wasDragged){
+          wasDragged = false;
+          e.preventDefault();
+          return;
+        }
+        if(card.getAttribute('data-position') !== '0'){
+          e.preventDefault();
+          goTo(cards.indexOf(card));
+          pause();
+          resume();
+        }
+      });
+    });
+
+    /* -- Flechas de teclado, con el foco dentro del carrusel. -- */
+    root.addEventListener('keydown', function(e){
+      if(e.key === 'ArrowRight'){
+        e.preventDefault();
+        next();
+        pause();
+        resume();
+      } else if(e.key === 'ArrowLeft'){
+        e.preventDefault();
+        prev();
+        pause();
+        resume();
+      }
+    });
+
+    /* -- Arrastre con ratón y deslizamiento táctil (Pointer Events, mismo
+       mecanismo que "disclosures" usa para unificar ratón/táctil). El
+       viewport usa touch-action:pan-y (CSS) para no secuestrar el scroll
+       vertical: el gesto horizontal se resuelve aquí, el vertical lo
+       gestiona el navegador de forma nativa. -- */
+    var isDragging = false;
+    var dragStartX = 0;
+    var dragDx = 0;
+    var dragIsHorizontal = null;
+    var DRAG_THRESHOLD = 40;
+    var CLICK_CANCEL_THRESHOLD = 8;
+
+    viewport.addEventListener('pointerdown', function(e){
+      if(e.pointerType === 'mouse' && e.button !== 0) return;
+      isDragging = true;
+      dragIsHorizontal = null;
+      dragDx = 0;
+      dragStartX = e.clientX;
+      root.classList.add('is-dragging');
+      pause();
+      try{ viewport.setPointerCapture(e.pointerId); }catch(err){}
+    });
+
+    viewport.addEventListener('pointermove', function(e){
+      if(!isDragging) return;
+      dragDx = e.clientX - dragStartX;
+      if(dragIsHorizontal === null && Math.abs(dragDx) > 6){
+        dragIsHorizontal = true;
+      }
+      if(dragIsHorizontal){
+        track.style.transform = 'translateX(' + dragDx + 'px)';
+      }
+    });
+
+    function endDrag(){
+      if(!isDragging) return;
+      isDragging = false;
+      root.classList.remove('is-dragging');
+      var dx = dragDx;
+      track.style.transform = '';
+      wasDragged = dragIsHorizontal === true && Math.abs(dx) > CLICK_CANCEL_THRESHOLD;
+      if(dragIsHorizontal && Math.abs(dx) > DRAG_THRESHOLD){
+        if(dx < 0) next(); else prev();
+      }
+      dragIsHorizontal = null;
+      resume();
+    }
+    viewport.addEventListener('pointerup', endDrag);
+    viewport.addEventListener('pointercancel', endDrag);
+
+    applyPositions();
+  }catch(e){ console.warn('areaCarousel', e); }
+})();
+
+/* ---------- Cinta "Problemas y ámbitos que abordamos": pausa accesible ----------
+   La animación en sí es puro CSS (rail duplicado + keyframe), así que sigue
+   visible y en marcha aunque este script falle. El botón solo añade una
+   forma de pausar/reanudar sin depender del hover (útil en touch/teclado);
+   con prefers-reduced-motion el botón ya se oculta por CSS y no hace falta. */
+(function problemTicker(){
+  try{
+    var section = document.querySelector('.problem-ticker');
+    if(!section || prefersReducedMotion) return;
+    var toggle = section.querySelector('.problem-ticker__toggle');
+    var label = toggle ? toggle.querySelector('.problem-ticker__toggle-label') : null;
+    if(!toggle) return;
+    toggle.addEventListener('click', function(){
+      var paused = section.classList.toggle('is-paused');
+      toggle.setAttribute('aria-pressed', paused ? 'true' : 'false');
+      if(label) label.textContent = paused ? 'Reanudar animación' : 'Pausar animación';
+    });
+  }catch(e){ console.warn('problemTicker', e); }
+})();

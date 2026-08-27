@@ -419,25 +419,116 @@
     </div>
   </section>
 
-  <!-- ============ Reseña real ============
-       Misma reseña, mismo texto y misma autoría ya publicados en
-       index.html (#quote-1): es la única reseña del sitio centrada en un
-       proceso de dolor/recuperación física, coherente con esta página. No
-       se parafrasea ni se atribuye a nadie nuevo. -->
-  <section class="testimonials" aria-label="Reseña de un paciente">
+  <!-- ============ Reseñas de Google ============
+       Seis reseñas reales y verificadas en la ficha pública de Google de
+       Physio Wellness by Marshall (Sitges), distintas de la reseña de
+       Ignacio Castells Soler ya publicada en index.html. Texto íntegro
+       original, sin corregir/resumir/traducir. Autoría mostrada solo con
+       iniciales (decisión explícita del cliente, no el nombre público
+       completo). Fase estática: una única lista semántica, sin
+       duplicado de tarjetas ni movimiento infinito (fase posterior). -->
+  <section class="google-reviews" aria-label="Reseñas de Google de pacientes">
     <div class="container">
-      <div class="testimonials__head" data-reveal>
-        <p class="eyebrow section-eyebrow">Reseña</p>
-        <h2 class="section-heading">La experiencia de un paciente real</h2>
+      <div class="google-reviews__head">
+        <p class="eyebrow section-eyebrow">Reseñas de Google</p>
+        <h2 class="section-heading"><span class="google-reviews__highlight">Experiencias reales</span> de quienes han confiado en Physio Wellness</h2>
       </div>
 
-      <div class="testimonials__grid" data-reveal>
-        <article class="testimonial-card">
-          <p class="testimonial-card__quote">Muy profesional y atento. Llegué con bastante dolor en la rodilla y no solo me alivió durante la sesión, sino que me transmitió calma y confianza. Me indicó ejercicios sencillos para hacer en casa y me marcó tiempos de recuperación muy claros. He notado una gran mejoría y, sin duda, ya tengo a mi fisioterapeuta de confianza.</p>
-          <p class="testimonial-card__author">Ignacio Castells Soler</p>
-        </article>
-      </div>
-      <p class="testimonials__source">Reseña real publicada en Google, reproducida con el texto original.</p>
+      <ul class="google-reviews__list">
+        <li class="google-review-card">
+          <span class="google-review-card__tag">Experiencia en la clínica</span>
+          <p class="google-review-card__rating">
+            <span class="google-review-card__stars" aria-hidden="true">★★★★★</span>
+            <span class="sr-only">Valoración: 5 de 5 estrellas</span>
+          </p>
+          <blockquote class="google-review-card__quote">
+            <p>Marçal es un excelente profesional, en dos sesiones la mejoría es total.</p>
+            <p>Las instalaciones impecables, y también destacar la eficiencia y amabilidad de Abril.</p>
+          </blockquote>
+          <footer class="google-review-card__meta">
+            <span class="google-review-card__author">M. A. B. F.</span>
+            <span class="google-review-card__source">Reseña de Google</span>
+          </footer>
+        </li>
+
+        <li class="google-review-card">
+          <span class="google-review-card__tag">Fisioterapia</span>
+          <p class="google-review-card__rating">
+            <span class="google-review-card__stars" aria-hidden="true">★★★★★</span>
+            <span class="sr-only">Valoración: 5 de 5 estrellas</span>
+          </p>
+          <blockquote class="google-review-card__quote">
+            <p>I highly recommend this physiotherapist to anyone in need of high-quality care. They are extremely knowledgeable, attentive, and truly dedicated to their patients’ recovery. From the very first session, they took the time to understand the root of the problem, not just the symptoms, and created a personalized treatment plan that made a real difference.</p>
+            <p>Thank you!</p>
+          </blockquote>
+          <footer class="google-review-card__meta">
+            <span class="google-review-card__author">J. D.</span>
+            <span class="google-review-card__source">Reseña de Google</span>
+          </footer>
+        </li>
+
+        <li class="google-review-card">
+          <span class="google-review-card__tag">Profesionalidad</span>
+          <p class="google-review-card__rating">
+            <span class="google-review-card__stars" aria-hidden="true">★★★★★</span>
+            <span class="sr-only">Valoración: 5 de 5 estrellas</span>
+          </p>
+          <blockquote class="google-review-card__quote">
+            <p>Marçal es muy profesional, resolutivo y transmite confianza. Soy paciente oncológica y su tratamiento está dando muy buen resultado. También me ha dado unos ejercicios que puedo hacer en mi casa . Estoy muy conforme.</p>
+          </blockquote>
+          <footer class="google-review-card__meta">
+            <span class="google-review-card__author">C. C. G.</span>
+            <span class="google-review-card__source">Reseña de Google</span>
+          </footer>
+        </li>
+
+        <li class="google-review-card">
+          <span class="google-review-card__tag">Atención personalizada</span>
+          <p class="google-review-card__rating">
+            <span class="google-review-card__stars" aria-hidden="true">★★★★★</span>
+            <span class="sr-only">Valoración: 5 de 5 estrellas</span>
+          </p>
+          <blockquote class="google-review-card__quote">
+            <p>Great hands, technique, deep knowledge, very attentive and personalized service. They have all kinds of machinery when needed. I’m treating an injured knee and it could feel improvement from the first session.</p>
+            <p>Totally worth it, Marçal and his team are best in class.</p>
+          </blockquote>
+          <footer class="google-review-card__meta">
+            <span class="google-review-card__author">I. G.</span>
+            <span class="google-review-card__source">Reseña de Google</span>
+          </footer>
+        </li>
+
+        <li class="google-review-card">
+          <span class="google-review-card__tag">Trato y acompañamiento</span>
+          <p class="google-review-card__rating">
+            <span class="google-review-card__stars" aria-hidden="true">★★★★★</span>
+            <span class="sr-only">Valoración: 5 de 5 estrellas</span>
+          </p>
+          <blockquote class="google-review-card__quote">
+            <p>I had a great experience with this physiotherapy clinic. The treatment really helped me get rid of my back pain, and I noticed significant improvement after the sessions. The administrator Abril is very friendly, helpful, and well organized, which makes every visit smooth and comfortable.</p>
+            <p>A special thank you to Marshall, a highly qualified physiotherapist who is professional, attentive, and truly knows what he is doing. I felt confident and well cared for throughout the entire process. I highly recommend this place to anyone dealing with back pain or looking for high-quality physiotherapy</p>
+          </blockquote>
+          <footer class="google-review-card__meta">
+            <span class="google-review-card__author">A.</span>
+            <span class="google-review-card__source">Reseña de Google</span>
+          </footer>
+        </li>
+
+        <li class="google-review-card">
+          <span class="google-review-card__tag">Recuperación</span>
+          <p class="google-review-card__rating">
+            <span class="google-review-card__stars" aria-hidden="true">★★★★★</span>
+            <span class="sr-only">Valoración: 5 de 5 estrellas</span>
+          </p>
+          <blockquote class="google-review-card__quote">
+            <p>Found this place and really like the sessions I have had. He has a good knowledge of the body and how to make the patient feel better immediately and long term as well.</p>
+          </blockquote>
+          <footer class="google-review-card__meta">
+            <span class="google-review-card__author">T. M.</span>
+            <span class="google-review-card__source">Reseña de Google</span>
+          </footer>
+        </li>
+      </ul>
     </div>
   </section>
 

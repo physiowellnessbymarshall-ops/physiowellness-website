@@ -823,30 +823,89 @@ a:focus-visible,button:focus-visible,input:focus-visible{
    Sección independiente de "15. Reseñas reales" (Home): usa sus propias
    clases (.google-reviews/.google-review-card) para no tocar el
    componente compartido .testimonials/.testimonial-card que sigue en
-   uso en Home. Fase estática: sin duplicado de tarjetas ni movimiento
-   infinito (se añaden en una fase posterior). Sin [data-reveal]
-   deliberadamente: esa utilidad deja el bloque en opacity:0 hasta que
-   JS añade .is-visible, lo que ocultaría el contenido sin JavaScript. */
-.google-reviews{padding-block:var(--sp-32);background:var(--pw-mist);border-block:1px solid var(--pw-line);}
-.google-reviews__head{max-width:44rem;margin-bottom:var(--sp-16);}
-/* Preparado para un tratamiento visual destacado en una fase posterior;
-   sin estilo propio todavía. */
-.google-reviews__highlight{}
-
-.google-reviews__list{
-  list-style:none;margin:0;padding:0;
-  display:grid;gap:var(--sp-10);
-  grid-template-columns:1fr;
+   uso en Home. Fase visual (aún estática): composición inspirada en el
+   ritmo de una cinta horizontal (referencia externa, adaptada a la
+   identidad de Physio Wellness), sin duplicado de tarjetas ni
+   movimiento automático todavía — eso llega en una fase posterior.
+   Sin [data-reveal] deliberadamente: esa utilidad deja el bloque en
+   opacity:0 hasta que JS añade .is-visible, lo que ocultaría el
+   contenido sin JavaScript.
+   Radio de esquina propio (--gr-radius) en vez de var(--radius, 2px):
+   el token global es casi recto ("precisión clínica") a propósito para
+   botones/inputs; estas tarjetas piden esquinas ligeramente redondeadas
+   por requisito explícito, así que se define un valor local sin tocar
+   el token compartido. */
+.google-reviews{
+  --gr-radius:14px;
+  padding-block:var(--sp-32);
+  background:var(--pw-mist);
+  border-block:1px solid var(--pw-line);
 }
-@media (min-width:640px){ .google-reviews__list{grid-template-columns:repeat(2,1fr);} }
-@media (min-width:1080px){ .google-reviews__list{grid-template-columns:repeat(3,1fr);} }
 
+.google-reviews__head{
+  max-width:36rem;
+  margin-inline:auto;
+  margin-bottom:var(--sp-16);
+  text-align:center;
+}
+.google-reviews__head .section-heading{max-width:32ch;margin-inline:auto;}
+/* Único destacado permitido: "Experiencias reales". Verde corporativo
+   (--pw-primary, no --pw-accent: el acento no cumple AA en texto, ver
+   nota de contraste del inventario de marca) + una línea fina bajo el
+   texto a modo de subrayado editorial. Deliberadamente sin fondo, sin
+   padding y sin border-radius para que no se lea como una etiqueta o
+   un botón. Cursiva/serif quedó descartada: el proyecto solo carga
+   Jost en pesos 400/500/600 (sin itálica ni familia serif), y la
+   instrucción es no sumar una tipografía nueva solo para este detalle. */
+.google-reviews__highlight{
+  color:var(--pw-primary);
+  font-weight:600;
+  box-shadow:inset 0 -0.15em 0 0 rgba(35,115,105,.22);
+}
+
+/* La cinta se desborda del ancho del .container del encabezado (1240px)
+   pero no del documento: .google-reviews (la <section>) no tiene
+   max-width propio, así que la <ul> hereda el 100% del ancho del body.
+   El scroll horizontal queda contenido en la propia lista
+   (overflow-x:auto), nunca en html/body. */
+.google-reviews__list{
+  list-style:none;margin:0;
+  display:flex;gap:var(--sp-6);
+  padding-block:var(--sp-2);
+  padding-inline:clamp(1.5rem,4vw,2.75rem);
+  overflow-x:auto;
+  scroll-snap-type:x proximity;
+  scroll-padding-inline:clamp(1.5rem,4vw,2.75rem);
+  -webkit-overflow-scrolling:touch;
+  scrollbar-width:thin;
+  scrollbar-color:var(--pw-primary) transparent;
+}
+.google-reviews__list::-webkit-scrollbar{height:6px;}
+.google-reviews__list::-webkit-scrollbar-thumb{background:var(--pw-line);border-radius:999px;}
+.google-reviews__list::-webkit-scrollbar-thumb:hover{background:var(--pw-primary);}
+
+/* Anchos por tarjeta pensados en proporción (% del ancho visible de la
+   cinta), no en px fijos, para que la relación "tres completas + un
+   fragmento" se mantenga igual de 1440px en adelante que en pantallas
+   más anchas (>1600px), tal como pide la comprobación visual. */
 .google-review-card{
+  scroll-snap-align:start;
+  flex:0 0 82%;
+  min-width:0;
   background:var(--pw-white);
   border:1px solid var(--pw-line);
-  border-radius:var(--radius);
+  border-radius:var(--gr-radius);
+  box-shadow:0 1px 2px rgba(18,32,29,.05);
   padding:var(--sp-8);
   display:flex;flex-direction:column;gap:var(--sp-5);
+}
+@media (min-width:640px){ .google-review-card{flex-basis:46%;} }
+@media (min-width:1080px){ .google-review-card{flex-basis:29%;} }
+/* Algunas tarjetas (2 de 6) llevan un degradado verde muy sutil en la
+   esquina, como única variación de fondo; el resto queda en blanco
+   liso para que el verde siga usándose con moderación. */
+.google-review-card:nth-child(3n+2){
+  background:linear-gradient(155deg, var(--pw-white) 58%, rgba(35,115,105,.07) 100%);
 }
 .google-review-card__tag{
   align-self:flex-start;
@@ -858,8 +917,8 @@ a:focus-visible,button:focus-visible,input:focus-visible{
   padding:.25rem .7rem;
 }
 .google-review-card__rating{margin:0;}
-.google-review-card__stars{color:var(--pw-accent);letter-spacing:.15em;font-size:1rem;}
-.google-review-card__quote{margin:0;font-size:1rem;line-height:1.65;color:var(--pw-ink);}
+.google-review-card__stars{color:var(--pw-primary);letter-spacing:.15em;font-size:1rem;}
+.google-review-card__quote{margin:0;font-size:1rem;line-height:1.65;color:var(--pw-ink);text-align:left;}
 .google-review-card__quote p{margin:0 0 var(--sp-4);}
 .google-review-card__quote p:last-child{margin-bottom:0;}
 .google-review-card__quote::before{content:"“";color:var(--pw-primary);font-size:1.3em;line-height:0;vertical-align:-.3em;margin-right:.04em;}
@@ -867,8 +926,15 @@ a:focus-visible,button:focus-visible,input:focus-visible{
   margin-top:auto;padding-top:var(--sp-5);border-top:1px solid var(--pw-line);
   display:flex;align-items:center;justify-content:space-between;gap:var(--sp-4);
 }
-.google-review-card__author{font-size:.78rem;letter-spacing:.06em;text-transform:uppercase;color:var(--pw-ink);font-weight:600;}
+/* Nombre, procedencia y etiqueta quedan en un nivel secundario respecto
+   a la cita (que es el contenido principal de la tarjeta): tamaño
+   menor y color atenuado en vez del --pw-ink de cuerpo de texto. */
+.google-review-card__author{font-size:.78rem;letter-spacing:.06em;text-transform:uppercase;color:var(--pw-ink-70);font-weight:500;}
 .google-review-card__source{font-size:.72rem;color:var(--pw-ink-50);}
+
+@media (prefers-reduced-motion:reduce){
+  .google-reviews__list{scroll-behavior:auto;}
+}
 
 /* ---------- 16. Ubicación y contacto ---------- */
 .contact{padding-block:var(--sp-32);background:var(--pw-mist);border-block:1px solid var(--pw-line);}

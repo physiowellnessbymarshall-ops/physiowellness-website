@@ -433,8 +433,14 @@
         <p class="eyebrow section-eyebrow">Reseñas de Google</p>
         <h2 class="section-heading"><span class="google-reviews__highlight">Experiencias reales</span> de quienes han confiado en Physio Wellness</h2>
       </div>
+    </div>
 
-      <ul class="google-reviews__list">
+    <!-- La cinta vive fuera de .container a propósito: puede superar el
+         ancho del encabezado (1240px) pero nunca el del documento, ya que
+         .google-reviews (la section) no tiene max-width propio y ocupa el
+         100% del body. El desbordamiento horizontal está contenido dentro
+         de esta lista (overflow-x:auto), no en html/body. -->
+    <ul class="google-reviews__list">
         <li class="google-review-card">
           <span class="google-review-card__tag">Experiencia en la clínica</span>
           <p class="google-review-card__rating">
@@ -529,7 +535,6 @@
           </footer>
         </li>
       </ul>
-    </div>
   </section>
 
   <!-- ============ CTA final ============

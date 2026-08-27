@@ -107,6 +107,26 @@ project) han quedado sustituidos por el archivo de esta tabla —mismo nombre
 base, contenido y proporción nuevos—, así que no queda ningún fichero
 huérfano que borrar de esa fase.
 
+## Hero de Fisioterapia (`.page-physio .page-hero--split`, FASE 8 — nueva)
+
+Hasta la FASE 8 el hero de `src/pages/servicios/physiotherapy.html` era el
+mismo bloque editorial sin foto que usa Servicios (`.page-hero` base), a la
+espera de una fotografía exclusiva. La FASE 8 introduce una composición a
+dos columnas (contenido izquierda / foto derecha en escritorio) y, con
+ella, la primera fotografía propia de esta página.
+
+| Campo | Detalle |
+| ----- | ------- |
+| Archivo servido | `src/assets/img/stock/hero-fisio-720.webp` (720×480) y `-1440.webp` (1440×960) |
+| Plataforma | Pexels |
+| Autor | Yan Krukau (usuario `yankrukov`) |
+| URL de la foto | `https://www.pexels.com/photo/5794011/` (título: "A Massage Therapist Holding a Woman's Leg Up" — valoración/estiramiento guiado de pierna sobre camilla, junto a una ventana grande) |
+| Licencia | Pexels License, libre uso comercial, sin atribución obligatoria |
+| Fecha de verificación y descarga | 2026-08-26 |
+| Motivo de la elección | Luz natural cálida (ventanal grande), paleta cálida/desaturada (paredes rosa pálido, madera, camilla crema), escena realista de valoración/movilidad (no posada ni de estética hospitalaria), rostro de la fisioterapeuta de perfil y sin mirar a cámara —no protagonista de la composición—, y encuadre horizontal con el sujeto desplazado hacia la derecha, adecuado para recortar en columna vertical junto al texto. Se descartaron otros candidatos de Pexels por fondo clínico frío (salas con dispensadores/lavabo), rostro de la profesional demasiado protagonista o encuadres ya usados en la foto del hero de Tarifas. |
+| Transformaciones aplicadas | Ninguna gradación de color: se usa el encuadre original completo (proporción 3:2), redimensionado a 720w/1440w y exportado a WebP calidad 82, `method=6`. El recorte final a las proporciones del hero (4:3 en móvil, 3:4 en escritorio) lo resuelve `object-fit:cover` + `object-position` en `styles.css`, igual que el resto de fotos editoriales del sitio (`.service-photo`), sin recortar el archivo servido. |
+| Integración en la página | `.page-hero__photo` dentro de `.page-hero__grid`, con `srcset`/`sizes`, `width`/`height` reservados, `loading="eager"` y `fetchpriority="high"` (foto above the fold, sin lazy-loading). Mismo filtro (`saturate(1.05) contrast(1.04) brightness(.97)`) y radio de esquina (`--radius-tile`) que `.service-photo`, para no introducir un lenguaje visual nuevo. |
+
 ## Bloque de ayuda (`#ayuda`, FASE 6 con foto → FASE 7B sin foto → FASE 7C con fotografía propia)
 
 La FASE 6 añadió una foto de stock (`local-lounge.jpg`, zona de espera) a

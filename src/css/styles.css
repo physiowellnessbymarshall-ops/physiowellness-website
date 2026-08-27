@@ -85,6 +85,14 @@ ul{margin:0;padding:0;list-style:none;}
   padding-inline:clamp(1.5rem,4vw,2.75rem);
 }
 
+/* Evita que el header fijo (siempre presente, con o sin .is-hidden) tape el
+   inicio de una sección al llegar por ancla, tanto en saltos nativos del
+   navegador (enlaces entre páginas) como en el scrollIntoView de
+   smoothAnchor(). La altura del header es fija en todos los anchos
+   (§4, "Altura fija y compacta"), así que un único valor sirve para todo
+   el sitio; :where() mantiene especificidad 0 para no pisar otras reglas. */
+:where([id]){scroll-margin-top:6rem;}
+
 /* foco visible consistente en toda la web */
 a:focus-visible,button:focus-visible,input:focus-visible{
   outline:2px solid var(--pw-accent);
@@ -159,12 +167,18 @@ a:focus-visible,button:focus-visible,input:focus-visible{
   position:fixed;inset-block-start:0;inset-inline:0;z-index:100;
   color:var(--pw-white);
   background:linear-gradient(to bottom, rgba(18,32,29,.5), rgba(18,32,29,0));
-  transition:background-color var(--dur-med) var(--ease-out), box-shadow var(--dur-med) var(--ease-out);
+  transform:translateY(0);
+  transition:background-color var(--dur-med) var(--ease-out), box-shadow var(--dur-med) var(--ease-out), transform var(--dur-med) var(--ease-out);
 }
 .site-header.is-solid{
   background:var(--pw-primary-900);
   box-shadow:0 12px 32px -18px rgba(0,0,0,.5);
 }
+/* Se oculta desplazándose fuera de la vista (no display:none ni visibility)
+   para que la transición sea fluida y el elemento siga midiéndose igual;
+   headerState() en main.js ya se asegura de no aplicar esta clase mientras
+   el header tiene foco de teclado dentro. */
+.site-header.is-hidden{transform:translateY(-100%);}
 /* Altura fija y compacta: el header NO se comprime al hacer scroll,
    solo cambia el fondo (transparente sobre el Hero → verde oscuro). */
 .site-header__bar{
@@ -770,6 +784,12 @@ a:focus-visible,button:focus-visible,input:focus-visible{
 .testimonials__head{max-width:40rem;margin-bottom:var(--sp-16);}
 .testimonials__grid{display:grid;gap:1px;background:var(--pw-line);border:1px solid var(--pw-line);grid-template-columns:1fr;}
 @media (min-width:860px){ .testimonials__grid{grid-template-columns:repeat(3,1fr);} }
+/* Con una única reseña (p. ej. páginas de servicio) la rejilla de 3
+   columnas deja dos celdas vacías visibles como bloques grises: se
+   reduce a una sola columna centrada y del ancho de una tarjeta. */
+@media (min-width:860px){
+  .testimonials__grid:has(.testimonial-card:only-child){grid-template-columns:1fr;max-width:26rem;margin-inline:auto;}
+}
 .testimonial-card{background:var(--pw-white);padding:var(--sp-10) var(--sp-8);display:flex;flex-direction:column;gap:var(--sp-5);}
 .testimonial-card__quote{font-size:1.05rem;line-height:1.68;color:var(--pw-ink);}
 .testimonial-card__quote::before{content:"“";color:var(--pw-primary);font-size:1.3em;line-height:0;vertical-align:-.3em;margin-right:.04em;}
@@ -886,59 +906,158 @@ a:focus-visible,button:focus-visible,input:focus-visible{
   color:rgba(255,255,255,.6);
 }
 
-/* ---------- 20. Selector de necesidad (Servicios) ---------- */
-.needs{
+/* ---------- 20. Carrusel de áreas (Servicios) ----------
+   Componente reutilizable: .area-carousel. La tarjeta activa se fija por
+   CSS mediante [data-position="0"]; el resto de posiciones (±1, ±2) se
+   colocan alrededor. Los datos de cada tarjeta (texto, imagen, ruta) viven
+   únicamente en el HTML; data-position es el único enganche que el JS
+   (areaCarousel, main.js) reescribe en los 5 <li> para ciclar el carrusel,
+   avanzar/retroceder o saltar a una tarjeta concreta, sin tocar esta hoja
+   de estilos. Las reglas de posición se aplican en todos los anchos (no
+   solo en escritorio) para que el arrastre/deslizamiento táctil anime la
+   misma composición a cualquier tamaño; el media query de 1024px solo
+   amplía tamaños y revela descripción/CTA de la tarjeta activa. */
+.area-carousel{
+  position:relative;
   padding-block:var(--sp-24);
-  background:var(--pw-mist);
-  border-block:1px solid var(--pw-line);
+  background:var(--pw-primary-900);
+  overflow:hidden;
   scroll-margin-top:4.5rem;
 }
-.needs__head{max-width:42rem;margin-bottom:var(--sp-12);}
-.needs__lead{margin-top:var(--sp-5);max-width:56ch;}
+/* Resplandor ambiental tras la tarjeta central. rgba calculada a partir de
+   --pw-accent (#269888 = 38,152,136) y --pw-primary-900 (#123c37 =
+   18,60,55), mismo criterio que --pw-line respecto a --pw-ink: un custom
+   property no puede variar su alpha dentro de un radial-gradient. */
+.area-carousel::before{
+  content:"";
+  position:absolute;top:50%;left:50%;
+  width:50rem;height:50rem;
+  transform:translate(-50%,-50%);
+  background:radial-gradient(circle, rgba(38,152,136,.4) 0%, rgba(38,152,136,.14) 42%, rgba(18,60,55,0) 70%);
+  pointer-events:none;
+}
+.area-carousel__head{position:relative;z-index:1;max-width:42rem;margin-bottom:var(--sp-12);color:var(--pw-white);}
+.area-carousel__head .section-heading{color:var(--pw-white);}
+.area-carousel__lead{margin-top:var(--sp-5);max-width:56ch;color:rgba(255,255,255,.72);}
 
-.needs__grid{
-  display:grid;grid-template-columns:1fr;gap:1px;
-  background:var(--pw-line);border:1px solid var(--pw-line);
+.area-carousel__viewport{
+  position:relative;z-index:1;
+  overflow:hidden;
+  touch-action:pan-y;
+  cursor:grab;
 }
-@media (min-width:860px){ .needs__grid{grid-template-columns:repeat(2,1fr);} }
+.area-carousel__viewport:active{cursor:grabbing;}
+.area-carousel__track{
+  display:flex;align-items:flex-start;justify-content:center;
+  gap:1.25rem;
+  margin:0;padding:.5rem var(--sp-4) 1rem;
+  user-select:none;-webkit-user-select:none;
+  transition:transform .3s var(--ease-out);
+}
+.area-carousel.is-dragging .area-carousel__track{transition:none;}
 
-.need-card{
-  background:var(--pw-white);
-  padding:var(--sp-8) var(--sp-6);
-  display:flex;flex-direction:column;gap:var(--sp-4);
-  transition:background-color var(--dur-med) var(--ease-out), color var(--dur-med) var(--ease-out);
+/* Duración propia (700ms) fuera de la escala --dur-* del sitio: el pedido
+   del carrusel es 600-800ms, y ningún token existente cae en ese rango
+   (--dur-med .5s, --dur-slow .9s). Precedente de duraciones puntuales fuera
+   de la escala ya usado en otros componentes del sitio. */
+.area-carousel__card{
+  list-style:none;flex:0 0 auto;
+  width:13rem;
+  transition:transform .7s var(--ease-out), opacity .7s var(--ease-out), width .7s var(--ease-out);
 }
-.need-card:hover{background:var(--pw-primary-900);color:var(--pw-white);}
-.need-card__num{font-size:.72rem;letter-spacing:.14em;color:var(--pw-accent);}
-.need-card__title{
-  font-size:var(--fs-h3);font-weight:500;
-  line-height:1.25;letter-spacing:normal;
-  max-width:26ch;
+.area-carousel.is-dragging .area-carousel__card{transition:none;}
+.area-carousel__card-link{display:block;position:relative;}
+.area-carousel__media{
+  position:relative;display:block;
+  aspect-ratio:3/4;overflow:hidden;
+  border-radius:1.25rem;
+  background:var(--pw-primary-600);
 }
-.need-card__desc{font-size:.95rem;color:var(--pw-ink-70);max-width:48ch;flex-grow:1;}
-.need-card:hover .need-card__desc{color:rgba(255,255,255,.82);}
-.need-card__cta{
-  display:inline-flex;align-items:center;gap:.5rem;
+.area-carousel__media img{
+  width:100%;height:100%;object-fit:cover;display:block;
+  transition:transform var(--dur-slow) var(--ease-out);
+}
+.area-carousel__img--physio{object-position:58% 32%;}
+.area-carousel__img--wellness{object-position:70% 32%;}
+.area-carousel__img--strength{object-position:46% 35%;}
+.area-carousel__img--pilates{object-position:42% 30%;}
+.area-carousel__img--domicilio{object-position:center;}
+.area-carousel__media::after{
+  content:"";position:absolute;inset:0;
+  background:linear-gradient(180deg, rgba(18,60,55,0) 45%, rgba(18,60,55,.88) 100%);
+}
+.area-carousel__card-link:hover .area-carousel__media img,
+.area-carousel__card-link:focus-visible .area-carousel__media img{transform:scale(1.05);}
+.area-carousel__card-link:focus-visible{outline:2px solid var(--pw-accent);outline-offset:3px;border-radius:1.25rem;}
+
+.area-carousel__body{
+  position:absolute;left:0;right:0;bottom:0;z-index:2;
+  padding:var(--sp-4) var(--sp-5) var(--sp-5);
+  color:var(--pw-white);
+  display:flex;flex-direction:column;gap:.35rem;
+}
+.area-carousel__title{font-size:1rem;font-weight:500;line-height:1.25;}
+.area-carousel__desc,.area-carousel__cta{display:none;}
+.area-carousel__cta{
+  align-items:center;gap:.5rem;
   font-size:.7rem;letter-spacing:.12em;text-transform:uppercase;
-  color:var(--pw-primary);
+  color:#8fd9c9;margin-top:.15rem;
 }
-.need-card:hover .need-card__cta{color:#8fd9c9;}
-.need-card__cta svg{transition:transform var(--dur-fast) var(--ease-out);}
-.need-card:hover .need-card__cta svg{transform:translateX(4px);}
+.area-carousel__cta svg{transition:transform var(--dur-fast) var(--ease-out);}
+.area-carousel__card-link:hover .area-carousel__cta svg,
+.area-carousel__card-link:focus-visible .area-carousel__cta svg{transform:translateX(4px);}
 
-.needs__note{
+/* -- Composición base (también móvil): tarjeta activa centrada y más
+   grande, dos tarjetas visibles a cada lado, escala/opacidad decrecientes
+   y extremos parcialmente recortados por el ancho limitado del viewport.
+   Los 5 <li> siempre tienen un data-position (0/±1/±2), así que estas
+   reglas son incondicionales y el JS solo reescribe el atributo. -- */
+.area-carousel__card[data-position="0"]{order:0;opacity:1;transform:translateY(0) scale(1);z-index:5;}
+.area-carousel__card[data-position="0"] .area-carousel__title{font-size:1.05rem;}
+
+.area-carousel__card[data-position="1"],
+.area-carousel__card[data-position="-1"]{width:9.5rem;opacity:.75;transform:translateY(1.15rem) scale(.94);z-index:4;}
+.area-carousel__card[data-position="1"]{order:1;}
+.area-carousel__card[data-position="-1"]{order:-1;}
+
+.area-carousel__card[data-position="2"],
+.area-carousel__card[data-position="-2"]{width:6.5rem;opacity:.42;transform:translateY(1.75rem) scale(.88);z-index:3;}
+.area-carousel__card[data-position="2"]{order:2;}
+.area-carousel__card[data-position="-2"]{order:-2;}
+
+@media (min-width:1024px){
+  .area-carousel__viewport{
+    max-width:70rem;margin-inline:auto;
+  }
+  .area-carousel__track{padding-inline:0;}
+
+  .area-carousel__card[data-position="0"]{width:21rem;}
+  .area-carousel__card[data-position="0"] .area-carousel__title{font-size:var(--fs-h3);}
+  .area-carousel__card[data-position="0"] .area-carousel__desc{display:block;font-size:.9rem;color:rgba(255,255,255,.82);max-width:26ch;}
+  .area-carousel__card[data-position="0"] .area-carousel__cta{display:inline-flex;}
+
+  .area-carousel__card[data-position="1"],
+  .area-carousel__card[data-position="-1"]{width:15.5rem;transform:translateY(1.75rem) scale(.94);}
+
+  .area-carousel__card[data-position="2"],
+  .area-carousel__card[data-position="-2"]{width:10.5rem;transform:translateY(2.75rem) scale(.88);}
+}
+
+.area-carousel__note{
+  position:relative;z-index:1;
   margin-top:var(--sp-10);
   max-width:60ch;
   padding-left:var(--sp-6);
-  border-left:2px solid var(--pw-primary);
+  border-left:2px solid var(--pw-accent);
   display:flex;flex-direction:column;align-items:flex-start;gap:var(--sp-4);
 }
-.needs__note-text{font-size:.98rem;color:var(--pw-ink-70);}
-.needs__note-link{
+.area-carousel__note-text{font-size:.98rem;color:rgba(255,255,255,.72);}
+.area-carousel__note-link{
   font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;
-  color:var(--pw-primary);
+  color:#8fd9c9;
   border-bottom:1px solid currentColor;padding-bottom:.25rem;
 }
+.area-carousel__note-link:hover,.area-carousel__note-link:focus-visible{color:var(--pw-white);}
 
 /* ---------- 21. Las áreas en detalle (Servicios) ----------
    Las áreas se leen como capítulos de un mismo proceso: filete superior
@@ -1086,14 +1205,11 @@ a:focus-visible,button:focus-visible,input:focus-visible{
    sobre claro (5.6:1) y #8fd9c9 sobre oscuro (7.5:1). */
 .page-servicios .eyebrow:not(.eyebrow--on-dark){color:var(--pw-primary);}
 .page-servicios .eyebrow:not(.eyebrow--on-dark)::before{background:var(--pw-primary);}
-.page-servicios .need-card__num{color:var(--pw-primary);}
-.page-servicios .need-card:hover .need-card__num,
-.page-servicios .need-card:focus-visible .need-card__num{color:#8fd9c9;}
 
 /* Área táctil. Los enlaces de texto crecían sólo 17-24px de alto: se les da
    recorrido vertical y se compensa el margen para que no se muevan de sitio. */
 .page-servicios .breadcrumb a{padding-block:.5rem;margin-block:-.5rem;}
-.page-servicios .needs__note-link{padding-top:.7rem;margin-top:-.7rem;}
+.page-servicios .area-carousel__note-link{padding-top:.7rem;margin-top:-.7rem;}
 .page-servicios .area-block__cta,
 .page-servicios .home-care__cta,
 .page-servicios .expertise__cta{
@@ -1102,19 +1218,12 @@ a:focus-visible,button:focus-visible,input:focus-visible{
 }
 
 /* Estados. El foco visible global ya cubre a/button; aquí se añade el estado
-   activo y se hace que la tarjeta responda igual al teclado que al ratón. */
+   activo. */
 .page-servicios .btn:active{transform:translateY(1px);}
-.page-servicios .need-card:focus-visible{
-  background:var(--pw-primary-900);color:var(--pw-white);
-  outline-offset:-2px;
-}
-.page-servicios .need-card:focus-visible .need-card__desc{color:rgba(255,255,255,.82);}
-.page-servicios .need-card:focus-visible .need-card__cta{color:#8fd9c9;}
-.page-servicios .need-card:active{background:var(--pw-primary-900);color:var(--pw-white);}
 .page-servicios .area-block__cta:active,
 .page-servicios .home-care__cta:active,
-.page-servicios .expertise__cta:active,
-.page-servicios .needs__note-link:active{color:var(--pw-primary-900);}
+.page-servicios .expertise__cta:active{color:var(--pw-primary-900);}
+.page-servicios .area-carousel__note-link:active{color:var(--pw-white);}
 .page-servicios .breadcrumb a:hover{color:var(--pw-white);}
 
 /* ---------- 26b. Acabado de Home ----------
@@ -2010,10 +2119,50 @@ a:focus-visible,button:focus-visible,input:focus-visible{
    para los números de .first-visit__step (--pw-accent no llega a AA). */
 .page-physio .first-visit__step::before{color:var(--pw-primary);}
 
+/* ----- Hero de Fisioterapia: composición editorial a dos columnas -----
+   FASE 8. El .page-hero base (§19) es de un solo bloque de texto sin foto;
+   aquí se añade una variante (.page-hero--split) solo para esta página:
+   contenido a la izquierda, fotografía a la derecha en escritorio, con
+   menos altura/espacio vacío que el hero base. En móvil el orden natural
+   del DOM ya coloca el contenido antes que la foto, sin necesidad de
+   "order". Mismo tratamiento visual (aspect-ratio 4/3→3/4, filtro) que
+   .service-photo más abajo, para no introducir un lenguaje visual nuevo. */
+.page-physio .page-hero__inner{
+  padding-block:clamp(6rem,12vh,8rem) clamp(3rem,7vh,4.5rem);
+}
+.page-physio .page-hero__grid{display:grid;grid-template-columns:minmax(0,1fr);gap:var(--sp-10);}
+.page-physio .page-hero__text{margin-block:var(--sp-6) var(--sp-8);}
+.page-physio .page-hero__photo{
+  margin:0;
+  aspect-ratio:4/3;
+  overflow:hidden;
+  border-radius:var(--radius-tile,20px);
+}
+.page-physio .page-hero__photo img{
+  width:100%;height:100%;
+  object-fit:cover;object-position:60% center;
+  filter:saturate(1.05) contrast(1.04) brightness(.97);
+}
+@media (min-width:860px){
+  .page-physio .page-hero__grid{
+    grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);
+    gap:var(--sp-16);
+    align-items:center;
+  }
+  .page-physio .page-hero__photo{aspect-ratio:3/4;}
+  .page-physio .page-hero__photo img{object-position:65% center;}
+}
+
 /* ----- "Cuándo empezar por aquí": texto + fotografía de referencia -----
    Bloque asimétrico a dos columnas, no una tarjeta ni un hero: en móvil la
    imagen va primero como apoyo visual, luego el texto. */
 .service-context{padding-block:var(--sp-24);background:var(--pw-white);}
+/* Fisioterapia: el texto ahora es un único párrafo breve (antes eran dos),
+   así que el bloque queda con más aire del necesario entre el hero y la
+   siguiente sección. Se reduce el padding-block ~17% respecto a la base
+   (var(--sp-24) = 6rem) solo en esta página, conservando el mismo ritmo
+   editorial y el resto de reglas compartidas de .service-context. */
+.page-physio .service-context{padding-block:5rem;}
 .service-context__grid{display:grid;gap:var(--sp-12);}
 .service-context__text .area-block__text{max-width:56ch;}
 .service-photo{
@@ -2031,10 +2180,93 @@ a:focus-visible,button:focus-visible,input:focus-visible{
 @media (min-width:860px){
   .service-context__grid{
     grid-template-columns:1.1fr .9fr;
-    gap:var(--sp-20);
+    gap:var(--sp-16);
     align-items:center;
   }
   .service-photo{order:0;aspect-ratio:3/4;}
+}
+
+/* ----- "Problemas y ámbitos que abordamos": título estático + cinta -----
+   Sustituye la antigua franja de confianza (datos personales/de
+   colegiación). Título fijo arriba; debajo, una única línea horizontal en
+   movimiento continuo con los conceptos ya existentes en el contenido de
+   la página (sin patologías nuevas). Implementada solo con CSS (rail
+   duplicado + keyframe translateX -50%, sin scroll horizontal real: el
+   viewport tiene overflow:hidden). El botón de pausa es la única pieza que
+   depende de JS (ver main.js); si JS falla, la animación y la lista siguen
+   visibles igualmente. La segunda <ul> es un duplicado visual puro, por
+   eso lleva aria-hidden="true". */
+.problem-ticker{padding-block:var(--sp-12) var(--sp-16);background:var(--pw-mist);border-block:1px solid var(--pw-line);}
+.problem-ticker__head{
+  display:flex;align-items:center;justify-content:space-between;gap:var(--sp-6);
+  flex-wrap:wrap;margin-bottom:var(--sp-8);
+}
+.problem-ticker__head .section-heading{margin:0;max-width:34ch;}
+.problem-ticker__toggle{
+  display:inline-flex;align-items:center;gap:.6rem;flex:0 0 auto;
+  padding:.5rem .9rem;
+  border:1px solid var(--pw-line);
+  border-radius:999px;
+  background:var(--pw-white);
+  color:var(--pw-ink-70);
+  font-size:var(--fs-small);
+  cursor:pointer;
+  transition:background .2s ease,color .2s ease,border-color .2s ease;
+}
+.problem-ticker__toggle:hover,.problem-ticker__toggle:focus-visible{
+  background:var(--pw-primary);border-color:var(--pw-primary);color:var(--pw-white);
+}
+.problem-ticker__toggle-icon{position:relative;width:.7rem;height:.7rem;flex:0 0 auto;}
+.problem-ticker__toggle-icon::before,.problem-ticker__toggle-icon::after{
+  content:"";position:absolute;top:0;bottom:0;width:2px;background:currentColor;
+}
+.problem-ticker__toggle-icon::before{left:1px;}
+.problem-ticker__toggle-icon::after{right:1px;}
+.problem-ticker__toggle[aria-pressed="true"] .problem-ticker__toggle-icon{
+  width:0;height:0;
+  border-left:.6rem solid currentColor;border-top:.4rem solid transparent;border-bottom:.4rem solid transparent;
+}
+.problem-ticker__toggle[aria-pressed="true"] .problem-ticker__toggle-icon::before,
+.problem-ticker__toggle[aria-pressed="true"] .problem-ticker__toggle-icon::after{content:none;}
+.problem-ticker__viewport{
+  width:100%;overflow:hidden;
+  mask-image:linear-gradient(to right,transparent,#000 4%,#000 96%,transparent);
+  -webkit-mask-image:linear-gradient(to right,transparent,#000 4%,#000 96%,transparent);
+}
+.problem-ticker__rail{
+  display:flex;width:max-content;gap:var(--sp-10);
+  animation:problem-ticker-scroll 34s linear infinite;
+}
+.problem-ticker.is-paused .problem-ticker__rail,
+.problem-ticker__viewport:hover .problem-ticker__rail,
+.problem-ticker__viewport:focus-within .problem-ticker__rail{
+  animation-play-state:paused;
+}
+.problem-ticker__list{
+  display:flex;align-items:center;list-style:none;margin:0;padding:0;gap:var(--sp-10);
+}
+.problem-ticker__item{
+  display:flex;align-items:center;gap:var(--sp-10);
+  white-space:nowrap;flex:0 0 auto;
+  font-size:var(--fs-lead);color:var(--pw-ink-70);
+}
+.problem-ticker__item::after{
+  content:"";flex:0 0 auto;width:.35rem;height:.35rem;border-radius:50%;background:var(--pw-accent);
+}
+@keyframes problem-ticker-scroll{
+  from{transform:translateX(0);}
+  to{transform:translateX(-50%);}
+}
+@media (max-width:640px){
+  .problem-ticker__head{flex-direction:column;align-items:flex-start;}
+  .problem-ticker__item{font-size:var(--fs-body);}
+}
+@media (prefers-reduced-motion:reduce){
+  .problem-ticker__rail{animation:none;transform:none;flex-wrap:wrap;width:100%;}
+  .problem-ticker__viewport{overflow:visible;mask-image:none;-webkit-mask-image:none;}
+  .problem-ticker__item{white-space:normal;}
+  .problem-ticker__list[aria-hidden="true"]{display:none;}
+  .problem-ticker__toggle{display:none;}
 }
 
 /* ----- Subespecialidades: lista editorial, no cuadrícula de tarjetas -----
@@ -2082,6 +2314,25 @@ a:focus-visible,button:focus-visible,input:focus-visible{
   .specialty-item{padding-block:var(--sp-8);}
 }
 
+/* ----- Relación entre las áreas -----
+   Bloque breve de una sola columna de texto, deliberadamente ligero
+   (no es un componente de tarjetas ni de lista con enlaces): un párrafo
+   corto y, como mucho, un enlace a una ruta real ya existente. */
+.area-relation{padding-block:var(--sp-12);background:var(--pw-white);border-top:1px solid var(--pw-line);}
+.area-relation__inner{max-width:56ch;}
+.area-relation__text{
+  font-size:var(--fs-lead);
+  color:var(--pw-ink-70);
+  margin:0 0 var(--sp-6);
+}
+.area-relation__cta{
+  display:inline-block;
+  font-weight:600;
+  color:var(--pw-primary);
+  text-decoration:none;
+}
+.area-relation__cta:hover,.area-relation__cta:focus-visible{text-decoration:underline;}
+
 /* ----- Cómo es el proceso -----
    Reutiliza .first-visit__steps fuera de .first-visit; solo hace falta el
    encabezado propio de la sección. */
@@ -2092,4 +2343,4 @@ a:focus-visible,button:focus-visible,input:focus-visible{
 /* ----- Fisioterapia a domicilio + enlace a tarifas -----
    Mismo fondo y ritmo que el bloque equivalente de Servicios; separa el
    aviso de "a domicilio" del enlace general a tarifas sin usar tarjetas. */
-.home-care-note{padding-block:var(--sp-20);background:var(--pw-mist);border-block:1px solid var(--pw-line);}
+.home-care-note{padding-block:var(--sp-24);background:var(--pw-mist);border-block:1px solid var(--pw-line);}

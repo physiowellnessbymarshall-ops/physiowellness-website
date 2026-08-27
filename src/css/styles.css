@@ -85,6 +85,14 @@ ul{margin:0;padding:0;list-style:none;}
   padding-inline:clamp(1.5rem,4vw,2.75rem);
 }
 
+/* Evita que el header fijo (siempre presente, con o sin .is-hidden) tape el
+   inicio de una sección al llegar por ancla, tanto en saltos nativos del
+   navegador (enlaces entre páginas) como en el scrollIntoView de
+   smoothAnchor(). La altura del header es fija en todos los anchos
+   (§4, "Altura fija y compacta"), así que un único valor sirve para todo
+   el sitio; :where() mantiene especificidad 0 para no pisar otras reglas. */
+:where([id]){scroll-margin-top:6rem;}
+
 /* foco visible consistente en toda la web */
 a:focus-visible,button:focus-visible,input:focus-visible{
   outline:2px solid var(--pw-accent);
@@ -159,12 +167,18 @@ a:focus-visible,button:focus-visible,input:focus-visible{
   position:fixed;inset-block-start:0;inset-inline:0;z-index:100;
   color:var(--pw-white);
   background:linear-gradient(to bottom, rgba(18,32,29,.5), rgba(18,32,29,0));
-  transition:background-color var(--dur-med) var(--ease-out), box-shadow var(--dur-med) var(--ease-out);
+  transform:translateY(0);
+  transition:background-color var(--dur-med) var(--ease-out), box-shadow var(--dur-med) var(--ease-out), transform var(--dur-med) var(--ease-out);
 }
 .site-header.is-solid{
   background:var(--pw-primary-900);
   box-shadow:0 12px 32px -18px rgba(0,0,0,.5);
 }
+/* Se oculta desplazándose fuera de la vista (no display:none ni visibility)
+   para que la transición sea fluida y el elemento siga midiéndose igual;
+   headerState() en main.js ya se asegura de no aplicar esta clase mientras
+   el header tiene foco de teclado dentro. */
+.site-header.is-hidden{transform:translateY(-100%);}
 /* Altura fija y compacta: el header NO se comprime al hacer scroll,
    solo cambia el fondo (transparente sobre el Hero → verde oscuro). */
 .site-header__bar{

@@ -8,20 +8,78 @@ document.documentElement.classList.add('js');
 
 var prefersReducedMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-/* ---------- header sólido al hacer scroll ---------- */
+/* ---------- header: fondo sólido + ocultar/mostrar según dirección de scroll ----------
+   Componente global (se sirve desde el único main.js compartido por todas las
+   páginas): no es una implementación exclusiva de Fisioterapia. Se oculta al
+   bajar y reaparece al subir, con una zona muerta (MIN_DELTA) para no
+   reaccionar a temblores mínimos, y se fuerza siempre visible cerca del
+   principio de la página, con el menú móvil abierto, con el panel de reserva
+   abierto o mientras el foco de teclado esté dentro del header (nav, botón de
+   reserva), para no esconder nunca un elemento con foco. */
 (function headerState(){
   try{
     var header = document.getElementById('site-header');
     if(!header) return;
-    var onScroll = function(){
-      if(window.scrollY > 24){
-        header.classList.add('is-solid');
-      } else {
-        header.classList.remove('is-solid');
-      }
+    var mobileMenuEl = document.getElementById('mobile-menu');
+    var bookingPanel = document.getElementById('booking-panel');
+
+    var SHOW_NEAR_TOP = 96;
+    var MIN_DELTA = 8;
+
+    var lastY = window.scrollY;
+    var hidden = false;
+    var focusWithin = false;
+    var ticking = false;
+
+    var setHidden = function(next){
+      if(next === hidden) return;
+      hidden = next;
+      header.classList.toggle('is-hidden', hidden);
     };
-    onScroll();
+
+    var forceVisible = function(){
+      return focusWithin
+        || window.scrollY <= SHOW_NEAR_TOP
+        || (mobileMenuEl && mobileMenuEl.classList.contains('is-open'))
+        || (bookingPanel && !bookingPanel.hidden);
+    };
+
+    var apply = function(){
+      ticking = false;
+      var y = window.scrollY;
+      header.classList.toggle('is-solid', y > 24);
+
+      if(forceVisible()){
+        setHidden(false);
+        lastY = y;
+        return;
+      }
+
+      var delta = y - lastY;
+      if(Math.abs(delta) < MIN_DELTA) return;
+      setHidden(delta > 0);
+      lastY = y;
+    };
+
+    var onScroll = function(){
+      if(ticking) return;
+      ticking = true;
+      window.requestAnimationFrame(apply);
+    };
+
+    apply();
     window.addEventListener('scroll', onScroll, {passive:true});
+
+    /* el foco de teclado en cualquier enlace/botón del header lo mantiene visible */
+    header.addEventListener('focusin', function(){
+      focusWithin = true;
+      setHidden(false);
+    });
+    header.addEventListener('focusout', function(){
+      window.setTimeout(function(){
+        focusWithin = header.contains(document.activeElement);
+      }, 0);
+    });
   }catch(e){ console.warn('headerState', e); }
 })();
 

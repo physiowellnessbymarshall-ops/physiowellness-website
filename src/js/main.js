@@ -779,3 +779,184 @@ var prefersReducedMotion = window.matchMedia && window.matchMedia('(prefers-redu
     });
   }catch(e){ console.warn('problemTicker', e); }
 })();
+
+/* ---------- Cinta de reseñas de Google (Fisioterapia): movimiento continuo ----------
+   Bucle infinito por transform, sin <marquee> ni librerías nuevas. La única
+   lista semántica es [data-reviews-track] (las 6 reseñas reales); el
+   duplicado que cierra el bucle se genera aquí clonando ese nodo y
+   marcándolo aria-hidden + inert, así los lectores de pantalla no lo
+   anuncian ni el teclado lo alcanza (las tarjetas no tienen elementos
+   focuseables dentro, así que no hace falta tocar tabindex tarjeta a
+   tarjeta). Con prefers-reduced-motion, o si algo falla, no se crea
+   ningún duplicado ni arranca ningún bucle: [data-reviews-viewport] se
+   queda con su overflow-x:auto de base (CSS) y las 6 reseñas reales
+   siguen visibles y explorables a mano, igual que en la fase estática. */
+(function googleReviewsMarquee(){
+  try{
+    var section = document.querySelector('.google-reviews');
+    if(!section || prefersReducedMotion) return;
+    var viewport = section.querySelector('[data-reviews-viewport]');
+    var rail = section.querySelector('[data-reviews-rail]');
+    var track = section.querySelector('[data-reviews-track]');
+    if(!viewport || !rail || !track) return;
+
+    var clone = track.cloneNode(true);
+    clone.removeAttribute('data-reviews-track');
+    clone.setAttribute('aria-hidden', 'true');
+    clone.setAttribute('inert', '');
+    rail.appendChild(clone);
+    section.classList.add('has-marquee');
+
+    var SPEED = 32; /* px/s: lento y constante, no un carrusel de diapositivas */
+    var offset = 0;
+    var setWidth = 0;
+
+    function measure(){
+      var a = track.getBoundingClientRect();
+      var b = clone.getBoundingClientRect();
+      var w = b.left - a.left;
+      if(w > 0) setWidth = w;
+    }
+    measure();
+
+    function wrap(){
+      if(setWidth <= 0) return;
+      offset = ((offset % setWidth) + setWidth) % setWidth;
+    }
+    function render(){
+      rail.style.transform = 'translateX(-' + offset + 'px)';
+    }
+
+    /* -- Motivos de pausa: hover, foco, arrastre, pestaña oculta, fuera de
+       vista, y el botón manual. Cualquiera activo detiene el bucle; solo
+       cuando ninguno lo está, sigue avanzando. Nunca "encaja" en una
+       posición fija: al reanudar continúa desde el offset donde se
+       quedó. -- */
+    var pausedByHover = false;
+    var pausedByFocus = false;
+    var pausedByDrag = false;
+    var pausedByToggle = false;
+    var pausedByVisibility = document.hidden;
+    var pausedByIntersection = true; /* hasta que el observer confirme visibilidad */
+
+    function shouldRun(){
+      return !(pausedByHover || pausedByFocus || pausedByDrag || pausedByToggle ||
+        pausedByVisibility || pausedByIntersection);
+    }
+
+    var rafId = null;
+    var lastTime = null;
+    function frame(now){
+      if(lastTime == null) lastTime = now;
+      var dt = (now - lastTime) / 1000;
+      lastTime = now;
+      offset += SPEED * dt;
+      wrap();
+      render();
+      rafId = requestAnimationFrame(frame);
+    }
+    function start(){
+      if(rafId || !shouldRun()) return;
+      lastTime = null;
+      rafId = requestAnimationFrame(frame);
+    }
+    function stop(){
+      if(rafId){ cancelAnimationFrame(rafId); rafId = null; }
+    }
+    function sync(){
+      if(shouldRun()) start(); else stop();
+    }
+
+    /* -- Pasar el cursor por la cinta. -- */
+    viewport.addEventListener('pointerenter', function(){ pausedByHover = true; sync(); });
+    viewport.addEventListener('pointerleave', function(){ pausedByHover = false; sync(); });
+
+    /* -- Foco en la sección o en el botón de pausa (teclado). -- */
+    section.addEventListener('focusin', function(){ pausedByFocus = true; sync(); });
+    section.addEventListener('focusout', function(){
+      setTimeout(function(){
+        if(!section.contains(document.activeElement)){ pausedByFocus = false; sync(); }
+      }, 50);
+    });
+
+    /* -- Pestaña no visible: pausa por completo, no solo "se nota poco". -- */
+    document.addEventListener('visibilitychange', function(){
+      pausedByVisibility = document.hidden;
+      sync();
+    });
+
+    /* -- Fuera de vista: no consume ciclos si la sección no está en
+       pantalla (cancela el rAF, no solo lo salta en vacío). -- */
+    if('IntersectionObserver' in window){
+      var io = new IntersectionObserver(function(entries){
+        entries.forEach(function(entry){
+          pausedByIntersection = !entry.isIntersecting;
+          sync();
+        });
+      }, { threshold: .1 });
+      io.observe(section);
+    } else {
+      pausedByIntersection = false;
+    }
+
+    /* -- Arrastre manual (ratón o táctil, Pointer Events, igual que el
+       carrusel de áreas): pausa el avance automático y deja explorar la
+       cinta a mano. El offset es el mismo que usa el bucle automático, así
+       que al soltar continúa sin saltos desde donde quedó, sin encajar en
+       ninguna tarjeta fija. -- */
+    var isDragging = false;
+    var dragStartX = 0;
+    var dragStartOffset = 0;
+
+    viewport.addEventListener('pointerdown', function(e){
+      if(e.pointerType === 'mouse' && e.button !== 0) return;
+      isDragging = true;
+      pausedByDrag = true;
+      dragStartX = e.clientX;
+      dragStartOffset = offset;
+      viewport.classList.add('is-dragging');
+      sync();
+      try{ viewport.setPointerCapture(e.pointerId); }catch(err){}
+    });
+    viewport.addEventListener('pointermove', function(e){
+      if(!isDragging) return;
+      offset = dragStartOffset - (e.clientX - dragStartX);
+      wrap();
+      render();
+    });
+    function endDrag(){
+      if(!isDragging) return;
+      isDragging = false;
+      viewport.classList.remove('is-dragging');
+      pausedByDrag = false;
+      sync();
+    }
+    viewport.addEventListener('pointerup', endDrag);
+    viewport.addEventListener('pointercancel', endDrag);
+
+    /* -- Botón de pausa/reanudación manual: la única pausa que no se
+       levanta sola (hover/foco/arrastre se reanudan al soltar; esta la
+       deshace un segundo clic). -- */
+    var toggle = section.querySelector('[data-reviews-toggle]');
+    var label = toggle ? toggle.querySelector('.google-reviews__toggle-label') : null;
+    if(toggle){
+      toggle.addEventListener('click', function(){
+        pausedByToggle = !pausedByToggle;
+        toggle.setAttribute('aria-pressed', pausedByToggle ? 'true' : 'false');
+        if(label) label.textContent = pausedByToggle ? 'Reanudar movimiento' : 'Pausar movimiento';
+        sync();
+      });
+    }
+
+    /* -- Recalcula el ancho de una vuelta si cambia el layout (resize,
+       cambio de breakpoint del ancho en % de las tarjetas). -- */
+    var resizeTimer = null;
+    window.addEventListener('resize', function(){
+      clearTimeout(resizeTimer);
+      resizeTimer = setTimeout(function(){ measure(); wrap(); render(); }, 150);
+    });
+
+    render();
+    sync();
+  }catch(e){ console.warn('googleReviewsMarquee', e); }
+})();

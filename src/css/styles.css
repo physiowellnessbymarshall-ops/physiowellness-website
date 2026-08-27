@@ -865,12 +865,17 @@ a:focus-visible,button:focus-visible,input:focus-visible{
 
 /* La cinta se desborda del ancho del .container del encabezado (1240px)
    pero no del documento: .google-reviews (la <section>) no tiene
-   max-width propio, así que la <ul> hereda el 100% del ancho del body.
-   El scroll horizontal queda contenido en la propia lista
-   (overflow-x:auto), nunca en html/body. */
-.google-reviews__list{
-  list-style:none;margin:0;
-  display:flex;gap:var(--sp-6);
+   max-width propio, así que el viewport hereda el 100% del ancho del
+   body. El scroll horizontal queda contenido en este viewport
+   (overflow-x:auto), nunca en html/body.
+   Estado base (sin JS / prefers-reduced-motion): overflow-x:auto, así
+   la única lista real es explorable a mano igual que en la fase
+   anterior. googleReviewsMarquee (main.js) añade "has-marquee" a la
+   sección solo cuando consigue clonar la lista y arrancar el
+   movimiento continuo; solo entonces se sustituye el scroll nativo por
+   overflow:hidden + arrastre propio (misma cinta, ahora animada). */
+.google-reviews__viewport{
+  width:100%;
   padding-block:var(--sp-2);
   padding-inline:clamp(1.5rem,4vw,2.75rem);
   overflow-x:auto;
@@ -880,9 +885,37 @@ a:focus-visible,button:focus-visible,input:focus-visible{
   scrollbar-width:thin;
   scrollbar-color:var(--pw-primary) transparent;
 }
-.google-reviews__list::-webkit-scrollbar{height:6px;}
-.google-reviews__list::-webkit-scrollbar-thumb{background:var(--pw-line);border-radius:999px;}
-.google-reviews__list::-webkit-scrollbar-thumb:hover{background:var(--pw-primary);}
+.google-reviews__viewport::-webkit-scrollbar{height:6px;}
+.google-reviews__viewport::-webkit-scrollbar-thumb{background:var(--pw-line);border-radius:999px;}
+.google-reviews__viewport::-webkit-scrollbar-thumb:hover{background:var(--pw-primary);}
+.google-reviews.has-marquee .google-reviews__viewport{
+  overflow:hidden;
+  scroll-snap-type:none;
+  cursor:grab;
+}
+.google-reviews.has-marquee .google-reviews__viewport.is-dragging{cursor:grabbing;}
+
+/* El rail agrupa la lista real y (solo por JS) su duplicado; ambas son
+   a su vez flex rows, así que rail > [ul, ul-clon] queda en una única
+   fila continua. El mismo valor de gap en rail y en la lista mantiene
+   la separación constante también en la costura entre una vuelta y la
+   siguiente, que es lo que evita un salto visible en el bucle.
+   Deliberadamente sin width:max-content en el rail: cada <ul> reclama
+   flex:0 0 100% (el 100% del ancho, ya definido, del viewport), para
+   que los anchos en % de .google-review-card sigan resolviendo contra
+   un contenedor de ancho fijo y no un ancestro "shrink-to-fit" — si no,
+   los porcentajes de las tarjetas dejarían de calcularse bien en cuanto
+   hubiera dos listas en fila. */
+.google-reviews__rail{
+  display:flex;gap:var(--sp-6);
+  will-change:transform;
+}
+.google-reviews__list{
+  list-style:none;margin:0;padding:0;
+  display:flex;gap:var(--sp-6);
+  flex:0 0 100%;
+  min-width:0;
+}
 
 /* Anchos por tarjeta pensados en proporción (% del ancho visible de la
    cinta), no en px fijos, para que la relación "tres completas + un
@@ -932,8 +965,50 @@ a:focus-visible,button:focus-visible,input:focus-visible{
 .google-review-card__author{font-size:.78rem;letter-spacing:.06em;text-transform:uppercase;color:var(--pw-ink-70);font-weight:500;}
 .google-review-card__source{font-size:.72rem;color:var(--pw-ink-50);}
 
+/* Botón de pausa/reanudación: pequeño, presente desde el HTML (evita CLS
+   al no ser inyectado) pero oculto hasta que .js confirme que el script
+   se ejecutó — sin JS no hay nada que pausar. Mismo icono de dos barras
+   / triángulo que .problem-ticker__toggle, por coherencia visual, con
+   sus propias clases para no acoplar ambos componentes. */
+.google-reviews__toggle{
+  display:none;
+  align-items:center;gap:.5rem;
+  margin-top:var(--sp-6);
+  padding:.45rem .85rem;
+  border:1px solid var(--pw-line);
+  border-radius:999px;
+  background:var(--pw-white);
+  color:var(--pw-ink-70);
+  font-size:var(--fs-small);
+  cursor:pointer;
+  transition:background .2s ease,color .2s ease,border-color .2s ease;
+}
+.js .google-reviews__toggle{display:inline-flex;}
+.google-reviews__toggle:hover,.google-reviews__toggle:focus-visible{
+  background:var(--pw-primary);border-color:var(--pw-primary);color:var(--pw-white);
+}
+.google-reviews__toggle-icon{position:relative;width:.7rem;height:.7rem;flex:0 0 auto;}
+.google-reviews__toggle-icon::before,.google-reviews__toggle-icon::after{
+  content:"";position:absolute;top:0;bottom:0;width:2px;background:currentColor;
+}
+.google-reviews__toggle-icon::before{left:1px;}
+.google-reviews__toggle-icon::after{right:1px;}
+.google-reviews__toggle[aria-pressed="true"] .google-reviews__toggle-icon{
+  width:0;height:0;
+  border-left:.6rem solid currentColor;border-top:.4rem solid transparent;border-bottom:.4rem solid transparent;
+}
+.google-reviews__toggle[aria-pressed="true"] .google-reviews__toggle-icon::before,
+.google-reviews__toggle[aria-pressed="true"] .google-reviews__toggle-icon::after{content:none;}
+
+/* Con prefers-reduced-motion, googleReviewsMarquee (main.js) no arranca
+   el bucle continuo (misma lógica que problemTicker/areaCarousel: sale
+   antes de tocar el DOM si prefersReducedMotion es true). El botón de
+   pausa no tiene nada que controlar en ese caso, así que se oculta aquí
+   con !important aunque .js ya lo hubiera revelado. */
 @media (prefers-reduced-motion:reduce){
-  .google-reviews__list{scroll-behavior:auto;}
+  .google-reviews__viewport{scroll-behavior:auto;}
+  .google-reviews__toggle{display:none!important;}
+  .google-reviews__rail{transform:none!important;}
 }
 
 /* ---------- 16. Ubicación y contacto ---------- */
@@ -2273,7 +2348,7 @@ a:focus-visible,button:focus-visible,input:focus-visible{
     align-items:center;
   }
   .page-physio .page-hero__photo{aspect-ratio:3/4;}
-  .page-physio .page-hero__photo img{object-position:65% center;}
+  .page-physio .page-hero__photo img{object-position:20% center;}
 }
 
 /* ----- "Cuándo empezar por aquí": texto + fotografía de referencia -----

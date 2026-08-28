@@ -800,31 +800,38 @@ var prefersReducedMotion = window.matchMedia && window.matchMedia('(prefers-redu
     var track = section.querySelector('[data-reviews-track]');
     if(!viewport || !rail || !track) return;
 
-    var clone = track.cloneNode(true);
-    clone.removeAttribute('data-reviews-track');
-    clone.setAttribute('aria-hidden', 'true');
-    clone.setAttribute('inert', '');
-    rail.appendChild(clone);
-    section.classList.add('has-marquee');
+    /* -- Móvil (<768px, igual que el breakpoint de tablet en CSS): sin
+       bucle automático. Con una sola tarjeta casi completa por pantalla
+       leer mientras la cinta se mueve sola es incómodo, así que ahí se
+       queda en el mismo estado que sin JS / reduced-motion: scroll
+       horizontal nativo, sin clon, sin transform, botón de pausa oculto
+       (nada que pausar). marqueeEnabled decide en qué modo está la
+       sección; se reevalúa en cada resize/orientationchange, no solo al
+       cargar, para que rotar el dispositivo o cambiar de ventana cruce
+       el umbral sin tener que recargar la página. -- */
+    var MOBILE_MAX = 767;
+    var mobileMq = window.matchMedia ? window.matchMedia('(max-width:' + MOBILE_MAX + 'px)') : null;
+    var marqueeEnabled = false;
+    var clone = null;
 
     var SPEED = 32; /* px/s: lento y constante, no un carrusel de diapositivas */
     var offset = 0;
     var setWidth = 0;
 
     function measure(){
+      if(!clone) return;
       var a = track.getBoundingClientRect();
       var b = clone.getBoundingClientRect();
       var w = b.left - a.left;
       if(w > 0) setWidth = w;
     }
-    measure();
 
     function wrap(){
       if(setWidth <= 0) return;
       offset = ((offset % setWidth) + setWidth) % setWidth;
     }
     function render(){
-      rail.style.transform = 'translateX(-' + offset + 'px)';
+      rail.style.transform = marqueeEnabled ? 'translateX(-' + offset + 'px)' : 'none';
     }
 
     /* -- Motivos de pausa: hover, foco, arrastre, pestaña oculta, fuera de
@@ -840,7 +847,7 @@ var prefersReducedMotion = window.matchMedia && window.matchMedia('(prefers-redu
     var pausedByIntersection = true; /* hasta que el observer confirme visibilidad */
 
     function shouldRun(){
-      return !(pausedByHover || pausedByFocus || pausedByDrag || pausedByToggle ||
+      return marqueeEnabled && !(pausedByHover || pausedByFocus || pausedByDrag || pausedByToggle ||
         pausedByVisibility || pausedByIntersection);
     }
 
@@ -865,6 +872,48 @@ var prefersReducedMotion = window.matchMedia && window.matchMedia('(prefers-redu
     }
     function sync(){
       if(shouldRun()) start(); else stop();
+    }
+
+    /* -- Crea/retira el clon inert+aria-hidden que hace el bucle sin
+       costuras. Solo existe mientras marqueeEnabled es true: en móvil no
+       tiene sentido duplicar 6 reseñas en el DOM si nunca se anima. -- */
+    function createClone(){
+      if(clone) return;
+      clone = track.cloneNode(true);
+      clone.removeAttribute('data-reviews-track');
+      clone.setAttribute('aria-hidden', 'true');
+      clone.setAttribute('inert', '');
+      rail.appendChild(clone);
+      measure();
+    }
+    function removeClone(){
+      if(!clone) return;
+      rail.removeChild(clone);
+      clone = null;
+      setWidth = 0;
+    }
+
+    function enableMarquee(){
+      if(marqueeEnabled) return;
+      marqueeEnabled = true;
+      createClone();
+      offset = 0;
+      section.classList.add('has-marquee');
+      render();
+      sync();
+    }
+    function disableMarquee(){
+      if(!marqueeEnabled) return;
+      marqueeEnabled = false;
+      stop();
+      section.classList.remove('has-marquee');
+      removeClone();
+      offset = 0;
+      render();
+    }
+    function applyResponsiveMode(){
+      var isMobile = !!(mobileMq && mobileMq.matches);
+      if(isMobile) disableMarquee(); else enableMarquee();
     }
 
     /* -- Pasar el cursor por la cinta. -- */
@@ -903,12 +952,15 @@ var prefersReducedMotion = window.matchMedia && window.matchMedia('(prefers-redu
        carrusel de áreas): pausa el avance automático y deja explorar la
        cinta a mano. El offset es el mismo que usa el bucle automático, así
        que al soltar continúa sin saltos desde donde quedó, sin encajar en
-       ninguna tarjeta fija. -- */
+       ninguna tarjeta fija. En móvil (marqueeEnabled=false) no se activa:
+       ahí el gesto horizontal lo resuelve el scroll nativo del viewport
+       (overflow-x:auto), que no bloquea el scroll vertical de la página. -- */
     var isDragging = false;
     var dragStartX = 0;
     var dragStartOffset = 0;
 
     viewport.addEventListener('pointerdown', function(e){
+      if(!marqueeEnabled) return;
       if(e.pointerType === 'mouse' && e.button !== 0) return;
       isDragging = true;
       pausedByDrag = true;
@@ -949,14 +1001,25 @@ var prefersReducedMotion = window.matchMedia && window.matchMedia('(prefers-redu
     }
 
     /* -- Recalcula el ancho de una vuelta si cambia el layout (resize,
-       cambio de breakpoint del ancho en % de las tarjetas). -- */
+       cambio de breakpoint del ancho en % de las tarjetas) y, sobre todo,
+       revisa si el ancho cruzó el umbral móvil/tablet para activar o
+       desactivar el bucle en caliente (sin recargar). orientationchange
+       se escucha aparte porque en algunos navegadores dispara antes de
+       que matchMedia/innerWidth reflejen el nuevo tamaño; el timeout
+       compartido con resize le da margen a que el layout se asiente. -- */
     var resizeTimer = null;
-    window.addEventListener('resize', function(){
+    function scheduleResponsiveCheck(){
       clearTimeout(resizeTimer);
-      resizeTimer = setTimeout(function(){ measure(); wrap(); render(); }, 150);
-    });
+      resizeTimer = setTimeout(function(){
+        applyResponsiveMode();
+        measure();
+        wrap();
+        render();
+      }, 150);
+    }
+    window.addEventListener('resize', scheduleResponsiveCheck);
+    window.addEventListener('orientationchange', scheduleResponsiveCheck);
 
-    render();
-    sync();
+    applyResponsiveMode();
   }catch(e){ console.warn('googleReviewsMarquee', e); }
 })();

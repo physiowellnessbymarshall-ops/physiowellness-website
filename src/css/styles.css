@@ -570,44 +570,66 @@ a:focus-visible,button:focus-visible,input:focus-visible{
   .orient__item{flex-direction:column;align-items:flex-start;gap:var(--sp-3);}
 }
 
-/* ---------- 10. Las cuatro áreas ---------- */
-.areas{padding-block:var(--sp-32);background:var(--pw-white);}
-.areas__head{max-width:40rem;margin-bottom:var(--sp-16);}
-.areas__grid{
-  display:grid;grid-template-columns:1fr;gap:1px;
-  background:var(--pw-line);border:1px solid var(--pw-line);
-}
-@media (min-width:720px){ .areas__grid{grid-template-columns:repeat(2,1fr);} }
-@media (min-width:1100px){ .areas__grid{grid-template-columns:repeat(4,1fr);} }
+/* ---------- 10. Servicios ----------
+   Fase actual: recorrido vertical normal, sin scroll horizontal fijado.
+   El marcado (grid de 4 .service-panel + panel de transición) queda listo
+   para que una fase posterior añada position:sticky + traslación por scroll
+   sin reescribir el HTML, pero hoy no depende de JavaScript. */
+.services{padding-block:var(--sp-32);background:var(--pw-white);}
+.services__head{max-width:40rem;margin-bottom:var(--sp-16);}
 
-.area-card{
-  background:var(--pw-white);
-  padding:var(--sp-10) var(--sp-6);
-  display:flex;flex-direction:column;gap:var(--sp-6);
-  transition:background-color var(--dur-med) var(--ease-out), color var(--dur-med) var(--ease-out);
+.services__grid{
+  display:grid;grid-template-columns:1fr;gap:var(--sp-10);
+}
+@media (min-width:720px){ .services__grid{grid-template-columns:repeat(2,1fr);gap:var(--sp-8);} }
+@media (min-width:1100px){ .services__grid{grid-template-columns:repeat(4,1fr);gap:var(--sp-6);} }
+
+.service-panel{
+  display:flex;flex-direction:column;
+  border:1px solid var(--pw-line);
   scroll-margin-top:6rem;
 }
-.area-card:hover{background:var(--pw-primary-900);color:var(--pw-white);}
-.area-card__head{display:flex;flex-direction:column;gap:.5rem;}
-.area-card__num{font-size:.72rem;letter-spacing:.14em;color:var(--pw-primary);}
-.area-card:hover .area-card__num{color:#8fd9c9;}
-.area-card__title{font-size:1.5rem;font-weight:500;line-height:1.15;}
-.area-card__desc{font-size:.92rem;color:var(--pw-ink-70);flex-grow:1;}
-.area-card:hover .area-card__desc{color:rgba(255,255,255,.82);}
-.area-card__cta{
-  font-size:.7rem;letter-spacing:.12em;text-transform:uppercase;
-  display:inline-flex;align-items:center;gap:.5rem;color:var(--pw-primary);
-}
-.area-card:hover .area-card__cta{color:#8fd9c9;}
+.service-panel__media{aspect-ratio:4/3;overflow:hidden;background:var(--pw-mist);}
+.service-panel__img{width:100%;height:100%;object-fit:cover;}
+.service-panel__img--physio{object-position:58% 32%;}
+.service-panel__img--wellness{object-position:70% 32%;}
+.service-panel__img--strength{object-position:46% 35%;}
+.service-panel__img--pilates{object-position:42% 30%;}
 
-.areas__note{
-  margin-top:var(--sp-10);
+.service-panel__body{
+  display:flex;flex-direction:column;gap:var(--sp-3);
+  padding:var(--sp-6);flex-grow:1;
+}
+.service-panel__num{font-size:.72rem;letter-spacing:.14em;color:var(--pw-primary);}
+.service-panel__title{font-size:1.35rem;font-weight:500;line-height:1.15;}
+.service-panel__hook{font-size:.95rem;color:var(--pw-ink-70);}
+.service-panel__benefits{display:flex;flex-direction:column;gap:.4rem;margin-top:.15rem;}
+.service-panel__benefits li{
+  position:relative;padding-left:1rem;
+  font-size:.85rem;color:var(--pw-ink-70);
+}
+.service-panel__benefits li::before{
+  content:"";position:absolute;left:0;top:.5em;
+  width:.3rem;height:.3rem;border-radius:50%;
+  background:var(--pw-accent);
+}
+.service-panel__cta{
+  margin-top:auto;padding-top:var(--sp-3);
+  display:inline-flex;align-items:center;gap:.5rem;
+  font-size:.7rem;letter-spacing:.12em;text-transform:uppercase;
+  color:var(--pw-primary);
+}
+.service-panel__cta svg{transition:transform var(--dur-fast) var(--ease-out);}
+.service-panel__cta:hover svg,.service-panel__cta:focus-visible svg{transform:translateX(4px);}
+
+/* Panel final de transición: servicio complementario + puente hacia Method */
+.services__transition{margin-top:var(--sp-16);}
+.services__transition-note{
   font-size:.95rem;color:var(--pw-ink-70);
   max-width:56ch;
 }
 
-/* Servicio complementario: jerarquía inferior a las cuatro áreas */
-.areas__extra{
+.services__transition-extra{
   margin-top:var(--sp-10);
   background:var(--pw-mist);
   border-left:2px solid var(--pw-primary);
@@ -616,31 +638,40 @@ a:focus-visible,button:focus-visible,input:focus-visible{
   align-items:flex-start;
 }
 @media (min-width:720px){
-  .areas__extra{flex-direction:row;align-items:center;justify-content:space-between;gap:var(--sp-6);}
+  .services__transition-extra{flex-direction:row;align-items:center;justify-content:space-between;gap:var(--sp-6);}
 }
-.areas__extra-text{max-width:52ch;}
-.areas__extra-label{
+.services__transition-extra-text{max-width:52ch;}
+.services__transition-extra-label{
   font-size:.68rem;letter-spacing:.12em;text-transform:uppercase;
   color:var(--pw-ink-70);
 }
-.areas__extra-title{
+.services__transition-extra-title{
   margin-top:.35rem;
   font-size:1.05rem;font-weight:500;line-height:1.3;letter-spacing:normal;
 }
-.areas__extra-desc{margin-top:.35rem;font-size:.9rem;color:var(--pw-ink-70);}
-.areas__extra-cta{
+.services__transition-extra-desc{margin-top:.35rem;font-size:.9rem;color:var(--pw-ink-70);}
+.services__transition-extra-cta{
   flex-shrink:0;
   font-size:.7rem;letter-spacing:.12em;text-transform:uppercase;
   color:var(--pw-primary);
 }
 
-.areas__all{margin-top:var(--sp-6);}
-.areas__all-link{
+.services__transition-all{margin-top:var(--sp-6);}
+.services__transition-all-link{
   display:inline-block;
   font-size:.75rem;letter-spacing:.12em;text-transform:uppercase;
   color:var(--pw-primary);
   border-bottom:1px solid currentColor;
   padding-bottom:.25rem;
+}
+
+.services__transition-bridge{
+  margin-top:var(--sp-12);
+  padding-top:var(--sp-10);
+  border-top:1px solid var(--pw-line);
+  font-size:1.05rem;font-weight:500;
+  color:var(--pw-ink);
+  max-width:48ch;
 }
 
 /* ---------- 11. The Marshall Method ---------- */
@@ -892,6 +923,13 @@ a:focus-visible,button:focus-visible,input:focus-visible{
   overflow:hidden;
   scroll-snap-type:none;
   cursor:grab;
+  /* pan-y: un dedo que empieza sobre la cinta puede seguir haciendo scroll
+     vertical de la página con normalidad; solo el gesto horizontal queda
+     disponible para el arrastre propio (Pointer Events), que nunca llama
+     preventDefault. En móvil esta clase no llega a aplicarse (ver
+     googleReviewsMarquee/disableMarquee en main.js), así que ahí el
+     desplazamiento es 100% nativo sin necesidad de esta regla. */
+  touch-action:pan-y;
 }
 .google-reviews.has-marquee .google-reviews__viewport.is-dragging{cursor:grabbing;}
 
@@ -923,7 +961,7 @@ a:focus-visible,button:focus-visible,input:focus-visible{
    más anchas (>1600px), tal como pide la comprobación visual. */
 .google-review-card{
   scroll-snap-align:start;
-  flex:0 0 82%;
+  flex:0 0 90%;
   min-width:0;
   background:var(--pw-white);
   border:1px solid var(--pw-line);
@@ -932,8 +970,13 @@ a:focus-visible,button:focus-visible,input:focus-visible{
   padding:var(--sp-8);
   display:flex;flex-direction:column;gap:var(--sp-5);
 }
-@media (min-width:640px){ .google-review-card{flex-basis:46%;} }
-@media (min-width:1080px){ .google-review-card{flex-basis:29%;} }
+/* 90% en móvil deja un fragmento de ~11% del ancho de la siguiente
+   tarjeta asomando (antes 82%/22%, demasiado protagonismo para ser "una
+   pista pequeña"). 768px es el arranque de tablet (2 completas + parte
+   de una tercera con 46%); 1024px el de escritorio (3 completas + un
+   fragmento con 29%), alineados con los puntos de prueba pedidos. */
+@media (min-width:768px){ .google-review-card{flex-basis:46%;} }
+@media (min-width:1024px){ .google-review-card{flex-basis:29%;} }
 /* Algunas tarjetas (2 de 6) llevan un degradado verde muy sutil en la
    esquina, como única variación de fondo; el resto queda en blanco
    liso para que el verde siga usándose con moderación. */
@@ -963,7 +1006,7 @@ a:focus-visible,button:focus-visible,input:focus-visible{
    a la cita (que es el contenido principal de la tarjeta): tamaño
    menor y color atenuado en vez del --pw-ink de cuerpo de texto. */
 .google-review-card__author{font-size:.78rem;letter-spacing:.06em;text-transform:uppercase;color:var(--pw-ink-70);font-weight:500;}
-.google-review-card__source{font-size:.72rem;color:var(--pw-ink-50);}
+.google-review-card__source{font-size:.72rem;color:var(--pw-ink-70);}
 
 /* Botón de pausa/reanudación: pequeño, presente desde el HTML (evita CLS
    al no ser inyectado) pero oculto hasta que .js confirme que el script
@@ -983,7 +1026,11 @@ a:focus-visible,button:focus-visible,input:focus-visible{
   cursor:pointer;
   transition:background .2s ease,color .2s ease,border-color .2s ease;
 }
-.js .google-reviews__toggle{display:inline-flex;}
+/* Solo visible cuando googleReviewsMarquee confirma que el bucle
+   automático está activo (escritorio/tablet, sin reduced-motion): en
+   móvil marqueeEnabled es siempre false (ver disableMarquee en main.js)
+   y no hay nada que pausar, así que el botón no llega a mostrarse. */
+.google-reviews.has-marquee .google-reviews__toggle{display:inline-flex;}
 .google-reviews__toggle:hover,.google-reviews__toggle:focus-visible{
   background:var(--pw-primary);border-color:var(--pw-primary);color:var(--pw-white);
 }
@@ -1002,9 +1049,13 @@ a:focus-visible,button:focus-visible,input:focus-visible{
 
 /* Con prefers-reduced-motion, googleReviewsMarquee (main.js) no arranca
    el bucle continuo (misma lógica que problemTicker/areaCarousel: sale
-   antes de tocar el DOM si prefersReducedMotion es true). El botón de
-   pausa no tiene nada que controlar en ese caso, así que se oculta aquí
-   con !important aunque .js ya lo hubiera revelado. */
+   antes de tocar el DOM si prefersReducedMotion es true), así que
+   has-marquee nunca se añade y el botón ya queda oculto por la regla
+   base (.google-reviews.has-marquee .google-reviews__toggle). El
+   !important de aquí es un cinturón de seguridad, no la única barrera:
+   nada que pausar, así que no hace falta el control; el resto del
+   contenido (nombre, puntuación, procedencia, etiqueta y las 6 reseñas
+   completas) sigue visible y navegable a mano vía scroll nativo. */
 @media (prefers-reduced-motion:reduce){
   .google-reviews__viewport{scroll-behavior:auto;}
   .google-reviews__toggle{display:none!important;}
@@ -2348,7 +2399,7 @@ a:focus-visible,button:focus-visible,input:focus-visible{
     align-items:center;
   }
   .page-physio .page-hero__photo{aspect-ratio:3/4;}
-  .page-physio .page-hero__photo img{object-position:20% center;}
+  .page-physio .page-hero__photo img{object-position:65% center;}
 }
 
 /* ----- "Cuándo empezar por aquí": texto + fotografía de referencia -----

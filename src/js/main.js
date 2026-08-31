@@ -431,6 +431,332 @@ var prefersReducedMotion = window.matchMedia && window.matchMedia('(prefers-redu
   }
 })();
 
+/* ---------- Franja de confianza: conteo suave de las cifras ----------
+   Solo anima los dos valores numéricos (10+, 1.500+); "Atención individual"
+   y "Sitges" ya reciben su entrada sutil del [data-reveal] genérico que
+   envuelve toda la lista (revealOnScroll(), justo arriba). Dispara una
+   única vez al entrar en viewport — mismo patrón "un solo disparo" que
+   revealOnScroll(): se desconecta el observer tras animar, así nunca se
+   repite al subir/bajar por la página. Con prefers-reduced-motion, salta
+   directo al valor final sin animar cifra a cifra. */
+(function trustCounters(){
+  try{
+    var counters = document.querySelectorAll('[data-count-to]');
+    if(!counters.length) return;
+
+    var format = function(n){
+      return String(n).replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+    };
+
+    var setFinal = function(el){
+      var target = parseInt(el.getAttribute('data-count-to'), 10) || 0;
+      var suffix = el.getAttribute('data-count-suffix') || '';
+      el.textContent = format(target) + suffix;
+    };
+
+    if(prefersReducedMotion){
+      counters.forEach(setFinal);
+      return;
+    }
+
+    var DURATION = 900; /* ms: corta y elegante, alineada con --dur-slow */
+    var easeOutCubic = function(t){ return 1 - Math.pow(1 - t, 3); };
+
+    var animate = function(el){
+      var target = parseInt(el.getAttribute('data-count-to'), 10) || 0;
+      var suffix = el.getAttribute('data-count-suffix') || '';
+      var start = null;
+
+      var step = function(now){
+        if(start === null) start = now;
+        var progress = Math.min((now - start) / DURATION, 1);
+        var value = Math.round(target * easeOutCubic(progress));
+        el.textContent = format(value) + suffix;
+        if(progress < 1) window.requestAnimationFrame(step);
+        else setFinal(el);
+      };
+      window.requestAnimationFrame(step);
+    };
+
+    var run = function(){ counters.forEach(animate); };
+
+    var list = document.querySelector('.trust__list');
+    if('IntersectionObserver' in window && list){
+      var io = new IntersectionObserver(function(entries, obs){
+        entries.forEach(function(entry){
+          if(entry.isIntersecting){
+            run();
+            obs.disconnect();
+          }
+        });
+      }, {threshold:.4});
+      io.observe(list);
+    } else {
+      run();
+    }
+  }catch(e){
+    console.warn('trustCounters', e);
+    document.querySelectorAll('[data-count-to]').forEach(function(el){
+      var target = parseInt(el.getAttribute('data-count-to'), 10) || 0;
+      var suffix = el.getAttribute('data-count-suffix') || '';
+      el.textContent = String(target).replace(/\B(?=(\d{3})+(?!\d))/g, '.') + suffix;
+    });
+  }
+})();
+
+/* ---------- Servicios: escenario fijado con recorrido horizontal ----------
+   En escritorio amplio (≥1100px, sin motion reducido y con desbordamiento
+   horizontal suficiente) el scroll vertical dentro de .services__pin-wrap
+   mueve el riel de paneles con transform en vez de dejarlo como scroll
+   horizontal normal: .services__pin-inner se queda fijo (position:sticky,
+   ya resuelto en CSS) mientras el wrap tiene la altura extra necesaria
+   para cubrir el recorrido horizontal completo. La rueda, el trackpad y el
+   touch nunca se interceptan: todo el efecto es una función pura de la
+   posición de scroll vertical ya existente (mismo patrón que
+   methodSequence(), leída de forma pasiva y aplicada con
+   requestAnimationFrame). Sin JS, por debajo de 1100px, con motion
+   reducido, o si no hay desbordamiento suficiente, la sección se queda tal
+   cual: un riel de scroll horizontal nativo (ver CSS, mismo patrón que
+   .google-reviews__viewport). */
+(function servicesPinScroll(){
+  try{
+    var section = document.querySelector('.services');
+    var pinWrap = section && section.querySelector('[data-services-pin]');
+    var pinInner = pinWrap && pinWrap.querySelector('.services__pin-inner');
+    var viewport = pinWrap && pinWrap.querySelector('[data-services-viewport]');
+    var grid = pinWrap && pinWrap.querySelector('[data-services-track]');
+    var header = document.getElementById('site-header');
+    if(!section || !pinWrap || !pinInner || !viewport || !grid || !header) return;
+    if(!window.matchMedia) return;
+
+    var panels = grid.querySelectorAll('.service-panel');
+    var transitionEl = grid.querySelector('.services__transition');
+    if(!panels.length || !transitionEl) return;
+    /* Las cinco "paradas" del riel: los cuatro servicios + el panel de
+       transición. Flechas, teclado y el indicador 01/04 trabajan siempre
+       sobre este mismo array, tanto en modo fijado como en el riel nativo
+       de respaldo, para no duplicar la lógica de sincronización. */
+    var stopEls = Array.prototype.slice.call(panels).concat([transitionEl]);
+
+    var progressWrap = section.querySelector('[data-services-progress]');
+    var progressCurrent = section.querySelector('.services__progress-current');
+    var prevBtn = section.querySelector('[data-services-prev]');
+    var nextBtn = section.querySelector('[data-services-next]');
+
+    var mq = window.matchMedia('(min-width:1100px)');
+
+    var active = false;
+    var maxTranslate = 0;
+    var headerOffset = 0;
+    var ticking = false;
+    var fallbackTicking = false;
+    var stopTargets = [];
+    var currentIndex = 0;
+
+    var resetInline = function(){
+      pinWrap.style.height = '';
+      pinInner.style.height = '';
+      grid.style.transform = '';
+      section.classList.remove('is-pin-active');
+    };
+
+    var deactivate = function(){
+      if(!active) return;
+      active = false;
+      resetInline();
+    };
+
+    /* Traduce el índice de parada (0-3 = servicios, 4 = panel de
+       transición) al texto "01/04"…"04/04" y al estado disabled/is-final
+       de flechas e indicador. Es el único punto que toca ese estado, tanto
+       si lo dispara el scroll (fijado o riel nativo) como un clic o una
+       tecla, para que nunca queden desincronizados entre sí. */
+    var updateNav = function(index){
+      currentIndex = index;
+      var hasOverflow = maxTranslate > 0;
+
+      if(progressCurrent){
+        var label = index < 4 ? '0' + (index + 1) : '04';
+        if(progressCurrent.textContent !== label) progressCurrent.textContent = label;
+      }
+      if(progressWrap) progressWrap.classList.toggle('is-final', index >= 4);
+
+      if(prevBtn) prevBtn.disabled = !hasOverflow || index <= 0;
+      if(nextBtn) nextBtn.disabled = !hasOverflow || index >= stopEls.length - 1;
+    };
+
+    var nearestStopIndex = function(scrolled){
+      var best = 0;
+      var bestDist = Infinity;
+      for(var i = 0; i < stopTargets.length; i++){
+        var d = Math.abs(scrolled - stopTargets[i]);
+        if(d < bestDist){ bestDist = d; best = i; }
+      }
+      return best;
+    };
+
+    /* aplica el progreso actual del escenario fijado: se llama tanto en
+       cada frame de scroll como justo después de (re)activar, para no
+       dejar un frame con el riel desalineado respecto al scroll real */
+    var applyProgress = function(){
+      ticking = false;
+      if(!active) return;
+
+      var rect = pinWrap.getBoundingClientRect();
+      var scrolled = headerOffset - rect.top;
+      scrolled = Math.min(Math.max(scrolled, 0), maxTranslate);
+      grid.style.transform = 'translate3d(' + (-scrolled) + 'px,0,0)';
+
+      updateNav(nearestStopIndex(scrolled));
+    };
+
+    var onScroll = function(){
+      if(!active || ticking) return;
+      ticking = true;
+      window.requestAnimationFrame(applyProgress);
+    };
+
+    /* Modo de respaldo (por debajo de 1100px, motion reducido, o sin
+       desbordamiento suficiente): el riel es el scroll horizontal nativo
+       de .services__viewport; aquí solo mantenemos el indicador y las
+       flechas sincronizados con scrollLeft, sin tocar transform ni la
+       altura del wrap. */
+    var applyFallbackNav = function(){
+      fallbackTicking = false;
+      if(active) return;
+      updateNav(nearestStopIndex(viewport.scrollLeft));
+    };
+
+    var onViewportScroll = function(){
+      if(active || fallbackTicking) return;
+      fallbackTicking = true;
+      window.requestAnimationFrame(applyFallbackNav);
+    };
+
+    /* Mide el contenido real y decide si el modo fijado tiene sentido, y
+       recalcula las cinco paradas a partir de la posición real de cada
+       panel (offsetLeft, no afectado por el transform aplicado al riel),
+       nunca de valores fijos dependientes de una resolución concreta. */
+    var measure = function(){
+      var firstEl = stopEls[0];
+      var stageWidth = viewport.clientWidth;
+      var railWidth = grid.scrollWidth;
+      var maxT = Math.max(0, railWidth - stageWidth);
+      maxTranslate = maxT;
+
+      stopTargets = stopEls.map(function(el){
+        var raw = el.offsetLeft - firstEl.offsetLeft;
+        return Math.min(Math.max(raw, 0), maxT);
+      });
+
+      var canPin = mq.matches && !prefersReducedMotion && maxT > 0 && stageWidth;
+
+      if(!canPin){
+        deactivate();
+        applyFallbackNav();
+        return;
+      }
+
+      headerOffset = header.offsetHeight || 0;
+
+      var innerHeight = Math.max(window.innerHeight - headerOffset, 1);
+      var wrapHeight = innerHeight + maxTranslate;
+
+      document.documentElement.style.setProperty('--services-pin-top', headerOffset + 'px');
+      pinInner.style.height = innerHeight + 'px';
+      pinWrap.style.height = wrapHeight + 'px';
+      section.classList.add('is-pin-active');
+      active = true;
+
+      applyProgress();
+    };
+
+    /* Calcula el scrollY del documento que hace que el escenario fijado
+       muestre exactamente `target` px de recorrido horizontal, a partir de
+       la posición real (no hardcodeada) de .services__pin-wrap en el
+       documento en el momento del clic. */
+    var scrollYForTarget = function(target){
+      var docTop = pinWrap.getBoundingClientRect().top + window.pageYOffset;
+      return docTop + target - headerOffset;
+    };
+
+    /* Navegación manual: nunca mueve solo el transform. Desplaza el
+       scroll real (de la página en modo fijado, del viewport en modo
+       riel nativo) hasta la posición que corresponde a esa parada; el
+       propio listener de scroll se encarga de recolocar el riel y el
+       indicador según avanza la animación, así que estado visual, scroll
+       real y transform quedan siempre sincronizados. */
+    var goToStop = function(index){
+      index = Math.min(Math.max(index, 0), stopEls.length - 1);
+      var target = stopTargets[index];
+      if(target === undefined) return;
+      var behavior = prefersReducedMotion ? 'auto' : 'smooth';
+
+      updateNav(index);
+
+      if(active){
+        window.scrollTo({ top: scrollYForTarget(target), behavior: behavior });
+      } else {
+        viewport.scrollTo({ left: target, behavior: behavior });
+      }
+    };
+
+    var goPrev = function(){ goToStop(currentIndex - 1); };
+    var goNext = function(){ goToStop(currentIndex + 1); };
+
+    var isEditableTarget = function(el){
+      if(!el) return false;
+      var tag = el.tagName ? el.tagName.toLowerCase() : '';
+      return tag === 'input' || tag === 'textarea' || tag === 'select' || el.isContentEditable;
+    };
+
+    /* Flechas izquierda/derecha solo cuando la sección o sus controles
+       tienen el foco, y nunca si el usuario está escribiendo en un campo
+       editable en otra parte de la página. */
+    var onKeydown = function(e){
+      if(e.defaultPrevented || e.metaKey || e.ctrlKey || e.altKey) return;
+      if(isEditableTarget(document.activeElement)) return;
+      if(e.key === 'ArrowRight'){
+        e.preventDefault();
+        goNext();
+      } else if(e.key === 'ArrowLeft'){
+        e.preventDefault();
+        goPrev();
+      }
+    };
+
+    var resizeTimer = null;
+    var scheduleMeasure = function(){
+      if(resizeTimer) window.clearTimeout(resizeTimer);
+      resizeTimer = window.setTimeout(measure, 150);
+    };
+
+    if(prevBtn) prevBtn.addEventListener('click', goPrev);
+    if(nextBtn) nextBtn.addEventListener('click', goNext);
+    section.addEventListener('keydown', onKeydown);
+
+    measure();
+    window.addEventListener('scroll', onScroll, {passive:true});
+    viewport.addEventListener('scroll', onViewportScroll, {passive:true});
+    window.addEventListener('resize', scheduleMeasure);
+    window.addEventListener('orientationchange', scheduleMeasure);
+    window.addEventListener('load', scheduleMeasure);
+
+    if(document.fonts && document.fonts.ready){
+      document.fonts.ready.then(scheduleMeasure)['catch'](function(){});
+    }
+
+    if('ResizeObserver' in window){
+      var ro = new ResizeObserver(scheduleMeasure);
+      ro.observe(viewport);
+      ro.observe(grid);
+    }
+
+    if(mq.addEventListener) mq.addEventListener('change', scheduleMeasure);
+    else if(mq.addListener) mq.addListener(scheduleMeasure);
+  }catch(e){ console.warn('servicesPinScroll', e); }
+})();
+
 /* ---------- The Marshall Method: secuencia scroll-driven ---------- */
 (function methodSequence(){
   try{
@@ -760,26 +1086,6 @@ var prefersReducedMotion = window.matchMedia && window.matchMedia('(prefers-redu
   }catch(e){ console.warn('areaCarousel', e); }
 })();
 
-/* ---------- Cinta "Problemas y ámbitos que abordamos": pausa accesible ----------
-   La animación en sí es puro CSS (rail duplicado + keyframe), así que sigue
-   visible y en marcha aunque este script falle. El botón solo añade una
-   forma de pausar/reanudar sin depender del hover (útil en touch/teclado);
-   con prefers-reduced-motion el botón ya se oculta por CSS y no hace falta. */
-(function problemTicker(){
-  try{
-    var section = document.querySelector('.problem-ticker');
-    if(!section || prefersReducedMotion) return;
-    var toggle = section.querySelector('.problem-ticker__toggle');
-    var label = toggle ? toggle.querySelector('.problem-ticker__toggle-label') : null;
-    if(!toggle) return;
-    toggle.addEventListener('click', function(){
-      var paused = section.classList.toggle('is-paused');
-      toggle.setAttribute('aria-pressed', paused ? 'true' : 'false');
-      if(label) label.textContent = paused ? 'Reanudar animación' : 'Pausar animación';
-    });
-  }catch(e){ console.warn('problemTicker', e); }
-})();
-
 /* ---------- Cinta de reseñas de Google (Fisioterapia): movimiento continuo ----------
    Bucle infinito por transform, sin <marquee> ni librerías nuevas. La única
    lista semántica es [data-reviews-track] (las 6 reseñas reales); el
@@ -818,11 +1124,25 @@ var prefersReducedMotion = window.matchMedia && window.matchMedia('(prefers-redu
     var offset = 0;
     var setWidth = 0;
 
+    /* -- No se mide con "clone.left - track.left": esa distancia es la de
+       la CAJA flex de track (su flex-basis, ligado al ancho del rail), no
+       la del CONTENIDO real de sus tarjetas. Desde que .google-review-card
+       usa flex-basis en % pensados para que sobresalgan más tarjetas de
+       las que caben en esa caja ("tres completas + un fragmento"), el
+       contenido de track se desborda mucho más allá de su propia caja, así
+       que esa resta se queda corta y el clon empieza a solaparse con
+       tarjetas reales que aún no han terminado de desfilar. Se mide en su
+       lugar el tramo real: del borde izquierdo de la primera tarjeta al
+       borde derecho de la última, más un gap para mantener la misma
+       separación en la costura entre track y su clon. -- */
     function measure(){
       if(!clone) return;
-      var a = track.getBoundingClientRect();
-      var b = clone.getBoundingClientRect();
-      var w = b.left - a.left;
+      var cards = track.querySelectorAll('.google-review-card');
+      if(!cards.length) return;
+      var first = cards[0].getBoundingClientRect();
+      var last = cards[cards.length - 1].getBoundingClientRect();
+      var gap = parseFloat(getComputedStyle(track).columnGap) || 0;
+      var w = (last.right - first.left) + gap;
       if(w > 0) setWidth = w;
     }
 
@@ -835,19 +1155,17 @@ var prefersReducedMotion = window.matchMedia && window.matchMedia('(prefers-redu
     }
 
     /* -- Motivos de pausa: hover, foco, arrastre, pestaña oculta, fuera de
-       vista, y el botón manual. Cualquiera activo detiene el bucle; solo
-       cuando ninguno lo está, sigue avanzando. Nunca "encaja" en una
-       posición fija: al reanudar continúa desde el offset donde se
-       quedó. -- */
+       vista. Cualquiera activo detiene el bucle; solo cuando ninguno lo
+       está, sigue avanzando. Nunca "encaja" en una posición fija: al
+       reanudar continúa desde el offset donde se quedó. -- */
     var pausedByHover = false;
     var pausedByFocus = false;
     var pausedByDrag = false;
-    var pausedByToggle = false;
     var pausedByVisibility = document.hidden;
     var pausedByIntersection = true; /* hasta que el observer confirme visibilidad */
 
     function shouldRun(){
-      return marqueeEnabled && !(pausedByHover || pausedByFocus || pausedByDrag || pausedByToggle ||
+      return marqueeEnabled && !(pausedByHover || pausedByFocus || pausedByDrag ||
         pausedByVisibility || pausedByIntersection);
     }
 
@@ -985,20 +1303,6 @@ var prefersReducedMotion = window.matchMedia && window.matchMedia('(prefers-redu
     }
     viewport.addEventListener('pointerup', endDrag);
     viewport.addEventListener('pointercancel', endDrag);
-
-    /* -- Botón de pausa/reanudación manual: la única pausa que no se
-       levanta sola (hover/foco/arrastre se reanudan al soltar; esta la
-       deshace un segundo clic). -- */
-    var toggle = section.querySelector('[data-reviews-toggle]');
-    var label = toggle ? toggle.querySelector('.google-reviews__toggle-label') : null;
-    if(toggle){
-      toggle.addEventListener('click', function(){
-        pausedByToggle = !pausedByToggle;
-        toggle.setAttribute('aria-pressed', pausedByToggle ? 'true' : 'false');
-        if(label) label.textContent = pausedByToggle ? 'Reanudar movimiento' : 'Pausar movimiento';
-        sync();
-      });
-    }
 
     /* -- Recalcula el ancho de una vuelta si cambia el layout (resize,
        cambio de breakpoint del ancho en % de las tarjetas) y, sobre todo,

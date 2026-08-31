@@ -517,22 +517,47 @@ a:focus-visible,button:focus-visible,input:focus-visible{
 .section-heading{font-size:var(--fs-h2);max-width:20ch;}
 .section-lead{font-size:var(--fs-lead);color:var(--pw-ink-70);max-width:42ch;}
 
-/* ---------- 8. Franja de confianza ---------- */
-.trust{padding-block:var(--sp-8);background:var(--pw-white);border-bottom:1px solid var(--pw-line);}
+/* ---------- 8. Franja de confianza ----------
+   Tira editorial de datos de confianza, no barra de "features": sin cards,
+   sin sombras, sin puntos. Cada dato es un par valor/etiqueta apilado; los
+   separadores son líneas de 1px casi invisibles (var(--pw-line)) y solo
+   aparecen en la fila única de escritorio (≥960px), donde no hay ambigüedad
+   de "primero de fila" — en móvil/tablet el aire (gap) ya separa cada dato
+   sin necesidad de trazo. La micro-animación de conteo (10+ / 1.500+) vive
+   en trustCounters() en main.js y usa este mismo [data-reveal] como disparo:
+   ver comentario ahí para el porqué de no repetirla al hacer scroll. */
+.trust{padding-block:var(--sp-12);background:var(--pw-white);border-bottom:1px solid var(--pw-line);}
 .trust__list{
   display:grid;grid-template-columns:1fr;
-  gap:var(--sp-4) var(--sp-8);
-  font-size:.82rem;letter-spacing:.04em;
+  gap:var(--sp-8) var(--sp-6);
+}
+.trust__item{display:flex;flex-direction:column;gap:.3rem;}
+.trust__value{
+  display:block;
+  font-size:clamp(1.75rem,2.4vw,2.125rem);
+  font-weight:500;
+  line-height:1.1;
+  letter-spacing:-.01em;
+  color:var(--pw-ink);
+  font-variant-numeric:tabular-nums;
+}
+.trust__label{
+  display:block;
+  font-size:var(--fs-small);
+  letter-spacing:.02em;
   color:var(--pw-ink-70);
 }
-.trust__item{display:flex;align-items:center;gap:.6rem;}
-.trust__item::before{
-  content:"";flex:0 0 auto;
-  width:.3rem;height:.3rem;border-radius:50%;
-  background:var(--pw-accent);
+@media (min-width:640px){
+  .trust__list{grid-template-columns:repeat(2,1fr);gap:var(--sp-10) var(--sp-8);}
 }
-@media (min-width:640px){ .trust__list{grid-template-columns:repeat(2,auto);justify-content:space-between;} }
-@media (min-width:960px){ .trust__list{grid-template-columns:repeat(4,auto);} }
+@media (min-width:960px){
+  .trust__list{grid-template-columns:repeat(4,minmax(0,1fr));gap:var(--sp-6);}
+  .trust__item{
+    padding-inline-start:var(--sp-6);
+    border-inline-start:1px solid var(--pw-line);
+  }
+  .trust__item:first-child{padding-inline-start:0;border-inline-start:none;}
+}
 
 /* ---------- 9. Orientación: "¿qué necesitas?" ---------- */
 .orient{
@@ -571,26 +596,123 @@ a:focus-visible,button:focus-visible,input:focus-visible{
 }
 
 /* ---------- 10. Servicios ----------
-   Fase actual: recorrido vertical normal, sin scroll horizontal fijado.
-   El marcado (grid de 4 .service-panel + panel de transición) queda listo
-   para que una fase posterior añada position:sticky + traslación por scroll
-   sin reescribir el HTML, pero hoy no depende de JavaScript. */
-.services{padding-block:var(--sp-32);background:var(--pw-white);}
-.services__head{max-width:40rem;margin-bottom:var(--sp-16);}
+   Diseño visual: fondo profundo (--pw-primary-900, el mismo tono que The
+   Marshall Method, con el que conecta directamente) para que la sección se
+   lea como un momento principal de la Home, con paneles editoriales grandes
+   dominados por la fotografía.
+
+   Comportamiento de escritorio (>=1100px, sin prefers-reduced-motion):
+   servicesPinScroll (main.js) fija el escenario con position:sticky y
+   traduce .services__grid con transform:translate3d() según el progreso de
+   scroll vertical (ver JS para el cálculo de distancias). Todo el CSS de
+   aquí es también el fallback SIN JavaScript / por debajo de 1100px /
+   reduced-motion: sin la clase .is-pin-active que añade el script, el
+   riel es un scroll horizontal nativo (overflow-x:auto, mismo patrón que
+   .google-reviews__viewport) y .services__pin-inner no llega a fijarse
+   porque .services__pin-wrap no tiene una altura forzada. */
+.services{padding-block:var(--sp-16) 0;background:var(--pw-primary-900);color:var(--pw-white);}
+
+.services__pin-wrap{position:relative;}
+
+.services__pin-inner{padding-block:var(--sp-2) 0;}
+@media (min-width:1100px){
+  .services__pin-inner{
+    position:sticky;
+    top:var(--services-pin-top,0px);
+    display:flex;flex-direction:column;
+    overflow:hidden;
+  }
+}
+
+.services__head-row{
+  display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;
+  gap:var(--sp-8);margin-bottom:var(--sp-16);
+  flex:0 0 auto;
+}
+.services__head{max-width:34rem;}
+.services__head .section-heading{color:var(--pw-white);}
+
+.services__nav{display:flex;align-items:center;gap:var(--sp-6);}
+.services__progress{
+  font-size:.85rem;letter-spacing:.06em;
+  color:rgba(255,255,255,.5);
+  font-variant-numeric:tabular-nums;white-space:nowrap;
+  transition:opacity var(--dur-med) var(--ease-out);
+}
+.services__progress-current{color:var(--pw-white);font-weight:500;}
+/* Panel final: el contador se mantiene en 04/04 pero se atenúa, ya no hay
+   "siguiente servicio" que contar (ver requisito 10, servicesPinScroll). */
+.services__progress.is-final{opacity:.45;}
+
+.services__arrows{display:flex;gap:var(--sp-3);}
+.services__arrow{
+  width:54px;height:54px;flex:0 0 auto;
+  display:inline-flex;align-items:center;justify-content:center;
+  border-radius:50%;
+  border:1px solid rgba(255,255,255,.3);
+  background:rgba(255,255,255,.04);
+  color:var(--pw-white);
+  cursor:pointer;
+  transition:background-color var(--dur-fast) var(--ease-out),border-color var(--dur-fast) var(--ease-out),opacity var(--dur-fast) var(--ease-out);
+}
+.services__arrow:hover,.services__arrow:focus-visible{
+  background:rgba(143,217,201,.14);border-color:rgba(143,217,201,.55);
+}
+.services__arrow:focus-visible{outline:2px solid #8fd9c9;outline-offset:2px;}
+.services__arrow:active{background:rgba(143,217,201,.22);border-color:rgba(143,217,201,.7);}
+.services__arrow:disabled:hover{background:rgba(255,255,255,.04);border-color:rgba(255,255,255,.3);}
+.services__arrow:disabled{
+  opacity:.3;cursor:not-allowed;
+  background:rgba(255,255,255,.04);border-color:rgba(255,255,255,.3);
+}
+
+/* El riel vive fuera de .container a propósito, igual que
+   .google-reviews__viewport: puede superar el ancho del encabezado (1240px)
+   pero nunca el del documento, ya que .services (la section) no tiene
+   max-width propio. El desbordamiento horizontal queda contenido en este
+   viewport (overflow-x:auto de base; overflow:hidden solo cuando
+   servicesPinScroll activa .is-pin-active), nunca en html/body. El
+   padding-inline repite el del .container para que el primer panel
+   arranque alineado con el encabezado. */
+.services__viewport{
+  width:100%;
+  overflow-x:auto;
+  scroll-snap-type:x proximity;
+  scroll-padding-inline:clamp(1.5rem,4vw,2.75rem);
+  padding-block:var(--sp-2);
+  -webkit-overflow-scrolling:touch;
+  scrollbar-width:thin;
+  scrollbar-color:rgba(255,255,255,.35) transparent;
+  flex:1 1 auto;
+  min-height:0;
+}
+.services__viewport::-webkit-scrollbar{height:6px;}
+.services__viewport::-webkit-scrollbar-thumb{background:rgba(255,255,255,.25);border-radius:999px;}
+.services.is-pin-active .services__viewport{
+  overflow:hidden;
+  scroll-snap-type:none;
+}
 
 .services__grid{
-  display:grid;grid-template-columns:1fr;gap:var(--sp-10);
+  display:flex;gap:var(--sp-8);align-items:center;
+  width:max-content;
+  height:100%;
+  padding-inline:clamp(1.5rem,4vw,2.75rem);
 }
-@media (min-width:720px){ .services__grid{grid-template-columns:repeat(2,1fr);gap:var(--sp-8);} }
-@media (min-width:1100px){ .services__grid{grid-template-columns:repeat(4,1fr);gap:var(--sp-6);} }
+.services.is-pin-active .services__grid{will-change:transform;}
 
 .service-panel{
+  flex:0 0 auto;
+  width:clamp(380px,42vw,560px);
+  scroll-snap-align:start;
   display:flex;flex-direction:column;
-  border:1px solid var(--pw-line);
+  background:rgba(255,255,255,.03);
+  border:1px solid rgba(255,255,255,.14);
   scroll-margin-top:6rem;
 }
-.service-panel__media{aspect-ratio:4/3;overflow:hidden;background:var(--pw-mist);}
-.service-panel__img{width:100%;height:100%;object-fit:cover;}
+.service-panel__media{aspect-ratio:3/4;overflow:hidden;background:rgba(255,255,255,.06);}
+.service-panel__img{width:100%;height:100%;object-fit:cover;transition:transform var(--dur-slow) var(--ease-out);}
+.service-panel:hover .service-panel__img,.service-panel:focus-within .service-panel__img{transform:scale(1.04);}
 .service-panel__img--physio{object-position:58% 32%;}
 .service-panel__img--wellness{object-position:70% 32%;}
 .service-panel__img--strength{object-position:46% 35%;}
@@ -600,77 +722,97 @@ a:focus-visible,button:focus-visible,input:focus-visible{
   display:flex;flex-direction:column;gap:var(--sp-3);
   padding:var(--sp-6);flex-grow:1;
 }
-.service-panel__num{font-size:.72rem;letter-spacing:.14em;color:var(--pw-primary);}
-.service-panel__title{font-size:1.35rem;font-weight:500;line-height:1.15;}
-.service-panel__hook{font-size:.95rem;color:var(--pw-ink-70);}
+.service-panel__num{font-size:.72rem;letter-spacing:.14em;color:#8fd9c9;}
+.service-panel__title{font-size:1.35rem;font-weight:500;line-height:1.15;color:var(--pw-white);}
+.service-panel__hook{font-size:.95rem;color:rgba(255,255,255,.75);}
 .service-panel__benefits{display:flex;flex-direction:column;gap:.4rem;margin-top:.15rem;}
 .service-panel__benefits li{
   position:relative;padding-left:1rem;
-  font-size:.85rem;color:var(--pw-ink-70);
+  font-size:.85rem;color:rgba(255,255,255,.65);
 }
 .service-panel__benefits li::before{
   content:"";position:absolute;left:0;top:.5em;
   width:.3rem;height:.3rem;border-radius:50%;
-  background:var(--pw-accent);
+  background:#8fd9c9;
 }
 .service-panel__cta{
   margin-top:auto;padding-top:var(--sp-3);
   display:inline-flex;align-items:center;gap:.5rem;
   font-size:.7rem;letter-spacing:.12em;text-transform:uppercase;
-  color:var(--pw-primary);
+  color:#8fd9c9;
 }
 .service-panel__cta svg{transition:transform var(--dur-fast) var(--ease-out);}
 .service-panel__cta:hover svg,.service-panel__cta:focus-visible svg{transform:translateX(4px);}
 
-/* Panel final de transición: servicio complementario + puente hacia Method */
-.services__transition{margin-top:var(--sp-16);}
+/* Composición móvil: recorrido vertical normal, sin riel ni indicador de
+   progreso (no hay nada horizontal que contar todavía). El panel de
+   transición se apila igual que los cuatro paneles de servicio: es un
+   elemento más de .services__grid, no un bloque aparte. */
+@media (max-width:719px){
+  .services__nav{display:none;}
+  .services__viewport{overflow-x:visible;scroll-snap-type:none;}
+  .services__grid{
+    display:flex;flex-direction:column;width:auto;height:auto;
+    gap:var(--sp-10);padding-inline:clamp(1.5rem,4vw,2.75rem);
+  }
+  .service-panel{width:100%;scroll-snap-align:none;}
+  .service-panel__media{aspect-ratio:4/3;}
+  .services__transition{width:100%;}
+}
+
+/* Panel final de transición: quinto elemento del riel (tramo 2 del
+   escenario fijado en escritorio; última tarjeta del scroll nativo en el
+   resto de casos). Servicio complementario + puente hacia Method. */
+.services__transition{
+  flex:0 0 auto;
+  width:clamp(560px,54vw,820px);
+  scroll-snap-align:start;
+  display:flex;flex-direction:column;justify-content:center;gap:var(--sp-8);
+  padding:var(--sp-10);
+  border:1px solid rgba(255,255,255,.14);
+  background:rgba(255,255,255,.03);
+}
 .services__transition-note{
-  font-size:.95rem;color:var(--pw-ink-70);
+  font-size:.95rem;color:rgba(255,255,255,.7);
   max-width:56ch;
 }
 
 .services__transition-extra{
-  margin-top:var(--sp-10);
-  background:var(--pw-mist);
-  border-left:2px solid var(--pw-primary);
+  background:rgba(255,255,255,.05);
+  border-left:2px solid #8fd9c9;
   padding:var(--sp-6);
   display:flex;flex-direction:column;gap:var(--sp-5);
   align-items:flex-start;
 }
-@media (min-width:720px){
-  .services__transition-extra{flex-direction:row;align-items:center;justify-content:space-between;gap:var(--sp-6);}
-}
 .services__transition-extra-text{max-width:52ch;}
 .services__transition-extra-label{
   font-size:.68rem;letter-spacing:.12em;text-transform:uppercase;
-  color:var(--pw-ink-70);
+  color:rgba(255,255,255,.6);
 }
 .services__transition-extra-title{
-  margin-top:.35rem;
+  margin-top:.35rem;color:var(--pw-white);
   font-size:1.05rem;font-weight:500;line-height:1.3;letter-spacing:normal;
 }
-.services__transition-extra-desc{margin-top:.35rem;font-size:.9rem;color:var(--pw-ink-70);}
+.services__transition-extra-desc{margin-top:.35rem;font-size:.9rem;color:rgba(255,255,255,.7);}
 .services__transition-extra-cta{
   flex-shrink:0;
   font-size:.7rem;letter-spacing:.12em;text-transform:uppercase;
-  color:var(--pw-primary);
+  color:#8fd9c9;
 }
 
-.services__transition-all{margin-top:var(--sp-6);}
 .services__transition-all-link{
   display:inline-block;
   font-size:.75rem;letter-spacing:.12em;text-transform:uppercase;
-  color:var(--pw-primary);
+  color:#8fd9c9;
   border-bottom:1px solid currentColor;
   padding-bottom:.25rem;
 }
 
 .services__transition-bridge{
-  margin-top:var(--sp-12);
-  padding-top:var(--sp-10);
-  border-top:1px solid var(--pw-line);
+  padding-top:var(--sp-6);
+  border-top:1px solid rgba(255,255,255,.16);
   font-size:1.05rem;font-weight:500;
-  color:var(--pw-ink);
+  color:var(--pw-white);
   max-width:48ch;
 }
 
@@ -907,6 +1049,12 @@ a:focus-visible,button:focus-visible,input:focus-visible{
    overflow:hidden + arrastre propio (misma cinta, ahora animada). */
 .google-reviews__viewport{
   width:100%;
+  /* Ancla de container query para .google-review-card (ver más abajo):
+     es el único ancestro de las tarjetas con un ancho ya definido y
+     estable (width:100%, no depende de su contenido), así que sus cqw
+     dan siempre el mismo resultado tanto si la tarjeta está en la lista
+     real como en el clon. */
+  container-type:inline-size;
   padding-block:var(--sp-2);
   padding-inline:clamp(1.5rem,4vw,2.75rem);
   overflow-x:auto;
@@ -938,12 +1086,23 @@ a:focus-visible,button:focus-visible,input:focus-visible{
    fila continua. El mismo valor de gap en rail y en la lista mantiene
    la separación constante también en la costura entre una vuelta y la
    siguiente, que es lo que evita un salto visible en el bucle.
-   Deliberadamente sin width:max-content en el rail: cada <ul> reclama
-   flex:0 0 100% (el 100% del ancho, ya definido, del viewport), para
-   que los anchos en % de .google-review-card sigan resolviendo contra
-   un contenedor de ancho fijo y no un ancestro "shrink-to-fit" — si no,
-   los porcentajes de las tarjetas dejarían de calcularse bien en cuanto
-   hubiera dos listas en fila. */
+
+   CORREGIDO (antes flex:0 0 100% en .google-reviews__list + % en
+   .google-review-card): con 6 tarjetas al 29%/46%/90%, su suma (174%+)
+   desborda a propósito la caja de la lista ("tres completas + un
+   fragmento" asomando) — pero eso deja la CAJA de la lista (100% del
+   rail) mucho más estrecha que su CONTENIDO real (las tarjetas
+   desbordadas). Como track y su clon se colocan uno junto a otro según
+   el ancho de sus CAJAS (no de su contenido desbordado), el clon
+   arrancaba mientras las últimas tarjetas reales aún no habían
+   terminado de desfilar visualmente: solapamiento constante, no solo
+   en el instante del empalme.
+   Fix: las tarjetas ya no miden en % del ancho de LA LISTA (que se
+   desborda) sino en cqw del ancho de .google-reviews__viewport (que sí
+   es estable, ver container-type arriba) vía container queries. Al no
+   depender ya del ancho de la lista, la lista puede volver a
+   flex:0 0 auto y su caja pasa a coincidir exactamente con la suma de
+   sus tarjetas — track y clon quedan pegados sin hueco y sin solape. */
 .google-reviews__rail{
   display:flex;gap:var(--sp-6);
   will-change:transform;
@@ -951,17 +1110,19 @@ a:focus-visible,button:focus-visible,input:focus-visible{
 .google-reviews__list{
   list-style:none;margin:0;padding:0;
   display:flex;gap:var(--sp-6);
-  flex:0 0 100%;
+  flex:0 0 auto;
   min-width:0;
 }
 
-/* Anchos por tarjeta pensados en proporción (% del ancho visible de la
-   cinta), no en px fijos, para que la relación "tres completas + un
-   fragmento" se mantenga igual de 1440px en adelante que en pantallas
-   más anchas (>1600px), tal como pide la comprobación visual. */
+/* Anchos por tarjeta en cqw (% del ancho de .google-reviews__viewport,
+   ver container-type:inline-size arriba), no en px fijos, para que la
+   relación "tres completas + un fragmento" se mantenga igual de 1440px
+   en adelante que en pantallas más anchas (>1600px), tal como pide la
+   comprobación visual — sin depender del ancho, ahora auto, de la
+   lista que las contiene. */
 .google-review-card{
   scroll-snap-align:start;
-  flex:0 0 90%;
+  flex:0 0 90cqw;
   min-width:0;
   background:var(--pw-white);
   border:1px solid var(--pw-line);
@@ -970,13 +1131,13 @@ a:focus-visible,button:focus-visible,input:focus-visible{
   padding:var(--sp-8);
   display:flex;flex-direction:column;gap:var(--sp-5);
 }
-/* 90% en móvil deja un fragmento de ~11% del ancho de la siguiente
+/* 90cqw en móvil deja un fragmento de ~11% del ancho de la siguiente
    tarjeta asomando (antes 82%/22%, demasiado protagonismo para ser "una
    pista pequeña"). 768px es el arranque de tablet (2 completas + parte
-   de una tercera con 46%); 1024px el de escritorio (3 completas + un
-   fragmento con 29%), alineados con los puntos de prueba pedidos. */
-@media (min-width:768px){ .google-review-card{flex-basis:46%;} }
-@media (min-width:1024px){ .google-review-card{flex-basis:29%;} }
+   de una tercera con 46cqw); 1024px el de escritorio (3 completas + un
+   fragmento con 29cqw), alineados con los puntos de prueba pedidos. */
+@media (min-width:768px){ .google-review-card{flex-basis:46cqw;} }
+@media (min-width:1024px){ .google-review-card{flex-basis:29cqw;} }
 /* Algunas tarjetas (2 de 6) llevan un degradado verde muy sutil en la
    esquina, como única variación de fondo; el resto queda en blanco
    liso para que el verde siga usándose con moderación. */
@@ -1008,57 +1169,14 @@ a:focus-visible,button:focus-visible,input:focus-visible{
 .google-review-card__author{font-size:.78rem;letter-spacing:.06em;text-transform:uppercase;color:var(--pw-ink-70);font-weight:500;}
 .google-review-card__source{font-size:.72rem;color:var(--pw-ink-70);}
 
-/* Botón de pausa/reanudación: pequeño, presente desde el HTML (evita CLS
-   al no ser inyectado) pero oculto hasta que .js confirme que el script
-   se ejecutó — sin JS no hay nada que pausar. Mismo icono de dos barras
-   / triángulo que .problem-ticker__toggle, por coherencia visual, con
-   sus propias clases para no acoplar ambos componentes. */
-.google-reviews__toggle{
-  display:none;
-  align-items:center;gap:.5rem;
-  margin-top:var(--sp-6);
-  padding:.45rem .85rem;
-  border:1px solid var(--pw-line);
-  border-radius:999px;
-  background:var(--pw-white);
-  color:var(--pw-ink-70);
-  font-size:var(--fs-small);
-  cursor:pointer;
-  transition:background .2s ease,color .2s ease,border-color .2s ease;
-}
-/* Solo visible cuando googleReviewsMarquee confirma que el bucle
-   automático está activo (escritorio/tablet, sin reduced-motion): en
-   móvil marqueeEnabled es siempre false (ver disableMarquee en main.js)
-   y no hay nada que pausar, así que el botón no llega a mostrarse. */
-.google-reviews.has-marquee .google-reviews__toggle{display:inline-flex;}
-.google-reviews__toggle:hover,.google-reviews__toggle:focus-visible{
-  background:var(--pw-primary);border-color:var(--pw-primary);color:var(--pw-white);
-}
-.google-reviews__toggle-icon{position:relative;width:.7rem;height:.7rem;flex:0 0 auto;}
-.google-reviews__toggle-icon::before,.google-reviews__toggle-icon::after{
-  content:"";position:absolute;top:0;bottom:0;width:2px;background:currentColor;
-}
-.google-reviews__toggle-icon::before{left:1px;}
-.google-reviews__toggle-icon::after{right:1px;}
-.google-reviews__toggle[aria-pressed="true"] .google-reviews__toggle-icon{
-  width:0;height:0;
-  border-left:.6rem solid currentColor;border-top:.4rem solid transparent;border-bottom:.4rem solid transparent;
-}
-.google-reviews__toggle[aria-pressed="true"] .google-reviews__toggle-icon::before,
-.google-reviews__toggle[aria-pressed="true"] .google-reviews__toggle-icon::after{content:none;}
-
 /* Con prefers-reduced-motion, googleReviewsMarquee (main.js) no arranca
-   el bucle continuo (misma lógica que problemTicker/areaCarousel: sale
-   antes de tocar el DOM si prefersReducedMotion es true), así que
-   has-marquee nunca se añade y el botón ya queda oculto por la regla
-   base (.google-reviews.has-marquee .google-reviews__toggle). El
-   !important de aquí es un cinturón de seguridad, no la única barrera:
-   nada que pausar, así que no hace falta el control; el resto del
-   contenido (nombre, puntuación, procedencia, etiqueta y las 6 reseñas
-   completas) sigue visible y navegable a mano vía scroll nativo. */
+   el bucle continuo (misma lógica que areaCarousel: sale antes de tocar
+   el DOM si prefersReducedMotion es true): nada que pausar, así que el
+   resto del contenido (nombre, puntuación, procedencia, etiqueta y las
+   6 reseñas completas) sigue visible y navegable a mano vía scroll
+   nativo. */
 @media (prefers-reduced-motion:reduce){
   .google-reviews__viewport{scroll-behavior:auto;}
-  .google-reviews__toggle{display:none!important;}
   .google-reviews__rail{transform:none!important;}
 }
 
@@ -2441,42 +2559,16 @@ a:focus-visible,button:focus-visible,input:focus-visible{
    movimiento continuo con los conceptos ya existentes en el contenido de
    la página (sin patologías nuevas). Implementada solo con CSS (rail
    duplicado + keyframe translateX -50%, sin scroll horizontal real: el
-   viewport tiene overflow:hidden). El botón de pausa es la única pieza que
-   depende de JS (ver main.js); si JS falla, la animación y la lista siguen
-   visibles igualmente. La segunda <ul> es un duplicado visual puro, por
-   eso lleva aria-hidden="true". */
+   viewport tiene overflow:hidden). Sin dependencia de JS: la pausa al
+   pasar el cursor o al enfocar con teclado es puro CSS (ver
+   .problem-ticker__viewport:hover/:focus-within más abajo). La segunda
+   <ul> es un duplicado visual puro, por eso lleva aria-hidden="true". */
 .problem-ticker{padding-block:var(--sp-12) var(--sp-16);background:var(--pw-mist);border-block:1px solid var(--pw-line);}
 .problem-ticker__head{
   display:flex;align-items:center;justify-content:space-between;gap:var(--sp-6);
   flex-wrap:wrap;margin-bottom:var(--sp-8);
 }
 .problem-ticker__head .section-heading{margin:0;max-width:34ch;}
-.problem-ticker__toggle{
-  display:inline-flex;align-items:center;gap:.6rem;flex:0 0 auto;
-  padding:.5rem .9rem;
-  border:1px solid var(--pw-line);
-  border-radius:999px;
-  background:var(--pw-white);
-  color:var(--pw-ink-70);
-  font-size:var(--fs-small);
-  cursor:pointer;
-  transition:background .2s ease,color .2s ease,border-color .2s ease;
-}
-.problem-ticker__toggle:hover,.problem-ticker__toggle:focus-visible{
-  background:var(--pw-primary);border-color:var(--pw-primary);color:var(--pw-white);
-}
-.problem-ticker__toggle-icon{position:relative;width:.7rem;height:.7rem;flex:0 0 auto;}
-.problem-ticker__toggle-icon::before,.problem-ticker__toggle-icon::after{
-  content:"";position:absolute;top:0;bottom:0;width:2px;background:currentColor;
-}
-.problem-ticker__toggle-icon::before{left:1px;}
-.problem-ticker__toggle-icon::after{right:1px;}
-.problem-ticker__toggle[aria-pressed="true"] .problem-ticker__toggle-icon{
-  width:0;height:0;
-  border-left:.6rem solid currentColor;border-top:.4rem solid transparent;border-bottom:.4rem solid transparent;
-}
-.problem-ticker__toggle[aria-pressed="true"] .problem-ticker__toggle-icon::before,
-.problem-ticker__toggle[aria-pressed="true"] .problem-ticker__toggle-icon::after{content:none;}
 .problem-ticker__viewport{
   width:100%;overflow:hidden;
   mask-image:linear-gradient(to right,transparent,#000 4%,#000 96%,transparent);
@@ -2486,7 +2578,6 @@ a:focus-visible,button:focus-visible,input:focus-visible{
   display:flex;width:max-content;gap:var(--sp-10);
   animation:problem-ticker-scroll 34s linear infinite;
 }
-.problem-ticker.is-paused .problem-ticker__rail,
 .problem-ticker__viewport:hover .problem-ticker__rail,
 .problem-ticker__viewport:focus-within .problem-ticker__rail{
   animation-play-state:paused;
@@ -2515,7 +2606,6 @@ a:focus-visible,button:focus-visible,input:focus-visible{
   .problem-ticker__viewport{overflow:visible;mask-image:none;-webkit-mask-image:none;}
   .problem-ticker__item{white-space:normal;}
   .problem-ticker__list[aria-hidden="true"]{display:none;}
-  .problem-ticker__toggle{display:none;}
 }
 
 /* ----- Subespecialidades: lista editorial, no cuadrícula de tarjetas -----
@@ -2593,3 +2683,39 @@ a:focus-visible,button:focus-visible,input:focus-visible{
    Mismo fondo y ritmo que el bloque equivalente de Servicios; separa el
    aviso de "a domicilio" del enlace general a tarifas sin usar tarjetas. */
 .home-care-note{padding-block:var(--sp-24);background:var(--pw-mist);border-block:1px solid var(--pw-line);}
+/* .home-care-note__* reemplaza al antiguo .areas__extra/.areas__all-link
+   (huérfanos desde que ese componente se renombró a
+   .services__transition-extra/-all-link para el escenario oscuro de
+   Servicios): mismo fondo/ritmo que ese bloque, adaptado a texto oscuro
+   sobre --pw-mist y con los dos enlaces agrupados en un único bloque de
+   acciones en vez de repartidos en dos contenedores sueltos. */
+.home-care-note__body{
+  display:flex;flex-direction:column;align-items:flex-start;gap:var(--sp-8);
+}
+@media (min-width:720px){
+  .home-care-note__body{flex-direction:row;align-items:center;justify-content:space-between;gap:var(--sp-10);}
+}
+.home-care-note__text{max-width:52ch;}
+.home-care-note__label{margin-bottom:var(--sp-3);}
+.home-care-note__title{margin-top:0;font-size:1.5rem;}
+.home-care-note__desc{margin-top:var(--sp-4);color:var(--pw-ink-70);line-height:1.6;}
+
+.home-care-note__actions{
+  display:flex;flex-direction:column;align-items:flex-start;gap:var(--sp-4);
+  flex-shrink:0;
+}
+@media (min-width:720px){
+  .home-care-note__actions{flex-direction:row;align-items:center;gap:var(--sp-8);}
+}
+.home-care-note__link{
+  display:inline-flex;align-items:center;gap:.5rem;
+  padding-block:.35rem;
+  font-size:.8rem;font-weight:500;letter-spacing:.08em;text-transform:uppercase;
+  color:var(--pw-primary);
+  border-bottom:1px solid currentColor;
+  transition:color var(--dur-fast) var(--ease-out);
+}
+.home-care-note__link:hover{color:var(--pw-primary-600);}
+.home-care-note__arrow{transition:transform var(--dur-fast) var(--ease-out);}
+.home-care-note__link:hover .home-care-note__arrow,
+.home-care-note__link:focus-visible .home-care-note__arrow{transform:translateX(4px);}

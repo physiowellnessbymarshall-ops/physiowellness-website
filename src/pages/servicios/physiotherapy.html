@@ -269,10 +269,6 @@
   <section class="problem-ticker" aria-label="Problemas y ámbitos que abordamos">
     <div class="container problem-ticker__head" data-reveal>
       <h2 class="section-heading">Problemas y ámbitos que abordamos</h2>
-      <button type="button" class="problem-ticker__toggle" aria-pressed="false">
-        <span class="problem-ticker__toggle-icon" aria-hidden="true"></span>
-        <span class="problem-ticker__toggle-label">Pausar animación</span>
-      </button>
     </div>
     <div class="problem-ticker__viewport">
       <div class="problem-ticker__rail">
@@ -399,22 +395,29 @@
   </section>
 
   <!-- ============ Fisioterapia a domicilio + enlace a tarifas ============
-       Reutiliza .areas__extra tal cual (Home) y .areas__all-link tal cual
-       (Servicios/Tarifas). El destino de "a domicilio" es la sección real
-       ya construida en Tarifas: la página propia todavía no existe. -->
+       Antes reutilizaba .areas__extra/.areas__all-link (Home), pero ese
+       componente fue renombrado a .services__transition-extra/-all-link al
+       construir el nuevo escenario fijado de Servicios (para un fondo
+       oscuro, con texto en blanco/rgba) y esta página se quedó con las
+       clases antiguas sin ningún selector que las atendiera: la sección
+       quedaba totalmente sin estilos. Clases propias (.home-care-note__*)
+       en vez de recuperar las antiguas .areas__* tal cual, ya que ese
+       nombre ya no describe nada en el sistema actual y el destino final
+       (fondo claro --pw-mist) diverge del componente oscuro con el que
+       comparte origen. El destino de "a domicilio" es la sección real ya
+       construida en Tarifas: la página propia todavía no existe. -->
   <section class="home-care-note">
     <div class="container">
-      <div class="areas__extra" data-reveal>
-        <div class="areas__extra-text">
-          <p class="areas__extra-label">Una modalidad de Fisioterapia</p>
-          <h2 class="areas__extra-title">Fisioterapia a domicilio</h2>
-          <p class="areas__extra-desc">Si no puedes desplazarte al centro, puedes realizar tu proceso de fisioterapia a domicilio, con el mismo seguimiento.</p>
+      <div class="home-care-note__body" data-reveal>
+        <div class="home-care-note__text">
+          <p class="eyebrow home-care-note__label">Una modalidad de Fisioterapia</p>
+          <h2 class="home-care-note__title">Fisioterapia a domicilio</h2>
+          <p class="home-care-note__desc">Si no puedes desplazarte al centro, puedes realizar tu proceso de fisioterapia a domicilio, con el mismo seguimiento.</p>
         </div>
-        <a class="areas__extra-cta" href="../tarifas.html#a-domicilio">Ver condiciones a domicilio →</a>
-      </div>
-
-      <div class="areas__all" data-reveal style="--i:1">
-        <a class="areas__all-link" href="../tarifas.html#en-la-clinica">Ver todas las tarifas →</a>
+        <div class="home-care-note__actions">
+          <a class="home-care-note__link" href="../tarifas.html#a-domicilio">Ver condiciones a domicilio <span class="home-care-note__arrow" aria-hidden="true">→</span></a>
+          <a class="home-care-note__link" href="../tarifas.html#en-la-clinica">Ver todas las tarifas <span class="home-care-note__arrow" aria-hidden="true">→</span></a>
+        </div>
       </div>
     </div>
   </section>
@@ -440,13 +443,6 @@
       <div class="google-reviews__head">
         <p class="eyebrow section-eyebrow">Reseñas de Google</p>
         <h2 class="section-heading"><span class="google-reviews__highlight">Experiencias reales</span> de quienes han confiado en Physio Wellness</h2>
-        <!-- Presente desde el HTML (no inyectado por JS) para no generar
-             CLS al aparecer; oculto por CSS hasta que .js confirme que el
-             script se ejecutó, para no dejar un control inerte sin JS. -->
-        <button type="button" class="google-reviews__toggle" data-reviews-toggle aria-pressed="false">
-          <span class="google-reviews__toggle-icon" aria-hidden="true"></span>
-          <span class="google-reviews__toggle-label">Pausar movimiento</span>
-        </button>
       </div>
     </div>
 
@@ -482,8 +478,8 @@
               <span class="sr-only">Valoración: 5 de 5 estrellas</span>
             </p>
             <blockquote class="google-review-card__quote">
-              <p>I highly recommend this physiotherapist to anyone in need of high-quality care. They are extremely knowledgeable, attentive, and truly dedicated to their patients’ recovery. From the very first session, they took the time to understand the root of the problem, not just the symptoms, and created a personalized treatment plan that made a real difference.</p>
-              <p>Thank you!</p>
+              <p>Recomiendo totalmente a este fisioterapeuta a cualquiera que necesite una atención de calidad. Tiene un conocimiento muy amplio, es atento y está realmente comprometido con la recuperación de sus pacientes. Desde la primera sesión se tomó el tiempo de entender la raíz del problema, no solo los síntomas, y creó un plan de tratamiento personalizado que marcó una diferencia real.</p>
+              <p>¡Gracias!</p>
             </blockquote>
             <footer class="google-review-card__meta">
               <span class="google-review-card__author">J. D.</span>
@@ -513,8 +509,8 @@
               <span class="sr-only">Valoración: 5 de 5 estrellas</span>
             </p>
             <blockquote class="google-review-card__quote">
-              <p>Great hands, technique, deep knowledge, very attentive and personalized service. They have all kinds of machinery when needed. I’m treating an injured knee and it could feel improvement from the first session.</p>
-              <p>Totally worth it, Marçal and his team are best in class.</p>
+              <p>Muy buenas manos, técnica y conocimiento profundo, con un trato muy atento y personalizado. Disponen de todo tipo de maquinaria cuando hace falta. Estoy tratando una lesión de rodilla y ya noté mejoría desde la primera sesión.</p>
+              <p>Totalmente recomendable, Marçal y su equipo son de lo mejor.</p>
             </blockquote>
             <footer class="google-review-card__meta">
               <span class="google-review-card__author">I. G.</span>
@@ -529,8 +525,8 @@
               <span class="sr-only">Valoración: 5 de 5 estrellas</span>
             </p>
             <blockquote class="google-review-card__quote">
-              <p>I had a great experience with this physiotherapy clinic. The treatment really helped me get rid of my back pain, and I noticed significant improvement after the sessions. The administrator Abril is very friendly, helpful, and well organized, which makes every visit smooth and comfortable.</p>
-              <p>A special thank you to Marshall, a highly qualified physiotherapist who is professional, attentive, and truly knows what he is doing. I felt confident and well cared for throughout the entire process. I highly recommend this place to anyone dealing with back pain or looking for high-quality physiotherapy</p>
+              <p>He tenido una muy buena experiencia en esta clínica de fisioterapia. El tratamiento me ayudó de verdad a quitarme el dolor de espalda, y noté una mejoría importante después de las sesiones. Abril, la administradora, es muy amable, atenta y organizada, lo que hace que cada visita sea cómoda y sin complicaciones.</p>
+              <p>Un agradecimiento especial a Marshall, un fisioterapeuta muy cualificado, profesional, atento y que realmente sabe lo que hace. Me sentí seguro y bien cuidado durante todo el proceso. Recomiendo totalmente este centro a cualquiera que tenga dolor de espalda o busque fisioterapia de calidad.</p>
             </blockquote>
             <footer class="google-review-card__meta">
               <span class="google-review-card__author">A.</span>
@@ -545,7 +541,7 @@
               <span class="sr-only">Valoración: 5 de 5 estrellas</span>
             </p>
             <blockquote class="google-review-card__quote">
-              <p>Found this place and really like the sessions I have had. He has a good knowledge of the body and how to make the patient feel better immediately and long term as well.</p>
+              <p>Encontré este centro y me han gustado mucho las sesiones que he tenido. Tiene un buen conocimiento del cuerpo y sabe cómo hacer que el paciente se sienta mejor tanto de forma inmediata como a largo plazo.</p>
             </blockquote>
             <footer class="google-review-card__meta">
               <span class="google-review-card__author">T. M.</span>

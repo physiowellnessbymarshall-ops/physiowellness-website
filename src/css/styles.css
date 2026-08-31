@@ -85,6 +85,14 @@ ul{margin:0;padding:0;list-style:none;}
   padding-inline:clamp(1.5rem,4vw,2.75rem);
 }
 
+/* Evita que el header fijo (siempre presente, con o sin .is-hidden) tape el
+   inicio de una sección al llegar por ancla, tanto en saltos nativos del
+   navegador (enlaces entre páginas) como en el scrollIntoView de
+   smoothAnchor(). La altura del header es fija en todos los anchos
+   (§4, "Altura fija y compacta"), así que un único valor sirve para todo
+   el sitio; :where() mantiene especificidad 0 para no pisar otras reglas. */
+:where([id]){scroll-margin-top:6rem;}
+
 /* foco visible consistente en toda la web */
 a:focus-visible,button:focus-visible,input:focus-visible{
   outline:2px solid var(--pw-accent);
@@ -98,6 +106,12 @@ a:focus-visible,button:focus-visible,input:focus-visible{
   font-size:var(--fs-small);
 }
 .skip-link:focus{left:var(--sp-4);top:var(--sp-4);}
+
+/* Utilidad genérica: contenido solo para lectores de pantalla. */
+.sr-only{
+  position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;
+  clip:rect(0,0,0,0);white-space:nowrap;border:0;
+}
 
 .display{font-size:var(--fs-display);font-weight:500;}
 
@@ -159,12 +173,18 @@ a:focus-visible,button:focus-visible,input:focus-visible{
   position:fixed;inset-block-start:0;inset-inline:0;z-index:100;
   color:var(--pw-white);
   background:linear-gradient(to bottom, rgba(18,32,29,.5), rgba(18,32,29,0));
-  transition:background-color var(--dur-med) var(--ease-out), box-shadow var(--dur-med) var(--ease-out);
+  transform:translateY(0);
+  transition:background-color var(--dur-med) var(--ease-out), box-shadow var(--dur-med) var(--ease-out), transform var(--dur-med) var(--ease-out);
 }
 .site-header.is-solid{
   background:var(--pw-primary-900);
   box-shadow:0 12px 32px -18px rgba(0,0,0,.5);
 }
+/* Se oculta desplazándose fuera de la vista (no display:none ni visibility)
+   para que la transición sea fluida y el elemento siga midiéndose igual;
+   headerState() en main.js ya se asegura de no aplicar esta clase mientras
+   el header tiene foco de teclado dentro. */
+.site-header.is-hidden{transform:translateY(-100%);}
 /* Altura fija y compacta: el header NO se comprime al hacer scroll,
    solo cambia el fondo (transparente sobre el Hero → verde oscuro). */
 .site-header__bar{
@@ -497,22 +517,47 @@ a:focus-visible,button:focus-visible,input:focus-visible{
 .section-heading{font-size:var(--fs-h2);max-width:20ch;}
 .section-lead{font-size:var(--fs-lead);color:var(--pw-ink-70);max-width:42ch;}
 
-/* ---------- 8. Franja de confianza ---------- */
-.trust{padding-block:var(--sp-8);background:var(--pw-white);border-bottom:1px solid var(--pw-line);}
+/* ---------- 8. Franja de confianza ----------
+   Tira editorial de datos de confianza, no barra de "features": sin cards,
+   sin sombras, sin puntos. Cada dato es un par valor/etiqueta apilado; los
+   separadores son líneas de 1px casi invisibles (var(--pw-line)) y solo
+   aparecen en la fila única de escritorio (≥960px), donde no hay ambigüedad
+   de "primero de fila" — en móvil/tablet el aire (gap) ya separa cada dato
+   sin necesidad de trazo. La micro-animación de conteo (10+ / 1.500+) vive
+   en trustCounters() en main.js y usa este mismo [data-reveal] como disparo:
+   ver comentario ahí para el porqué de no repetirla al hacer scroll. */
+.trust{padding-block:var(--sp-12);background:var(--pw-white);border-bottom:1px solid var(--pw-line);}
 .trust__list{
   display:grid;grid-template-columns:1fr;
-  gap:var(--sp-4) var(--sp-8);
-  font-size:.82rem;letter-spacing:.04em;
+  gap:var(--sp-8) var(--sp-6);
+}
+.trust__item{display:flex;flex-direction:column;gap:.3rem;}
+.trust__value{
+  display:block;
+  font-size:clamp(1.75rem,2.4vw,2.125rem);
+  font-weight:500;
+  line-height:1.1;
+  letter-spacing:-.01em;
+  color:var(--pw-ink);
+  font-variant-numeric:tabular-nums;
+}
+.trust__label{
+  display:block;
+  font-size:var(--fs-small);
+  letter-spacing:.02em;
   color:var(--pw-ink-70);
 }
-.trust__item{display:flex;align-items:center;gap:.6rem;}
-.trust__item::before{
-  content:"";flex:0 0 auto;
-  width:.3rem;height:.3rem;border-radius:50%;
-  background:var(--pw-accent);
+@media (min-width:640px){
+  .trust__list{grid-template-columns:repeat(2,1fr);gap:var(--sp-10) var(--sp-8);}
 }
-@media (min-width:640px){ .trust__list{grid-template-columns:repeat(2,auto);justify-content:space-between;} }
-@media (min-width:960px){ .trust__list{grid-template-columns:repeat(4,auto);} }
+@media (min-width:960px){
+  .trust__list{grid-template-columns:repeat(4,minmax(0,1fr));gap:var(--sp-6);}
+  .trust__item{
+    padding-inline-start:var(--sp-6);
+    border-inline-start:1px solid var(--pw-line);
+  }
+  .trust__item:first-child{padding-inline-start:0;border-inline-start:none;}
+}
 
 /* ---------- 9. Orientación: "¿qué necesitas?" ---------- */
 .orient{
@@ -550,77 +595,225 @@ a:focus-visible,button:focus-visible,input:focus-visible{
   .orient__item{flex-direction:column;align-items:flex-start;gap:var(--sp-3);}
 }
 
-/* ---------- 10. Las cuatro áreas ---------- */
-.areas{padding-block:var(--sp-32);background:var(--pw-white);}
-.areas__head{max-width:40rem;margin-bottom:var(--sp-16);}
-.areas__grid{
-  display:grid;grid-template-columns:1fr;gap:1px;
-  background:var(--pw-line);border:1px solid var(--pw-line);
-}
-@media (min-width:720px){ .areas__grid{grid-template-columns:repeat(2,1fr);} }
-@media (min-width:1100px){ .areas__grid{grid-template-columns:repeat(4,1fr);} }
+/* ---------- 10. Servicios ----------
+   Diseño visual: fondo profundo (--pw-primary-900, el mismo tono que The
+   Marshall Method, con el que conecta directamente) para que la sección se
+   lea como un momento principal de la Home, con paneles editoriales grandes
+   dominados por la fotografía.
 
-.area-card{
-  background:var(--pw-white);
-  padding:var(--sp-10) var(--sp-6);
-  display:flex;flex-direction:column;gap:var(--sp-6);
-  transition:background-color var(--dur-med) var(--ease-out), color var(--dur-med) var(--ease-out);
+   Comportamiento de escritorio (>=1100px, sin prefers-reduced-motion):
+   servicesPinScroll (main.js) fija el escenario con position:sticky y
+   traduce .services__grid con transform:translate3d() según el progreso de
+   scroll vertical (ver JS para el cálculo de distancias). Todo el CSS de
+   aquí es también el fallback SIN JavaScript / por debajo de 1100px /
+   reduced-motion: sin la clase .is-pin-active que añade el script, el
+   riel es un scroll horizontal nativo (overflow-x:auto, mismo patrón que
+   .google-reviews__viewport) y .services__pin-inner no llega a fijarse
+   porque .services__pin-wrap no tiene una altura forzada. */
+.services{padding-block:var(--sp-16) 0;background:var(--pw-primary-900);color:var(--pw-white);}
+
+.services__pin-wrap{position:relative;}
+
+.services__pin-inner{padding-block:var(--sp-2) 0;}
+@media (min-width:1100px){
+  .services__pin-inner{
+    position:sticky;
+    top:var(--services-pin-top,0px);
+    display:flex;flex-direction:column;
+    overflow:hidden;
+  }
+}
+
+.services__head-row{
+  display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;
+  gap:var(--sp-8);margin-bottom:var(--sp-16);
+  flex:0 0 auto;
+}
+.services__head{max-width:34rem;}
+.services__head .section-heading{color:var(--pw-white);}
+
+.services__nav{display:flex;align-items:center;gap:var(--sp-6);}
+.services__progress{
+  font-size:.85rem;letter-spacing:.06em;
+  color:rgba(255,255,255,.5);
+  font-variant-numeric:tabular-nums;white-space:nowrap;
+  transition:opacity var(--dur-med) var(--ease-out);
+}
+.services__progress-current{color:var(--pw-white);font-weight:500;}
+/* Panel final: el contador se mantiene en 04/04 pero se atenúa, ya no hay
+   "siguiente servicio" que contar (ver requisito 10, servicesPinScroll). */
+.services__progress.is-final{opacity:.45;}
+
+.services__arrows{display:flex;gap:var(--sp-3);}
+.services__arrow{
+  width:54px;height:54px;flex:0 0 auto;
+  display:inline-flex;align-items:center;justify-content:center;
+  border-radius:50%;
+  border:1px solid rgba(255,255,255,.3);
+  background:rgba(255,255,255,.04);
+  color:var(--pw-white);
+  cursor:pointer;
+  transition:background-color var(--dur-fast) var(--ease-out),border-color var(--dur-fast) var(--ease-out),opacity var(--dur-fast) var(--ease-out);
+}
+.services__arrow:hover,.services__arrow:focus-visible{
+  background:rgba(143,217,201,.14);border-color:rgba(143,217,201,.55);
+}
+.services__arrow:focus-visible{outline:2px solid #8fd9c9;outline-offset:2px;}
+.services__arrow:active{background:rgba(143,217,201,.22);border-color:rgba(143,217,201,.7);}
+.services__arrow:disabled:hover{background:rgba(255,255,255,.04);border-color:rgba(255,255,255,.3);}
+.services__arrow:disabled{
+  opacity:.3;cursor:not-allowed;
+  background:rgba(255,255,255,.04);border-color:rgba(255,255,255,.3);
+}
+
+/* El riel vive fuera de .container a propósito, igual que
+   .google-reviews__viewport: puede superar el ancho del encabezado (1240px)
+   pero nunca el del documento, ya que .services (la section) no tiene
+   max-width propio. El desbordamiento horizontal queda contenido en este
+   viewport (overflow-x:auto de base; overflow:hidden solo cuando
+   servicesPinScroll activa .is-pin-active), nunca en html/body. El
+   padding-inline repite el del .container para que el primer panel
+   arranque alineado con el encabezado. */
+.services__viewport{
+  width:100%;
+  overflow-x:auto;
+  scroll-snap-type:x proximity;
+  scroll-padding-inline:clamp(1.5rem,4vw,2.75rem);
+  padding-block:var(--sp-2);
+  -webkit-overflow-scrolling:touch;
+  scrollbar-width:thin;
+  scrollbar-color:rgba(255,255,255,.35) transparent;
+  flex:1 1 auto;
+  min-height:0;
+}
+.services__viewport::-webkit-scrollbar{height:6px;}
+.services__viewport::-webkit-scrollbar-thumb{background:rgba(255,255,255,.25);border-radius:999px;}
+.services.is-pin-active .services__viewport{
+  overflow:hidden;
+  scroll-snap-type:none;
+}
+
+.services__grid{
+  display:flex;gap:var(--sp-8);align-items:center;
+  width:max-content;
+  height:100%;
+  padding-inline:clamp(1.5rem,4vw,2.75rem);
+}
+.services.is-pin-active .services__grid{will-change:transform;}
+
+.service-panel{
+  flex:0 0 auto;
+  width:clamp(380px,42vw,560px);
+  scroll-snap-align:start;
+  display:flex;flex-direction:column;
+  background:rgba(255,255,255,.03);
+  border:1px solid rgba(255,255,255,.14);
   scroll-margin-top:6rem;
 }
-.area-card:hover{background:var(--pw-primary-900);color:var(--pw-white);}
-.area-card__head{display:flex;flex-direction:column;gap:.5rem;}
-.area-card__num{font-size:.72rem;letter-spacing:.14em;color:var(--pw-primary);}
-.area-card:hover .area-card__num{color:#8fd9c9;}
-.area-card__title{font-size:1.5rem;font-weight:500;line-height:1.15;}
-.area-card__desc{font-size:.92rem;color:var(--pw-ink-70);flex-grow:1;}
-.area-card:hover .area-card__desc{color:rgba(255,255,255,.82);}
-.area-card__cta{
-  font-size:.7rem;letter-spacing:.12em;text-transform:uppercase;
-  display:inline-flex;align-items:center;gap:.5rem;color:var(--pw-primary);
-}
-.area-card:hover .area-card__cta{color:#8fd9c9;}
+.service-panel__media{aspect-ratio:3/4;overflow:hidden;background:rgba(255,255,255,.06);}
+.service-panel__img{width:100%;height:100%;object-fit:cover;transition:transform var(--dur-slow) var(--ease-out);}
+.service-panel:hover .service-panel__img,.service-panel:focus-within .service-panel__img{transform:scale(1.04);}
+.service-panel__img--physio{object-position:58% 32%;}
+.service-panel__img--wellness{object-position:70% 32%;}
+.service-panel__img--strength{object-position:46% 35%;}
+.service-panel__img--pilates{object-position:42% 30%;}
 
-.areas__note{
-  margin-top:var(--sp-10);
-  font-size:.95rem;color:var(--pw-ink-70);
+.service-panel__body{
+  display:flex;flex-direction:column;gap:var(--sp-3);
+  padding:var(--sp-6);flex-grow:1;
+}
+.service-panel__num{font-size:.72rem;letter-spacing:.14em;color:#8fd9c9;}
+.service-panel__title{font-size:1.35rem;font-weight:500;line-height:1.15;color:var(--pw-white);}
+.service-panel__hook{font-size:.95rem;color:rgba(255,255,255,.75);}
+.service-panel__benefits{display:flex;flex-direction:column;gap:.4rem;margin-top:.15rem;}
+.service-panel__benefits li{
+  position:relative;padding-left:1rem;
+  font-size:.85rem;color:rgba(255,255,255,.65);
+}
+.service-panel__benefits li::before{
+  content:"";position:absolute;left:0;top:.5em;
+  width:.3rem;height:.3rem;border-radius:50%;
+  background:#8fd9c9;
+}
+.service-panel__cta{
+  margin-top:auto;padding-top:var(--sp-3);
+  display:inline-flex;align-items:center;gap:.5rem;
+  font-size:.7rem;letter-spacing:.12em;text-transform:uppercase;
+  color:#8fd9c9;
+}
+.service-panel__cta svg{transition:transform var(--dur-fast) var(--ease-out);}
+.service-panel__cta:hover svg,.service-panel__cta:focus-visible svg{transform:translateX(4px);}
+
+/* Composición móvil: recorrido vertical normal, sin riel ni indicador de
+   progreso (no hay nada horizontal que contar todavía). El panel de
+   transición se apila igual que los cuatro paneles de servicio: es un
+   elemento más de .services__grid, no un bloque aparte. */
+@media (max-width:719px){
+  .services__nav{display:none;}
+  .services__viewport{overflow-x:visible;scroll-snap-type:none;}
+  .services__grid{
+    display:flex;flex-direction:column;width:auto;height:auto;
+    gap:var(--sp-10);padding-inline:clamp(1.5rem,4vw,2.75rem);
+  }
+  .service-panel{width:100%;scroll-snap-align:none;}
+  .service-panel__media{aspect-ratio:4/3;}
+  .services__transition{width:100%;}
+}
+
+/* Panel final de transición: quinto elemento del riel (tramo 2 del
+   escenario fijado en escritorio; última tarjeta del scroll nativo en el
+   resto de casos). Servicio complementario + puente hacia Method. */
+.services__transition{
+  flex:0 0 auto;
+  width:clamp(560px,54vw,820px);
+  scroll-snap-align:start;
+  display:flex;flex-direction:column;justify-content:center;gap:var(--sp-8);
+  padding:var(--sp-10);
+  border:1px solid rgba(255,255,255,.14);
+  background:rgba(255,255,255,.03);
+}
+.services__transition-note{
+  font-size:.95rem;color:rgba(255,255,255,.7);
   max-width:56ch;
 }
 
-/* Servicio complementario: jerarquía inferior a las cuatro áreas */
-.areas__extra{
-  margin-top:var(--sp-10);
-  background:var(--pw-mist);
-  border-left:2px solid var(--pw-primary);
+.services__transition-extra{
+  background:rgba(255,255,255,.05);
+  border-left:2px solid #8fd9c9;
   padding:var(--sp-6);
   display:flex;flex-direction:column;gap:var(--sp-5);
   align-items:flex-start;
 }
-@media (min-width:720px){
-  .areas__extra{flex-direction:row;align-items:center;justify-content:space-between;gap:var(--sp-6);}
-}
-.areas__extra-text{max-width:52ch;}
-.areas__extra-label{
+.services__transition-extra-text{max-width:52ch;}
+.services__transition-extra-label{
   font-size:.68rem;letter-spacing:.12em;text-transform:uppercase;
-  color:var(--pw-ink-70);
+  color:rgba(255,255,255,.6);
 }
-.areas__extra-title{
-  margin-top:.35rem;
+.services__transition-extra-title{
+  margin-top:.35rem;color:var(--pw-white);
   font-size:1.05rem;font-weight:500;line-height:1.3;letter-spacing:normal;
 }
-.areas__extra-desc{margin-top:.35rem;font-size:.9rem;color:var(--pw-ink-70);}
-.areas__extra-cta{
+.services__transition-extra-desc{margin-top:.35rem;font-size:.9rem;color:rgba(255,255,255,.7);}
+.services__transition-extra-cta{
   flex-shrink:0;
   font-size:.7rem;letter-spacing:.12em;text-transform:uppercase;
-  color:var(--pw-primary);
+  color:#8fd9c9;
 }
 
-.areas__all{margin-top:var(--sp-6);}
-.areas__all-link{
+.services__transition-all-link{
   display:inline-block;
   font-size:.75rem;letter-spacing:.12em;text-transform:uppercase;
-  color:var(--pw-primary);
+  color:#8fd9c9;
   border-bottom:1px solid currentColor;
   padding-bottom:.25rem;
+}
+
+.services__transition-bridge{
+  padding-top:var(--sp-6);
+  border-top:1px solid rgba(255,255,255,.16);
+  font-size:1.05rem;font-weight:500;
+  color:var(--pw-white);
+  max-width:48ch;
 }
 
 /* ---------- 11. The Marshall Method ---------- */
@@ -770,6 +963,12 @@ a:focus-visible,button:focus-visible,input:focus-visible{
 .testimonials__head{max-width:40rem;margin-bottom:var(--sp-16);}
 .testimonials__grid{display:grid;gap:1px;background:var(--pw-line);border:1px solid var(--pw-line);grid-template-columns:1fr;}
 @media (min-width:860px){ .testimonials__grid{grid-template-columns:repeat(3,1fr);} }
+/* Con una única reseña (p. ej. páginas de servicio) la rejilla de 3
+   columnas deja dos celdas vacías visibles como bloques grises: se
+   reduce a una sola columna centrada y del ancho de una tarjeta. */
+@media (min-width:860px){
+  .testimonials__grid:has(.testimonial-card:only-child){grid-template-columns:1fr;max-width:26rem;margin-inline:auto;}
+}
 .testimonial-card{background:var(--pw-white);padding:var(--sp-10) var(--sp-8);display:flex;flex-direction:column;gap:var(--sp-5);}
 .testimonial-card__quote{font-size:1.05rem;line-height:1.68;color:var(--pw-ink);}
 .testimonial-card__quote::before{content:"“";color:var(--pw-primary);font-size:1.3em;line-height:0;vertical-align:-.3em;margin-right:.04em;}
@@ -792,6 +991,194 @@ a:focus-visible,button:focus-visible,input:focus-visible{
   margin-top:auto;padding-top:var(--sp-5);border-top:1px solid var(--pw-line);
 }
 .testimonials__source{margin-top:var(--sp-6);font-size:.78rem;color:var(--pw-ink-50);}
+
+/* ---------- 15b. Reseñas de Google (Fisioterapia) ----------
+   Sección independiente de "15. Reseñas reales" (Home): usa sus propias
+   clases (.google-reviews/.google-review-card) para no tocar el
+   componente compartido .testimonials/.testimonial-card que sigue en
+   uso en Home. Fase visual (aún estática): composición inspirada en el
+   ritmo de una cinta horizontal (referencia externa, adaptada a la
+   identidad de Physio Wellness), sin duplicado de tarjetas ni
+   movimiento automático todavía — eso llega en una fase posterior.
+   Sin [data-reveal] deliberadamente: esa utilidad deja el bloque en
+   opacity:0 hasta que JS añade .is-visible, lo que ocultaría el
+   contenido sin JavaScript.
+   Radio de esquina propio (--gr-radius) en vez de var(--radius, 2px):
+   el token global es casi recto ("precisión clínica") a propósito para
+   botones/inputs; estas tarjetas piden esquinas ligeramente redondeadas
+   por requisito explícito, así que se define un valor local sin tocar
+   el token compartido. */
+.google-reviews{
+  --gr-radius:14px;
+  padding-block:var(--sp-32);
+  background:var(--pw-mist);
+  border-block:1px solid var(--pw-line);
+}
+
+.google-reviews__head{
+  max-width:36rem;
+  margin-inline:auto;
+  margin-bottom:var(--sp-16);
+  text-align:center;
+}
+.google-reviews__head .section-heading{max-width:32ch;margin-inline:auto;}
+/* Único destacado permitido: "Experiencias reales". Verde corporativo
+   (--pw-primary, no --pw-accent: el acento no cumple AA en texto, ver
+   nota de contraste del inventario de marca) + una línea fina bajo el
+   texto a modo de subrayado editorial. Deliberadamente sin fondo, sin
+   padding y sin border-radius para que no se lea como una etiqueta o
+   un botón. Cursiva/serif quedó descartada: el proyecto solo carga
+   Jost en pesos 400/500/600 (sin itálica ni familia serif), y la
+   instrucción es no sumar una tipografía nueva solo para este detalle. */
+.google-reviews__highlight{
+  color:var(--pw-primary);
+  font-weight:600;
+  box-shadow:inset 0 -0.15em 0 0 rgba(35,115,105,.22);
+}
+
+/* La cinta se desborda del ancho del .container del encabezado (1240px)
+   pero no del documento: .google-reviews (la <section>) no tiene
+   max-width propio, así que el viewport hereda el 100% del ancho del
+   body. El scroll horizontal queda contenido en este viewport
+   (overflow-x:auto), nunca en html/body.
+   Estado base (sin JS / prefers-reduced-motion): overflow-x:auto, así
+   la única lista real es explorable a mano igual que en la fase
+   anterior. googleReviewsMarquee (main.js) añade "has-marquee" a la
+   sección solo cuando consigue clonar la lista y arrancar el
+   movimiento continuo; solo entonces se sustituye el scroll nativo por
+   overflow:hidden + arrastre propio (misma cinta, ahora animada). */
+.google-reviews__viewport{
+  width:100%;
+  /* Ancla de container query para .google-review-card (ver más abajo):
+     es el único ancestro de las tarjetas con un ancho ya definido y
+     estable (width:100%, no depende de su contenido), así que sus cqw
+     dan siempre el mismo resultado tanto si la tarjeta está en la lista
+     real como en el clon. */
+  container-type:inline-size;
+  padding-block:var(--sp-2);
+  padding-inline:clamp(1.5rem,4vw,2.75rem);
+  overflow-x:auto;
+  scroll-snap-type:x proximity;
+  scroll-padding-inline:clamp(1.5rem,4vw,2.75rem);
+  -webkit-overflow-scrolling:touch;
+  scrollbar-width:thin;
+  scrollbar-color:var(--pw-primary) transparent;
+}
+.google-reviews__viewport::-webkit-scrollbar{height:6px;}
+.google-reviews__viewport::-webkit-scrollbar-thumb{background:var(--pw-line);border-radius:999px;}
+.google-reviews__viewport::-webkit-scrollbar-thumb:hover{background:var(--pw-primary);}
+.google-reviews.has-marquee .google-reviews__viewport{
+  overflow:hidden;
+  scroll-snap-type:none;
+  cursor:grab;
+  /* pan-y: un dedo que empieza sobre la cinta puede seguir haciendo scroll
+     vertical de la página con normalidad; solo el gesto horizontal queda
+     disponible para el arrastre propio (Pointer Events), que nunca llama
+     preventDefault. En móvil esta clase no llega a aplicarse (ver
+     googleReviewsMarquee/disableMarquee en main.js), así que ahí el
+     desplazamiento es 100% nativo sin necesidad de esta regla. */
+  touch-action:pan-y;
+}
+.google-reviews.has-marquee .google-reviews__viewport.is-dragging{cursor:grabbing;}
+
+/* El rail agrupa la lista real y (solo por JS) su duplicado; ambas son
+   a su vez flex rows, así que rail > [ul, ul-clon] queda en una única
+   fila continua. El mismo valor de gap en rail y en la lista mantiene
+   la separación constante también en la costura entre una vuelta y la
+   siguiente, que es lo que evita un salto visible en el bucle.
+
+   CORREGIDO (antes flex:0 0 100% en .google-reviews__list + % en
+   .google-review-card): con 6 tarjetas al 29%/46%/90%, su suma (174%+)
+   desborda a propósito la caja de la lista ("tres completas + un
+   fragmento" asomando) — pero eso deja la CAJA de la lista (100% del
+   rail) mucho más estrecha que su CONTENIDO real (las tarjetas
+   desbordadas). Como track y su clon se colocan uno junto a otro según
+   el ancho de sus CAJAS (no de su contenido desbordado), el clon
+   arrancaba mientras las últimas tarjetas reales aún no habían
+   terminado de desfilar visualmente: solapamiento constante, no solo
+   en el instante del empalme.
+   Fix: las tarjetas ya no miden en % del ancho de LA LISTA (que se
+   desborda) sino en cqw del ancho de .google-reviews__viewport (que sí
+   es estable, ver container-type arriba) vía container queries. Al no
+   depender ya del ancho de la lista, la lista puede volver a
+   flex:0 0 auto y su caja pasa a coincidir exactamente con la suma de
+   sus tarjetas — track y clon quedan pegados sin hueco y sin solape. */
+.google-reviews__rail{
+  display:flex;gap:var(--sp-6);
+  will-change:transform;
+}
+.google-reviews__list{
+  list-style:none;margin:0;padding:0;
+  display:flex;gap:var(--sp-6);
+  flex:0 0 auto;
+  min-width:0;
+}
+
+/* Anchos por tarjeta en cqw (% del ancho de .google-reviews__viewport,
+   ver container-type:inline-size arriba), no en px fijos, para que la
+   relación "tres completas + un fragmento" se mantenga igual de 1440px
+   en adelante que en pantallas más anchas (>1600px), tal como pide la
+   comprobación visual — sin depender del ancho, ahora auto, de la
+   lista que las contiene. */
+.google-review-card{
+  scroll-snap-align:start;
+  flex:0 0 90cqw;
+  min-width:0;
+  background:var(--pw-white);
+  border:1px solid var(--pw-line);
+  border-radius:var(--gr-radius);
+  box-shadow:0 1px 2px rgba(18,32,29,.05);
+  padding:var(--sp-8);
+  display:flex;flex-direction:column;gap:var(--sp-5);
+}
+/* 90cqw en móvil deja un fragmento de ~11% del ancho de la siguiente
+   tarjeta asomando (antes 82%/22%, demasiado protagonismo para ser "una
+   pista pequeña"). 768px es el arranque de tablet (2 completas + parte
+   de una tercera con 46cqw); 1024px el de escritorio (3 completas + un
+   fragmento con 29cqw), alineados con los puntos de prueba pedidos. */
+@media (min-width:768px){ .google-review-card{flex-basis:46cqw;} }
+@media (min-width:1024px){ .google-review-card{flex-basis:29cqw;} }
+/* Algunas tarjetas (2 de 6) llevan un degradado verde muy sutil en la
+   esquina, como única variación de fondo; el resto queda en blanco
+   liso para que el verde siga usándose con moderación. */
+.google-review-card:nth-child(3n+2){
+  background:linear-gradient(155deg, var(--pw-white) 58%, rgba(35,115,105,.07) 100%);
+}
+.google-review-card__tag{
+  align-self:flex-start;
+  font-size:.7rem;letter-spacing:.08em;text-transform:uppercase;font-weight:600;
+  color:var(--pw-primary);
+  background:var(--pw-mist);
+  border:1px solid var(--pw-line);
+  border-radius:999px;
+  padding:.25rem .7rem;
+}
+.google-review-card__rating{margin:0;}
+.google-review-card__stars{color:var(--pw-primary);letter-spacing:.15em;font-size:1rem;}
+.google-review-card__quote{margin:0;font-size:1rem;line-height:1.65;color:var(--pw-ink);text-align:left;}
+.google-review-card__quote p{margin:0 0 var(--sp-4);}
+.google-review-card__quote p:last-child{margin-bottom:0;}
+.google-review-card__quote::before{content:"“";color:var(--pw-primary);font-size:1.3em;line-height:0;vertical-align:-.3em;margin-right:.04em;}
+.google-review-card__meta{
+  margin-top:auto;padding-top:var(--sp-5);border-top:1px solid var(--pw-line);
+  display:flex;align-items:center;justify-content:space-between;gap:var(--sp-4);
+}
+/* Nombre, procedencia y etiqueta quedan en un nivel secundario respecto
+   a la cita (que es el contenido principal de la tarjeta): tamaño
+   menor y color atenuado en vez del --pw-ink de cuerpo de texto. */
+.google-review-card__author{font-size:.78rem;letter-spacing:.06em;text-transform:uppercase;color:var(--pw-ink-70);font-weight:500;}
+.google-review-card__source{font-size:.72rem;color:var(--pw-ink-70);}
+
+/* Con prefers-reduced-motion, googleReviewsMarquee (main.js) no arranca
+   el bucle continuo (misma lógica que areaCarousel: sale antes de tocar
+   el DOM si prefersReducedMotion es true): nada que pausar, así que el
+   resto del contenido (nombre, puntuación, procedencia, etiqueta y las
+   6 reseñas completas) sigue visible y navegable a mano vía scroll
+   nativo. */
+@media (prefers-reduced-motion:reduce){
+  .google-reviews__viewport{scroll-behavior:auto;}
+  .google-reviews__rail{transform:none!important;}
+}
 
 /* ---------- 16. Ubicación y contacto ---------- */
 .contact{padding-block:var(--sp-32);background:var(--pw-mist);border-block:1px solid var(--pw-line);}
@@ -886,59 +1273,158 @@ a:focus-visible,button:focus-visible,input:focus-visible{
   color:rgba(255,255,255,.6);
 }
 
-/* ---------- 20. Selector de necesidad (Servicios) ---------- */
-.needs{
+/* ---------- 20. Carrusel de áreas (Servicios) ----------
+   Componente reutilizable: .area-carousel. La tarjeta activa se fija por
+   CSS mediante [data-position="0"]; el resto de posiciones (±1, ±2) se
+   colocan alrededor. Los datos de cada tarjeta (texto, imagen, ruta) viven
+   únicamente en el HTML; data-position es el único enganche que el JS
+   (areaCarousel, main.js) reescribe en los 5 <li> para ciclar el carrusel,
+   avanzar/retroceder o saltar a una tarjeta concreta, sin tocar esta hoja
+   de estilos. Las reglas de posición se aplican en todos los anchos (no
+   solo en escritorio) para que el arrastre/deslizamiento táctil anime la
+   misma composición a cualquier tamaño; el media query de 1024px solo
+   amplía tamaños y revela descripción/CTA de la tarjeta activa. */
+.area-carousel{
+  position:relative;
   padding-block:var(--sp-24);
-  background:var(--pw-mist);
-  border-block:1px solid var(--pw-line);
+  background:var(--pw-primary-900);
+  overflow:hidden;
   scroll-margin-top:4.5rem;
 }
-.needs__head{max-width:42rem;margin-bottom:var(--sp-12);}
-.needs__lead{margin-top:var(--sp-5);max-width:56ch;}
+/* Resplandor ambiental tras la tarjeta central. rgba calculada a partir de
+   --pw-accent (#269888 = 38,152,136) y --pw-primary-900 (#123c37 =
+   18,60,55), mismo criterio que --pw-line respecto a --pw-ink: un custom
+   property no puede variar su alpha dentro de un radial-gradient. */
+.area-carousel::before{
+  content:"";
+  position:absolute;top:50%;left:50%;
+  width:50rem;height:50rem;
+  transform:translate(-50%,-50%);
+  background:radial-gradient(circle, rgba(38,152,136,.4) 0%, rgba(38,152,136,.14) 42%, rgba(18,60,55,0) 70%);
+  pointer-events:none;
+}
+.area-carousel__head{position:relative;z-index:1;max-width:42rem;margin-bottom:var(--sp-12);color:var(--pw-white);}
+.area-carousel__head .section-heading{color:var(--pw-white);}
+.area-carousel__lead{margin-top:var(--sp-5);max-width:56ch;color:rgba(255,255,255,.72);}
 
-.needs__grid{
-  display:grid;grid-template-columns:1fr;gap:1px;
-  background:var(--pw-line);border:1px solid var(--pw-line);
+.area-carousel__viewport{
+  position:relative;z-index:1;
+  overflow:hidden;
+  touch-action:pan-y;
+  cursor:grab;
 }
-@media (min-width:860px){ .needs__grid{grid-template-columns:repeat(2,1fr);} }
+.area-carousel__viewport:active{cursor:grabbing;}
+.area-carousel__track{
+  display:flex;align-items:flex-start;justify-content:center;
+  gap:1.25rem;
+  margin:0;padding:.5rem var(--sp-4) 1rem;
+  user-select:none;-webkit-user-select:none;
+  transition:transform .3s var(--ease-out);
+}
+.area-carousel.is-dragging .area-carousel__track{transition:none;}
 
-.need-card{
-  background:var(--pw-white);
-  padding:var(--sp-8) var(--sp-6);
-  display:flex;flex-direction:column;gap:var(--sp-4);
-  transition:background-color var(--dur-med) var(--ease-out), color var(--dur-med) var(--ease-out);
+/* Duración propia (700ms) fuera de la escala --dur-* del sitio: el pedido
+   del carrusel es 600-800ms, y ningún token existente cae en ese rango
+   (--dur-med .5s, --dur-slow .9s). Precedente de duraciones puntuales fuera
+   de la escala ya usado en otros componentes del sitio. */
+.area-carousel__card{
+  list-style:none;flex:0 0 auto;
+  width:13rem;
+  transition:transform .7s var(--ease-out), opacity .7s var(--ease-out), width .7s var(--ease-out);
 }
-.need-card:hover{background:var(--pw-primary-900);color:var(--pw-white);}
-.need-card__num{font-size:.72rem;letter-spacing:.14em;color:var(--pw-accent);}
-.need-card__title{
-  font-size:var(--fs-h3);font-weight:500;
-  line-height:1.25;letter-spacing:normal;
-  max-width:26ch;
+.area-carousel.is-dragging .area-carousel__card{transition:none;}
+.area-carousel__card-link{display:block;position:relative;}
+.area-carousel__media{
+  position:relative;display:block;
+  aspect-ratio:3/4;overflow:hidden;
+  border-radius:1.25rem;
+  background:var(--pw-primary-600);
 }
-.need-card__desc{font-size:.95rem;color:var(--pw-ink-70);max-width:48ch;flex-grow:1;}
-.need-card:hover .need-card__desc{color:rgba(255,255,255,.82);}
-.need-card__cta{
-  display:inline-flex;align-items:center;gap:.5rem;
+.area-carousel__media img{
+  width:100%;height:100%;object-fit:cover;display:block;
+  transition:transform var(--dur-slow) var(--ease-out);
+}
+.area-carousel__img--physio{object-position:58% 32%;}
+.area-carousel__img--wellness{object-position:70% 32%;}
+.area-carousel__img--strength{object-position:46% 35%;}
+.area-carousel__img--pilates{object-position:42% 30%;}
+.area-carousel__img--domicilio{object-position:center;}
+.area-carousel__media::after{
+  content:"";position:absolute;inset:0;
+  background:linear-gradient(180deg, rgba(18,60,55,0) 45%, rgba(18,60,55,.88) 100%);
+}
+.area-carousel__card-link:hover .area-carousel__media img,
+.area-carousel__card-link:focus-visible .area-carousel__media img{transform:scale(1.05);}
+.area-carousel__card-link:focus-visible{outline:2px solid var(--pw-accent);outline-offset:3px;border-radius:1.25rem;}
+
+.area-carousel__body{
+  position:absolute;left:0;right:0;bottom:0;z-index:2;
+  padding:var(--sp-4) var(--sp-5) var(--sp-5);
+  color:var(--pw-white);
+  display:flex;flex-direction:column;gap:.35rem;
+}
+.area-carousel__title{font-size:1rem;font-weight:500;line-height:1.25;}
+.area-carousel__desc,.area-carousel__cta{display:none;}
+.area-carousel__cta{
+  align-items:center;gap:.5rem;
   font-size:.7rem;letter-spacing:.12em;text-transform:uppercase;
-  color:var(--pw-primary);
+  color:#8fd9c9;margin-top:.15rem;
 }
-.need-card:hover .need-card__cta{color:#8fd9c9;}
-.need-card__cta svg{transition:transform var(--dur-fast) var(--ease-out);}
-.need-card:hover .need-card__cta svg{transform:translateX(4px);}
+.area-carousel__cta svg{transition:transform var(--dur-fast) var(--ease-out);}
+.area-carousel__card-link:hover .area-carousel__cta svg,
+.area-carousel__card-link:focus-visible .area-carousel__cta svg{transform:translateX(4px);}
 
-.needs__note{
+/* -- Composición base (también móvil): tarjeta activa centrada y más
+   grande, dos tarjetas visibles a cada lado, escala/opacidad decrecientes
+   y extremos parcialmente recortados por el ancho limitado del viewport.
+   Los 5 <li> siempre tienen un data-position (0/±1/±2), así que estas
+   reglas son incondicionales y el JS solo reescribe el atributo. -- */
+.area-carousel__card[data-position="0"]{order:0;opacity:1;transform:translateY(0) scale(1);z-index:5;}
+.area-carousel__card[data-position="0"] .area-carousel__title{font-size:1.05rem;}
+
+.area-carousel__card[data-position="1"],
+.area-carousel__card[data-position="-1"]{width:9.5rem;opacity:.75;transform:translateY(1.15rem) scale(.94);z-index:4;}
+.area-carousel__card[data-position="1"]{order:1;}
+.area-carousel__card[data-position="-1"]{order:-1;}
+
+.area-carousel__card[data-position="2"],
+.area-carousel__card[data-position="-2"]{width:6.5rem;opacity:.42;transform:translateY(1.75rem) scale(.88);z-index:3;}
+.area-carousel__card[data-position="2"]{order:2;}
+.area-carousel__card[data-position="-2"]{order:-2;}
+
+@media (min-width:1024px){
+  .area-carousel__viewport{
+    max-width:70rem;margin-inline:auto;
+  }
+  .area-carousel__track{padding-inline:0;}
+
+  .area-carousel__card[data-position="0"]{width:21rem;}
+  .area-carousel__card[data-position="0"] .area-carousel__title{font-size:var(--fs-h3);}
+  .area-carousel__card[data-position="0"] .area-carousel__desc{display:block;font-size:.9rem;color:rgba(255,255,255,.82);max-width:26ch;}
+  .area-carousel__card[data-position="0"] .area-carousel__cta{display:inline-flex;}
+
+  .area-carousel__card[data-position="1"],
+  .area-carousel__card[data-position="-1"]{width:15.5rem;transform:translateY(1.75rem) scale(.94);}
+
+  .area-carousel__card[data-position="2"],
+  .area-carousel__card[data-position="-2"]{width:10.5rem;transform:translateY(2.75rem) scale(.88);}
+}
+
+.area-carousel__note{
+  position:relative;z-index:1;
   margin-top:var(--sp-10);
   max-width:60ch;
   padding-left:var(--sp-6);
-  border-left:2px solid var(--pw-primary);
+  border-left:2px solid var(--pw-accent);
   display:flex;flex-direction:column;align-items:flex-start;gap:var(--sp-4);
 }
-.needs__note-text{font-size:.98rem;color:var(--pw-ink-70);}
-.needs__note-link{
+.area-carousel__note-text{font-size:.98rem;color:rgba(255,255,255,.72);}
+.area-carousel__note-link{
   font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;
-  color:var(--pw-primary);
+  color:#8fd9c9;
   border-bottom:1px solid currentColor;padding-bottom:.25rem;
 }
+.area-carousel__note-link:hover,.area-carousel__note-link:focus-visible{color:var(--pw-white);}
 
 /* ---------- 21. Las áreas en detalle (Servicios) ----------
    Las áreas se leen como capítulos de un mismo proceso: filete superior
@@ -1086,14 +1572,11 @@ a:focus-visible,button:focus-visible,input:focus-visible{
    sobre claro (5.6:1) y #8fd9c9 sobre oscuro (7.5:1). */
 .page-servicios .eyebrow:not(.eyebrow--on-dark){color:var(--pw-primary);}
 .page-servicios .eyebrow:not(.eyebrow--on-dark)::before{background:var(--pw-primary);}
-.page-servicios .need-card__num{color:var(--pw-primary);}
-.page-servicios .need-card:hover .need-card__num,
-.page-servicios .need-card:focus-visible .need-card__num{color:#8fd9c9;}
 
 /* Área táctil. Los enlaces de texto crecían sólo 17-24px de alto: se les da
    recorrido vertical y se compensa el margen para que no se muevan de sitio. */
 .page-servicios .breadcrumb a{padding-block:.5rem;margin-block:-.5rem;}
-.page-servicios .needs__note-link{padding-top:.7rem;margin-top:-.7rem;}
+.page-servicios .area-carousel__note-link{padding-top:.7rem;margin-top:-.7rem;}
 .page-servicios .area-block__cta,
 .page-servicios .home-care__cta,
 .page-servicios .expertise__cta{
@@ -1102,19 +1585,12 @@ a:focus-visible,button:focus-visible,input:focus-visible{
 }
 
 /* Estados. El foco visible global ya cubre a/button; aquí se añade el estado
-   activo y se hace que la tarjeta responda igual al teclado que al ratón. */
+   activo. */
 .page-servicios .btn:active{transform:translateY(1px);}
-.page-servicios .need-card:focus-visible{
-  background:var(--pw-primary-900);color:var(--pw-white);
-  outline-offset:-2px;
-}
-.page-servicios .need-card:focus-visible .need-card__desc{color:rgba(255,255,255,.82);}
-.page-servicios .need-card:focus-visible .need-card__cta{color:#8fd9c9;}
-.page-servicios .need-card:active{background:var(--pw-primary-900);color:var(--pw-white);}
 .page-servicios .area-block__cta:active,
 .page-servicios .home-care__cta:active,
-.page-servicios .expertise__cta:active,
-.page-servicios .needs__note-link:active{color:var(--pw-primary-900);}
+.page-servicios .expertise__cta:active{color:var(--pw-primary-900);}
+.page-servicios .area-carousel__note-link:active{color:var(--pw-white);}
 .page-servicios .breadcrumb a:hover{color:var(--pw-white);}
 
 /* ---------- 26b. Acabado de Home ----------
@@ -2010,10 +2486,50 @@ a:focus-visible,button:focus-visible,input:focus-visible{
    para los números de .first-visit__step (--pw-accent no llega a AA). */
 .page-physio .first-visit__step::before{color:var(--pw-primary);}
 
+/* ----- Hero de Fisioterapia: composición editorial a dos columnas -----
+   FASE 8. El .page-hero base (§19) es de un solo bloque de texto sin foto;
+   aquí se añade una variante (.page-hero--split) solo para esta página:
+   contenido a la izquierda, fotografía a la derecha en escritorio, con
+   menos altura/espacio vacío que el hero base. En móvil el orden natural
+   del DOM ya coloca el contenido antes que la foto, sin necesidad de
+   "order". Mismo tratamiento visual (aspect-ratio 4/3→3/4, filtro) que
+   .service-photo más abajo, para no introducir un lenguaje visual nuevo. */
+.page-physio .page-hero__inner{
+  padding-block:clamp(6rem,12vh,8rem) clamp(3rem,7vh,4.5rem);
+}
+.page-physio .page-hero__grid{display:grid;grid-template-columns:minmax(0,1fr);gap:var(--sp-10);}
+.page-physio .page-hero__text{margin-block:var(--sp-6) var(--sp-8);}
+.page-physio .page-hero__photo{
+  margin:0;
+  aspect-ratio:4/3;
+  overflow:hidden;
+  border-radius:var(--radius-tile,20px);
+}
+.page-physio .page-hero__photo img{
+  width:100%;height:100%;
+  object-fit:cover;object-position:60% center;
+  filter:saturate(1.05) contrast(1.04) brightness(.97);
+}
+@media (min-width:860px){
+  .page-physio .page-hero__grid{
+    grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);
+    gap:var(--sp-16);
+    align-items:center;
+  }
+  .page-physio .page-hero__photo{aspect-ratio:3/4;}
+  .page-physio .page-hero__photo img{object-position:65% center;}
+}
+
 /* ----- "Cuándo empezar por aquí": texto + fotografía de referencia -----
    Bloque asimétrico a dos columnas, no una tarjeta ni un hero: en móvil la
    imagen va primero como apoyo visual, luego el texto. */
 .service-context{padding-block:var(--sp-24);background:var(--pw-white);}
+/* Fisioterapia: el texto ahora es un único párrafo breve (antes eran dos),
+   así que el bloque queda con más aire del necesario entre el hero y la
+   siguiente sección. Se reduce el padding-block ~17% respecto a la base
+   (var(--sp-24) = 6rem) solo en esta página, conservando el mismo ritmo
+   editorial y el resto de reglas compartidas de .service-context. */
+.page-physio .service-context{padding-block:5rem;}
 .service-context__grid{display:grid;gap:var(--sp-12);}
 .service-context__text .area-block__text{max-width:56ch;}
 .service-photo{
@@ -2031,10 +2547,65 @@ a:focus-visible,button:focus-visible,input:focus-visible{
 @media (min-width:860px){
   .service-context__grid{
     grid-template-columns:1.1fr .9fr;
-    gap:var(--sp-20);
+    gap:var(--sp-16);
     align-items:center;
   }
   .service-photo{order:0;aspect-ratio:3/4;}
+}
+
+/* ----- "Problemas y ámbitos que abordamos": título estático + cinta -----
+   Sustituye la antigua franja de confianza (datos personales/de
+   colegiación). Título fijo arriba; debajo, una única línea horizontal en
+   movimiento continuo con los conceptos ya existentes en el contenido de
+   la página (sin patologías nuevas). Implementada solo con CSS (rail
+   duplicado + keyframe translateX -50%, sin scroll horizontal real: el
+   viewport tiene overflow:hidden). Sin dependencia de JS: la pausa al
+   pasar el cursor o al enfocar con teclado es puro CSS (ver
+   .problem-ticker__viewport:hover/:focus-within más abajo). La segunda
+   <ul> es un duplicado visual puro, por eso lleva aria-hidden="true". */
+.problem-ticker{padding-block:var(--sp-12) var(--sp-16);background:var(--pw-mist);border-block:1px solid var(--pw-line);}
+.problem-ticker__head{
+  display:flex;align-items:center;justify-content:space-between;gap:var(--sp-6);
+  flex-wrap:wrap;margin-bottom:var(--sp-8);
+}
+.problem-ticker__head .section-heading{margin:0;max-width:34ch;}
+.problem-ticker__viewport{
+  width:100%;overflow:hidden;
+  mask-image:linear-gradient(to right,transparent,#000 4%,#000 96%,transparent);
+  -webkit-mask-image:linear-gradient(to right,transparent,#000 4%,#000 96%,transparent);
+}
+.problem-ticker__rail{
+  display:flex;width:max-content;gap:var(--sp-10);
+  animation:problem-ticker-scroll 34s linear infinite;
+}
+.problem-ticker__viewport:hover .problem-ticker__rail,
+.problem-ticker__viewport:focus-within .problem-ticker__rail{
+  animation-play-state:paused;
+}
+.problem-ticker__list{
+  display:flex;align-items:center;list-style:none;margin:0;padding:0;gap:var(--sp-10);
+}
+.problem-ticker__item{
+  display:flex;align-items:center;gap:var(--sp-10);
+  white-space:nowrap;flex:0 0 auto;
+  font-size:var(--fs-lead);color:var(--pw-ink-70);
+}
+.problem-ticker__item::after{
+  content:"";flex:0 0 auto;width:.35rem;height:.35rem;border-radius:50%;background:var(--pw-accent);
+}
+@keyframes problem-ticker-scroll{
+  from{transform:translateX(0);}
+  to{transform:translateX(-50%);}
+}
+@media (max-width:640px){
+  .problem-ticker__head{flex-direction:column;align-items:flex-start;}
+  .problem-ticker__item{font-size:var(--fs-body);}
+}
+@media (prefers-reduced-motion:reduce){
+  .problem-ticker__rail{animation:none;transform:none;flex-wrap:wrap;width:100%;}
+  .problem-ticker__viewport{overflow:visible;mask-image:none;-webkit-mask-image:none;}
+  .problem-ticker__item{white-space:normal;}
+  .problem-ticker__list[aria-hidden="true"]{display:none;}
 }
 
 /* ----- Subespecialidades: lista editorial, no cuadrícula de tarjetas -----
@@ -2082,6 +2653,25 @@ a:focus-visible,button:focus-visible,input:focus-visible{
   .specialty-item{padding-block:var(--sp-8);}
 }
 
+/* ----- Relación entre las áreas -----
+   Bloque breve de una sola columna de texto, deliberadamente ligero
+   (no es un componente de tarjetas ni de lista con enlaces): un párrafo
+   corto y, como mucho, un enlace a una ruta real ya existente. */
+.area-relation{padding-block:var(--sp-12);background:var(--pw-white);border-top:1px solid var(--pw-line);}
+.area-relation__inner{max-width:56ch;}
+.area-relation__text{
+  font-size:var(--fs-lead);
+  color:var(--pw-ink-70);
+  margin:0 0 var(--sp-6);
+}
+.area-relation__cta{
+  display:inline-block;
+  font-weight:600;
+  color:var(--pw-primary);
+  text-decoration:none;
+}
+.area-relation__cta:hover,.area-relation__cta:focus-visible{text-decoration:underline;}
+
 /* ----- Cómo es el proceso -----
    Reutiliza .first-visit__steps fuera de .first-visit; solo hace falta el
    encabezado propio de la sección. */
@@ -2092,4 +2682,40 @@ a:focus-visible,button:focus-visible,input:focus-visible{
 /* ----- Fisioterapia a domicilio + enlace a tarifas -----
    Mismo fondo y ritmo que el bloque equivalente de Servicios; separa el
    aviso de "a domicilio" del enlace general a tarifas sin usar tarjetas. */
-.home-care-note{padding-block:var(--sp-20);background:var(--pw-mist);border-block:1px solid var(--pw-line);}
+.home-care-note{padding-block:var(--sp-24);background:var(--pw-mist);border-block:1px solid var(--pw-line);}
+/* .home-care-note__* reemplaza al antiguo .areas__extra/.areas__all-link
+   (huérfanos desde que ese componente se renombró a
+   .services__transition-extra/-all-link para el escenario oscuro de
+   Servicios): mismo fondo/ritmo que ese bloque, adaptado a texto oscuro
+   sobre --pw-mist y con los dos enlaces agrupados en un único bloque de
+   acciones en vez de repartidos en dos contenedores sueltos. */
+.home-care-note__body{
+  display:flex;flex-direction:column;align-items:flex-start;gap:var(--sp-8);
+}
+@media (min-width:720px){
+  .home-care-note__body{flex-direction:row;align-items:center;justify-content:space-between;gap:var(--sp-10);}
+}
+.home-care-note__text{max-width:52ch;}
+.home-care-note__label{margin-bottom:var(--sp-3);}
+.home-care-note__title{margin-top:0;font-size:1.5rem;}
+.home-care-note__desc{margin-top:var(--sp-4);color:var(--pw-ink-70);line-height:1.6;}
+
+.home-care-note__actions{
+  display:flex;flex-direction:column;align-items:flex-start;gap:var(--sp-4);
+  flex-shrink:0;
+}
+@media (min-width:720px){
+  .home-care-note__actions{flex-direction:row;align-items:center;gap:var(--sp-8);}
+}
+.home-care-note__link{
+  display:inline-flex;align-items:center;gap:.5rem;
+  padding-block:.35rem;
+  font-size:.8rem;font-weight:500;letter-spacing:.08em;text-transform:uppercase;
+  color:var(--pw-primary);
+  border-bottom:1px solid currentColor;
+  transition:color var(--dur-fast) var(--ease-out);
+}
+.home-care-note__link:hover{color:var(--pw-primary-600);}
+.home-care-note__arrow{transition:transform var(--dur-fast) var(--ease-out);}
+.home-care-note__link:hover .home-care-note__arrow,
+.home-care-note__link:focus-visible .home-care-note__arrow{transform:translateX(4px);}

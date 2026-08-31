@@ -189,10 +189,24 @@
   <!-- ============ Franja de confianza ============ -->
   <section class="trust" id="presentacion" aria-label="Datos del centro">
     <ul class="container trust__list" data-reveal>
-      <li class="trust__item">Más de 10 años de experiencia</li>
-      <li class="trust__item">Más de 1.500 pacientes acompañados</li>
-      <li class="trust__item">Atención individual</li>
-      <li class="trust__item">Centro en Sitges</li>
+      <li class="trust__item">
+        <span class="trust__value" data-count-to="10" data-count-suffix="+" aria-hidden="true">0</span>
+        <span class="sr-only">Más de 10 años de experiencia</span>
+        <span class="trust__label" aria-hidden="true">años de experiencia</span>
+      </li>
+      <li class="trust__item">
+        <span class="trust__value" data-count-to="1500" data-count-suffix="+" aria-hidden="true">0</span>
+        <span class="sr-only">Más de 1.500 pacientes acompañados</span>
+        <span class="trust__label" aria-hidden="true">pacientes acompañados</span>
+      </li>
+      <li class="trust__item">
+        <span class="trust__value">Atención</span>
+        <span class="trust__label">individual</span>
+      </li>
+      <li class="trust__item">
+        <span class="trust__value">Sitges</span>
+        <span class="trust__label">centro físico</span>
+      </li>
     </ul>
   </section>
 
@@ -224,6 +238,143 @@
       </div>
 
       <p class="orient__note" data-reveal>¿No sabes cuál encaja contigo? Te orientamos en la primera visita.</p>
+    </div>
+  </section>
+
+  <!-- ============ Servicios ============
+       El escenario se fija en pantallas de escritorio (≥1100px) mientras el
+       scroll vertical mueve el riel horizontalmente (ver servicesPinScroll()
+       en main.js). .services__pin-wrap es el espaciador cuya altura fija la
+       duración del efecto; .services__pin-inner es lo que se queda pegado
+       (position:sticky, gestionado en CSS). Sin JavaScript, o por debajo de
+       1100px, o con motion reducido, no pasa nada de esto: el riel sigue
+       siendo scroll horizontal nativo (mismo patrón que
+       .google-reviews__viewport), así que la sección funciona completa
+       sin JS. -->
+  <section class="services" id="areas">
+    <div class="services__pin-wrap" data-services-pin>
+      <div class="services__pin-inner">
+        <div class="services__head-row container" data-reveal>
+          <div class="services__head">
+            <p class="eyebrow section-eyebrow eyebrow--on-dark">Servicios</p>
+            <h2 class="section-heading">Cuatro formas de cuidarte</h2>
+          </div>
+
+          <!-- Indicador de progreso y flechas: el indicador se actualiza con
+               el avance del scroll fijado y las flechas desplazan la página
+               al servicio anterior/siguiente (ver servicesPinScroll() en
+               main.js). Son controles reales: navegables por teclado y con
+               estado disabled sincronizado con el extremo del recorrido. -->
+          <div class="services__nav">
+            <p class="services__progress" data-services-progress><span class="services__progress-current">01</span> / <span class="services__progress-total">04</span></p>
+            <div class="services__arrows" data-services-arrows>
+              <button class="services__arrow services__arrow--prev" type="button" aria-label="Servicio anterior" data-services-prev disabled>
+                <svg width="16" height="12" viewBox="0 0 16 12" fill="none" aria-hidden="true"><path d="M15 6H1M1 6l5-5M1 6l5 5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </button>
+              <button class="services__arrow services__arrow--next" type="button" aria-label="Servicio siguiente" data-services-next>
+                <svg width="16" height="12" viewBox="0 0 16 12" fill="none" aria-hidden="true"><path d="M1 6h14M10 1l5 5-5 5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- El riel vive fuera de .container a propósito, igual que
+             .google-reviews__viewport: puede superar el ancho del encabezado
+             pero nunca el del documento (ver comentario en styles.css). -->
+        <div class="services__viewport" data-services-viewport>
+          <div class="services__grid" data-services-track>
+            <article class="service-panel" id="physiotherapy" data-reveal style="--i:0">
+              <div class="service-panel__media">
+                <img class="service-panel__img service-panel__img--physio" src="src/assets/img/stock/area-physio-1440.webp" srcset="src/assets/img/stock/area-physio-720.webp 720w, src/assets/img/stock/area-physio-1440.webp 1440w" sizes="(min-width: 1100px) 25vw, (min-width: 720px) 50vw, 100vw" alt="" loading="lazy" width="1440" height="960">
+              </div>
+              <div class="service-panel__body">
+                <span class="service-panel__num">01</span>
+                <h3 class="service-panel__title">Fisioterapia</h3>
+                <p class="service-panel__hook">Recupera movimiento y reduce el dolor</p>
+                <ul class="service-panel__benefits">
+                  <li>Tratar el dolor o una lesión</li>
+                  <li>Recuperar una función</li>
+                  <li>Volver a moverte mejor</li>
+                </ul>
+                <a class="service-panel__cta" href="src/pages/servicios/physiotherapy.html">Descubrir Fisioterapia <svg width="14" height="10" viewBox="0 0 14 10" fill="none" aria-hidden="true"><path d="M1 5h12M8 1l4 4-4 4" stroke="currentColor" stroke-width="1.4"/></svg></a>
+              </div>
+            </article>
+
+            <article class="service-panel" id="wellness" data-reveal style="--i:1">
+              <div class="service-panel__media">
+                <img class="service-panel__img service-panel__img--wellness" src="src/assets/img/stock/area-wellness-1440.webp" srcset="src/assets/img/stock/area-wellness-720.webp 720w, src/assets/img/stock/area-wellness-1440.webp 1440w" sizes="(min-width: 1100px) 25vw, (min-width: 720px) 50vw, 100vw" alt="" loading="lazy" width="1440" height="960">
+              </div>
+              <div class="service-panel__body">
+                <span class="service-panel__num">02</span>
+                <h3 class="service-panel__title">Bienestar</h3>
+                <p class="service-panel__hook">Libera tensión y recupera el equilibrio</p>
+                <ul class="service-panel__benefits">
+                  <li>Cuidar el cuerpo</li>
+                  <li>Recuperarte del esfuerzo</li>
+                  <li>Reducir la fatiga</li>
+                </ul>
+                <a class="service-panel__cta" href="src/pages/servicios/wellness.html">Descubrir Bienestar <svg width="14" height="10" viewBox="0 0 14 10" fill="none" aria-hidden="true"><path d="M1 5h12M8 1l4 4-4 4" stroke="currentColor" stroke-width="1.4"/></svg></a>
+              </div>
+            </article>
+
+            <article class="service-panel" id="strength" data-reveal style="--i:2">
+              <div class="service-panel__media">
+                <img class="service-panel__img service-panel__img--strength" src="src/assets/img/stock/area-strength-1440.webp" srcset="src/assets/img/stock/area-strength-720.webp 720w, src/assets/img/stock/area-strength-1440.webp 1440w" sizes="(min-width: 1100px) 25vw, (min-width: 720px) 50vw, 100vw" alt="" loading="lazy" width="1440" height="810">
+              </div>
+              <div class="service-panel__body">
+                <span class="service-panel__num">03</span>
+                <h3 class="service-panel__title">Fuerza</h3>
+                <p class="service-panel__hook">Gana capacidad, confianza y autonomía</p>
+                <ul class="service-panel__benefits">
+                  <li>Desarrollar capacidad física</li>
+                  <li>Ganar confianza</li>
+                  <li>Mejorar el rendimiento</li>
+                </ul>
+                <a class="service-panel__cta" href="src/pages/servicios/strength.html">Descubrir Fuerza <svg width="14" height="10" viewBox="0 0 14 10" fill="none" aria-hidden="true"><path d="M1 5h12M8 1l4 4-4 4" stroke="currentColor" stroke-width="1.4"/></svg></a>
+              </div>
+            </article>
+
+            <article class="service-panel" id="pilates" data-reveal style="--i:3">
+              <div class="service-panel__media">
+                <img class="service-panel__img service-panel__img--pilates" src="src/assets/img/stock/area-pilates-1440.webp" srcset="src/assets/img/stock/area-pilates-720.webp 720w, src/assets/img/stock/area-pilates-1440.webp 1440w" sizes="(min-width: 1100px) 25vw, (min-width: 720px) 50vw, 100vw" alt="" loading="lazy" width="1440" height="756">
+              </div>
+              <div class="service-panel__body">
+                <span class="service-panel__num">04</span>
+                <h3 class="service-panel__title">Pilates Reformer</h3>
+                <p class="service-panel__hook">Mejora el control, la movilidad y la fuerza</p>
+                <ul class="service-panel__benefits">
+                  <li>Control corporal</li>
+                  <li>Movilidad y estabilidad</li>
+                  <li>Alineación postural</li>
+                </ul>
+                <a class="service-panel__cta" href="src/pages/servicios/pilates.html">Descubrir Pilates Reformer <svg width="14" height="10" viewBox="0 0 14 10" fill="none" aria-hidden="true"><path d="M1 5h12M8 1l4 4-4 4" stroke="currentColor" stroke-width="1.4"/></svg></a>
+              </div>
+            </article>
+
+            <!-- Panel final de transición: cierra el recorrido de Servicios y conecta
+                 con The Marshall Method. Es el 5º elemento del riel: el tramo 2 del
+                 scroll fijado revela este panel tras el último servicio. -->
+            <div class="services__transition" data-reveal>
+              <p class="services__transition-note">No son recorridos cerrados: tu plan puede evolucionar entre áreas según lo que necesites.</p>
+
+              <div class="services__transition-extra">
+                <div class="services__transition-extra-text">
+                  <p class="services__transition-extra-label">Servicio complementario</p>
+                  <h3 class="services__transition-extra-title">Fisioterapia a domicilio</h3>
+                  <p class="services__transition-extra-desc">Si no puedes desplazarte al centro, llevamos el tratamiento a tu casa con el mismo seguimiento.</p>
+                </div>
+                <a class="services__transition-extra-cta" href="src/pages/servicios/fisioterapia-a-domicilio.html">Ver el servicio →</a>
+              </div>
+
+              <div class="services__transition-all">
+                <a class="services__transition-all-link" href="src/pages/servicios.html">Todos los servicios →</a>
+              </div>
+
+              <p class="services__transition-bridge">Todas estas áreas se conectan dentro de un mismo proceso: The Marshall Method.</p>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </section>
 
@@ -268,66 +419,6 @@
       </div>
 
       <a class="btn btn--outline method__cta" href="src/pages/metodo.html">Conocer The Marshall Method</a>
-    </div>
-  </section>
-
-  <!-- ============ Las cuatro áreas ============ -->
-  <section class="areas" id="areas">
-    <div class="container">
-      <div class="areas__head" data-reveal>
-        <p class="eyebrow section-eyebrow">Servicios</p>
-        <h2 class="section-heading">Cuatro áreas. Un mismo objetivo: ayudarte a avanzar</h2>
-      </div>
-
-      <div class="areas__grid">
-        <article class="area-card" id="physiotherapy" data-reveal style="--i:0">
-          <div class="area-card__head">
-            <span class="area-card__num">01</span>
-            <h3 class="area-card__title">Fisioterapia</h3>
-          </div>
-          <p class="area-card__desc">Fisioterapia para tratar el dolor o una lesión, recuperar una función y volver a moverte mejor.</p>
-          <a class="area-card__cta" href="src/pages/servicios/physiotherapy.html">Descubrir el área →</a>
-        </article>
-        <article class="area-card" id="wellness" data-reveal style="--i:1">
-          <div class="area-card__head">
-            <span class="area-card__num">02</span>
-            <h3 class="area-card__title">Bienestar</h3>
-          </div>
-          <p class="area-card__desc">Cuidar el cuerpo, recuperarte del esfuerzo, reducir la fatiga y favorecer tu bienestar físico.</p>
-          <a class="area-card__cta" href="src/pages/servicios/wellness.html">Descubrir el área →</a>
-        </article>
-        <article class="area-card" id="strength" data-reveal style="--i:2">
-          <div class="area-card__head">
-            <span class="area-card__num">03</span>
-            <h3 class="area-card__title">Fuerza</h3>
-          </div>
-          <p class="area-card__desc">Entrenamiento de fuerza para desarrollar capacidad física, confianza y rendimiento.</p>
-          <a class="area-card__cta" href="src/pages/servicios/strength.html">Descubrir el área →</a>
-        </article>
-        <article class="area-card" id="pilates" data-reveal style="--i:3">
-          <div class="area-card__head">
-            <span class="area-card__num">04</span>
-            <h3 class="area-card__title">Pilates</h3>
-          </div>
-          <p class="area-card__desc">Pilates Reformer para mejorar control, movilidad, estabilidad y alineación.</p>
-          <a class="area-card__cta" href="src/pages/servicios/pilates.html">Descubrir el área →</a>
-        </article>
-      </div>
-
-      <p class="areas__note" data-reveal>No son recorridos cerrados: tu plan puede evolucionar entre áreas según lo que necesites.</p>
-
-      <div class="areas__extra" data-reveal>
-        <div class="areas__extra-text">
-          <p class="areas__extra-label">Servicio complementario</p>
-          <h3 class="areas__extra-title">Fisioterapia a domicilio</h3>
-          <p class="areas__extra-desc">Si no puedes desplazarte al centro, llevamos el tratamiento a tu casa con el mismo seguimiento.</p>
-        </div>
-        <a class="areas__extra-cta" href="src/pages/servicios/fisioterapia-a-domicilio.html">Ver el servicio →</a>
-      </div>
-
-      <div class="areas__all" data-reveal>
-        <a class="areas__all-link" href="src/pages/servicios.html">Todos los servicios →</a>
-      </div>
     </div>
   </section>
 

@@ -862,7 +862,7 @@ a:focus-visible,button:focus-visible,input:focus-visible{
   .umbral{--u-blur-max:20px;--u-veil-travel:24vw;--u-frame-max:9vw;--u-core-size:min(62vw,440px);}
 }
 @media (max-width:639px){
-  .umbral{--u-blur-max:12px;--u-veil-travel:16vw;--u-frame-max:6vw;--u-core-size:min(80vw,340px);}
+  .umbral{--u-blur-max:16px;--u-veil-travel:18vw;--u-frame-max:5vw;--u-core-size:min(85vw,350px);}
 }
 
 .umbral__head{max-width:36rem;margin-bottom:var(--sp-16);}
@@ -947,26 +947,38 @@ a:focus-visible,button:focus-visible,input:focus-visible{
   opacity:var(--u-core-warm,0);
 }
 
-/* Numeral editorial: un único ancla espacial (esquina inferior
-   izquierda, recortada por el viewport a propósito) para las cinco
-   cifras — nunca se desplaza de fase a fase, solo escala (--u-num-scale,
-   escrita por JS cada frame) y cada cifra funde su propia opacidad de
-   forma continua según la distancia de la fase actual (ver render() en
-   main.js): así 01→02→...→05 se disuelve entre sí en vez de "contar". */
+/* Numeral editorial: ancla espacial propia ubicada sobre el bloque de texto
+   (desacoplada de la esquina inferior para evitar colisiones de lectura).
+   Escala con --u-num-scale y modula su luminancia con --u-num-opacity y
+   mix-blend-mode:screen sobre el fondo verde de marca, garantizando contraste
+   perceptible en 01/02 sin deslumbrar en 03 (§2 y §3 auditoría). */
 .umbral__num{
   position:absolute;z-index:2;
-  left:-4%;bottom:-8%;
+  left:clamp(1.5rem, 4vw, 3.5rem);
+  bottom:clamp(9.5rem, 23vh, 15rem);
   transform:scale(var(--u-num-scale,.65));
   transform-origin:left bottom;
-  mix-blend-mode:overlay;
+  mix-blend-mode:screen;
+  opacity:var(--u-num-opacity,.25);
   pointer-events:none;user-select:none;
 }
 .umbral__num-digit{
   position:absolute;left:0;bottom:0;
-  font-size:clamp(6rem,24vw,19rem);
+  font-size:clamp(5.5rem, 20vw, 15rem);
   font-weight:600;line-height:1;letter-spacing:-.02em;
-  color:var(--pw-white);white-space:nowrap;
+  color:#8fd9c9;white-space:nowrap;
   opacity:0;
+  will-change:opacity;
+}
+@media (max-width:639px){
+  .umbral__num{
+    left:var(--sp-5);
+    bottom:clamp(11rem, 28vh, 15rem);
+    transform-origin:left bottom;
+  }
+  .umbral__num-digit{
+    font-size:clamp(4.5rem, 22vw, 7.5rem);
+  }
 }
 
 /* Veladuras: dos paños translúcidos en diagonal (no blobs, no papel
@@ -1016,11 +1028,11 @@ a:focus-visible,button:focus-visible,input:focus-visible{
   opacity:calc(1 - var(--u-bg-dark,1));
 }
 
-/* Texto de cada fase: mismo patrón de apilado por grid (todas las
-   fases ocupan la misma celda; solo la .is-active es visible) que ya
-   validó .method-step, con un velo de contraste (::before) para
-   mantener AA sobre cualquier estado de la escena. Sin pin activo, cae
-   a lista vertical normal (ver comentario de arriba). */
+/* Texto de cada fase: apilado por grid donde la opacidad y el desplazamiento
+   se interpolan directamente en scroll desde main.js (render), eliminando
+   saltos de transición temporales fijos (§4 auditoría). En móvil se añade
+   un resguardo inferior de seguridad para evitar solapamiento con la barra
+   fija de reserva (.book-bar, §6 auditoría). */
 .umbral.is-pin-active .umbral__content{
   position:absolute;z-index:5;inset:0;
   display:flex;align-items:flex-end;
@@ -1028,11 +1040,11 @@ a:focus-visible,button:focus-visible,input:focus-visible{
 }
 .umbral.is-pin-active .umbral__content::before{
   content:"";position:absolute;inset:0;
-  background:linear-gradient(0deg, rgba(11,34,31,.72) 0%, rgba(11,34,31,.14) 56%, transparent 80%);
+  background:linear-gradient(0deg, rgba(11,34,31,.82) 0%, rgba(11,34,31,.2) 48%, transparent 74%);
   pointer-events:none;
 }
 .umbral.is-pin-active .umbral__phases{
-  display:grid;width:100%;max-width:30rem;
+  display:grid;width:100%;max-width:32rem;
 }
 .umbral__phase{
   position:relative;
@@ -1045,19 +1057,26 @@ a:focus-visible,button:focus-visible,input:focus-visible{
   grid-area:1/1;
   border-top:none;padding-block:0;
   opacity:0;
-  transform:translateY(16px);
-  transition:opacity var(--dur-slow) var(--ease-out), transform var(--dur-slow) var(--ease-out);
-  transition-delay:0ms!important;
+  transform:translate3d(0, 16px, 0);
   pointer-events:none;
+  transition:none!important;
+  transition-delay:0ms!important;
+  will-change:opacity, transform;
 }
 .umbral.is-pin-active .umbral__phase.is-active{
-  opacity:1;
-  transform:translateY(0);
   pointer-events:auto;
 }
 .umbral__phase-eyebrow{display:block;font-size:.75rem;letter-spacing:.14em;color:#8fd9c9;}
 .umbral__phase-title{font-size:clamp(1.5rem,3.2vw,2.3rem);font-weight:500;margin-top:.3rem;color:var(--pw-white);}
 .umbral__phase-text{font-size:.95rem;color:rgba(255,255,255,.75);margin-top:.4rem;max-width:42ch;}
+
+@media (max-width:639px){
+  .umbral.is-pin-active .umbral__content{
+    padding:var(--sp-6) var(--sp-5) calc(var(--sp-10) + 18px);
+  }
+  .umbral__phase-title{font-size:clamp(1.4rem, 5.5vw, 1.8rem);}
+  .umbral__phase-text{font-size:.88rem;max-width:32ch;}
+}
 
 /* Indicador "01 — 02 — 03 — 04 — 05": puramente decorativo (aria-hidden),
    solo visible en modo fijado — el contenido real y accesible ya está

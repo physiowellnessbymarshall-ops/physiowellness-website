@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Fisioterapia, Pilates y fuerza en Sitges | Physio Wellness</title>
-<meta name="description" content="Descubre servicios de fisioterapia, Wellness, fuerza y Pilates en Sitges. Te ayudamos a encontrar por dónde empezar y reservar la opción adecuada.">
+<title>Fisioterapia, Pilates, fuerza y stretching en Sitges | Physio Wellness</title>
+<meta name="description" content="Descubre servicios de fisioterapia, Wellness, fuerza, Pilates y stretching en Sitges. Te ayudamos a encontrar por dónde empezar y reservar la opción adecuada.">
 <link rel="canonical" href="https://physiowellness.es/es/servicios/">
 <link rel="alternate" hreflang="es" href="https://physiowellness.es/es/servicios/">
 <link rel="alternate" hreflang="ca" href="https://physiowellness.es/ca/serveis/">
@@ -36,6 +36,7 @@
           <a href="servicios/wellness.html">Bienestar</a>
           <a href="servicios/strength.html">Fuerza</a>
           <a href="servicios/pilates.html">Pilates</a>
+          <a href="servicios/stretching.html">Stretching</a>
           <a href="servicios/fisioterapia-a-domicilio.html">Fisioterapia a domicilio</a>
           <a class="nav-dropdown__all" href="servicios.html" aria-current="page">Ver todos los servicios</a>
         </div>
@@ -122,6 +123,7 @@
         <a href="servicios/wellness.html">Bienestar</a>
         <a href="servicios/strength.html">Fuerza</a>
         <a href="servicios/pilates.html">Pilates</a>
+        <a href="servicios/stretching.html">Stretching</a>
         <a href="servicios/fisioterapia-a-domicilio.html">Fisioterapia a domicilio</a>
         <a class="m-acc__all" href="servicios.html" aria-current="page">Ver todos los servicios</a>
       </div>
@@ -174,6 +176,7 @@
        wellness       servicios/wellness.html                   /servicios/wellness/
        strength       servicios/strength.html                   /servicios/fuerza/
        pilates        servicios/pilates.html                    /servicios/pilates/
+       stretching     servicios/stretching.html                 /servicios/stretching/
        domicilio      servicios/fisioterapia-a-domicilio.html   /servicios/fisioterapia-domicilio/
        metodo         ../../index.html#metodo                   /el-metodo/
        equipo         ../../index.html#equipo                   /conocenos/equipo/
@@ -201,12 +204,12 @@
 
       <div data-reveal style="--i:1">
         <p class="eyebrow eyebrow--on-dark page-hero__eyebrow">Todos los servicios</p>
-        <h1 class="page-hero__title">Encuentra el servicio de fisioterapia, fuerza, Pilates o bienestar que necesitas</h1>
+        <h1 class="page-hero__title">Encuentra el servicio de fisioterapia, fuerza, Pilates, stretching o bienestar que necesitas</h1>
       </div>
 
       <div class="page-hero__text" data-reveal style="--i:2">
         <p>No todas las personas necesitan empezar por el mismo lugar. Quizá llegas con dolor, estás recuperándote, quieres ganar fuerza o buscas cuidar tu cuerpo de una forma más consciente.</p>
-        <p>En Physio Wellness trabajamos desde cuatro áreas conectadas para ayudarte a encontrar un punto de partida adecuado.</p>
+        <p>En Physio Wellness trabajamos desde cinco áreas conectadas para ayudarte a encontrar un punto de partida adecuado.</p>
       </div>
 
       <div data-reveal style="--i:3">
@@ -225,12 +228,13 @@
        vive solo en el <li>; la posición visual (tamaño, desplazamiento,
        opacidad, orden) la decide el CSS a partir de data-position, así que
        una futura fase de avance cíclico solo tendrá que reescribir ese
-       atributo en los 5 <li>, sin tocar el resto del marcado.
+       atributo en los 6 <li>, sin tocar el resto del marcado.
 
        pos   área                     data-route   imagen (stock)
         0    Fisioterapia             physiotherapy  area-physio
         1    Bienestar                wellness       area-wellness
         2    Fuerza y readaptación    strength       area-strength
+       -3    Stretching               stretching     area-strength (temporal)
        -2    Pilates Reformer         pilates        area-pilates
        -1    Fisioterapia a domicilio domicilio      domicilio-visita
 
@@ -239,6 +243,17 @@
        rutas de arriba). "Pilates Reformer" y "Fuerza y readaptación" son los
        nombres de tarjeta indicados para este carrusel; el resto del sitio
        sigue usando "Pilates" y "Fuerza" para el área.
+
+       Stretching se inserta justo antes de Pilates en el DOM: con 6
+       tarjetas (total par) applyPositions() en main.js ya no puede repartir
+       un abanico simétrico ±2 (mitad = 3, no 2), así que una tarjeta cae en
+       una tercera posición "-3" (nueva, ver styles.css §20). Colocando
+       Stretching ahí, las cinco tarjetas ya existentes conservan exactamente
+       la misma posición inicial que tenían antes (0/1/2/-2/-1); solo
+       Stretching ocupa el nuevo hueco -3. Imagen: no existe todavía foto
+       propia de Stretching, así que se reutiliza area-strength-*.webp como
+       placeholder temporal (ver ASSET_SOURCES.md) hasta disponer de una
+       fotografía propia de esta área.
        ========================================================================== -->
   <section class="area-carousel" id="orientacion">
     <div class="container">
@@ -283,6 +298,19 @@
               <span class="area-carousel__body">
                 <span class="area-carousel__title">Fuerza y readaptación</span>
                 <span class="area-carousel__desc">Desarrollar fuerza, capacidad física y rendimiento.</span>
+                <span class="area-carousel__cta">Ver servicio <svg width="14" height="10" viewBox="0 0 14 10" fill="none" aria-hidden="true"><path d="M1 5h12M8 1l4 4-4 4" stroke="currentColor" stroke-width="1.4"/></svg></span>
+              </span>
+            </a>
+          </li>
+
+          <li class="area-carousel__card" data-position="-3">
+            <a class="area-carousel__card-link" href="servicios/stretching.html" data-route="stretching">
+              <span class="area-carousel__media">
+                <img class="area-carousel__img area-carousel__img--stretching" src="../assets/img/stock/area-strength-1440.webp" srcset="../assets/img/stock/area-strength-720.webp 720w, ../assets/img/stock/area-strength-1440.webp 1440w" sizes="(min-width: 1024px) 7rem, 60vw" alt="" loading="lazy" width="1440" height="810">
+              </span>
+              <span class="area-carousel__body">
+                <span class="area-carousel__title">Stretching</span>
+                <span class="area-carousel__desc">Ganar flexibilidad y amplitud de movimiento.</span>
                 <span class="area-carousel__cta">Ver servicio <svg width="14" height="10" viewBox="0 0 14 10" fill="none" aria-hidden="true"><path d="M1 5h12M8 1l4 4-4 4" stroke="currentColor" stroke-width="1.4"/></svg></span>
               </span>
             </a>
@@ -393,7 +421,7 @@
           <h3 class="area-block__claim">Desarrollar fuerza, capacidad física y rendimiento</h3>
           <div class="area-block__text">
             <p>Strength está pensado para personas que quieren construir una base física más sólida, recuperar capacidades o mejorar su rendimiento.</p>
-            <p>El trabajo se adapta al punto de partida de cada persona y puede incluir ejercicios de fuerza, movilidad y stretching dentro de un proceso con objetivos definidos.</p>
+            <p>El trabajo se adapta al punto de partida de cada persona y puede incluir ejercicios de fuerza y movilidad dentro de un proceso con objetivos definidos.</p>
           </div>
           <a class="area-block__cta" href="servicios/strength.html" data-route="strength">
             Descubrir Strength
@@ -406,7 +434,33 @@
           <ul class="area-block__list">
             <li>Entrenamiento de fuerza</li>
             <li>Readaptación deportiva</li>
-            <li>Stretching integrado en las sesiones</li>
+          </ul>
+        </div>
+      </article>
+
+      <!-- Stretching, quinta área: bloque normal (no reverse), justo después
+           de Strength (reverse) para no repetir la misma retícula dos veces
+           seguidas y antes de Pilates, que sigue cerrando la secuencia con
+           su propio cambio de ritmo (--wide). -->
+      <article class="area-block" id="stretching" data-reveal>
+        <div class="area-block__main">
+          <p class="eyebrow section-eyebrow">Stretching</p>
+          <h3 class="area-block__claim">Ganar flexibilidad y amplitud de movimiento</h3>
+          <div class="area-block__text">
+            <p>Stretching está pensado para quienes buscan ganar flexibilidad, soltar tensión acumulada y moverse con más amplitud en el día a día o antes/después de otros procesos.</p>
+            <p>Las sesiones se adaptan a tu movilidad actual, combinando estiramiento activo y guiado para trabajar de forma segura y progresiva.</p>
+          </div>
+          <a class="area-block__cta" href="servicios/stretching.html" data-route="stretching">
+            Descubrir Stretching
+            <svg width="14" height="10" viewBox="0 0 14 10" fill="none" aria-hidden="true"><path d="M1 5h12M8 1l4 4-4 4" stroke="currentColor" stroke-width="1.4"/></svg>
+          </a>
+        </div>
+
+        <div class="area-block__services">
+          <p class="area-block__services-label">Servicios</p>
+          <ul class="area-block__list">
+            <li>Stretching individual guiado</li>
+            <li>Stretching integrado en sesiones de Strength o Pilates</li>
           </ul>
         </div>
       </article>
@@ -439,7 +493,7 @@
       <div data-reveal style="--i:1">
         <div class="path__text">
           <p>Empezar por un área no significa tener que permanecer siempre en ella.</p>
-          <p>Después de tratar una lesión en Physiotherapy, puede tener sentido continuar desarrollando fuerza. En otros procesos, Pilates puede ayudar a consolidar el control y la estabilidad. Wellness puede incorporarse como una forma complementaria de recuperación y cuidado corporal.</p>
+          <p>Después de tratar una lesión en Physiotherapy, puede tener sentido continuar desarrollando fuerza. En otros procesos, Pilates puede ayudar a consolidar el control y la estabilidad, o Stretching puede ayudar a recuperar amplitud de movimiento. Wellness puede incorporarse como una forma complementaria de recuperación y cuidado corporal.</p>
           <p>El recorrido se adapta a la evolución de cada persona, no a una clasificación rígida de servicios.</p>
         </div>
         <a class="btn btn--outline path__cta" href="../../index.html#metodo" data-route="metodo">Conocer cómo trabajamos</a>
@@ -517,7 +571,7 @@
     <div class="container cta-final__inner" data-reveal>
       <h2 class="cta-final__title">Empieza por el siguiente paso, no por tener todas las respuestas</h2>
       <p class="cta-final__lead">Si llegas con dolor, una lesión o no sabes qué necesitas, puedes reservar una primera consulta de fisioterapia.</p>
-      <p class="cta-final__lead">Si te interesa Strength, Pilates o Wellness y prefieres que te expliquemos las opciones disponibles, escríbenos.</p>
+      <p class="cta-final__lead">Si te interesa Strength, Pilates, Stretching o Wellness y prefieres que te expliquemos las opciones disponibles, escríbenos.</p>
       <div class="cta-final__actions">
         <a class="btn btn--primary" href="https://www.docfav.com/portal/physio-wellness-by-marshall" target="_blank" rel="noopener">Reservar primera consulta</a>
         <a class="btn btn--outline" href="https://wa.me/34644678344" target="_blank" rel="noopener">Escribir por WhatsApp</a>

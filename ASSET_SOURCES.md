@@ -64,6 +64,37 @@ huérfano que borrar de esa fase.
 anterior a la FASE 7) **no se han borrado**: siguen usándose en `index.html`
 (hero y galería) y no se toca ninguna otra página en esta fase.
 
+### Stretching (integración como servicio principal — placeholder temporal)
+
+Al añadir Stretching como quinto servicio principal (a la par de
+Fisioterapia, Bienestar, Fuerza y Pilates) en Home, `servicios.html`,
+`tarifas.html` y `physiotherapy.html`, no existe todavía una fotografía
+propia para esta disciplina. Como solución temporal se **reutilizan los
+mismos archivos** `src/assets/img/stock/area-strength-720.webp` /
+`-1440.webp` (los mismos de la fila "Fuerza" de la tabla anterior) en todas
+las tarjetas/paneles de Stretching (`.service-panel__img--stretching`,
+`.area-carousel__img--stretching`, `.area-tile[data-area="Stretching"]`).
+
+No es un archivo nuevo ni tiene procedencia propia que documentar aquí: es
+el mismo archivo de Fuerza, servido dos veces. **Pendiente**: sustituir por
+una fotografía real de Stretching en cuanto esté disponible, y entonces
+documentar su origen en una fila propia de esta tabla.
+
+**FASE 5 — página individual `src/pages/servicios/stretching.html`**: mismo
+criterio, mismo archivo de placeholder (`area-strength-720.webp` /
+`-1440.webp`), reutilizado dos veces dentro de la propia página (hero
+`.page-hero__photo` y bloque `.service-photo` de "Qué es el Stretching",
+con distinto recorte por `object-position`), en vez de sumar una segunda
+imagen de stock sin necesidad real. `alt=""` en ambos usos porque la foto
+no representa realmente Stretching todavía. El cliente indicó que
+adjuntaría una fotografía propia para esta página (y para Home/
+`servicios.html`/`tarifas.html`), pero no ha sido posible extraer ningún
+archivo adjuntado en la conversación a un archivo en disco con las
+herramientas disponibles: sigue pendiente que el cliente guarde esa foto
+en una ruta del sistema de archivos accesible para poder procesarla al
+mismo formato (WebP, 720w/1440w, calidad ~82) e integrarla en las cuatro
+ubicaciones pendientes.
+
 ## Hero de página (`#hero`, FASE 7B — nueva)
 
 Hasta la FASE 7B el hero de Tarifas reutilizaba `hero-clinic.webp`, la misma

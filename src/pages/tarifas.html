@@ -52,6 +52,7 @@
           <a href="servicios/wellness.html">Bienestar</a>
           <a href="servicios/strength.html">Fuerza</a>
           <a href="servicios/pilates.html">Pilates</a>
+          <a href="servicios/stretching.html">Stretching</a>
           <a href="servicios/fisioterapia-a-domicilio.html">Fisioterapia a domicilio</a>
           <a class="nav-dropdown__all" href="servicios.html">Ver todos los servicios</a>
         </div>
@@ -138,6 +139,7 @@
         <a href="servicios/wellness.html">Bienestar</a>
         <a href="servicios/strength.html">Fuerza</a>
         <a href="servicios/pilates.html">Pilates</a>
+        <a href="servicios/stretching.html">Stretching</a>
         <a href="servicios/fisioterapia-a-domicilio.html">Fisioterapia a domicilio</a>
         <a class="m-acc__all" href="servicios.html">Ver todos los servicios</a>
       </div>
@@ -272,18 +274,20 @@
   </section>
 
   <!-- ============ Elige tu área ============
-       Selector accesible, no cuatro tarifas: Fisioterapia, Bienestar,
-       Fuerza y Pilates comparten la misma tarifa en clínica (PRECIOS
-       2026). Cada panel es un botón (aria-pressed) que marca el área activa
-       y actualiza el panel de contexto lateral/apilado; el enlace
-       "Ver tarifas" de cada panel sigue siendo un <a> real, así que
-       funciona sin JavaScript (las cuatro áreas ya comparten el mismo
-       precio, visible más abajo en #en-la-clinica). -->
+       Selector accesible: Fisioterapia, Bienestar, Fuerza y Pilates
+       comparten la misma tarifa en clínica (PRECIOS 2026). Stretching se
+       incorpora como quinta área al mismo nivel visual, pero PRECIOS 2026
+       no define ninguna tarifa para ella todavía — no se inventa ningún
+       precio: su tarjeta usa un CTA distinto ("Consultar tarifas" en vez
+       de "Ver tarifas", enlazando a WhatsApp en vez de a #en-la-clinica).
+       Cada panel es un botón (aria-pressed) que marca el área activa y
+       actualiza el panel de contexto lateral/apilado; los enlaces de cada
+       panel siguen siendo <a> reales, así que funcionan sin JavaScript. -->
   <section class="area-select" id="areas">
     <div class="container">
       <div class="area-select__head" data-reveal>
         <h2 class="section-heading">Elige tu área</h2>
-        <p class="section-lead">Fisioterapia, Bienestar, Fuerza y Pilates comparten la misma tarifa en clínica. Elige tu área para ver los precios.</p>
+        <p class="section-lead">Fisioterapia, Bienestar, Fuerza y Pilates comparten la misma tarifa en clínica. Elige tu área para ver los precios; para Stretching, consúltanos directamente.</p>
       </div>
 
       <div class="area-select__layout">
@@ -359,9 +363,29 @@
               <a class="area-tile__cta" href="#en-la-clinica">Ver tarifas <svg width="14" height="10" viewBox="0 0 14 10" fill="none" aria-hidden="true"><path d="M1 5h12M8 1l4 4-4 4" stroke="currentColor" stroke-width="1.4"/></svg></a>
             </span>
           </div>
+
+          <div class="area-tile" data-area="Stretching" data-desc="Ganar flexibilidad y amplitud de movimiento." data-reveal style="--i:4">
+            <span class="area-tile__media" aria-hidden="true">
+              <!-- Placeholder temporal: se reutiliza area-strength-*.webp hasta
+                   disponer de una foto propia de Stretching (ver ASSET_SOURCES.md). -->
+              <img src="../assets/img/stock/area-strength-1440.webp" srcset="../assets/img/stock/area-strength-720.webp 720w, ../assets/img/stock/area-strength-1440.webp 1440w" sizes="(min-width: 700px) 50vw, 100vw" alt="" loading="lazy" width="1440" height="810">
+            </span>
+            <span class="area-tile__body">
+              <button type="button" class="area-tile__select" aria-pressed="false" aria-controls="area-context">
+                <span class="area-tile__eyebrow">05</span>
+                <span class="area-tile__title">Stretching</span>
+              </button>
+              <span class="area-tile__badge">
+                <svg width="12" height="10" viewBox="0 0 12 10" fill="none" aria-hidden="true"><path d="M1 5l3 3 7-7" stroke="currentColor" stroke-width="1.6"/></svg>
+                Seleccionada
+              </span>
+              <span class="area-tile__text">Ganar flexibilidad y amplitud de movimiento.</span>
+              <a class="area-tile__cta" href="https://wa.me/34644678344" target="_blank" rel="noopener">Consultar tarifas <svg width="14" height="10" viewBox="0 0 14 10" fill="none" aria-hidden="true"><path d="M1 5h12M8 1l4 4-4 4" stroke="currentColor" stroke-width="1.4"/></svg></a>
+            </span>
+          </div>
         </div>
 
-        <aside class="area-context" id="area-context" aria-live="polite" data-reveal style="--i:4">
+        <aside class="area-context" id="area-context" aria-live="polite" data-reveal style="--i:5">
           <p class="area-context__eyebrow">Área seleccionada</p>
           <h3 class="area-context__title">Fisioterapia</h3>
           <p class="area-context__text">Recuperar, tratar y volver a funcionar mejor.</p>
@@ -373,8 +397,11 @@
 
   <!-- ============ 01 — En la clínica ============
        Panel único de tarifas en clínica: fuente de los precios que enlazan
-       las cuatro tarjetas de "Elige tu área". Cifras y condiciones según
-       PRECIOS 2026 (src/content/tarifas.md). -->
+       las cuatro tarjetas de "Elige tu área" con tarifa definida
+       (Fisioterapia, Bienestar, Fuerza, Pilates). Cifras y condiciones
+       según PRECIOS 2026 (src/content/tarifas.md). Stretching no tiene
+       tarifa en PRECIOS 2026, así que no enlaza aquí: su tarjeta usa un
+       CTA de "Consultar tarifas" por WhatsApp en su lugar. -->
   <section class="rates" id="en-la-clinica">
     <div class="container rates__inner">
       <div class="rates__head" data-reveal>
@@ -490,9 +517,11 @@
   </section>
 
   <!-- ============ 02 — A domicilio ============
-       Modalidad independiente: no es una quinta área junto a Fisioterapia,
-       Bienestar, Fuerza y Pilates. Según PRECIOS 2026, el servicio a
-       domicilio cubre Fisioterapia, Bienestar y Fuerza; no incluye Pilates.
+       Modalidad independiente: no es una sexta área junto a Fisioterapia,
+       Bienestar, Fuerza, Pilates y Stretching. Según PRECIOS 2026, el
+       servicio a domicilio cubre Fisioterapia, Bienestar y Fuerza; no
+       incluye Pilates. Stretching tampoco se incluye aquí (PRECIOS 2026 no
+       define ninguna modalidad para ella todavía).
 
        Ruptura visual (FASE 6): fondo oscuro (antes mist) frente al panel
        claro de "En la clínica".
@@ -516,7 +545,7 @@
         <p class="eyebrow eyebrow--on-dark section-eyebrow">02 — A domicilio</p>
         <h2 class="section-heading">Nos desplazamos hasta ti</h2>
         <p class="section-lead rates__lead">También puedes realizar tu primera visita o un seguimiento de fisioterapia a domicilio.</p>
-        <p class="rates__note">Disponible para Fisioterapia, Bienestar y Fuerza. El servicio de Pilates no está disponible a domicilio.</p>
+        <p class="rates__note">Disponible para Fisioterapia, Bienestar y Fuerza. Los servicios de Pilates y Stretching no están disponibles a domicilio.</p>
         <!-- FASE 7B: foto con licencia verificable, documentada en
              ASSET_SOURCES.md. Puramente ambiental (aria-hidden): no ilustra
              un servicio ni sustituye al texto de precios. -->

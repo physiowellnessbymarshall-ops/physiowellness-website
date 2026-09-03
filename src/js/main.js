@@ -814,33 +814,36 @@ var prefersReducedMotion = window.matchMedia && window.matchMedia('(prefers-redu
        coreX/coreY: posición del núcleo de luz (fracción 0..1 del escenario).
        coreScale/coreGlow: escala e intensidad del halo.
        coreWarm: 0=luz fría, 1=luz cálida.
-       frame: 0=encuadre abierto del todo, 1=encuadre cerrado (§ --u-frame-max).
+       frame: 0=viñeta abierta del todo, 1=penumbra envolvente cerrada.
        bgDark: 0=halo neutro/mist visible, 1=sin halo (escena "cerrada").
-       numOpacity: luminancia controlada del numeral monumental (§3 auditoría). */
+       numOpacity: luminancia controlada del numeral monumental.
+       numX/numY: microdesplazamiento tridimensional del numeral (§11 Fase 2). */
     var KEYFRAMES = [
-      /* 0 — Escuchar: contenida, veladuras casi cerradas, luz fría difusa. */
-      {veilA:.02, veilB:.05, veilAOp:.95, veilBOp:.92, blur:1,
-       coreX:.5, coreY:.46, coreScale:.5, coreGlow:.26, coreWarm:0,
-       frame:1, bgDark:1, numScale:.65, numOpacity:.22},
-      /* 1 — Valorar: se abre ligeramente, baja el blur, aparece foco. */
-      {veilA:.16, veilB:.32, veilAOp:.86, veilBOp:.72, blur:.68,
-       coreX:.48, coreY:.44, coreScale:.68, coreGlow:.46, coreWarm:.08,
-       frame:.72, bgDark:.8, numScale:.84, numOpacity:.28},
-      /* 2 — Tratar: clímax. Máxima intensidad y profundidad, veladura B
-         se retira con claridad, numeral monumental y visible en screen. */
-      {veilA:.46, veilB:.92, veilAOp:.6, veilBOp:.2, blur:.16,
-       coreX:.57, coreY:.4, coreScale:1.2, coreGlow:1, coreWarm:.26,
-       frame:.3, bgDark:.46, numScale:1.35, numOpacity:.46},
-      /* 3 — Acompañar: la composición respira, baja la tensión, la luz
-         deriva lateralmente y se estabiliza en calidez. */
-      {veilA:.68, veilB:.98, veilAOp:.36, veilBOp:.12, blur:.3,
-       coreX:.67, coreY:.5, coreScale:.92, coreGlow:.58, coreWarm:.6,
-       frame:.14, bgDark:.22, numScale:1.06, numOpacity:.32},
-      /* 4 — Evolucionar: abierta, luminosa, cálida y tranquila; las
-         veladuras casi desaparecen y se prepara el horizonte. */
-      {veilA:.86, veilB:1, veilAOp:.08, veilBOp:.03, blur:.12,
-       coreX:.58, coreY:.52, coreScale:1.02, coreGlow:.66, coreWarm:1,
-       frame:0, bgDark:0, numScale:.96, numOpacity:.22}
+      /* 0 — Escuchar: entrada en lo desconocido; contenida, íntima, luz fría focalizada,
+             penumbra envolvente, numeral contenido que flota con calma. */
+      {veilA:.01, veilB:.03, veilAOp:.92, veilBOp:.88, blur:.85,
+       coreX:.5, coreY:.48, coreScale:.42, coreGlow:.24, coreWarm:0,
+       frame:1, bgDark:1, numScale:.62, numOpacity:.20, numX:0, numY:6},
+      /* 1 — Valorar: el espacio empieza a revelarse; apertura diagnóstica, la luz crece
+             y gana foco, veladuras se separan dejando pasar el haz, el numeral emerge. */
+      {veilA:.22, veilB:.38, veilAOp:.82, veilBOp:.68, blur:.52,
+       coreX:.48, coreY:.45, coreScale:.68, coreGlow:.48, coreWarm:.08,
+       frame:.62, bgDark:.78, numScale:.84, numOpacity:.28, numX:6, numY:0},
+      /* 2 — Tratar: CLÍMAX ICÓNICO. Máxima concentración, energía terapéutica de alta
+             pureza, veladuras apartadas, numeral monumental y rotundo en menta resplandeciente. */
+      {veilA:.52, veilB:.95, veilAOp:.50, veilBOp:.14, blur:.12,
+       coreX:.54, coreY:.40, coreScale:1.28, coreGlow:1.0, coreWarm:.26,
+       frame:.18, bgDark:.40, numScale:1.38, numOpacity:.48, numX:16, numY:-10},
+      /* 3 — Acompañar: liberación de la tensión, la composición respira y se expande;
+             la luz deriva a la derecha iluminando el camino con calidez ámbar serena. */
+      {veilA:.74, veilB:.98, veilAOp:.28, veilBOp:.08, blur:.26,
+       coreX:.68, coreY:.48, coreScale:.96, coreGlow:.62, coreWarm:.62,
+       frame:.06, bgDark:.20, numScale:1.05, numOpacity:.32, numX:10, numY:-4},
+      /* 4 — Evolucionar: resolución completa, horizonte abierto, amplitud y calma;
+             luz cálida envolvente que prepara el handoff luminoso hacia Primera Visita. */
+      {veilA:.92, veilB:1, veilAOp:.06, veilBOp:.02, blur:.10,
+       coreX:.56, coreY:.50, coreScale:1.18, coreGlow:.72, coreWarm:1.0,
+       frame:0, bgDark:0, numScale:.92, numOpacity:.20, numX:4, numY:2}
     ];
 
     /* Curva calibrada de progresión temporal por fase (0..1 de scroll total):
@@ -908,7 +911,9 @@ var prefersReducedMotion = window.matchMedia && window.matchMedia('(prefers-redu
         frame: lerp(a.frame, b.frame, t),
         bgDark: lerp(a.bgDark, b.bgDark, t),
         numScale: lerp(a.numScale, b.numScale, t),
-        numOpacity: lerp(a.numOpacity, b.numOpacity, t)
+        numOpacity: lerp(a.numOpacity, b.numOpacity, t),
+        numX: lerp(a.numX, b.numX, t),
+        numY: lerp(a.numY, b.numY, t)
       };
 
       var s = stage.style;
@@ -926,6 +931,8 @@ var prefersReducedMotion = window.matchMedia && window.matchMedia('(prefers-redu
       s.setProperty('--u-bg-dark', v.bgDark);
       s.setProperty('--u-num-opacity', v.numOpacity);
       numHost.style.setProperty('--u-num-scale', v.numScale);
+      numHost.style.setProperty('--u-num-x', v.numX.toFixed(1) + 'px');
+      numHost.style.setProperty('--u-num-y', v.numY.toFixed(1) + 'px');
 
       digits.forEach(function(digit, idx){
         digit.style.opacity = Math.max(0, 1 - Math.abs(clamped - idx));
@@ -976,6 +983,9 @@ var prefersReducedMotion = window.matchMedia && window.matchMedia('(prefers-redu
         phase.style.visibility = '';
         phase.style.pointerEvents = '';
       });
+      numHost.style.removeProperty('--u-num-scale');
+      numHost.style.removeProperty('--u-num-x');
+      numHost.style.removeProperty('--u-num-y');
       progressItems.forEach(function(item){ item.classList.remove('is-active','is-done'); });
       progressSegs.forEach(function(seg){ seg.classList.remove('is-done'); });
     };

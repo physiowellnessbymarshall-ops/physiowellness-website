@@ -800,53 +800,74 @@ var prefersReducedMotion = window.matchMedia && window.matchMedia('(prefers-redu
 
     /* Una entrada por fase ("momento"): JS solo interpola linealmente
        entre dos entradas consecutivas según la posición continua de
-       scroll, nunca decide estos valores en tiempo real. Ajustables aquí
-       tras ver el resultado en pantalla (paso 10 del encargo), sin tocar
-       la lógica de cálculo de más abajo.
+       scroll, nunca decide estos valores en tiempo real.
        veilA/veilB: 0=solapadas en el centro, 1=separadas del todo.
        veilAOp/veilBOp: opacidad de cada veladura.
        blur: 0=nítido, 1=blur máximo (§ --u-blur-max).
        coreX/coreY: posición del núcleo de luz (fracción 0..1 del escenario).
        coreScale/coreGlow: escala e intensidad del halo.
        coreWarm: 0=luz fría, 1=luz cálida.
-       frame: 0=encuadre abierto del todo, 1=encuadre cerrado (§ --u-frame-max).
-       bgDark: 0=halo neutro/mist visible, 1=sin halo (escena "cerrada"). */
+       frame: 0=viñeta abierta del todo, 1=penumbra envolvente cerrada.
+       bgDark: 0=halo neutro/mist visible, 1=sin halo (escena "cerrada").
+       numOpacity: luminancia controlada del numeral monumental.
+       numX/numY: microdesplazamiento tridimensional del numeral (§11 Fase 2). */
     var KEYFRAMES = [
-      /* 0 — Escuchar: contenida, veladuras casi cerradas, luz fría difusa. */
-      {veilA:.02, veilB:.05, veilAOp:.95, veilBOp:.92, blur:1,
-       coreX:.5, coreY:.46, coreScale:.5, coreGlow:.26, coreWarm:0,
-       frame:1, bgDark:1, numScale:.62},
-      /* 1 — Valorar: se abre ligeramente, baja el blur, aparece foco. */
-      {veilA:.16, veilB:.32, veilAOp:.86, veilBOp:.72, blur:.68,
-       coreX:.48, coreY:.44, coreScale:.68, coreGlow:.46, coreWarm:.08,
-       frame:.72, bgDark:.8, numScale:.84},
-      /* 2 — Tratar: clímax. Máxima intensidad y profundidad, veladura B
-         se retira con claridad, numeral enorme y cortado por el viewport. */
-      {veilA:.46, veilB:.92, veilAOp:.6, veilBOp:.2, blur:.16,
-       coreX:.57, coreY:.4, coreScale:1.2, coreGlow:1, coreWarm:.26,
-       frame:.3, bgDark:.46, numScale:1.42},
-      /* 3 — Acompañar: la composición respira, baja la tensión, la luz
-         deriva lateralmente y se estabiliza. */
-      {veilA:.68, veilB:.98, veilAOp:.36, veilBOp:.12, blur:.3,
-       coreX:.67, coreY:.5, coreScale:.92, coreGlow:.58, coreWarm:.6,
-       frame:.14, bgDark:.22, numScale:1.06},
-      /* 4 — Evolucionar: abierta, luminosa, cálida y tranquila; las
-         veladuras casi desaparecen y aparece el CTA como cierre. */
-      {veilA:.86, veilB:1, veilAOp:.08, veilBOp:.03, blur:.12,
-       coreX:.58, coreY:.52, coreScale:1.02, coreGlow:.66, coreWarm:1,
-       frame:0, bgDark:0, numScale:.96}
+      /* 0 — Escuchar: entrada en lo desconocido; contenida, íntima, luz fría focalizada,
+             penumbra envolvente, numeral contenido que flota con calma. */
+      {veilA:.01, veilB:.03, veilAOp:.92, veilBOp:.88, blur:.85,
+       coreX:.5, coreY:.48, coreScale:.42, coreGlow:.24, coreWarm:0,
+       frame:1, bgDark:1, numScale:.62, numOpacity:.20, numX:0, numY:6},
+      /* 1 — Valorar: el espacio empieza a revelarse; apertura diagnóstica, la luz crece
+             y gana foco, veladuras se separan dejando pasar el haz, el numeral emerge. */
+      {veilA:.22, veilB:.38, veilAOp:.82, veilBOp:.68, blur:.52,
+       coreX:.48, coreY:.45, coreScale:.68, coreGlow:.48, coreWarm:.08,
+       frame:.62, bgDark:.78, numScale:.84, numOpacity:.28, numX:6, numY:0},
+      /* 2 — Tratar: CLÍMAX ICÓNICO. Máxima concentración, energía terapéutica de alta
+             pureza, veladuras apartadas, numeral monumental y rotundo en menta resplandeciente. */
+      {veilA:.52, veilB:.95, veilAOp:.50, veilBOp:.14, blur:.12,
+       coreX:.54, coreY:.40, coreScale:1.28, coreGlow:1.0, coreWarm:.26,
+       frame:.18, bgDark:.40, numScale:1.38, numOpacity:.48, numX:16, numY:-10},
+      /* 3 — Acompañar: liberación de la tensión, la composición respira y se expande;
+             la luz deriva a la derecha iluminando el camino con calidez ámbar serena. */
+      {veilA:.74, veilB:.98, veilAOp:.28, veilBOp:.08, blur:.26,
+       coreX:.68, coreY:.48, coreScale:.96, coreGlow:.62, coreWarm:.62,
+       frame:.06, bgDark:.20, numScale:1.05, numOpacity:.32, numX:10, numY:-4},
+      /* 4 — Evolucionar: resolución completa, horizonte abierto, amplitud y calma;
+             luz cálida envolvente que prepara el handoff luminoso hacia Primera Visita. */
+      {veilA:.92, veilB:1, veilAOp:.06, veilBOp:.02, blur:.10,
+       coreX:.56, coreY:.50, coreScale:1.18, coreGlow:.72, coreWarm:1.0,
+       frame:0, bgDark:0, numScale:.92, numOpacity:.20, numX:4, numY:2}
     ];
 
+    /* Curva calibrada de progresión temporal por fase (0..1 de scroll total):
+       - Fase 0 (Escuchar): de 0.00 a 0.18 (entrada ágil sin tiempo muerto).
+       - Fase 1 (Valorar): de 0.18 a 0.46 (construcción deliberada de foco).
+       - Fase 2 (Tratar): de 0.46 a 0.74 (clímax sostenido, máxima presencia y respiración).
+       - Fase 3 (Acompañar): de 0.74 a 1.00 (resolución luminosa).
+       - Fase 4 (Evolucionar): al alcanzar 1.00 (plena apertura y preparación para la salida). */
+    var PROGRESS_STOPS = [0.0, 0.18, 0.46, 0.74, 1.0];
+
+    var progressToPhase = function(p){
+      if(p <= 0) return 0;
+      if(p >= 1) return 4;
+      for(var i = 0; i < PROGRESS_STOPS.length - 1; i++){
+        var pStart = PROGRESS_STOPS[i];
+        var pEnd = PROGRESS_STOPS[i + 1];
+        if(p >= pStart && p <= pEnd){
+          var t = (p - pStart) / (pEnd - pStart);
+          return i + t;
+        }
+      }
+      return 4;
+    };
+
     /* Recorrido de scroll por transición de fase, en fracción de la
-       altura visible — más corto cuanto más estrecha la pantalla, para
-       que móvil tenga "menos recorrido y menor duración" (encargo,
-       punto de accesibilidad/tablet-móvil) sin cambiar la intensidad
-       visual, que ya varía solo por CSS (§11). Con 5 fases el recorrido
-       total del pin es ~1 + 4*fraction alturas de viewport. */
+       altura visible. En móvil se calibra a 0.48 (antes 0.32) para evitar
+       que la experiencia se consuma en dos gestos rápidos (§6 auditoría). */
     var getStepFraction = function(){
       var w = window.innerWidth;
-      if(w < 640) return .32;
-      if(w < 960) return .44;
+      if(w < 640) return .48;
+      if(w < 960) return .52;
       return .58;
     };
 
@@ -859,11 +880,10 @@ var prefersReducedMotion = window.matchMedia && window.matchMedia('(prefers-redu
     var lerp = function(a, b, t){ return a + (b - a) * t; };
 
     /* Interpola KEYFRAMES en la posición continua de fase (0..4) y
-       escribe el resultado como variables CSS en .umbral__stage: toda
-       la forma/color de la escena vive en CSS (§11), esto solo mueve
-       números. Las cinco cifras del numeral funden su propia opacidad
-       según su distancia a la posición actual (envolvente triangular),
-       así 01→05 se disuelve de forma continua en vez de "contar". */
+       escribe el resultado como variables CSS en .umbral__stage.
+       Sincroniza el numeral y el bloque de texto directamente con el scroll:
+       el texto se disuelve suavemente por desplazamiento continuo sin
+       depender de un temporizador CSS de 650ms (§4 auditoría). */
     var render = function(phasePos){
       var clamped = Math.min(Math.max(phasePos, 0), KEYFRAMES.length - 1);
       var i = Math.min(Math.floor(clamped), KEYFRAMES.length - 2);
@@ -883,7 +903,10 @@ var prefersReducedMotion = window.matchMedia && window.matchMedia('(prefers-redu
         coreWarm: lerp(a.coreWarm, b.coreWarm, t),
         frame: lerp(a.frame, b.frame, t),
         bgDark: lerp(a.bgDark, b.bgDark, t),
-        numScale: lerp(a.numScale, b.numScale, t)
+        numScale: lerp(a.numScale, b.numScale, t),
+        numOpacity: lerp(a.numOpacity, b.numOpacity, t),
+        numX: lerp(a.numX, b.numX, t),
+        numY: lerp(a.numY, b.numY, t)
       };
 
       var s = stage.style;
@@ -899,24 +922,44 @@ var prefersReducedMotion = window.matchMedia && window.matchMedia('(prefers-redu
       s.setProperty('--u-core-warm', v.coreWarm);
       s.setProperty('--u-frame-inset', v.frame);
       s.setProperty('--u-bg-dark', v.bgDark);
+      s.setProperty('--u-num-opacity', v.numOpacity);
       numHost.style.setProperty('--u-num-scale', v.numScale);
+      numHost.style.setProperty('--u-num-x', v.numX.toFixed(1) + 'px');
+      numHost.style.setProperty('--u-num-y', v.numY.toFixed(1) + 'px');
 
       digits.forEach(function(digit, idx){
         digit.style.opacity = Math.max(0, 1 - Math.abs(clamped - idx));
       });
 
-      var index = Math.min(4, Math.round(clamped));
-      if(index !== currentIndex){
-        currentIndex = index;
-        phases.forEach(function(phase, i2){
-          phase.classList.toggle('is-active', i2 === index);
-        });
+      /* Sincronización continua de texto: calculamos opacidad, elevación
+         y visibilidad en tiempo real según la distancia de scroll. */
+      var activeIdx = Math.min(4, Math.round(clamped));
+      phases.forEach(function(phase, idx){
+        var dist = clamped - idx;
+        var absDist = Math.abs(dist);
+        var op = 0;
+        var yShift = 0;
+        if(absDist < 0.75){
+          /* Curva cosenoidal suave: op=1 en dist=0, op=0 en absDist >= 0.75 */
+          op = Math.max(0, Math.cos((absDist / 0.75) * Math.PI * 0.5));
+          yShift = dist * 8;
+        }
+        var isVis = op > 0.01;
+        phase.style.opacity = isVis ? op.toFixed(3) : '0';
+        phase.style.transform = isVis ? 'translate3d(0, ' + yShift.toFixed(1) + 'px, 0)' : 'translate3d(0, 14px, 0)';
+        phase.style.visibility = isVis ? 'visible' : 'hidden';
+        phase.style.pointerEvents = op > 0.5 ? 'auto' : 'none';
+        phase.classList.toggle('is-active', idx === activeIdx);
+      });
+
+      if(activeIdx !== currentIndex){
+        currentIndex = activeIdx;
         progressItems.forEach(function(item, i2){
-          item.classList.toggle('is-active', i2 === index);
-          item.classList.toggle('is-done', i2 < index);
+          item.classList.toggle('is-active', i2 === activeIdx);
+          item.classList.toggle('is-done', i2 < activeIdx);
         });
         progressSegs.forEach(function(seg, i2){
-          seg.classList.toggle('is-done', i2 < index);
+          seg.classList.toggle('is-done', i2 < activeIdx);
         });
       }
     };
@@ -926,7 +969,16 @@ var prefersReducedMotion = window.matchMedia && window.matchMedia('(prefers-redu
       stage.style.height = '';
       section.classList.remove('is-pin-active');
       currentIndex = -1;
-      phases.forEach(function(phase){ phase.classList.remove('is-active'); });
+      phases.forEach(function(phase){
+        phase.classList.remove('is-active');
+        phase.style.opacity = '';
+        phase.style.transform = '';
+        phase.style.visibility = '';
+        phase.style.pointerEvents = '';
+      });
+      numHost.style.removeProperty('--u-num-scale');
+      numHost.style.removeProperty('--u-num-x');
+      numHost.style.removeProperty('--u-num-y');
       progressItems.forEach(function(item){ item.classList.remove('is-active','is-done'); });
       progressSegs.forEach(function(seg){ seg.classList.remove('is-done'); });
     };
@@ -948,13 +1000,17 @@ var prefersReducedMotion = window.matchMedia && window.matchMedia('(prefers-redu
       var scrolled = headerOffset - rect.top;
       scrolled = Math.min(Math.max(scrolled, 0), maxScroll);
       var progress = maxScroll > 0 ? scrolled / maxScroll : 0;
-      render(progress * (phases.length - 1));
+      render(progressToPhase(progress));
     };
 
     var onScroll = function(){
       if(!active || ticking) return;
       ticking = true;
       window.requestAnimationFrame(applyProgress);
+    };
+
+    var isReducedMotion = function(){
+      return (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) || prefersReducedMotion;
     };
 
     /* Decide si el modo fijado tiene sentido (motion, alto de ventana) y,
@@ -964,7 +1020,7 @@ var prefersReducedMotion = window.matchMedia && window.matchMedia('(prefers-redu
        encargo pide que móvil y tablet conserven la escena fijada, solo
        reducida (ver getStepFraction y las variables --u-* en CSS §11). */
     var measure = function(){
-      var canPin = !prefersReducedMotion && window.innerHeight >= 480;
+      var canPin = !isReducedMotion() && window.innerHeight >= 480;
 
       if(!canPin){
         deactivate();
@@ -1001,6 +1057,16 @@ var prefersReducedMotion = window.matchMedia && window.matchMedia('(prefers-redu
     window.addEventListener('resize', scheduleMeasure);
     window.addEventListener('orientationchange', scheduleMeasure);
     window.addEventListener('load', scheduleMeasure);
+
+    if(window.matchMedia){
+      var rmQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+      if(rmQuery.addEventListener){
+        rmQuery.addEventListener('change', function(){
+          prefersReducedMotion = rmQuery.matches;
+          scheduleMeasure();
+        });
+      }
+    }
 
     if(document.fonts && document.fonts.ready){
       document.fonts.ready.then(scheduleMeasure)['catch'](function(){});
@@ -1217,6 +1283,229 @@ var prefersReducedMotion = window.matchMedia && window.matchMedia('(prefers-redu
       }, 200);
     });
   }catch(e){ console.warn('quoteToggles', e); }
+})();
+
+/* ---------- 15. Testimonios editoriales por scroll vertical (Sistema escalable N) ----------
+   Arquitectura desacoplada y paramétrica: lee la fuente semántica única (#testimonials-flow),
+   hidrata el escenario sticky interactivo (.testimonials__stage y .testimonials__text-stage)
+   y calcula dinámicamente alturas, capas de apilamiento y ventanas de transición según N.
+   Con prefers-reduced-motion o sin JS, permanece intacto el flujo normal accesible. */
+(function testimonialsScroll(){
+  try{
+    if(prefersReducedMotion) return;
+
+    var track = document.getElementById('testimonials-track');
+    var flow = document.getElementById('testimonials-flow');
+    var stage = document.getElementById('testimonials-stage');
+    var textStage = document.getElementById('testimonials-text-stage');
+
+    if(!track || !flow || !stage || !textStage) return;
+
+    var items = flow.querySelectorAll('.testimonials__item');
+    var N = items.length;
+    if(N < 2) return;
+
+    var layers = [];
+    var stories = [];
+
+    /* Hidratar dinámicamente las capas fotográficas y las historias de texto */
+    stage.innerHTML = '';
+    textStage.innerHTML = '';
+
+    for(var i = 0; i < N; i++){
+      /* Capa de foto */
+      var layer = document.createElement('div');
+      layer.className = 'testimonials__photo-layer';
+      layer.style.zIndex = i + 1;
+      layer.style.transform = i === 0 ? 'translate3d(0, 0, 0)' : 'translate3d(0, 100%, 0)';
+
+      var srcImg = items[i].querySelector('img');
+      if(srcImg){
+        var cloneImg = srcImg.cloneNode(true);
+        if(srcImg.style.objectPosition){
+          cloneImg.style.objectPosition = srcImg.style.objectPosition;
+        }
+        layer.appendChild(cloneImg);
+      }
+      stage.appendChild(layer);
+      layers.push(layer);
+
+      /* Historia de texto */
+      var story = document.createElement('article');
+      story.className = 'testimonials__story';
+      var textWrap = items[i].querySelector('.testimonials__item-text');
+      if(textWrap){
+        story.innerHTML = textWrap.innerHTML;
+      }
+      if(i === 0){
+        story.style.opacity = '1';
+        story.style.transform = 'translate3d(0, 0, 0)';
+        story.style.visibility = 'visible';
+        story.style.pointerEvents = 'auto';
+      } else {
+        story.style.opacity = '0';
+        story.style.transform = 'translate3d(0, 16px, 0)';
+        story.style.visibility = 'hidden';
+        story.style.pointerEvents = 'none';
+      }
+      textStage.appendChild(story);
+      stories.push(story);
+    }
+
+    /* Activar pista sticky interactiva (puramente visual para usuarios videntes)
+       y ocultar la fuente semántica SOLO visualmente mediante clip accesible,
+       manteniéndola 100% navegable en el Accessibility Tree para lectores de pantalla. */
+    track.hidden = false;
+    track.setAttribute('aria-hidden', 'true');
+    flow.classList.add('testimonials__flow--visually-hidden');
+    flow.removeAttribute('aria-hidden');
+
+    /* Cálculo dinámico de métricas: altura de pista sublineal y altura de text-stage */
+    var updateMetrics = function(){
+      var isMobile = (window.innerWidth || document.documentElement.clientWidth) <= 860;
+      var transInc = isMobile
+        ? Math.max(55, 85 - (N - 2) * 10)
+        : Math.max(65, 100 - (N - 2) * 10);
+      var totalVh = 100 + (N - 1) * transInc;
+      track.style.setProperty('--testimonials-track-height', totalVh + 'vh');
+      track.style.height = totalVh + 'vh';
+
+      /* Ajuste dinámico de altura mínima del text-stage según la historia más alta */
+      var maxStoryH = 0;
+      for(var j = 0; j < stories.length; j++){
+        var sh = stories[j].offsetHeight || stories[j].scrollHeight || 0;
+        if(sh > maxStoryH) maxStoryH = sh;
+      }
+      if(maxStoryH > 0){
+        textStage.style.minHeight = maxStoryH + 'px';
+      }
+    };
+    updateMetrics();
+
+    var ticking = false;
+
+    var updateStory = function(el, opacity, translateY){
+      el.style.opacity = opacity.toFixed(3);
+      el.style.transform = 'translate3d(0, ' + translateY.toFixed(1) + 'px, 0)';
+      if(opacity > 0.04){
+        el.style.visibility = 'visible';
+        el.style.pointerEvents = 'auto';
+      } else {
+        el.style.visibility = 'hidden';
+        el.style.pointerEvents = 'none';
+      }
+    };
+
+    /* Progresión paramétrica continua para N testimonios:
+       Garantiza la prioridad LECTURA > TRANSICIÓN adaptando la proporción según N
+       sin saltos discretos ni condicionales fijos, conservando exactamente el 18%/22%/21% en N=3. */
+    var W_final = Math.max(0.16, 0.21 - (N - 3) * 0.025);
+    var P_active = 1 - W_final;
+    var numCycles = N - 1;
+    var cycleLen = P_active / numCycles;
+    var stableRatio = Math.min(0.55, 0.455 + (N - 3) * 0.035);
+    var stableLen = cycleLen * stableRatio;
+    var transLen = cycleLen - stableLen;
+
+    var onScroll = function(){
+      ticking = false;
+      var rect = track.getBoundingClientRect();
+      var vh = window.innerHeight || document.documentElement.clientHeight;
+
+      if(rect.bottom < -50 || rect.top > vh + 50) return;
+
+      var totalScroll = track.offsetHeight - vh;
+      if(totalScroll <= 0) return;
+
+      var scrolled = -rect.top;
+      var p = scrolled / totalScroll;
+      if(p < 0) p = 0;
+      if(p > 1) p = 1;
+
+      /* Zona final de reposo: Último testimonio consolidado y estable */
+      if(p >= P_active){
+        for(var i = 1; i < N; i++){
+          layers[i].style.transform = 'translate3d(0, 0%, 0)';
+        }
+        for(var i = 0; i < N - 1; i++){
+          updateStory(stories[i], 0, -14);
+        }
+        updateStory(stories[N - 1], 1, 0);
+        return;
+      }
+
+      /* Ciclo activo k */
+      var k = Math.floor(p / cycleLen);
+      if(k >= numCycles) k = numCycles - 1;
+      var cycleStart = k * cycleLen;
+      var transStart = cycleStart + stableLen;
+
+      /* Capas anteriores: completamente arriba (0%) */
+      for(var i = 1; i <= k; i++){
+        layers[i].style.transform = 'translate3d(0, 0%, 0)';
+      }
+      /* Capas posteriores: completamente abajo (100%) */
+      for(var i = k + 2; i < N; i++){
+        layers[i].style.transform = 'translate3d(0, 100%, 0)';
+      }
+
+      /* Textos anteriores: ocultos arriba (-14px) */
+      for(var i = 0; i < k; i++){
+        updateStory(stories[i], 0, -14);
+      }
+      /* Textos posteriores: ocultos abajo (+16px) */
+      for(var i = k + 2; i < N; i++){
+        updateStory(stories[i], 0, 16);
+      }
+
+      /* Dentro del ciclo k: estado estable vs transición k -> k+1 */
+      if(p < transStart){
+        layers[k + 1].style.transform = 'translate3d(0, 100%, 0)';
+        updateStory(stories[k], 1, 0);
+        if(k + 1 < N) updateStory(stories[k + 1], 0, 16);
+      } else {
+        var t = (p - transStart) / transLen;
+        if(t < 0) t = 0;
+        if(t > 1) t = 1;
+
+        var yNext = (1 - t) * 100;
+        layers[k + 1].style.transform = 'translate3d(0, ' + yNext.toFixed(2) + '%, 0)';
+
+        if(t <= 0.38){
+          var subExit = t / 0.38;
+          updateStory(stories[k], 1 - subExit, -subExit * 14);
+          updateStory(stories[k + 1], 0, 16);
+        } else if(t <= 0.54){
+          updateStory(stories[k], 0, -14);
+          updateStory(stories[k + 1], 0, 16);
+        } else {
+          var subEnter = (t - 0.54) / 0.46;
+          updateStory(stories[k], 0, -14);
+          updateStory(stories[k + 1], subEnter, (1 - subEnter) * 14);
+        }
+      }
+    };
+
+    window.addEventListener('scroll', function(){
+      if(!ticking){
+        ticking = true;
+        window.requestAnimationFrame(onScroll);
+      }
+    }, { passive: true });
+
+    window.addEventListener('resize', function(){
+      if(!ticking){
+        ticking = true;
+        window.requestAnimationFrame(function(){
+          updateMetrics();
+          onScroll();
+        });
+      }
+    }, { passive: true });
+
+    /* Inicialización al cargar */
+    onScroll();
+  }catch(e){ console.warn('testimonialsScroll', e); }
 })();
 
 /* ---------- scroll suave al CTA secundario del hero ---------- */

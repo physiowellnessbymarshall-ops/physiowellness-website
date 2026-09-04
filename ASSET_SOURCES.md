@@ -172,3 +172,25 @@ imagen de la página.
 | Fecha de incorporación | 2026-08-21 |
 | Transformaciones aplicadas | Ninguna gradación de color: se usa tal cual. Redimensionado a 720w/1086w (ancho grande limitado al ancho real del archivo) y exportación a WebP calidad 82, `method=6`. |
 | Integración en la página | `<figure class="help__media" aria-hidden="true">` con `srcset`/`sizes`, `width`/`height` reservados y `loading="lazy"`. `object-position` con sesgo hacia la parte superior de la foto (`center 20%` en escritorio, `center 15%` en móvil) para mantener visibles la cara y el móvil incluso cuando el contenedor recorta la imagen. |
+
+## Testimonios editoriales de la Home (`#resenas`, FASE 5.1 — SCROLL VERTICAL CONTINUO)
+
+Rediseño estructural de `#resenas` en `index.html` basado estrictamente en el scroll vertical del usuario (pista sticky donde las fotografías contextuales ascienden y se superponen como capas físicas en sincronía con el avance de las reseñas reales).
+
+### 1. Eliminación de retratos IA ficticios
+
+Se han eliminado por completo los retratos generados previamente para evitar cualquier asociación engañosa entre rostros artificiales y las reseñas reales de los pacientes. Ningún testimonio se asocia visualmente a una cara ficticia. Las firmas se presentan con atribución neutra ("Paciente de Physio Wellness · Reseña en Google").
+
+### 2. Fotografías contextuales del universo Physio Wellness
+
+Las imágenes funcionan como universo visual de la experiencia real del centro (tratamiento, clínica, luz natural, materiales) y NO como retrato de los autores:
+
+| Capa | Archivos servidos | Origen / Licencia | Descripción de la escena | Rol en la secuencia |
+| :--- | :--- | :--- | :--- | :--- |
+| Capa 1 (Base) | `src/assets/img/stock/hero-fisio-720.webp` / `-1440.webp` | Pexels (Yan Krukau), ya en repositorio | Fisioterapeuta realizando valoración de movilidad y tratamiento manual en camilla junto a ventanal de luz natural. | Escena inicial para la Historia 1 (enfoque en sesión y alivio en camilla). |
+| Capa 2 (Asciende) | `src/assets/img/hero-clinic.webp` | Fotografía real propia del centro (Sitges) | Espacio físico de consulta: camilla hidráulica, espaldera, PowerPlate, gran espejo e iluminación cálida. | Asciende desde abajo al hacer scroll hacia la Historia 2 (instalaciones impecables y profesionalidad). |
+| Capa 3 (Asciende) | `src/assets/img/local/local-lounge-720.webp` / `-1440.webp` | Fotografía real propia del centro (Sitges) | Zona de bienvenida y espera con luz natural, sillones verde oliva de terciopelo, mesa dorada, mármol y plantas. | Asciende desde abajo al hacer scroll hacia la Historia 3 (atención, calma y cuidado global). |
+
+- **Integración**: `.testimonials__photo-layer` dentro del marco sticky `.testimonials__stage` (`aspect-ratio: 4/5`), con capas absolutas controladas por `translateY()` según el progreso del scroll pasivo de la página.
+
+

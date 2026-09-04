@@ -493,9 +493,24 @@
   <section class="first-visit" id="primera-visita">
     <div class="container first-visit__grid">
       <div class="first-visit__intro" data-reveal>
-        <p class="eyebrow section-eyebrow">Primera visita</p>
+        <div class="first-visit__badge-row">
+          <p class="eyebrow section-eyebrow">Primera visita</p>
+          <span class="first-visit__duration"><span class="first-visit__duration-dot" aria-hidden="true"></span>60 min · Sesión individual</span>
+        </div>
         <h2 class="section-heading">La primera visita empieza por entenderte</h2>
         <p class="section-lead first-visit__lead">Una sesión individual de 60 minutos para entender tu caso, valorar tu punto de partida y definir cómo empezar.</p>
+
+        <div class="first-visit__media" data-reveal style="--i:1">
+          <picture>
+            <source srcset="src/assets/img/local/local-lounge-720.webp 720w, src/assets/img/local/local-lounge-1440.webp 1440w" sizes="(max-width: 859px) 92vw, 440px" type="image/webp">
+            <img src="src/assets/img/local/local-lounge.jpg" alt="Zona de bienvenida y recepción en Physio Wellness con sillones de terciopelo verde y luz natural." width="1440" height="2160" loading="lazy" class="first-visit__img">
+          </picture>
+          <div class="first-visit__media-caption">
+            <span class="first-visit__media-dot" aria-hidden="true"></span>
+            <span>Espacio de recepción · Physio Wellness</span>
+          </div>
+        </div>
+
         <div class="first-visit__actions">
           <a class="btn btn--primary" href="https://www.docfav.com/portal/physio-wellness-by-marshall" target="_blank" rel="noopener">Reservar primera visita</a>
           <a class="btn btn--outline" href="https://wa.me/34644678344" target="_blank" rel="noopener">Te ayudamos por WhatsApp</a>
@@ -508,38 +523,58 @@
             <span class="first-visit__marker" aria-hidden="true"><span class="first-visit__dot"></span></span>
             <div class="first-visit__step-body">
               <span class="first-visit__step-num" aria-hidden="true">01</span>
-              <p class="first-visit__step-text">Hablamos de tu caso.</p>
+              <div class="first-visit__step-content">
+                <h3 class="first-visit__step-title">Hablamos de tu caso</h3>
+                <p class="first-visit__step-desc">Sin prisas. Escuchamos tu historia, tu dolor, tus sensaciones y lo que necesitas recuperar.</p>
+              </div>
             </div>
           </li>
           <li class="first-visit__step" data-fv-step>
             <span class="first-visit__marker" aria-hidden="true"><span class="first-visit__dot"></span></span>
             <div class="first-visit__step-body">
               <span class="first-visit__step-num" aria-hidden="true">02</span>
-              <p class="first-visit__step-text">Valoramos tu punto de partida.</p>
+              <div class="first-visit__step-content">
+                <h3 class="first-visit__step-title">Valoramos tu punto de partida</h3>
+                <p class="first-visit__step-desc">Exploración clínica y biomecánica precisa para identificar el origen real de la molestia.</p>
+              </div>
             </div>
           </li>
           <li class="first-visit__step" data-fv-step>
             <span class="first-visit__marker" aria-hidden="true"><span class="first-visit__dot"></span></span>
             <div class="first-visit__step-body">
               <span class="first-visit__step-num" aria-hidden="true">03</span>
-              <p class="first-visit__step-text">Definimos objetivos.</p>
+              <div class="first-visit__step-content">
+                <h3 class="first-visit__step-title">Definimos objetivos claros</h3>
+                <p class="first-visit__step-desc">Te explicamos qué ocurre y trazamos un plan de trabajo transparente y adaptado a ti.</p>
+              </div>
             </div>
           </li>
           <li class="first-visit__step" data-fv-step>
             <span class="first-visit__marker" aria-hidden="true"><span class="first-visit__dot"></span></span>
             <div class="first-visit__step-body">
               <span class="first-visit__step-num" aria-hidden="true">04</span>
-              <p class="first-visit__step-text">Realizamos una primera intervención.</p>
+              <div class="first-visit__step-content">
+                <h3 class="first-visit__step-title">Realizamos una primera intervención</h3>
+                <p class="first-visit__step-desc">Empezamos a actuar desde la primera sesión con terapia manual o las técnicas adecuadas.</p>
+              </div>
             </div>
           </li>
           <li class="first-visit__step" data-fv-step>
             <span class="first-visit__marker" aria-hidden="true"><span class="first-visit__dot"></span></span>
             <div class="first-visit__step-body">
               <span class="first-visit__step-num" aria-hidden="true">05</span>
-              <p class="first-visit__step-text">Te llevas recomendaciones y siguientes pasos.</p>
+              <div class="first-visit__step-content">
+                <h3 class="first-visit__step-title">Recomendaciones y siguientes pasos</h3>
+                <p class="first-visit__step-desc">Te vas con pautas claras para tu día a día y total certeza sobre el proceso.</p>
+              </div>
             </div>
           </li>
         </ol>
+
+        <div class="first-visit__mobile-actions">
+          <a class="btn btn--primary" href="https://www.docfav.com/portal/physio-wellness-by-marshall" target="_blank" rel="noopener">Reservar primera visita</a>
+          <a class="btn btn--outline" href="https://wa.me/34644678344" target="_blank" rel="noopener">Te ayudamos por WhatsApp</a>
+        </div>
       </div>
     </div>
   </section>
@@ -599,32 +634,119 @@
     </div>
   </section>
 
-  <!-- ============ Reseñas reales ============ -->
-  <section class="testimonials" id="resenas">
-    <div class="container">
-      <div class="testimonials__head" data-reveal>
-        <p class="eyebrow section-eyebrow">Reseñas</p>
-        <h2 class="section-heading">Experiencias de personas que ya han pasado por el centro</h2>
+  <!-- ============ Reseñas editoriales / Experiencias en Physio Wellness ============ -->
+  <section class="testimonials" id="resenas" aria-label="Experiencias reales de pacientes">
+    <!-- Escenario sticky interactivo (hidratado dinámicamente por JS a partir del flujo semántico) -->
+    <div class="testimonials__track" id="testimonials-track" hidden aria-hidden="true">
+      <div class="testimonials__sticky" id="testimonials-sticky">
+        <div class="container testimonials__container">
+          <div class="testimonials__layout">
+
+            <!-- Columna 1: Escenario de fotografías contextuales superpuestas -->
+            <div class="testimonials__media">
+              <div class="testimonials__stage" id="testimonials-stage" aria-hidden="true"></div>
+            </div>
+
+            <!-- Columna 2: Historias editoriales sincronizadas con el scroll -->
+            <div class="testimonials__content">
+              <div class="testimonials__header">
+                <p class="eyebrow testimonials__eyebrow">Experiencias reales</p>
+                <div class="testimonials__stars" aria-label="5 de 5 estrellas" aria-hidden="true">★★★★★</div>
+              </div>
+
+              <div class="testimonials__text-stage" id="testimonials-text-stage"></div>
+
+              <div class="testimonials__footer">
+                <div class="testimonials__google">
+                  <span class="testimonials__google-rating">Puntuación Google: 5,0 de 5</span>
+                  <span class="testimonials__google-verified">Reseñas reales publicadas en Google</span>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Fuente semántica única de verdad (accesible directamente sin JS y con prefers-reduced-motion) -->
+    <div class="container testimonials__flow" id="testimonials-flow">
+      <div class="testimonials__header testimonials__header--flow">
+        <p class="eyebrow testimonials__eyebrow">Experiencias reales</p>
+        <div class="testimonials__stars" aria-label="5 de 5 estrellas" aria-hidden="true">★★★★★</div>
       </div>
 
-      <div class="testimonials__grid" data-reveal>
-        <article class="testimonial-card">
-          <p class="testimonial-card__quote" id="quote-1">Muy profesional y atento. Llegué con bastante dolor en la rodilla y no solo me alivió durante la sesión, sino que me transmitió calma y confianza. Me indicó ejercicios sencillos para hacer en casa y me marcó tiempos de recuperación muy claros. He notado una gran mejoría y, sin duda, ya tengo a mi fisioterapeuta de confianza.</p>
-          <button class="testimonial-card__more" type="button" data-quote-toggle aria-controls="quote-1" aria-expanded="false" hidden>Leer completo</button>
-          <p class="testimonial-card__author">Ignacio Castells Soler</p>
-        </article>
-        <article class="testimonial-card">
-          <p class="testimonial-card__quote" id="quote-2">Muy buena experiencia. Desde el primer momento mostró profesionalismo, empatía y un gran conocimiento. En pocas sesiones noté una mejoría significativa, y he mejorado mucho desde que me trató con el. El trato es cercano, las instalaciones están muy limpias y se nota que disfruta ayudando a sus pacientes a recuperarse. ¡Totalmente recomendable!</p>
-          <button class="testimonial-card__more" type="button" data-quote-toggle aria-controls="quote-2" aria-expanded="false" hidden>Leer completo</button>
-          <p class="testimonial-card__author">Angela Rodríguez Blanco</p>
-        </article>
-        <article class="testimonial-card">
-          <p class="testimonial-card__quote" id="quote-3">Solo he tenido unas pocas sesiones con Marçal hasta ahora, pero ya puedo notar una mejora clara en mis problemas de espalda baja. He probado distintos tratamientos en el pasado y ninguno ha sido tan efectivo como el que he recibido con él. Marçal es muy profesional, tiene grandes conocimientos y trata a sus pacientes con mucho cuidado y atención. Además, se toma el tiempo de explicar el tratamiento y de educarte para prevenir futuras molestias, algo que valoro mucho. Lo recomiendo totalmente.</p>
-          <button class="testimonial-card__more" type="button" data-quote-toggle aria-controls="quote-3" aria-expanded="false" hidden>Leer completo</button>
-          <p class="testimonial-card__author">Jerome D.</p>
-        </article>
+      <!-- Testimonio 1 -->
+      <article class="testimonials__item">
+        <div class="testimonials__item-media">
+          <img src="src/assets/img/stock/hero-fisio-1440.webp"
+               srcset="src/assets/img/stock/hero-fisio-720.webp 720w, src/assets/img/stock/hero-fisio-1440.webp 1440w"
+               sizes="(min-width: 860px) 46vw, 92vw"
+               alt="Sesión de fisioterapia y valoración de movilidad en camilla junto a un ventanal"
+               width="720" height="900" loading="lazy"
+               style="object-position: center 30%;">
+        </div>
+        <div class="testimonials__item-text">
+          <blockquote class="testimonials__quote-wrap">
+            <p class="testimonials__quote">Muy profesional y atento. Llegué con bastante dolor en la rodilla y no solo me alivió durante la sesión, sino que me transmitió calma y confianza. Me indicó ejercicios sencillos para hacer en casa y me marcó tiempos de recuperación muy claros. He notado una gran mejoría y, sin duda, ya tengo a mi fisioterapeuta de confianza.</p>
+          </blockquote>
+          <div class="testimonials__meta">
+            <span class="testimonials__author">Paciente de Physio Wellness</span>
+            <span class="testimonials__sep" aria-hidden="true">·</span>
+            <span class="testimonials__treatment">Reseña en Google</span>
+          </div>
+        </div>
+      </article>
+
+      <!-- Testimonio 2 -->
+      <article class="testimonials__item">
+        <div class="testimonials__item-media">
+          <img src="src/assets/img/hero-clinic.webp"
+               sizes="(min-width: 860px) 46vw, 92vw"
+               alt="Cabina de tratamiento y consulta de fisioterapia de Physio Wellness en Sitges"
+               width="720" height="900" loading="lazy"
+               style="object-position: center 45%;">
+        </div>
+        <div class="testimonials__item-text">
+          <blockquote class="testimonials__quote-wrap">
+            <p class="testimonials__quote">Muy buena experiencia. Desde el primer momento mostró profesionalismo, empatía y un gran conocimiento. En pocas sesiones noté una mejoría significativa, y he mejorado mucho desde que me trató con él. El trato es cercano, las instalaciones están muy limpias y se nota que disfruta ayudando a sus pacientes a recuperarse. ¡Totalmente recomendable!</p>
+          </blockquote>
+          <div class="testimonials__meta">
+            <span class="testimonials__author">Paciente de Physio Wellness</span>
+            <span class="testimonials__sep" aria-hidden="true">·</span>
+            <span class="testimonials__treatment">Reseña en Google</span>
+          </div>
+        </div>
+      </article>
+
+      <!-- Testimonio 3 -->
+      <article class="testimonials__item">
+        <div class="testimonials__item-media">
+          <img src="src/assets/img/local/local-lounge-1440.webp"
+               srcset="src/assets/img/local/local-lounge-720.webp 720w, src/assets/img/local/local-lounge-1440.webp 1440w"
+               sizes="(min-width: 860px) 46vw, 92vw"
+               alt="Zona de recepción y bienvenida de Physio Wellness en Sitges"
+               width="720" height="900" loading="lazy"
+               style="object-position: center 35%;">
+        </div>
+        <div class="testimonials__item-text">
+          <blockquote class="testimonials__quote-wrap">
+            <p class="testimonials__quote">Solo he tenido unas pocas sesiones con Marçal hasta ahora, pero ya puedo notar una mejora clara en mis problemas de espalda baja. He probado distintos tratamientos en el pasado y ninguno ha sido tan efectivo como el que he recibido con él. Marçal es muy profesional, tiene grandes conocimientos y trata a sus pacientes con mucho cuidado y atención. Además, se toma el tiempo de explicar el tratamiento y de educarte para prevenir futuras molestias, algo que valoro mucho. Lo recomiendo totalmente.</p>
+          </blockquote>
+          <div class="testimonials__meta">
+            <span class="testimonials__author">Paciente de Physio Wellness</span>
+            <span class="testimonials__sep" aria-hidden="true">·</span>
+            <span class="testimonials__treatment">Reseña en Google</span>
+          </div>
+        </div>
+      </article>
+
+      <div class="testimonials__footer">
+        <div class="testimonials__google">
+          <span class="testimonials__google-rating">Puntuación Google: 5,0 de 5</span>
+          <span class="testimonials__google-verified">Reseñas reales publicadas en Google</span>
+        </div>
       </div>
-      <p class="testimonials__source">Reseñas reales publicadas en Google, reproducidas con el texto original.</p>
     </div>
   </section>
 

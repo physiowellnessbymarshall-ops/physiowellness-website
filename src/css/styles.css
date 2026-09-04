@@ -869,7 +869,7 @@ a:focus-visible,button:focus-visible,input:focus-visible{
   .umbral{--u-blur-max:20px;--u-veil-travel:24vw;--u-frame-max:9vw;--u-core-size:min(62vw,440px);}
 }
 @media (max-width:639px){
-  .umbral{--u-blur-max:12px;--u-veil-travel:16vw;--u-frame-max:6vw;--u-core-size:min(80vw,340px);}
+  .umbral{--u-blur-max:16px;--u-veil-travel:18vw;--u-frame-max:5vw;--u-core-size:min(85vw,350px);}
 }
 
 .umbral__head{max-width:36rem;margin-bottom:var(--sp-16);}
@@ -910,8 +910,8 @@ a:focus-visible,button:focus-visible,input:focus-visible{
    fondo neutro/mist") sin cambiar el verde de fondo real de la página. */
 .umbral__stage-glow{
   position:absolute;z-index:0;inset:0;
-  background:radial-gradient(circle at calc(var(--u-core-x,.5) * 100%) calc(var(--u-core-y,.46) * 100%),
-    var(--pw-mist) 0%, rgba(243,246,245,.4) 32%, rgba(243,246,245,0) 64%);
+  background:radial-gradient(ellipse 92% 76% at calc(var(--u-core-x,.5) * 100%) calc(var(--u-core-y,.46) * 100%),
+    rgba(243,246,245,.82) 0%, rgba(243,246,245,.38) 36%, rgba(243,246,245,0) 72%);
   opacity:calc(1 - var(--u-bg-dark,1));
   mix-blend-mode:soft-light;
   pointer-events:none;
@@ -928,11 +928,9 @@ a:focus-visible,button:focus-visible,input:focus-visible{
   pointer-events:none;
 }
 
-/* Núcleo de luz: dos gradientes radiales coincidentes (frío/cálido) que
-   se funden por opacidad — así la "temperatura" cambia con CSS puro
-   (sin interpolar color en JS) mientras JS solo mueve un escalar
-   --u-core-warm de 0 a 1. Posición, escala e intensidad del halo
-   (blur) son las otras tres variables que pide la dirección. */
+/* Núcleo de luz: dos gradientes concéntricos (frío/cálido) con punto focal puro
+   y alta densidad lumínica en el centro, fundidos por opacidad sin escalonar color.
+   Posición, escala, glow y temperatura derivan matemáticamente del progreso (§8 Fase 2). */
 .umbral__core,.umbral__core-warm{
   position:absolute;z-index:1;
   width:var(--u-core-size);aspect-ratio:1;border-radius:50%;
@@ -940,47 +938,66 @@ a:focus-visible,button:focus-visible,input:focus-visible{
   top:calc(var(--u-core-y,.46) * 100%);
   transform:translate(-50%,-50%) scale(var(--u-core-scale,.55));
   pointer-events:none;
+  will-change:transform, filter, opacity;
 }
 .umbral__core{
-  background:radial-gradient(circle, rgba(186,235,225,.9) 0%, rgba(96,172,160,.4) 45%, rgba(96,172,160,0) 72%);
-  filter:blur(calc(14px + var(--u-core-glow,.3) * 30px));
+  background:radial-gradient(circle at 50% 50%,
+    rgba(255,255,255,.98) 0%,
+    rgba(214,245,238,.92) 18%,
+    rgba(143,217,201,.55) 40%,
+    rgba(52,108,98,.3) 60%,
+    rgba(18,60,55,0) 76%);
+  filter:blur(calc(8px + var(--u-core-glow,.3) * 26px));
   mix-blend-mode:screen;
-  opacity:calc(1 - var(--u-core-warm,0) * .2);
+  opacity:calc(1 - var(--u-core-warm,0) * .25);
 }
 .umbral__core-warm{
-  background:radial-gradient(circle, rgba(255,246,230,.95) 0%, rgba(255,214,163,.4) 45%, rgba(255,214,163,0) 72%);
-  filter:blur(calc(14px + var(--u-core-glow,.3) * 30px));
+  background:radial-gradient(circle at 50% 50%,
+    rgba(255,252,242,.98) 0%,
+    rgba(255,238,209,.90) 20%,
+    rgba(242,204,148,.52) 42%,
+    rgba(212,143,56,.28) 62%,
+    rgba(18,60,55,0) 76%);
+  filter:blur(calc(8px + var(--u-core-glow,.3) * 26px));
   mix-blend-mode:screen;
   opacity:var(--u-core-warm,0);
 }
 
-/* Numeral editorial: un único ancla espacial (esquina inferior
-   izquierda, recortada por el viewport a propósito) para las cinco
-   cifras — nunca se desplaza de fase a fase, solo escala (--u-num-scale,
-   escrita por JS cada frame) y cada cifra funde su propia opacidad de
-   forma continua según la distancia de la fase actual (ver render() en
-   main.js): así 01→02→...→05 se disuelve entre sí en vez de "contar". */
+/* Numeral editorial: ancla espacial propia ubicada sobre el bloque de texto
+   con microdesplazamiento tridimensional (--u-num-x, --u-num-y) que respira
+   con el avance del espacio sin deformar la tipografía (§11 Fase 2). */
 .umbral__num{
   position:absolute;z-index:2;
-  left:-4%;bottom:-8%;
-  transform:scale(var(--u-num-scale,.65));
+  left:clamp(1.5rem, 4vw, 3.5rem);
+  bottom:clamp(9.5rem, 23vh, 15rem);
+  transform:translate3d(var(--u-num-x, 0px), var(--u-num-y, 0px), 0) scale(var(--u-num-scale,.65));
   transform-origin:left bottom;
-  mix-blend-mode:overlay;
+  mix-blend-mode:screen;
+  opacity:var(--u-num-opacity,.25);
   pointer-events:none;user-select:none;
+  will-change:transform, opacity;
 }
 .umbral__num-digit{
   position:absolute;left:0;bottom:0;
-  font-size:clamp(6rem,24vw,19rem);
+  font-size:clamp(5.5rem, 20vw, 15rem);
   font-weight:600;line-height:1;letter-spacing:-.02em;
-  color:var(--pw-white);white-space:nowrap;
+  color:#8fd9c9;white-space:nowrap;
   opacity:0;
+  will-change:opacity;
+}
+@media (max-width:639px){
+  .umbral__num{
+    left:var(--sp-5);
+    bottom:clamp(11rem, 28vh, 15rem);
+    transform-origin:left bottom;
+  }
+  .umbral__num-digit{
+    font-size:clamp(4.5rem, 22vw, 7.5rem);
+  }
 }
 
-/* Veladuras: dos paños translúcidos en diagonal (no blobs, no papel
-   rasgado) que empiezan solapados en el centro y se separan lateralmente
-   (--u-veil-a-gap/--u-veil-b-gap, 0→1) mientras pierden opacidad y blur.
-   mix-blend-mode:screen sobre el fondo oscuro las hace sentir como luz
-   atravesando un material translúcido, no como una capa opaca encima. */
+/* Veladuras: dos paños translúcidos en diagonal que se separan lateralmente
+   con microparallax suave en 2 ejes, simulando tejidos que dejan pasar el haz (§9 Fase 2). */
 .umbral__veil{
   position:absolute;z-index:3;inset:-16%;
   mix-blend-mode:screen;
@@ -988,46 +1005,47 @@ a:focus-visible,button:focus-visible,input:focus-visible{
   will-change:transform,filter,opacity;
 }
 .umbral__veil--a{
-  background:linear-gradient(128deg, rgba(255,255,255,.5) 0%, rgba(150,224,210,.22) 48%, rgba(150,224,210,0) 78%);
+  background:linear-gradient(128deg, rgba(255,255,255,.48) 0%, rgba(150,224,210,.24) 46%, rgba(150,224,210,0) 76%);
   filter:blur(calc(6px + var(--u-veil-blur,1) * var(--u-blur-max)));
   opacity:var(--u-veil-a-opacity,.9);
-  transform:translate3d(calc(var(--u-veil-a-gap,0) * var(--u-veil-travel) * -1), 0, 0) rotate(-6deg) scale(1.3);
+  transform:translate3d(calc(var(--u-veil-a-gap,0) * var(--u-veil-travel) * -1), calc(var(--u-veil-a-gap,0) * 10px), 0) rotate(-6deg) scale(1.26);
 }
 .umbral__veil--b{
-  background:linear-gradient(-128deg, rgba(255,255,255,.46) 0%, rgba(150,224,210,.2) 48%, rgba(150,224,210,0) 78%);
+  background:linear-gradient(-128deg, rgba(255,255,255,.44) 0%, rgba(150,224,210,.2) 46%, rgba(150,224,210,0) 76%);
   filter:blur(calc(6px + var(--u-veil-blur,1) * var(--u-blur-max)));
   opacity:var(--u-veil-b-opacity,.85);
-  transform:translate3d(calc(var(--u-veil-b-gap,0) * var(--u-veil-travel)), 0, 0) rotate(6deg) scale(1.3);
+  transform:translate3d(calc(var(--u-veil-b-gap,0) * var(--u-veil-travel)), calc(var(--u-veil-b-gap,0) * -8px), 0) rotate(6deg) scale(1.26);
 }
 
-/* Encuadre: aperture que se cierra/abre por grosor de borde
-   (--u-frame-inset, 1→0), no por clip-path (evita el corte geométrico
-   duro de una máscara y deja el borde con el mismo blur/luz que el
-   resto de la escena). Dos variantes (oscura/clara) se funden por
-   opacidad con el mismo --u-bg-dark que el halo, para que el marco
-   "aclare" a la vez que el resto de la composición. */
+/* Encuadre: viñeta perimetral anamórfica envolvente (no marco de bordes duros)
+   cuya apertura y densidad respiran con el avance del recorrido (--u-frame-inset).
+   En 01 la penumbra abraza los límites de la pantalla; en 03 se retira para el clímax;
+   en 05 se disuelve completamente hacia el horizonte abierto (§10 Fase 2). */
 .umbral__frame{
   position:absolute;z-index:4;inset:0;
-  box-sizing:border-box;
-  border-style:solid;border-color:transparent;
   pointer-events:none;
+  will-change:opacity;
 }
 .umbral__frame--dark{
-  border-width:calc(var(--u-frame-inset,1) * var(--u-frame-max));
-  border-color:var(--pw-primary-900);
+  background:radial-gradient(ellipse 92% 76% at calc(var(--u-core-x,.5) * 100%) calc(var(--u-core-y,.46) * 100%),
+    transparent calc(28% + (1 - var(--u-frame-inset,1)) * 48%),
+    rgba(18,60,55,.62) calc(52% + (1 - var(--u-frame-inset,1)) * 36%),
+    var(--pw-primary-900) 100%);
   opacity:var(--u-bg-dark,1);
 }
 .umbral__frame--light{
-  border-width:calc(var(--u-frame-inset,1) * var(--u-frame-max));
-  border-color:var(--pw-mist);
+  background:radial-gradient(ellipse 95% 80% at calc(var(--u-core-x,.5) * 100%) calc(var(--u-core-y,.46) * 100%),
+    transparent calc(32% + (1 - var(--u-frame-inset,1)) * 46%),
+    rgba(243,246,245,.42) calc(58% + (1 - var(--u-frame-inset,1)) * 32%),
+    var(--pw-mist) 100%);
   opacity:calc(1 - var(--u-bg-dark,1));
 }
 
-/* Texto de cada fase: mismo patrón de apilado por grid (todas las
-   fases ocupan la misma celda; solo la .is-active es visible) que ya
-   validó .method-step, con un velo de contraste (::before) para
-   mantener AA sobre cualquier estado de la escena. Sin pin activo, cae
-   a lista vertical normal (ver comentario de arriba). */
+/* Texto de cada fase: apilado por grid donde la opacidad y el desplazamiento
+   se interpolan directamente en scroll desde main.js (render), eliminando
+   saltos de transición temporales fijos (§4 auditoría). En móvil se añade
+   un resguardo inferior de seguridad para evitar solapamiento con la barra
+   fija de reserva (.book-bar, §6 auditoría). */
 .umbral.is-pin-active .umbral__content{
   position:absolute;z-index:5;inset:0;
   display:flex;align-items:flex-end;
@@ -1035,11 +1053,11 @@ a:focus-visible,button:focus-visible,input:focus-visible{
 }
 .umbral.is-pin-active .umbral__content::before{
   content:"";position:absolute;inset:0;
-  background:linear-gradient(0deg, rgba(11,34,31,.72) 0%, rgba(11,34,31,.14) 56%, transparent 80%);
+  background:linear-gradient(0deg, rgba(11,34,31,.82) 0%, rgba(11,34,31,.2) 48%, transparent 74%);
   pointer-events:none;
 }
 .umbral.is-pin-active .umbral__phases{
-  display:grid;width:100%;max-width:30rem;
+  display:grid;width:100%;max-width:32rem;
 }
 .umbral__phase{
   position:relative;
@@ -1052,19 +1070,26 @@ a:focus-visible,button:focus-visible,input:focus-visible{
   grid-area:1/1;
   border-top:none;padding-block:0;
   opacity:0;
-  transform:translateY(16px);
-  transition:opacity var(--dur-slow) var(--ease-out), transform var(--dur-slow) var(--ease-out);
-  transition-delay:0ms!important;
+  transform:translate3d(0, 16px, 0);
   pointer-events:none;
+  transition:none!important;
+  transition-delay:0ms!important;
+  will-change:opacity, transform;
 }
 .umbral.is-pin-active .umbral__phase.is-active{
-  opacity:1;
-  transform:translateY(0);
   pointer-events:auto;
 }
 .umbral__phase-eyebrow{display:block;font-size:.75rem;letter-spacing:.14em;color:#8fd9c9;}
 .umbral__phase-title{font-size:clamp(1.5rem,3.2vw,2.3rem);font-weight:500;margin-top:.3rem;color:var(--pw-white);}
 .umbral__phase-text{font-size:.95rem;color:rgba(255,255,255,.75);margin-top:.4rem;max-width:42ch;}
+
+@media (max-width:639px){
+  .umbral.is-pin-active .umbral__content{
+    padding:var(--sp-6) var(--sp-5) calc(var(--sp-10) + 18px);
+  }
+  .umbral__phase-title{font-size:clamp(1.4rem, 5.5vw, 1.8rem);}
+  .umbral__phase-text{font-size:.88rem;max-width:32ch;}
+}
 
 /* Indicador "01 — 02 — 03 — 04 — 05": puramente decorativo (aria-hidden),
    solo visible en modo fijado — el contenido real y accesible ya está
@@ -1088,74 +1113,123 @@ a:focus-visible,button:focus-visible,input:focus-visible{
 }
 .umbral__progress-seg.is-done{background:#8fd9c9;}
 
-.umbral__cta{margin-top:var(--sp-16);position:relative;z-index:1;}
-
-/* Salida hacia Primera visita: única franja a todo el ancho (fuera de
-   .container) que funde el verde de marca hacia --pw-mist, para que el
-   siguiente fondo claro llegue sin corte — mismo criterio de "sin
-   cortes bruscos" que pide la dirección para la transición de salida. */
-.umbral__exit{
-  height:clamp(4rem,9vw,7rem);
+.umbral__cta{
   margin-top:var(--sp-16);
-  background:linear-gradient(180deg, var(--pw-primary-900), var(--pw-mist));
+  position:relative;z-index:1;
+  backdrop-filter:blur(4px);
 }
 
-/* ---------- 12. Primera visita ---------- */
+/* Salida hacia Primera visita: transición lumínica continua enriquecida
+   que conecta la disolución cálida de 05 con el tono sereno de --pw-mist,
+   eliminando cualquier corte brusco antes de la siguiente sección (§18 Fase 2). */
+.umbral__exit{
+  height:clamp(6rem,11vw,9.5rem);
+  margin-top:var(--sp-14);
+  background:linear-gradient(180deg,
+    var(--pw-primary-900) 0%,
+    rgba(18,60,55,.94) 22%,
+    rgba(52,108,98,.48) 54%,
+    rgba(186,235,225,.24) 76%,
+    var(--pw-mist) 100%);
+}
+
+/* ---------- 12. Primera visita ----------
+   Siguiente capítulo natural tras The Marshall Method: de la abstracción
+   conceptual ("así trabajamos") a la experiencia física y humana ("así
+   empieza tu primera visita"). Fondo continuo en --pw-mist sin corte superior,
+   fotografía real de bienvenida de la clínica, insignia de 60 minutos y
+   relato progresivo de 5 momentos que disipa la incertidumbre del paciente. */
 .first-visit{
-  padding-block:var(--sp-24);
+  padding-block:var(--sp-20) var(--sp-24);
   background:var(--pw-mist);
-  border-block:1px solid var(--pw-line);
+  border-bottom:1px solid var(--pw-line);
 }
 .first-visit__grid{display:grid;gap:var(--sp-12);}
 @media (min-width:860px){
-  .first-visit__grid{grid-template-columns:1.05fr .95fr;gap:var(--sp-24);align-items:start;}
+  .first-visit__grid{grid-template-columns:1.05fr .95fr;gap:var(--sp-20);align-items:start;}
 }
-.first-visit__lead{margin-top:var(--sp-5);}
+
+/* Insignia editorial de 60 min: anotación tipográfica limpia, sin aspecto de píldora SaaS (§2 QA) */
+.first-visit__badge-row{
+  display:flex;align-items:center;flex-wrap:wrap;gap:var(--sp-3);
+  margin-bottom:var(--sp-3);
+}
+.first-visit__badge-row .section-eyebrow{margin-bottom:0;}
+.first-visit__duration{
+  display:inline-flex;align-items:center;gap:.45rem;
+  font-size:.73rem;font-weight:500;letter-spacing:.06em;
+  text-transform:uppercase;
+  color:var(--pw-primary-900);
+  background:transparent;
+  border:none;
+  border-left:1px solid var(--pw-line);
+  padding:0 0 0 var(--sp-3);
+}
+.first-visit__duration-dot{
+  width:4px;height:4px;border-radius:50%;
+  background:var(--pw-accent);
+}
+
+.first-visit__lead{margin-top:var(--sp-4);max-width:44ch;}
+
+/* Fotografía editorial de bienvenida: encuadre integrado, sombra mínima (§3 QA) */
+.first-visit__media{
+  position:relative;
+  margin-top:var(--sp-8);
+  border-radius:var(--radius-md);
+  overflow:hidden;
+  background:rgba(18,60,55,.04);
+  box-shadow:0 4px 18px -4px rgba(18,60,55,.06);
+}
+.first-visit__img{
+  width:100%;height:auto;
+  aspect-ratio:16/11;
+  object-fit:cover;
+  display:block;
+  transform:scale(1.015);
+  transition:transform 500ms var(--ease-out);
+}
+.first-visit__media.is-revealed .first-visit__img,
+.first-visit__media.is-visible .first-visit__img,
+.first-visit__media[data-reveal].is-visible .first-visit__img{
+  transform:scale(1);
+}
+.first-visit__media-caption{
+  display:flex;align-items:center;gap:.45rem;
+  padding:.55rem .9rem;
+  font-size:.75rem;letter-spacing:.02em;
+  color:var(--pw-ink-muted);
+  background:rgba(255,255,255,.94);
+  backdrop-filter:blur(6px);
+  border-top:1px solid rgba(0,0,0,.04);
+}
+.first-visit__media-dot{
+  width:5px;height:5px;border-radius:50%;
+  background:var(--pw-accent);
+}
+
 .first-visit__actions{display:flex;flex-wrap:wrap;gap:var(--sp-4);margin-top:var(--sp-8);}
+.first-visit__mobile-actions{display:none;}
+
+@media (max-width:859px){
+  .first-visit{padding-bottom:var(--sp-24);}
+  .first-visit__actions{display:none;}
+  .first-visit__mobile-actions{
+    display:flex;flex-direction:column;gap:var(--sp-3);
+    margin-top:var(--sp-10);margin-bottom:var(--sp-16);
+  }
+}
 .first-visit .btn--outline{border-color:var(--pw-line);color:var(--pw-primary-900);}
 .first-visit .btn--outline:hover{border-color:var(--pw-accent);background:rgba(38,152,136,.08);}
 
-.first-visit__steps{counter-reset:fv;display:grid;}
-.first-visit__step{
-  counter-increment:fv;
-  display:flex;align-items:baseline;gap:var(--sp-5);
-  padding-block:var(--sp-5);
-  border-top:1px solid var(--pw-line);
-  font-size:1.02rem;
-}
-.first-visit__step:first-child{border-top:none;}
-.first-visit__step::before{
-  content:counter(fv,decimal-leading-zero);
-  flex:0 0 auto;
-  font-size:.72rem;letter-spacing:.14em;
-  color:var(--pw-accent);
-}
-
-/* ---------- 12b. Primera visita (Home) — timeline vinculada al scroll ----------
-   Solo afecta a .first-visit (Home): servicios.html y physiotherapy.html
-   reutilizan el mismo .first-visit__steps/.first-visit__step con la marca
-   plana original (contador CSS en ::before) y no deben verse afectados, así
-   que todo lo de aquí va scopeado bajo .first-visit y usa clases nuevas
-   (.first-visit__marker, __step-body, __step-num, __step-text) que solo
-   existen en la marca anidada de Home.
-
-   Filosofía igual que Marshall Method: mejora progresiva. Sin la clase
-   .is-timeline-active (añadida por JS solo si hay IntersectionObserver y
-   no hay prefers-reduced-motion) los cinco pasos se ven simplemente todos
-   visibles a la vez, con el punto y la línea en un tono neutro — nunca
-   hay contenido oculto esperando una animación que no va a llegar.
-
-   El título/CTA de la izquierda (.first-visit__intro) se queda sticky con
-   CSS puro (sin JS de scroll) mientras la columna derecha, más alta que él
-   gracias al espaciado generoso entre pasos, se recorre — y deja de ser
-   sticky solo con llegar al final del grid, sin necesidad de lógica extra. */
-.first-visit .first-visit__steps{counter-reset:none;}
+/* Timeline editorial: marcadores sutiles y línea fina, protagonismo tipográfico (§1 QA) */
+.first-visit__steps{counter-reset:none;display:grid;}
 .first-visit .first-visit__step{
   counter-increment:none;
   display:block;
   position:relative;
   align-items:unset;gap:0;
-  padding-block:var(--sp-8);
+  padding-block:var(--sp-6);
   padding-left:2.75rem;
   border-top:none;
   font-size:1rem;
@@ -1181,39 +1255,49 @@ a:focus-visible,button:focus-visible,input:focus-visible{
   transform:translateX(-50%);
   transition:background var(--dur-med) var(--ease-out);
 }
-.first-visit .first-visit__step:first-child .first-visit__marker::before{top:calc(var(--sp-8) + .78rem);}
-.first-visit .first-visit__step:last-child .first-visit__marker::before{bottom:calc(var(--sp-8) + .78rem);}
+.first-visit .first-visit__step:first-child .first-visit__marker::before{top:calc(var(--sp-6) + .6rem);}
+.first-visit .first-visit__step:last-child .first-visit__marker::before{bottom:calc(var(--sp-6) + .6rem);}
 
 .first-visit__dot{
   position:absolute;
-  left:50%;top:calc(var(--sp-8) + .78rem);
+  left:50%;top:calc(var(--sp-6) + .6rem);
   transform:translate(-50%,-50%);
-  width:.55rem;height:.55rem;border-radius:50%;
+  width:.45rem;height:.45rem;border-radius:50%;
   background:var(--pw-white);
-  border:2px solid var(--pw-line);
-  transition:background var(--dur-med) var(--ease-out), border-color var(--dur-med) var(--ease-out), transform var(--dur-med) var(--ease-out), box-shadow var(--dur-med) var(--ease-out);
+  border:1.5px solid var(--pw-line);
+  transition:background var(--dur-med) var(--ease-out), border-color var(--dur-med) var(--ease-out), transform var(--dur-med) var(--ease-out);
 }
-.first-visit__step-body{display:flex;align-items:baseline;flex-wrap:wrap;gap:var(--sp-4);}
+.first-visit__step-body{display:flex;align-items:flex-start;gap:var(--sp-3);}
 .first-visit__step-num{
   flex:0 0 auto;
-  font-size:.85rem;font-weight:600;letter-spacing:.06em;
-  color:var(--pw-primary);
+  font-size:.78rem;font-weight:500;letter-spacing:.08em;
+  color:var(--pw-accent);
   font-variant-numeric:tabular-nums;
+  padding-top:.15rem;
 }
-.first-visit__step-text{flex:1 1 12rem;min-width:0;margin:0;font-size:1.05rem;line-height:1.55;color:var(--pw-ink);}
+.first-visit__step-content{flex:1 1 auto;min-width:0;}
+.first-visit__step-title{
+  font-size:1.05rem;font-weight:550;line-height:1.35;
+  color:var(--pw-ink);margin:0 0 .2rem 0;
+  transition:color var(--dur-med) var(--ease-out);
+}
+.first-visit__step-desc{
+  font-size:.92rem;line-height:1.5;
+  color:var(--pw-ink-muted);margin:0;
+}
 
-/* Estados narrativos — solo con .is-timeline-active (JS + sin motion reducido) */
+/* Estados narrativos discretos con IntersectionObserver */
 .first-visit.is-timeline-active .first-visit__step{
-  opacity:.4;
-  transform:translateY(10px);
-  transition:opacity var(--dur-slow) var(--ease-out), transform var(--dur-slow) var(--ease-out);
+  opacity:.42;
+  transform:translateY(4px);
+  transition:opacity var(--dur-med) var(--ease-out), transform var(--dur-med) var(--ease-out);
 }
 .first-visit.is-timeline-active .first-visit__step.is-active,
 .first-visit.is-timeline-active .first-visit__step.is-done{
   opacity:1;
   transform:translateY(0);
 }
-.first-visit.is-timeline-active .first-visit__step.is-done{opacity:.75;}
+.first-visit.is-timeline-active .first-visit__step.is-done{opacity:.78;}
 
 .first-visit.is-timeline-active .first-visit__step.is-active .first-visit__marker::before,
 .first-visit.is-timeline-active .first-visit__step.is-done .first-visit__marker::before{
@@ -1221,11 +1305,25 @@ a:focus-visible,button:focus-visible,input:focus-visible{
 }
 .first-visit.is-timeline-active .first-visit__step.is-active .first-visit__dot{
   background:var(--pw-primary);border-color:var(--pw-primary);
-  transform:translate(-50%,-50%) scale(1.35);
-  box-shadow:0 0 0 4px rgba(35,115,105,.15);
+  transform:translate(-50%,-50%) scale(1.2);
 }
 .first-visit.is-timeline-active .first-visit__step.is-done .first-visit__dot{
   background:var(--pw-primary);border-color:var(--pw-primary);
+}
+.first-visit.is-timeline-active .first-visit__step.is-active .first-visit__step-title{
+  color:var(--pw-primary);
+}
+
+@media (prefers-reduced-motion:reduce){
+  .first-visit.is-timeline-active .first-visit__step{
+    opacity:1!important;
+    transform:none!important;
+    transition:none!important;
+  }
+  .first-visit__img{
+    transform:none!important;
+    transition:none!important;
+  }
 }
 
 /* ---------- 13. Equipo profesional ----------
@@ -1295,38 +1393,360 @@ a:focus-visible,button:focus-visible,input:focus-visible{
 }
 
 /* ---------- 15. Reseñas reales ---------- */
-.testimonials{padding-block:var(--sp-32);background:var(--pw-white);}
-.testimonials__head{max-width:40rem;margin-bottom:var(--sp-16);}
-.testimonials__grid{display:grid;gap:1px;background:var(--pw-line);border:1px solid var(--pw-line);grid-template-columns:1fr;}
-@media (min-width:860px){ .testimonials__grid{grid-template-columns:repeat(3,1fr);} }
-/* Con una única reseña (p. ej. páginas de servicio) la rejilla de 3
-   columnas deja dos celdas vacías visibles como bloques grises: se
-   reduce a una sola columna centrada y del ancho de una tarjeta. */
-@media (min-width:860px){
-  .testimonials__grid:has(.testimonial-card:only-child){grid-template-columns:1fr;max-width:26rem;margin-inline:auto;}
+/* ---------- 15. Reseñas editoriales / Experiencias (Home) ----------
+   Composición editorial basada en scroll vertical: una pista sticky donde
+   las fotografías contextuales de la experiencia Physio Wellness ascienden
+   y se superponen en sincronía con el progreso de lectura de las historias,
+   eliminando cualquier concepto de slider/carrusel.
+   Atribución discreta (sin nombres protagonistas) y fallback completo en flujo
+   normal para prefers-reduced-motion. */
+.testimonials{
+  background:var(--pw-white);
+  position:relative;
 }
-.testimonial-card{background:var(--pw-white);padding:var(--sp-10) var(--sp-8);display:flex;flex-direction:column;gap:var(--sp-5);}
-.testimonial-card__quote{font-size:1.05rem;line-height:1.68;color:var(--pw-ink);}
-.testimonial-card__quote::before{content:"“";color:var(--pw-primary);font-size:1.3em;line-height:0;vertical-align:-.3em;margin-right:.04em;}
-.testimonial-card__quote::after{content:"”";}
-/* El fragmento se recorta a 5 líneas solo si hay JS para desplegarlo;
-   sin JS el texto completo se lee siempre. */
-.js .testimonial-card__quote[data-clamped]{
-  display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:5;
+
+/* Pista de scroll vertical escalable según N testimonios */
+.testimonials__track{
+  position:relative;
+  height:var(--testimonials-track-height, 280vh); /* Calculado dinámicamente según N */
+}
+
+/* Contenedor sticky que se mantiene anclado en pantalla mientras dura el recorrido */
+.testimonials__sticky{
+  position:sticky;
+  top:0;
+  height:100vh;
+  height:100dvh;
+  display:flex;
+  align-items:center;
   overflow:hidden;
 }
-.testimonial-card__more{
-  align-self:flex-start;
-  font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;
+
+.testimonials__container{
+  width:100%;
+}
+
+.testimonials__layout{
+  display:grid;
+  grid-template-columns:minmax(0, 46%) minmax(0, 54%);
+  gap:clamp(2rem, 5vw, 4.5rem);
+  align-items:center;
+}
+
+/* Columna 1: Escenario de fotos contextuales superpuestas */
+.testimonials__media{
+  position:relative;
+  width:100%;
+}
+
+.testimonials__stage{
+  position:relative;
+  width:100%;
+  aspect-ratio:4 / 5;
+  border-radius:var(--radius, 2px);
+  overflow:hidden;
+  background:var(--pw-mist);
+  border:1px solid var(--pw-line);
+}
+
+/* Cada capa fotográfica ocupa el 100% del marco y asciende desde abajo */
+.testimonials__photo-layer{
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+  overflow:hidden;
+  will-change:transform;
+}
+
+.testimonials__photo-layer img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  object-position:var(--focal-point, center);
+  display:block;
+}
+
+/* Columna 2: Contenido editorial */
+.testimonials__content{
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+}
+
+.testimonials__header{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:var(--sp-4);
+  padding-bottom:var(--sp-5);
+  border-bottom:1px solid var(--pw-line);
+  margin-bottom:var(--sp-6);
+}
+
+.testimonials__eyebrow{
+  font-size:var(--fs-label, .75rem);
+  font-weight:600;
+  letter-spacing:.12em;
+  text-transform:uppercase;
   color:var(--pw-primary);
-  border-bottom:1px solid currentColor;padding-bottom:.15rem;
+  margin:0;
 }
-.testimonial-card__more:hover{color:var(--pw-accent);}
-.testimonial-card__author{
-  font-size:.78rem;letter-spacing:.06em;text-transform:uppercase;color:var(--pw-ink-50);
-  margin-top:auto;padding-top:var(--sp-5);border-top:1px solid var(--pw-line);
+
+.testimonials__stars{
+  color:var(--pw-primary);
+  font-size:1.05rem;
+  letter-spacing:.16em;
+  line-height:1;
+  user-select:none;
 }
-.testimonials__source{margin-top:var(--sp-6);font-size:.78rem;color:var(--pw-ink-50);}
+
+/* Escenario de textos: historias superpuestas gobernadas por scroll */
+.testimonials__text-stage{
+  position:relative;
+  min-height:280px;
+}
+
+.testimonials__story{
+  position:absolute;
+  top:0;
+  left:0;
+  width:100%;
+  display:flex;
+  flex-direction:column;
+  opacity:0;
+  transform:translate3d(0, 16px, 0);
+  pointer-events:none;
+  visibility:hidden;
+  will-change:opacity, transform;
+}
+
+.testimonials__quote-wrap{
+  margin:0 0 var(--sp-6);
+}
+
+.testimonials__quote{
+  font-size:clamp(1.15rem, 1.75vw, 1.5rem);
+  line-height:1.58;
+  color:var(--pw-ink);
+  font-weight:400;
+  margin:0;
+  letter-spacing:-.01em;
+}
+
+.testimonials__quote::before{
+  content:"“";
+  color:var(--pw-primary);
+  font-size:1.25em;
+  line-height:0;
+  vertical-align:-.2em;
+  margin-right:.04em;
+}
+
+.testimonials__quote::after{
+  content:"”";
+  color:var(--pw-primary);
+  font-size:1.25em;
+  line-height:0;
+  vertical-align:-.2em;
+  margin-left:.04em;
+}
+
+.testimonials__meta{
+  display:flex;
+  align-items:center;
+  gap:var(--sp-2);
+  font-size:.82rem;
+  letter-spacing:.08em;
+  text-transform:uppercase;
+  color:var(--pw-ink-50);
+  margin-top:auto;
+  padding-top:var(--sp-5);
+}
+
+.testimonials__author{
+  font-weight:600;
+  color:var(--pw-ink);
+}
+
+.testimonials__sep{
+  color:var(--pw-line);
+}
+
+.testimonials__treatment{
+  font-weight:500;
+  color:var(--pw-primary);
+}
+
+.testimonials__footer{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:var(--sp-4);
+  padding-top:var(--sp-5);
+  border-top:1px solid var(--pw-line);
+  margin-top:var(--sp-6);
+}
+
+.testimonials__google{
+  display:flex;
+  flex-direction:column;
+  gap:2px;
+}
+
+.testimonials__google-rating{
+  font-size:.8rem;
+  font-weight:500;
+  color:var(--pw-ink);
+}
+
+.testimonials__google-verified{
+  font-size:.72rem;
+  color:var(--pw-ink-50);
+}
+
+/* Fuente semántica única en flujo normal (usada sin JS y en prefers-reduced-motion) */
+.testimonials__flow{
+  padding-block:var(--sp-20);
+}
+
+.testimonials__header--flow{
+  margin-bottom:var(--sp-12);
+}
+
+.testimonials__item{
+  display:grid;
+  grid-template-columns:minmax(0, 44%) minmax(0, 56%);
+  gap:clamp(1.5rem, 4vw, 3.5rem);
+  align-items:center;
+  padding-bottom:var(--sp-12);
+  margin-bottom:var(--sp-12);
+  border-bottom:1px solid var(--pw-line);
+}
+
+.testimonials__item:last-of-type{
+  border-bottom:none;
+  margin-bottom:0;
+  padding-bottom:var(--sp-6);
+}
+
+.testimonials__item-media{
+  position:relative;
+  width:100%;
+  aspect-ratio:4 / 5;
+  border-radius:var(--radius, 2px);
+  overflow:hidden;
+  background:var(--pw-mist);
+  border:1px solid var(--pw-line);
+}
+
+.testimonials__item-media img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  object-position:var(--focal-point, center);
+  display:block;
+}
+
+.testimonials__item-text{
+  display:flex;
+  flex-direction:column;
+}
+
+/* Cuando el visor sticky interactivo está activo, la fuente semántica se oculta solo visualmente,
+   permaneciendo 100% disponible y navegable para tecnologías asistivas (lectores de pantalla) */
+.testimonials__flow--visually-hidden{
+  position:absolute!important;
+  width:1px!important;
+  height:1px!important;
+  padding:0!important;
+  margin:-1px!important;
+  overflow:hidden!important;
+  clip:rect(0,0,0,0)!important;
+  white-space:normal!important;
+  border:0!important;
+}
+
+/* Responsivo para móviles y tablets */
+@media (max-width:860px){
+  .testimonials__track{
+    height:var(--testimonials-track-height, 250vh);
+  }
+
+  .testimonials__sticky{
+    align-items:center;
+    justify-content:center;
+    padding-bottom:calc(72px + env(safe-area-inset-bottom, 0px)); /* Reserva espacio para .book-bar fijo */
+  }
+
+  .testimonials__layout{
+    display:flex;
+    flex-direction:column;
+    gap:var(--sp-3);
+  }
+
+  .testimonials__header{
+    margin-bottom:var(--sp-3);
+    padding-bottom:var(--sp-3);
+  }
+
+  .testimonials__stage{
+    aspect-ratio:auto;
+    height:clamp(135px, 22svh, 210px);
+    width:100%;
+  }
+
+  .testimonials__text-stage{
+    min-height:190px;
+  }
+
+  .testimonials__quote-wrap{
+    margin:0 0 var(--sp-3);
+  }
+
+  .testimonials__quote{
+    font-size:clamp(.92rem, 3.2vw, 1.05rem);
+    line-height:1.46;
+  }
+
+  .testimonials__meta{
+    font-size:.75rem;
+    flex-wrap:wrap;
+    padding-top:var(--sp-3);
+  }
+
+  .testimonials__footer{
+    margin-top:var(--sp-3);
+    padding-top:var(--sp-3);
+  }
+
+  .testimonials__item{
+    display:flex;
+    flex-direction:column;
+    gap:var(--sp-6);
+  }
+
+  .testimonials__item-media{
+    aspect-ratio:auto;
+    height:clamp(135px, 22svh, 210px);
+    width:100%;
+  }
+}
+
+/* Soporte accesible total con prefers-reduced-motion */
+@media (prefers-reduced-motion: reduce){
+  .testimonials__track{
+    display:none!important;
+  }
+  .testimonials__flow{
+    display:block!important;
+    position:static!important;
+    width:auto!important;
+    height:auto!important;
+    overflow:visible!important;
+    clip:auto!important;
+  }
+}
 
 /* ---------- 15b. Reseñas de Google (Fisioterapia) ----------
    Sección independiente de "15. Reseñas reales" (Home): usa sus propias

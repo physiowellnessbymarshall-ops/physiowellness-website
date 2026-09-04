@@ -234,7 +234,7 @@
         0    Fisioterapia             physiotherapy  area-physio
         1    Bienestar                wellness       area-wellness
         2    Fuerza y readaptación    strength       area-strength
-       -3    Stretching               stretching     area-strength (temporal)
+       -3    Stretching               stretching     stretching
        -2    Pilates Reformer         pilates        area-pilates
        -1    Fisioterapia a domicilio domicilio      domicilio-visita
 
@@ -250,10 +250,10 @@
        una tercera posición "-3" (nueva, ver styles.css §20). Colocando
        Stretching ahí, las cinco tarjetas ya existentes conservan exactamente
        la misma posición inicial que tenían antes (0/1/2/-2/-1); solo
-       Stretching ocupa el nuevo hueco -3. Imagen: no existe todavía foto
-       propia de Stretching, así que se reutiliza area-strength-*.webp como
-       placeholder temporal (ver ASSET_SOURCES.md) hasta disponer de una
-       fotografía propia de esta área.
+       Stretching ocupa el nuevo hueco -3. Imagen: fotografía real de
+       Stretching aportada por el cliente (stretching-*.webp, ver
+       ASSET_SOURCES.md), con recorte (object-position) ajustado en
+       styles.css (Fase 7).
        ========================================================================== -->
   <section class="area-carousel" id="orientacion">
     <div class="container">
@@ -306,7 +306,7 @@
           <li class="area-carousel__card" data-position="-3">
             <a class="area-carousel__card-link" href="servicios/stretching.html" data-route="stretching">
               <span class="area-carousel__media">
-                <img class="area-carousel__img area-carousel__img--stretching" src="../assets/img/stock/area-strength-1440.webp" srcset="../assets/img/stock/area-strength-720.webp 720w, ../assets/img/stock/area-strength-1440.webp 1440w" sizes="(min-width: 1024px) 7rem, 60vw" alt="" loading="lazy" width="1440" height="810">
+                <img class="area-carousel__img area-carousel__img--stretching" src="../assets/img/stock/stretching-1440.webp" srcset="../assets/img/stock/stretching-720.webp 720w, ../assets/img/stock/stretching-1440.webp 1440w" sizes="(min-width: 1024px) 7rem, 60vw" alt="" loading="lazy" width="1440" height="1799">
               </span>
               <span class="area-carousel__body">
                 <span class="area-carousel__title">Stretching</span>

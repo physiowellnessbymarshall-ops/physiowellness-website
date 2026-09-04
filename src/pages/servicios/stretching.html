@@ -208,13 +208,12 @@
        izquierda, foto a la derecha en escritorio; en móvil el contenido y
        los CTA van primero y la foto queda después.
 
-       IMAGEN: pendiente de sustituir por la fotografía real de Stretching
-       aportada por el cliente. No ha sido posible extraer el archivo
-       adjuntado en la conversación a disco (ver ASSET_SOURCES.md), así que
-       se reutiliza temporalmente el mismo placeholder ya usado en Home,
-       servicios.html y tarifas.html (area-strength-*.webp) en vez de
-       generar o buscar una imagen de stock nueva. alt="" porque la foto no
-       representa realmente Stretching todavía. -->
+       IMAGEN: fotografía real de Stretching aportada por el cliente
+       (stretching-*.webp, ver ASSET_SOURCES.md). Sustituye al placeholder
+       area-strength-*.webp usado hasta la Fase 6. El recorte
+       (object-position) se ajusta de forma independiente por breakpoint en
+       styles.css (Fase 7), priorizando el gesto de stretching asistido, la
+       pierna elevada y las manos de la profesional. -->
   <section class="page-hero page-hero--split">
     <div class="container page-hero__inner">
       <nav class="breadcrumb page-hero__breadcrumb" aria-label="Ruta de navegación" data-reveal>
@@ -246,7 +245,7 @@
         </div>
 
         <figure class="page-hero__photo" data-reveal style="--i:2">
-          <img src="../../assets/img/stock/area-strength-1440.webp" srcset="../../assets/img/stock/area-strength-720.webp 720w, ../../assets/img/stock/area-strength-1440.webp 1440w" sizes="(min-width:860px) 40vw, 100vw" alt="" width="1440" height="960" loading="eager" fetchpriority="high">
+          <img src="../../assets/img/stock/stretching-1440.webp" srcset="../../assets/img/stock/stretching-720.webp 720w, ../../assets/img/stock/stretching-1440.webp 1440w" sizes="(min-width:860px) 40vw, 100vw" alt="Profesional ayudando a una paciente a estirar la pierna elevada sobre una camilla, en un espacio cálido y natural." width="1440" height="1799" loading="eager" fetchpriority="high">
         </figure>
       </div>
     </div>
@@ -254,8 +253,8 @@
 
   <!-- ============ Qué es el Stretching ============
        Mismo bloque editorial a dos columnas que "Cuándo empezar por
-       Fisioterapia" (.service-context), reutilizando el mismo placeholder
-       de foto que el hero (misma imagen, distinto recorte por
+       Fisioterapia" (.service-context), reutilizando la misma fotografía
+       real que el hero (mismo archivo, distinto recorte por
        object-position) en vez de sumar un segundo archivo de stock sin
        necesidad real. Incluye la idea conceptual de enfoque pedida para
        esta fase ("no forzar, sino recuperar espacio para moverse"). -->
@@ -270,7 +269,7 @@
         </div>
       </div>
       <figure class="service-photo" data-reveal style="--i:1" aria-hidden="true">
-        <img src="../../assets/img/stock/area-strength-1440.webp" srcset="../../assets/img/stock/area-strength-720.webp 720w, ../../assets/img/stock/area-strength-1440.webp 1440w" sizes="(min-width:860px) 42vw, 100vw" alt="" loading="lazy" width="1440" height="960">
+        <img src="../../assets/img/stock/stretching-1440.webp" srcset="../../assets/img/stock/stretching-720.webp 720w, ../../assets/img/stock/stretching-1440.webp 1440w" sizes="(min-width:860px) 42vw, 100vw" alt="" loading="lazy" width="1440" height="1799">
       </figure>
     </div>
   </section>

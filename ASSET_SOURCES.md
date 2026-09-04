@@ -64,36 +64,30 @@ huérfano que borrar de esa fase.
 anterior a la FASE 7) **no se han borrado**: siguen usándose en `index.html`
 (hero y galería) y no se toca ninguna otra página en esta fase.
 
-### Stretching (integración como servicio principal — placeholder temporal)
+### Stretching (integración como servicio principal — fotografía real, FASE 7)
 
 Al añadir Stretching como quinto servicio principal (a la par de
 Fisioterapia, Bienestar, Fuerza y Pilates) en Home, `servicios.html`,
-`tarifas.html` y `physiotherapy.html`, no existe todavía una fotografía
-propia para esta disciplina. Como solución temporal se **reutilizan los
-mismos archivos** `src/assets/img/stock/area-strength-720.webp` /
-`-1440.webp` (los mismos de la fila "Fuerza" de la tabla anterior) en todas
-las tarjetas/paneles de Stretching (`.service-panel__img--stretching`,
-`.area-carousel__img--stretching`, `.area-tile[data-area="Stretching"]`).
+`tarifas.html` y `servicios/stretching.html`, la FASE 6 usó temporalmente
+como placeholder el mismo archivo de la fila "Fuerza" de la tabla anterior
+(`area-strength-720.webp` / `-1440.webp`) en las cuatro tarjetas/paneles de
+Stretching. La FASE 7 sustituye ese placeholder por una fotografía real de
+Stretching, aportada directamente por el cliente (Marshall) y guardada por
+él mismo en disco (no ha sido posible extraer archivos adjuntados
+directamente en la conversación), procesada localmente con el mismo
+criterio que el resto de fotografía de cliente (sin gradación de color
+añadida, solo redimensionado y exportación a WebP).
 
-No es un archivo nuevo ni tiene procedencia propia que documentar aquí: es
-el mismo archivo de Fuerza, servido dos veces. **Pendiente**: sustituir por
-una fotografía real de Stretching en cuanto esté disponible, y entonces
-documentar su origen en una fila propia de esta tabla.
+| Campo | Detalle |
+| ----- | ------- |
+| Archivo servido | `src/assets/img/stock/stretching-720.webp` (720×900) / `-1440.webp` (1440×1799) |
+| Origen | Aportada por el cliente (FASE 7); no procede de ningún banco de stock, así que no hay URL de licencia que documentar |
+| Descripción de la escena | Profesional ayudando a una paciente, tumbada en camilla, a estirar la pierna elevada sujetándola por el tobillo y la pantorrilla, en una sala cálida con plantas y mobiliario de madera clara |
+| Transformaciones aplicadas | Redimensionado **por ancho** (no por alto, para que el descriptor `w` de cada `srcset` coincida con el ancho real del archivo) desde el original de 1122×1402 a 720w/1440w, exportado a WebP calidad 84 con Pillow (`method=6`); sin gradación de color adicional |
+| Integración | Mismo archivo reutilizado en las cinco ubicaciones: `.service-panel__img--stretching` (Home), `.area-carousel__img--stretching` (`servicios.html`), `.area-tile[data-area="Stretching"]` (`tarifas.html`) y dos veces en `servicios/stretching.html` (hero `.page-hero__photo` y bloque `.service-photo` de "Qué es el Stretching") |
+| Recorte (`object-position`) | Ajustado de forma independiente por componente y por breakpoint en `styles.css` (bloques "FASE 7"), porque esta foto es de encuadre vertical (ratio ≈0.8) a diferencia de las demás fotos de área, que son de paisaje. Prioriza el gesto de stretching asistido, la pierna elevada, las manos de la profesional y el pie con calcetín completo, evitando cortes incómodos en las variantes 4/3 (paisaje) de Home y móvil |
 
-**FASE 5 — página individual `src/pages/servicios/stretching.html`**: mismo
-criterio, mismo archivo de placeholder (`area-strength-720.webp` /
-`-1440.webp`), reutilizado dos veces dentro de la propia página (hero
-`.page-hero__photo` y bloque `.service-photo` de "Qué es el Stretching",
-con distinto recorte por `object-position`), en vez de sumar una segunda
-imagen de stock sin necesidad real. `alt=""` en ambos usos porque la foto
-no representa realmente Stretching todavía. El cliente indicó que
-adjuntaría una fotografía propia para esta página (y para Home/
-`servicios.html`/`tarifas.html`), pero no ha sido posible extraer ningún
-archivo adjuntado en la conversación a un archivo en disco con las
-herramientas disponibles: sigue pendiente que el cliente guarde esa foto
-en una ruta del sistema de archivos accesible para poder procesarla al
-mismo formato (WebP, 720w/1440w, calidad ~82) e integrarla en las cuatro
-ubicaciones pendientes.
+Fecha de incorporación: 2026-09-03.
 
 ## Hero de página (`#hero`, FASE 7B — nueva)
 

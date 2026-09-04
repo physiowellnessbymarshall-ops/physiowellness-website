@@ -17,11 +17,21 @@ Vigencia: precios confirmados para 2026.
 
 ---
 
-## Tarifa en clínica — Physiotherapy · Wellness · Strength · Pilates
+## Tarifa en clínica — Physiotherapy · Wellness · Strength · Pilates · Stretching
 
 Sección `01 — En la clínica` (`#en-la-clinica`). Es una **tarifa única y
-transversal**: no hay un precio distinto por área. Las cuatro tarjetas de
+transversal**: no hay un precio distinto por área. Las cinco tarjetas de
 `#areas` enlazan a este mismo panel; los precios no se repiten en el HTML.
+
+> ℹ️ **Stretching confirmado a la misma tarifa (2026-09-03):** el PDF
+> "PRECIOS 2026" todavía no menciona Stretching en ningún título de tarifa
+> (ni clínica ni domicilio). El cliente confirmó explícitamente, en
+> conversación con el agente, que Stretching comparte exactamente la misma
+> tarifa en clínica que Fisioterapia, Wellness, Strength y Pilates (misma
+> valoración inicial, mismas sesiones y mismos bonos). Este archivo y
+> `src/pages/tarifas.html` ya reflejan esa decisión; queda pendiente
+> actualizar el PDF oficial para que el título de la tarifa en clínica
+> incluya también Stretching.
 
 | Sesión                          | Precio / sesión | Bonos                                                    |
 | -------------------------------- | ---------------- | --------------------------------------------------------- |
@@ -34,11 +44,11 @@ independencia del área. No se realizan sesiones sin valoración previa. Se
 factura como acto independiente y no se descuenta de los bonos. Un informe
 médico o una derivación no la sustituye.
 
-**Bonos:** combinables entre **Fisioterapia, Strength y Pilates**. Válidos
-únicamente en clínica, con validez de 2 meses desde la compra. Se abonan
-íntegros en el momento de la compra, son personales e intransferibles y no
-admiten devolución una vez iniciados (se entiende iniciado al consumir la
-primera sesión).
+**Bonos:** combinables entre **Fisioterapia, Strength, Pilates y
+Stretching**. Válidos únicamente en clínica, con validez de 2 meses desde la
+compra. Se abonan íntegros en el momento de la compra, son personales e
+intransferibles y no admiten devolución una vez iniciados (se entiende
+iniciado al consumir la primera sesión).
 
 > ⚠️ **Pendiente de confirmar:** el PDF titula la tarifa "PHYSIO · WELLNESS ·
 > STRENGTH · PILATES", pero el párrafo de combinabilidad de bonos solo cita
@@ -57,16 +67,19 @@ viernes, excepto festivos) o 48 h en fin de semana y festivos. Fuera de
 plazo, o sin aviso, la sesión se considera realizada salvo causa médica o de
 fuerza mayor acreditada.
 
-## Tarifa a domicilio — Physiotherapy · Wellness · Strength (sin Pilates)
+## Tarifa a domicilio — Physiotherapy · Wellness · Strength (sin Pilates ni Stretching)
 
 Sección `02 — A domicilio` (`#a-domicilio`) + `Condiciones del
 desplazamiento` (`#desplazamiento`). Es una **modalidad independiente**, no
-una quinta área junto a Physiotherapy, Wellness, Strength y Pilates.
+una sexta área junto a Physiotherapy, Wellness, Strength, Pilates y
+Stretching.
 
-**El servicio a domicilio no incluye Pilates.** El PDF titula esta tarifa
-"PHYSIO · WELLNESS · STRENGTH" (sin Pilates) y el texto de valoración inicial
-lo confirma: "con independencia de la disciplina (Fisioterapia, Strength y
-Wellness)".
+**El servicio a domicilio no incluye Pilates ni Stretching.** El PDF titula
+esta tarifa "PHYSIO · WELLNESS · STRENGTH" (sin Pilates) y el texto de
+valoración inicial lo confirma: "con independencia de la disciplina
+(Fisioterapia, Strength y Wellness)". Stretching tampoco está definido en
+ninguna tarifa a domicilio del PDF, y no se ha confirmado ninguna extensión
+para esta modalidad (a diferencia de la tarifa en clínica, ver nota arriba).
 
 | Sesión                             | Precio |
 | ------------------------------------ | ------ |

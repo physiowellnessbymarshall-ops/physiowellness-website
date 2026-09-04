@@ -353,9 +353,9 @@ var prefersReducedMotion = window.matchMedia && window.matchMedia('(prefers-redu
 /* ---------- "Elige tu área": panel activo + contexto asociado ----------
    Cada panel es un <button aria-pressed> que marca el área elegida; el
    enlace "Ver tarifas" de cada panel sigue siendo un <a href="#en-la-clinica">
-   real y funciona igual sin JavaScript (las cuatro áreas ya comparten el
+   real y funciona igual sin JavaScript (las cinco áreas ya comparten el
    mismo precio, visible más abajo, con el texto fijo "Tarifa en clínica
-   compartida por las cuatro áreas." que NO cambia con la selección). Esto
+   compartida por las cinco áreas." que NO cambia con la selección). Esto
    solo añade: el estado seleccionado (aria-pressed + clase is-selected, con
    su borde/insignia/texto propios) y la actualización del panel de contexto
    lateral/apilado (nombre del área, descripción de enfoque y CTA), que
@@ -384,17 +384,10 @@ var prefersReducedMotion = window.matchMedia && window.matchMedia('(prefers-redu
       if(contextTitle) contextTitle.textContent = area;
       if(contextText) contextText.textContent = desc;
       if(contextCta){
-        if(area === 'Stretching'){
-          contextCta.textContent = 'Consultar tarifas de Stretching';
-          contextCta.href = 'https://wa.me/34644678344';
-          contextCta.setAttribute('target', '_blank');
-          contextCta.setAttribute('rel', 'noopener');
-        } else {
-          contextCta.textContent = 'Ver tarifas de ' + area;
-          contextCta.href = '#en-la-clinica';
-          contextCta.removeAttribute('target');
-          contextCta.removeAttribute('rel');
-        }
+        contextCta.textContent = 'Ver tarifas de ' + area;
+        contextCta.href = '#en-la-clinica';
+        contextCta.removeAttribute('target');
+        contextCta.removeAttribute('rel');
       }
     };
 
@@ -1094,6 +1087,71 @@ var prefersReducedMotion = window.matchMedia && window.matchMedia('(prefers-redu
   }catch(e){ console.warn('firstVisitTimeline', e); }
 })();
 
+/* ---------- Service pages: "service-process" (Cómo es el proceso) ----------
+   FASE 2 de la SERVICE PAGE MASTER: versión genérica de firstVisitTimeline
+   para las páginas de servicio (physiotherapy.html y futuras). Misma
+   filosofía (IntersectionObserver + sticky por CSS, sin ticking/rAF, sin
+   competir con Marshall Method), pero sin asumir ni la cantidad de pasos
+   ni que solo hay una sección en la página: recorre todas las
+   [data-sp-steps] que encuentre y cuenta sus [data-sp-step] hijos, así que
+   un futuro service page con 3, 4 o 6 pasos funciona sin tocar este JS.
+
+   Mejora progresiva: si no hay IntersectionObserver o hay
+   prefers-reduced-motion, no se añade .is-process-active y los pasos se
+   quedan en su estado base (todos visibles) definido en CSS. */
+(function serviceProcessTimeline(){
+  try{
+    var sections = Array.prototype.slice.call(document.querySelectorAll('.service-process'));
+    if(!sections.length) return;
+    if(!('IntersectionObserver' in window) || prefersReducedMotion) return;
+
+    var header = document.getElementById('site-header');
+
+    function setStickyOffset(){
+      var h = (header && header.offsetHeight) || 0;
+      document.documentElement.style.setProperty('--sp-sticky-top', (h + 24) + 'px');
+    }
+    setStickyOffset();
+
+    sections.forEach(function(section){
+      var stepsHost = section.querySelector('[data-sp-steps]');
+      var steps = stepsHost ? Array.prototype.slice.call(stepsHost.querySelectorAll('[data-sp-step]')) : [];
+      if(!stepsHost || !steps.length) return;
+
+      var activeIndex = 0;
+
+      function applyState(){
+        steps.forEach(function(step, i){
+          step.classList.toggle('is-active', i === activeIndex);
+          step.classList.toggle('is-done', i < activeIndex);
+        });
+      }
+
+      section.classList.add('is-process-active');
+      applyState();
+
+      var io = new IntersectionObserver(function(entries){
+        entries.forEach(function(entry){
+          if(!entry.isIntersecting) return;
+          var idx = steps.indexOf(entry.target);
+          if(idx === -1 || idx === activeIndex) return;
+          activeIndex = idx;
+          applyState();
+        });
+      }, {root:null, rootMargin:'-42% 0px -50% 0px', threshold:0});
+      steps.forEach(function(step){ io.observe(step); });
+    });
+
+    var resizeTimer;
+    window.addEventListener('resize', function(){
+      clearTimeout(resizeTimer);
+      resizeTimer = setTimeout(setStickyOffset, 150);
+    }, {passive:true});
+    window.addEventListener('orientationchange', setStickyOffset);
+    if(document.fonts && document.fonts.ready) document.fonts.ready.then(setStickyOffset)['catch'](function(){});
+  }catch(e){ console.warn('serviceProcessTimeline', e); }
+})();
+
 /* ---------- reseñas: fragmento recortado con lectura completa ----------
    El texto íntegro siempre está en el HTML. Solo se recorta cuando de
    verdad sobra texto, y el botón únicamente aparece en ese caso.        */
@@ -1205,7 +1263,7 @@ var prefersReducedMotion = window.matchMedia && window.matchMedia('(prefers-redu
    .area-carousel__card ya trae su composición (tamaño, desplazamiento,
    opacidad, orden) resuelta por CSS a partir de data-position (ver
    styles.css, sección 20). El DOM mantiene siempre el mismo orden fijo
-   (physio, wellness, strength, pilates, domicilio); lo único que cambia es
+   (physio, wellness, strength, stretching, pilates, domicilio); lo único que cambia es
    qué posición (-2..2) le corresponde a cada tarjeta según cuál esté
    activa, así que avanzar/retroceder/saltar es solo reescribir el
    data-position de las 5 tarjetas — el CSS anima el resto por su cuenta. */

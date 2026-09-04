@@ -1227,6 +1227,153 @@ var prefersReducedMotion = window.matchMedia && window.matchMedia('(prefers-redu
   }catch(e){ console.warn('quoteToggles', e); }
 })();
 
+/* ---------- 15. Testimonios editoriales por scroll vertical ----------
+   El avance entre historias depende exclusivamente del scroll vertical:
+   las fotografías contextuales ascienden como capas físicas desde abajo
+   cubriendo a la anterior, mientras los textos se coordinan en sincronía.
+   Completamente reversible al hacer scroll hacia arriba y sin temporizadores. */
+(function testimonialsScroll(){
+  try{
+    if(prefersReducedMotion) return;
+
+    var track = document.getElementById('testimonials-track');
+    var layer2 = document.getElementById('photo-layer-2');
+    var layer3 = document.getElementById('photo-layer-3');
+    var story1 = document.getElementById('story-1');
+    var story2 = document.getElementById('story-2');
+    var story3 = document.getElementById('story-3');
+
+    if(!track || !layer2 || !layer3 || !story1 || !story2 || !story3) return;
+
+    var ticking = false;
+
+    var updateStory = function(el, opacity, translateY){
+      el.style.opacity = opacity.toFixed(3);
+      el.style.transform = 'translate3d(0, ' + translateY.toFixed(1) + 'px, 0)';
+      if(opacity > 0.04){
+        el.style.visibility = 'visible';
+        el.style.pointerEvents = 'auto';
+      } else {
+        el.style.visibility = 'hidden';
+        el.style.pointerEvents = 'none';
+      }
+    };
+
+    var onScroll = function(){
+      ticking = false;
+      var rect = track.getBoundingClientRect();
+      var vh = window.innerHeight || document.documentElement.clientHeight;
+
+      /* Fuera de pantalla: optimizar y no calcular */
+      if(rect.bottom < -50 || rect.top > vh + 50) return;
+
+      var totalScroll = track.offsetHeight - vh;
+      if(totalScroll <= 0) return;
+
+      var scrolled = -rect.top;
+      var p = scrolled / totalScroll;
+      if(p < 0) p = 0;
+      if(p > 1) p = 1;
+
+      /* Segmento 1: Historia 1 activa (p: 0.00 -> 0.18) */
+      if(p <= 0.18){
+        layer2.style.transform = 'translate3d(0, 100%, 0)';
+        layer3.style.transform = 'translate3d(0, 100%, 0)';
+        updateStory(story1, 1, 0);
+        updateStory(story2, 0, 16);
+        updateStory(story3, 0, 16);
+      }
+      /* Transición 1 -> 2: Foto 2 asciende desde abajo (p: 0.18 -> 0.40) */
+      else if(p <= 0.40){
+        var t1 = (p - 0.18) / 0.22; // 0 -> 1
+        var y2 = (1 - t1) * 100;
+        layer2.style.transform = 'translate3d(0, ' + y2.toFixed(2) + '%, 0)';
+        layer3.style.transform = 'translate3d(0, 100%, 0)';
+
+        /* Texto 1 se desvanece suavemente */
+        if(t1 <= 0.38){
+          var sub1 = t1 / 0.38;
+          updateStory(story1, 1 - sub1, -sub1 * 14);
+          updateStory(story2, 0, 16);
+        }
+        /* Pausa limpia mientras la foto cruza el centro */
+        else if(t1 <= 0.54){
+          updateStory(story1, 0, -14);
+          updateStory(story2, 0, 16);
+        }
+        /* Texto 2 entra con la foto consolidándose */
+        else {
+          var sub2 = (t1 - 0.54) / 0.46;
+          updateStory(story1, 0, -14);
+          updateStory(story2, sub2, (1 - sub2) * 14);
+        }
+        updateStory(story3, 0, 16);
+      }
+      /* Segmento 2: Historia 2 estable (p: 0.40 -> 0.58) */
+      else if(p <= 0.58){
+        layer2.style.transform = 'translate3d(0, 0%, 0)';
+        layer3.style.transform = 'translate3d(0, 100%, 0)';
+        updateStory(story1, 0, -14);
+        updateStory(story2, 1, 0);
+        updateStory(story3, 0, 16);
+      }
+      /* Transición 2 -> 3: Foto 3 asciende desde abajo (p: 0.58 -> 0.79) */
+      else if(p <= 0.79){
+        var t2 = (p - 0.58) / 0.21; // 0 -> 1
+        var y3 = (1 - t2) * 100;
+        layer2.style.transform = 'translate3d(0, 0%, 0)';
+        layer3.style.transform = 'translate3d(0, ' + y3.toFixed(2) + '%, 0)';
+
+        /* Texto 2 se desvanece */
+        if(t2 <= 0.38){
+          var sub2Exit = t2 / 0.38;
+          updateStory(story1, 0, -14);
+          updateStory(story2, 1 - sub2Exit, -sub2Exit * 14);
+          updateStory(story3, 0, 16);
+        }
+        /* Pausa limpia */
+        else if(t2 <= 0.54){
+          updateStory(story1, 0, -14);
+          updateStory(story2, 0, -14);
+          updateStory(story3, 0, 16);
+        }
+        /* Texto 3 entra */
+        else {
+          var sub3 = (t2 - 0.54) / 0.46;
+          updateStory(story1, 0, -14);
+          updateStory(story2, 0, -14);
+          updateStory(story3, sub3, (1 - sub3) * 14);
+        }
+      }
+      /* Segmento 3: Historia 3 consolidada y estable antes del unpin (p: 0.79 -> 1.00) */
+      else {
+        layer2.style.transform = 'translate3d(0, 0%, 0)';
+        layer3.style.transform = 'translate3d(0, 0%, 0)';
+        updateStory(story1, 0, -14);
+        updateStory(story2, 0, -14);
+        updateStory(story3, 1, 0);
+      }
+    };
+
+    window.addEventListener('scroll', function(){
+      if(!ticking){
+        ticking = true;
+        window.requestAnimationFrame(onScroll);
+      }
+    }, { passive: true });
+
+    window.addEventListener('resize', function(){
+      if(!ticking){
+        ticking = true;
+        window.requestAnimationFrame(onScroll);
+      }
+    }, { passive: true });
+
+    /* Ejecución inicial al cargar */
+    onScroll();
+  }catch(e){ console.warn('testimonialsScroll', e); }
+})();
+
 /* ---------- scroll suave al CTA secundario del hero ---------- */
 (function smoothAnchor(){
   try{

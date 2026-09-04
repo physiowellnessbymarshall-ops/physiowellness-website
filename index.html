@@ -634,32 +634,164 @@
     </div>
   </section>
 
-  <!-- ============ Reseñas reales ============ -->
-  <section class="testimonials" id="resenas">
-    <div class="container">
-      <div class="testimonials__head" data-reveal>
-        <p class="eyebrow section-eyebrow">Reseñas</p>
-        <h2 class="section-heading">Experiencias de personas que ya han pasado por el centro</h2>
+  <!-- ============ Reseñas editoriales / Experiencias en Physio Wellness ============ -->
+  <section class="testimonials" id="resenas" aria-label="Experiencias reales de pacientes">
+    <!-- Pista de scroll sticky para navegación vertical continua -->
+    <div class="testimonials__track" id="testimonials-track">
+      <div class="testimonials__sticky" id="testimonials-sticky">
+        <div class="container testimonials__container">
+          <div class="testimonials__layout">
+
+            <!-- Columna 1: Escenario de fotografías contextuales superpuestas -->
+            <div class="testimonials__media">
+              <div class="testimonials__stage" id="testimonials-stage" aria-hidden="true">
+                <!-- Capa 1: Fisioterapia y camilla en luz natural -->
+                <div class="testimonials__photo-layer testimonials__photo-layer--1" id="photo-layer-1" data-layer="1">
+                  <img src="src/assets/img/stock/hero-fisio-1440.webp"
+                       srcset="src/assets/img/stock/hero-fisio-720.webp 720w, src/assets/img/stock/hero-fisio-1440.webp 1440w"
+                       sizes="(min-width: 860px) 46vw, 92vw"
+                       alt="Sesión de fisioterapia y valoración de movilidad en camilla junto a un ventanal"
+                       width="720" height="900" loading="lazy">
+                </div>
+
+                <!-- Capa 2: Espacio de consulta y tratamiento en Sitges -->
+                <div class="testimonials__photo-layer testimonials__photo-layer--2" id="photo-layer-2" data-layer="2">
+                  <img src="src/assets/img/hero-clinic.webp"
+                       sizes="(min-width: 860px) 46vw, 92vw"
+                       alt="Cabina de tratamiento y consulta de fisioterapia de Physio Wellness en Sitges"
+                       width="720" height="900" loading="lazy">
+                </div>
+
+                <!-- Capa 3: Recepción y bienvenida con luz natural -->
+                <div class="testimonials__photo-layer testimonials__photo-layer--3" id="photo-layer-3" data-layer="3">
+                  <img src="src/assets/img/local/local-lounge-1440.webp"
+                       srcset="src/assets/img/local/local-lounge-720.webp 720w, src/assets/img/local/local-lounge-1440.webp 1440w"
+                       sizes="(min-width: 860px) 46vw, 92vw"
+                       alt="Zona de recepción y bienvenida de Physio Wellness en Sitges"
+                       width="720" height="900" loading="lazy">
+                </div>
+              </div>
+            </div>
+
+            <!-- Columna 2: Historias editoriales sincronizadas con el scroll -->
+            <div class="testimonials__content">
+              <div class="testimonials__header">
+                <p class="eyebrow testimonials__eyebrow">Experiencias reales</p>
+                <div class="testimonials__stars" aria-label="5 de 5 estrellas" aria-hidden="true">★★★★★</div>
+              </div>
+
+              <div class="testimonials__text-stage" id="testimonials-text-stage" aria-live="polite">
+                <!-- Historia 1 -->
+                <article class="testimonials__story testimonials__story--1" id="story-1" data-story="1">
+                  <blockquote class="testimonials__quote-wrap">
+                    <p class="testimonials__quote">Muy profesional y atento. Llegué con bastante dolor en la rodilla y no solo me alivió durante la sesión, sino que me transmitió calma y confianza. Me indicó ejercicios sencillos para hacer en casa y me marcó tiempos de recuperación muy claros. He notado una gran mejoría y, sin duda, ya tengo a mi fisioterapeuta de confianza.</p>
+                  </blockquote>
+                  <div class="testimonials__meta">
+                    <span class="testimonials__author">Paciente de Physio Wellness</span>
+                    <span class="testimonials__sep" aria-hidden="true">·</span>
+                    <span class="testimonials__treatment">Reseña en Google</span>
+                  </div>
+                </article>
+
+                <!-- Historia 2 -->
+                <article class="testimonials__story testimonials__story--2" id="story-2" data-story="2">
+                  <blockquote class="testimonials__quote-wrap">
+                    <p class="testimonials__quote">Muy buena experiencia. Desde el primer momento mostró profesionalismo, empatía y un gran conocimiento. En pocas sesiones noté una mejoría significativa, y he mejorado mucho desde que me trató con él. El trato es cercano, las instalaciones están muy limpias y se nota que disfruta ayudando a sus pacientes a recuperarse. ¡Totalmente recomendable!</p>
+                  </blockquote>
+                  <div class="testimonials__meta">
+                    <span class="testimonials__author">Paciente de Physio Wellness</span>
+                    <span class="testimonials__sep" aria-hidden="true">·</span>
+                    <span class="testimonials__treatment">Reseña en Google</span>
+                  </div>
+                </article>
+
+                <!-- Historia 3 -->
+                <article class="testimonials__story testimonials__story--3" id="story-3" data-story="3">
+                  <blockquote class="testimonials__quote-wrap">
+                    <p class="testimonials__quote">Solo he tenido unas pocas sesiones con Marçal hasta ahora, pero ya puedo notar una mejora clara en mis problemas de espalda baja. He probado distintos tratamientos en el pasado y ninguno ha sido tan efectivo como el que he recibido con él. Marçal es muy profesional, tiene grandes conocimientos y trata a sus pacientes con mucho cuidado y atención. Además, se toma el tiempo de explicar el tratamiento y de educarte para prevenir futuras molestias, algo que valoro mucho. Lo recomiendo totalmente.</p>
+                  </blockquote>
+                  <div class="testimonials__meta">
+                    <span class="testimonials__author">Paciente de Physio Wellness</span>
+                    <span class="testimonials__sep" aria-hidden="true">·</span>
+                    <span class="testimonials__treatment">Reseña en Google</span>
+                  </div>
+                </article>
+              </div>
+
+              <div class="testimonials__footer">
+                <div class="testimonials__google">
+                  <span class="testimonials__google-rating">Puntuación Google: 5,0 de 5</span>
+                  <span class="testimonials__google-verified">Reseñas reales publicadas en Google</span>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modo accesible en flujo normal (activo solo con prefers-reduced-motion) -->
+    <div class="container testimonials__reduced-flow">
+      <div class="testimonials__header testimonials__header--reduced">
+        <p class="eyebrow testimonials__eyebrow">Experiencias reales</p>
+        <div class="testimonials__stars" aria-label="5 de 5 estrellas" aria-hidden="true">★★★★★</div>
       </div>
 
-      <div class="testimonials__grid" data-reveal>
-        <article class="testimonial-card">
-          <p class="testimonial-card__quote" id="quote-1">Muy profesional y atento. Llegué con bastante dolor en la rodilla y no solo me alivió durante la sesión, sino que me transmitió calma y confianza. Me indicó ejercicios sencillos para hacer en casa y me marcó tiempos de recuperación muy claros. He notado una gran mejoría y, sin duda, ya tengo a mi fisioterapeuta de confianza.</p>
-          <button class="testimonial-card__more" type="button" data-quote-toggle aria-controls="quote-1" aria-expanded="false" hidden>Leer completo</button>
-          <p class="testimonial-card__author">Ignacio Castells Soler</p>
-        </article>
-        <article class="testimonial-card">
-          <p class="testimonial-card__quote" id="quote-2">Muy buena experiencia. Desde el primer momento mostró profesionalismo, empatía y un gran conocimiento. En pocas sesiones noté una mejoría significativa, y he mejorado mucho desde que me trató con el. El trato es cercano, las instalaciones están muy limpias y se nota que disfruta ayudando a sus pacientes a recuperarse. ¡Totalmente recomendable!</p>
-          <button class="testimonial-card__more" type="button" data-quote-toggle aria-controls="quote-2" aria-expanded="false" hidden>Leer completo</button>
-          <p class="testimonial-card__author">Angela Rodríguez Blanco</p>
-        </article>
-        <article class="testimonial-card">
-          <p class="testimonial-card__quote" id="quote-3">Solo he tenido unas pocas sesiones con Marçal hasta ahora, pero ya puedo notar una mejora clara en mis problemas de espalda baja. He probado distintos tratamientos en el pasado y ninguno ha sido tan efectivo como el que he recibido con él. Marçal es muy profesional, tiene grandes conocimientos y trata a sus pacientes con mucho cuidado y atención. Además, se toma el tiempo de explicar el tratamiento y de educarte para prevenir futuras molestias, algo que valoro mucho. Lo recomiendo totalmente.</p>
-          <button class="testimonial-card__more" type="button" data-quote-toggle aria-controls="quote-3" aria-expanded="false" hidden>Leer completo</button>
-          <p class="testimonial-card__author">Jerome D.</p>
-        </article>
+      <article class="testimonials__reduced-item">
+        <div class="testimonials__frame">
+          <img src="src/assets/img/stock/hero-fisio-720.webp" alt="Sesión de fisioterapia y valoración de movilidad en camilla junto a un ventanal" loading="lazy">
+        </div>
+        <div class="testimonials__reduced-text">
+          <blockquote class="testimonials__quote-wrap">
+            <p class="testimonials__quote">Muy profesional y atento. Llegué con bastante dolor en la rodilla y no solo me alivió durante la sesión, sino que me transmitió calma y confianza. Me indicó ejercicios sencillos para hacer en casa y me marcó tiempos de recuperación muy claros. He notado una gran mejoría y, sin duda, ya tengo a mi fisioterapeuta de confianza.</p>
+          </blockquote>
+          <div class="testimonials__meta">
+            <span class="testimonials__author">Paciente de Physio Wellness</span>
+            <span class="testimonials__sep" aria-hidden="true">·</span>
+            <span class="testimonials__treatment">Reseña en Google</span>
+          </div>
+        </div>
+      </article>
+
+      <article class="testimonials__reduced-item">
+        <div class="testimonials__frame">
+          <img src="src/assets/img/hero-clinic.webp" alt="Cabina de tratamiento y consulta de fisioterapia de Physio Wellness en Sitges" loading="lazy">
+        </div>
+        <div class="testimonials__reduced-text">
+          <blockquote class="testimonials__quote-wrap">
+            <p class="testimonials__quote">Muy buena experiencia. Desde el primer momento mostró profesionalismo, empatía y un gran conocimiento. En pocas sesiones noté una mejoría significativa, y he mejorado mucho desde que me trató con él. El trato es cercano, las instalaciones están muy limpias y se nota que disfruta ayudando a sus pacientes a recuperarse. ¡Totalmente recomendable!</p>
+          </blockquote>
+          <div class="testimonials__meta">
+            <span class="testimonials__author">Paciente de Physio Wellness</span>
+            <span class="testimonials__sep" aria-hidden="true">·</span>
+            <span class="testimonials__treatment">Reseña en Google</span>
+          </div>
+        </div>
+      </article>
+
+      <article class="testimonials__reduced-item">
+        <div class="testimonials__frame">
+          <img src="src/assets/img/local/local-lounge-720.webp" alt="Zona de recepción y bienvenida de Physio Wellness en Sitges" loading="lazy">
+        </div>
+        <div class="testimonials__reduced-text">
+          <blockquote class="testimonials__quote-wrap">
+            <p class="testimonials__quote">Solo he tenido unas pocas sesiones con Marçal hasta ahora, pero ya puedo notar una mejora clara en mis problemas de espalda baja. He probado distintos tratamientos en el pasado y ninguno ha sido tan efectivo como el que he recibido con él. Marçal es muy profesional, tiene grandes conocimientos y trata a sus pacientes con mucho cuidado y atención. Además, se toma el tiempo de explicar el tratamiento y de educarte para prevenir futuras molestias, algo que valoro mucho. Lo recomiendo totalmente.</p>
+          </blockquote>
+          <div class="testimonials__meta">
+            <span class="testimonials__author">Paciente de Physio Wellness</span>
+            <span class="testimonials__sep" aria-hidden="true">·</span>
+            <span class="testimonials__treatment">Reseña en Google</span>
+          </div>
+        </div>
+      </article>
+
+      <div class="testimonials__footer">
+        <div class="testimonials__google">
+          <span class="testimonials__google-rating">Puntuación Google: 5,0 de 5</span>
+          <span class="testimonials__google-verified">Reseñas reales publicadas en Google</span>
+        </div>
       </div>
-      <p class="testimonials__source">Reseñas reales publicadas en Google, reproducidas con el texto original.</p>
     </div>
   </section>
 

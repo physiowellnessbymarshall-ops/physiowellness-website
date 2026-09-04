@@ -1386,38 +1386,364 @@ a:focus-visible,button:focus-visible,input:focus-visible{
 }
 
 /* ---------- 15. Reseñas reales ---------- */
-.testimonials{padding-block:var(--sp-32);background:var(--pw-white);}
-.testimonials__head{max-width:40rem;margin-bottom:var(--sp-16);}
-.testimonials__grid{display:grid;gap:1px;background:var(--pw-line);border:1px solid var(--pw-line);grid-template-columns:1fr;}
-@media (min-width:860px){ .testimonials__grid{grid-template-columns:repeat(3,1fr);} }
-/* Con una única reseña (p. ej. páginas de servicio) la rejilla de 3
-   columnas deja dos celdas vacías visibles como bloques grises: se
-   reduce a una sola columna centrada y del ancho de una tarjeta. */
-@media (min-width:860px){
-  .testimonials__grid:has(.testimonial-card:only-child){grid-template-columns:1fr;max-width:26rem;margin-inline:auto;}
+/* ---------- 15. Reseñas editoriales / Experiencias (Home) ----------
+   Composición editorial basada en scroll vertical: una pista sticky donde
+   las fotografías contextuales de la experiencia Physio Wellness ascienden
+   y se superponen en sincronía con el progreso de lectura de las historias,
+   eliminando cualquier concepto de slider/carrusel.
+   Atribución discreta (sin nombres protagonistas) y fallback completo en flujo
+   normal para prefers-reduced-motion. */
+.testimonials{
+  background:var(--pw-white);
+  position:relative;
 }
-.testimonial-card{background:var(--pw-white);padding:var(--sp-10) var(--sp-8);display:flex;flex-direction:column;gap:var(--sp-5);}
-.testimonial-card__quote{font-size:1.05rem;line-height:1.68;color:var(--pw-ink);}
-.testimonial-card__quote::before{content:"“";color:var(--pw-primary);font-size:1.3em;line-height:0;vertical-align:-.3em;margin-right:.04em;}
-.testimonial-card__quote::after{content:"”";}
-/* El fragmento se recorta a 5 líneas solo si hay JS para desplegarlo;
-   sin JS el texto completo se lee siempre. */
-.js .testimonial-card__quote[data-clamped]{
-  display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:5;
+
+/* Pista de scroll vertical que da recorrido a las 3 historias */
+.testimonials__track{
+  position:relative;
+  height:280vh; /* Recorrido natural para las 3 historias */
+}
+
+/* Contenedor sticky que se mantiene anclado en pantalla mientras dura el recorrido */
+.testimonials__sticky{
+  position:sticky;
+  top:0;
+  height:100vh;
+  height:100dvh;
+  display:flex;
+  align-items:center;
   overflow:hidden;
 }
-.testimonial-card__more{
-  align-self:flex-start;
-  font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;
+
+.testimonials__container{
+  width:100%;
+}
+
+.testimonials__layout{
+  display:grid;
+  grid-template-columns:minmax(0, 46%) minmax(0, 54%);
+  gap:clamp(2rem, 5vw, 4.5rem);
+  align-items:center;
+}
+
+/* Columna 1: Escenario de fotos contextuales superpuestas */
+.testimonials__media{
+  position:relative;
+  width:100%;
+}
+
+.testimonials__stage{
+  position:relative;
+  width:100%;
+  aspect-ratio:4 / 5;
+  border-radius:var(--radius, 2px);
+  overflow:hidden;
+  background:var(--pw-mist);
+  border:1px solid var(--pw-line);
+}
+
+/* Cada capa fotográfica ocupa el 100% del marco y asciende desde abajo */
+.testimonials__photo-layer{
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+  overflow:hidden;
+  will-change:transform;
+}
+
+.testimonials__photo-layer--1{
+  z-index:1;
+  transform:translate3d(0, 0, 0);
+}
+
+.testimonials__photo-layer--2{
+  z-index:2;
+  transform:translate3d(0, var(--layer2-y, 100%), 0);
+}
+
+.testimonials__photo-layer--3{
+  z-index:3;
+  transform:translate3d(0, var(--layer3-y, 100%), 0);
+}
+
+.testimonials__photo-layer img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  object-position:center;
+  display:block;
+}
+
+.testimonials__photo-layer--1 img{
+  object-position:center 30%;
+}
+
+.testimonials__photo-layer--2 img{
+  object-position:center 45%;
+}
+
+.testimonials__photo-layer--3 img{
+  object-position:center 35%;
+}
+
+/* Columna 2: Contenido editorial */
+.testimonials__content{
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+}
+
+.testimonials__header{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:var(--sp-4);
+  padding-bottom:var(--sp-5);
+  border-bottom:1px solid var(--pw-line);
+  margin-bottom:var(--sp-6);
+}
+
+.testimonials__eyebrow{
+  font-size:var(--fs-label, .75rem);
+  font-weight:600;
+  letter-spacing:.12em;
+  text-transform:uppercase;
   color:var(--pw-primary);
-  border-bottom:1px solid currentColor;padding-bottom:.15rem;
+  margin:0;
 }
-.testimonial-card__more:hover{color:var(--pw-accent);}
-.testimonial-card__author{
-  font-size:.78rem;letter-spacing:.06em;text-transform:uppercase;color:var(--pw-ink-50);
-  margin-top:auto;padding-top:var(--sp-5);border-top:1px solid var(--pw-line);
+
+.testimonials__stars{
+  color:var(--pw-primary);
+  font-size:1.05rem;
+  letter-spacing:.16em;
+  line-height:1;
+  user-select:none;
 }
-.testimonials__source{margin-top:var(--sp-6);font-size:.78rem;color:var(--pw-ink-50);}
+
+/* Escenario de textos: historias superpuestas gobernadas por scroll */
+.testimonials__text-stage{
+  position:relative;
+  min-height:280px;
+}
+
+.testimonials__story{
+  position:absolute;
+  top:0;
+  left:0;
+  width:100%;
+  display:flex;
+  flex-direction:column;
+  opacity:0;
+  transform:translate3d(0, 16px, 0);
+  pointer-events:none;
+  visibility:hidden;
+  will-change:opacity, transform;
+}
+
+.testimonials__story--1{
+  /* Por defecto historia 1 visible inicialmente */
+  opacity:var(--story1-opacity, 1);
+  transform:translate3d(0, var(--story1-y, 0), 0);
+  pointer-events:auto;
+  visibility:visible;
+}
+
+.testimonials__story--2{
+  opacity:var(--story2-opacity, 0);
+  transform:translate3d(0, var(--story2-y, 16px), 0);
+}
+
+.testimonials__story--3{
+  opacity:var(--story3-opacity, 0);
+  transform:translate3d(0, var(--story3-y, 16px), 0);
+}
+
+.testimonials__quote-wrap{
+  margin:0 0 var(--sp-6);
+}
+
+.testimonials__quote{
+  font-size:clamp(1.15rem, 1.75vw, 1.5rem);
+  line-height:1.58;
+  color:var(--pw-ink);
+  font-weight:400;
+  margin:0;
+  letter-spacing:-.01em;
+}
+
+.testimonials__quote::before{
+  content:"“";
+  color:var(--pw-primary);
+  font-size:1.25em;
+  line-height:0;
+  vertical-align:-.2em;
+  margin-right:.04em;
+}
+
+.testimonials__quote::after{
+  content:"”";
+  color:var(--pw-primary);
+  font-size:1.25em;
+  line-height:0;
+  vertical-align:-.2em;
+  margin-left:.04em;
+}
+
+.testimonials__meta{
+  display:flex;
+  align-items:center;
+  gap:var(--sp-2);
+  font-size:.82rem;
+  letter-spacing:.08em;
+  text-transform:uppercase;
+  color:var(--pw-ink-50);
+  margin-top:auto;
+  padding-top:var(--sp-5);
+}
+
+.testimonials__author{
+  font-weight:600;
+  color:var(--pw-ink);
+}
+
+.testimonials__sep{
+  color:var(--pw-line);
+}
+
+.testimonials__treatment{
+  font-weight:500;
+  color:var(--pw-primary);
+}
+
+.testimonials__footer{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:var(--sp-4);
+  padding-top:var(--sp-5);
+  border-top:1px solid var(--pw-line);
+  margin-top:var(--sp-6);
+}
+
+.testimonials__google{
+  display:flex;
+  flex-direction:column;
+  gap:2px;
+}
+
+.testimonials__google-rating{
+  font-size:.8rem;
+  font-weight:500;
+  color:var(--pw-ink);
+}
+
+.testimonials__google-verified{
+  font-size:.72rem;
+  color:var(--pw-ink-50);
+}
+
+/* Modo en flujo normal para prefers-reduced-motion (oculto por defecto) */
+.testimonials__reduced-flow{
+  display:none;
+  padding-block:var(--sp-20);
+}
+
+.testimonials__header--reduced{
+  margin-bottom:var(--sp-12);
+}
+
+.testimonials__reduced-item{
+  display:grid;
+  grid-template-columns:minmax(0, 44%) minmax(0, 56%);
+  gap:clamp(1.5rem, 4vw, 3.5rem);
+  align-items:center;
+  padding-bottom:var(--sp-12);
+  margin-bottom:var(--sp-12);
+  border-bottom:1px solid var(--pw-line);
+}
+
+.testimonials__reduced-item:last-of-type{
+  border-bottom:none;
+  margin-bottom:0;
+  padding-bottom:var(--sp-6);
+}
+
+.testimonials__reduced-text{
+  display:flex;
+  flex-direction:column;
+}
+
+/* Responsivo para móviles y tablets */
+@media (max-width:860px){
+  .testimonials__track{
+    height:250vh; /* Pacing cómodo para scroll móvil */
+  }
+
+  .testimonials__sticky{
+    align-items:center;
+    justify-content:center;
+    padding-bottom:calc(72px + env(safe-area-inset-bottom, 0px)); /* Reserva espacio para .book-bar fijo */
+  }
+
+  .testimonials__layout{
+    display:flex;
+    flex-direction:column;
+    gap:var(--sp-3);
+  }
+
+  .testimonials__header{
+    margin-bottom:var(--sp-3);
+    padding-bottom:var(--sp-3);
+  }
+
+  .testimonials__stage{
+    aspect-ratio:auto;
+    height:clamp(170px, 28svh, 230px);
+    width:100%;
+  }
+
+  .testimonials__text-stage{
+    min-height:200px;
+  }
+
+  .testimonials__quote-wrap{
+    margin:0 0 var(--sp-3);
+  }
+
+  .testimonials__quote{
+    font-size:clamp(.95rem, 3.4vw, 1.06rem);
+    line-height:1.48;
+  }
+
+  .testimonials__meta{
+    font-size:.75rem;
+    flex-wrap:wrap;
+    padding-top:var(--sp-3);
+  }
+
+  .testimonials__footer{
+    margin-top:var(--sp-3);
+    padding-top:var(--sp-3);
+  }
+
+  .testimonials__reduced-item{
+    display:flex;
+    flex-direction:column;
+    gap:var(--sp-6);
+  }
+}
+
+/* Soporte accesible total con prefers-reduced-motion */
+@media (prefers-reduced-motion: reduce){
+  .testimonials__track{
+    display:none!important;
+  }
+  .testimonials__reduced-flow{
+    display:flex!important;
+    flex-direction:column;
+  }
+}
 
 /* ---------- 15b. Reseñas de Google (Fisioterapia) ----------
    Sección independiente de "15. Reseñas reales" (Home): usa sus propias

@@ -717,6 +717,10 @@ a:focus-visible,button:focus-visible,input:focus-visible{
 .service-panel__img--wellness{object-position:70% 32%;}
 .service-panel__img--strength{object-position:46% 35%;}
 .service-panel__img--pilates{object-position:42% 30%;}
+/* FASE 7: fotografía real de Stretching (ver ASSET_SOURCES.md). Contenedor
+   3/4 muy cercano al ratio nativo de la foto (0.8), así que el recorte es
+   mínimo: se centra ligeramente hacia la pierna elevada/manos. */
+.service-panel__img--stretching{object-position:44% 38%;}
 
 .service-panel__body{
   display:flex;flex-direction:column;gap:var(--sp-3);
@@ -757,7 +761,12 @@ a:focus-visible,button:focus-visible,input:focus-visible{
   }
   .service-panel{width:100%;scroll-snap-align:none;}
   .service-panel__media{aspect-ratio:4/3;}
-  .services__transition{width:100%;}
+  /* FASE 7: en 4/3 (paisaje) el recorte vertical es mucho mayor que en 3/4
+     (retrato), porque la foto es más vertical (0.8) que el contenedor. Con
+     el mismo 38% usado en escritorio el pie con el calcetín queda cortado
+     por arriba; bajando a 25% se libera margen suficiente para verlo
+     completo sin perder al paciente por abajo. */
+  .service-panel__img--stretching{object-position:44% 25%;}
 }
 
 /* Panel final de transición: quinto elemento del riel (tramo 2 del
@@ -771,6 +780,13 @@ a:focus-visible,button:focus-visible,input:focus-visible{
   padding:var(--sp-10);
   border:1px solid rgba(255,255,255,.14);
   background:rgba(255,255,255,.03);
+}
+/* El ancho mínimo de 560px de arriba desborda cualquier viewport móvil
+   (<719px); esta regla debe ir después de la base para ganar la cascada
+   con la misma especificidad (antes vivía dentro del media query de
+   arriba y perdía por orden de aparición, causando scroll horizontal). */
+@media (max-width:719px){
+  .services__transition{width:100%;}
 }
 .services__transition-note{
   font-size:.95rem;color:rgba(255,255,255,.7);
@@ -816,49 +832,272 @@ a:focus-visible,button:focus-visible,input:focus-visible{
   max-width:48ch;
 }
 
-/* ---------- 11. The Marshall Method ---------- */
-.method{
-  padding-block:var(--sp-32);
+/* ---------- 11. The Marshall Method — "El umbral" ----------
+   Escena única y continua ligada al scroll (umbralSequence() en
+   main.js), NO cinco slides: veladuras, núcleo de luz, numeral y
+   encuadre son las mismas capas del principio al final, solo cambian
+   sus variables CSS numéricas (--u-*) fase a fase. JS nunca decide
+   color ni forma — solo interpola una tabla de keyframes (una entrada
+   por fase) y escribe esas variables en .umbral__stage en cada frame
+   de scroll (rAF, sin interceptar rueda/touch, mismo patrón "función
+   pura de scroll" que servicesPinScroll()/methodSequence() antes de
+   esta fase). El físico de cada efecto (blur máximo, recorrido de las
+   veladuras, grosor del encuadre) vive en CSS y varía por breakpoint
+   (--u-blur-max/--u-veil-travel/--u-frame-max/--u-core-size más abajo),
+   así JS puede seguir siendo agnóstico del ancho de pantalla: solo
+   cambia cuánto dura el recorrido de scroll (STEP_VH_FRACTION por
+   breakpoint, en main.js), no la intensidad visual de cada capa.
+   Pin activo (.is-pin-active, añadida por JS) en cualquier ancho —
+   incluido móvil, con recorrido y blur reducidos vía CSS — mientras
+   no haya motion reducido y la ventana tenga alto suficiente. Sin
+   JS / con motion reducido, la sección nunca gana .is-pin-active: las
+   capas decorativas (veladuras, núcleo, numeral, encuadre) quedan en
+   display:none y las cinco fases se leen como una lista vertical
+   normal, cada una con [data-reveal] (misma utilidad del resto del
+   sitio) — versión estática accesible exigida por la dirección. */
+.umbral{
+  position:relative;
+  padding-block:var(--sp-32) 0;
   background:var(--pw-primary-900);
   color:var(--pw-white);
+  --u-blur-max:32px;
+  --u-veil-travel:34vw;
+  --u-frame-max:13vw;
+  --u-core-size:min(50vw,600px);
 }
-.method__head{max-width:36rem;margin-bottom:var(--sp-16);}
-.method__lead{margin-top:var(--sp-5);color:rgba(255,255,255,.75);max-width:52ch;}
-.method__grid{display:grid;gap:var(--sp-10);}
-@media (min-width:860px){
-  .method__grid{grid-template-columns:2px 1fr;gap:var(--sp-12);}
+@media (max-width:959px){
+  .umbral{--u-blur-max:20px;--u-veil-travel:24vw;--u-frame-max:9vw;--u-core-size:min(62vw,440px);}
 }
-.method__bar{display:none;position:relative;background:rgba(255,255,255,.18);}
-@media (min-width:860px){ .method__bar{display:block;} }
-.method__bar-fill{
-  position:absolute;top:0;left:0;width:100%;height:0%;
-  background:var(--pw-accent);
-  transition:height .2s linear;
+@media (max-width:639px){
+  .umbral{--u-blur-max:12px;--u-veil-travel:16vw;--u-frame-max:6vw;--u-core-size:min(80vw,340px);}
 }
-.method__steps{display:grid;}
-.method-step{
-  opacity:.4;
-  transition:opacity var(--dur-med) var(--ease-out);
-  display:grid;grid-template-columns:auto 1fr;column-gap:var(--sp-6);align-items:baseline;
+
+.umbral__head{max-width:36rem;margin-bottom:var(--sp-16);}
+.umbral__lead{margin-top:var(--sp-5);color:rgba(255,255,255,.75);max-width:52ch;}
+
+.umbral__pin-wrap{position:relative;}
+
+.umbral__stage{
+  position:relative;
+  display:flex;flex-direction:column;justify-content:flex-end;
+}
+.umbral.is-pin-active .umbral__stage{
+  position:sticky;
+  top:var(--umbral-pin-top,0px);
+  overflow:hidden;
+  isolation:isolate;
+  background:var(--pw-primary-900);
+}
+
+/* Capas decorativas de la escena: solo existen (display:block) en modo
+   fijado. En la lista estática de respaldo no aportan nada — el fondo
+   plano de .umbral ya resuelve el color, y el texto ya es legible sin
+   ellas. */
+.umbral__stage-glow,.umbral__texture,.umbral__core,.umbral__core-warm,
+.umbral__num,.umbral__veil,.umbral__frame{display:none;}
+.umbral.is-pin-active .umbral__stage-glow,
+.umbral.is-pin-active .umbral__texture,
+.umbral.is-pin-active .umbral__core,
+.umbral.is-pin-active .umbral__core-warm,
+.umbral.is-pin-active .umbral__num,
+.umbral.is-pin-active .umbral__veil,
+.umbral.is-pin-active .umbral__frame{display:block;}
+
+/* "Abrir hacia la luz": no recoloreamos toda la sección (rompería el
+   contraste de .btn--outline en el CTA final), sino que el propio
+   escenario respira hacia un halo neutro/mist alrededor del núcleo de
+   luz — mismo efecto sensorial que pide la dirección ("pasando a un
+   fondo neutro/mist") sin cambiar el verde de fondo real de la página. */
+.umbral__stage-glow{
+  position:absolute;z-index:0;inset:0;
+  background:radial-gradient(circle at calc(var(--u-core-x,.5) * 100%) calc(var(--u-core-y,.46) * 100%),
+    var(--pw-mist) 0%, rgba(243,246,245,.4) 32%, rgba(243,246,245,0) 64%);
+  opacity:calc(1 - var(--u-bg-dark,1));
+  mix-blend-mode:soft-light;
+  pointer-events:none;
+}
+
+/* Grano sutil constante (misma textura feTurbulence que .page-tarifas
+   .area-tile, sin petición de red): no varía con el scroll, es la única
+   capa que permanece literalmente idéntica de principio a fin. */
+.umbral__texture{
+  position:absolute;z-index:0;inset:0;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  mix-blend-mode:overlay;
+  opacity:.05;
+  pointer-events:none;
+}
+
+/* Núcleo de luz: dos gradientes radiales coincidentes (frío/cálido) que
+   se funden por opacidad — así la "temperatura" cambia con CSS puro
+   (sin interpolar color en JS) mientras JS solo mueve un escalar
+   --u-core-warm de 0 a 1. Posición, escala e intensidad del halo
+   (blur) son las otras tres variables que pide la dirección. */
+.umbral__core,.umbral__core-warm{
+  position:absolute;z-index:1;
+  width:var(--u-core-size);aspect-ratio:1;border-radius:50%;
+  left:calc(var(--u-core-x,.5) * 100%);
+  top:calc(var(--u-core-y,.46) * 100%);
+  transform:translate(-50%,-50%) scale(var(--u-core-scale,.55));
+  pointer-events:none;
+}
+.umbral__core{
+  background:radial-gradient(circle, rgba(186,235,225,.9) 0%, rgba(96,172,160,.4) 45%, rgba(96,172,160,0) 72%);
+  filter:blur(calc(14px + var(--u-core-glow,.3) * 30px));
+  mix-blend-mode:screen;
+  opacity:calc(1 - var(--u-core-warm,0) * .2);
+}
+.umbral__core-warm{
+  background:radial-gradient(circle, rgba(255,246,230,.95) 0%, rgba(255,214,163,.4) 45%, rgba(255,214,163,0) 72%);
+  filter:blur(calc(14px + var(--u-core-glow,.3) * 30px));
+  mix-blend-mode:screen;
+  opacity:var(--u-core-warm,0);
+}
+
+/* Numeral editorial: un único ancla espacial (esquina inferior
+   izquierda, recortada por el viewport a propósito) para las cinco
+   cifras — nunca se desplaza de fase a fase, solo escala (--u-num-scale,
+   escrita por JS cada frame) y cada cifra funde su propia opacidad de
+   forma continua según la distancia de la fase actual (ver render() en
+   main.js): así 01→02→...→05 se disuelve entre sí en vez de "contar". */
+.umbral__num{
+  position:absolute;z-index:2;
+  left:-4%;bottom:-8%;
+  transform:scale(var(--u-num-scale,.65));
+  transform-origin:left bottom;
+  mix-blend-mode:overlay;
+  pointer-events:none;user-select:none;
+}
+.umbral__num-digit{
+  position:absolute;left:0;bottom:0;
+  font-size:clamp(6rem,24vw,19rem);
+  font-weight:600;line-height:1;letter-spacing:-.02em;
+  color:var(--pw-white);white-space:nowrap;
+  opacity:0;
+}
+
+/* Veladuras: dos paños translúcidos en diagonal (no blobs, no papel
+   rasgado) que empiezan solapados en el centro y se separan lateralmente
+   (--u-veil-a-gap/--u-veil-b-gap, 0→1) mientras pierden opacidad y blur.
+   mix-blend-mode:screen sobre el fondo oscuro las hace sentir como luz
+   atravesando un material translúcido, no como una capa opaca encima. */
+.umbral__veil{
+  position:absolute;z-index:3;inset:-16%;
+  mix-blend-mode:screen;
+  pointer-events:none;
+  will-change:transform,filter,opacity;
+}
+.umbral__veil--a{
+  background:linear-gradient(128deg, rgba(255,255,255,.5) 0%, rgba(150,224,210,.22) 48%, rgba(150,224,210,0) 78%);
+  filter:blur(calc(6px + var(--u-veil-blur,1) * var(--u-blur-max)));
+  opacity:var(--u-veil-a-opacity,.9);
+  transform:translate3d(calc(var(--u-veil-a-gap,0) * var(--u-veil-travel) * -1), 0, 0) rotate(-6deg) scale(1.3);
+}
+.umbral__veil--b{
+  background:linear-gradient(-128deg, rgba(255,255,255,.46) 0%, rgba(150,224,210,.2) 48%, rgba(150,224,210,0) 78%);
+  filter:blur(calc(6px + var(--u-veil-blur,1) * var(--u-blur-max)));
+  opacity:var(--u-veil-b-opacity,.85);
+  transform:translate3d(calc(var(--u-veil-b-gap,0) * var(--u-veil-travel)), 0, 0) rotate(6deg) scale(1.3);
+}
+
+/* Encuadre: aperture que se cierra/abre por grosor de borde
+   (--u-frame-inset, 1→0), no por clip-path (evita el corte geométrico
+   duro de una máscara y deja el borde con el mismo blur/luz que el
+   resto de la escena). Dos variantes (oscura/clara) se funden por
+   opacidad con el mismo --u-bg-dark que el halo, para que el marco
+   "aclare" a la vez que el resto de la composición. */
+.umbral__frame{
+  position:absolute;z-index:4;inset:0;
+  box-sizing:border-box;
+  border-style:solid;border-color:transparent;
+  pointer-events:none;
+}
+.umbral__frame--dark{
+  border-width:calc(var(--u-frame-inset,1) * var(--u-frame-max));
+  border-color:var(--pw-primary-900);
+  opacity:var(--u-bg-dark,1);
+}
+.umbral__frame--light{
+  border-width:calc(var(--u-frame-inset,1) * var(--u-frame-max));
+  border-color:var(--pw-mist);
+  opacity:calc(1 - var(--u-bg-dark,1));
+}
+
+/* Texto de cada fase: mismo patrón de apilado por grid (todas las
+   fases ocupan la misma celda; solo la .is-active es visible) que ya
+   validó .method-step, con un velo de contraste (::before) para
+   mantener AA sobre cualquier estado de la escena. Sin pin activo, cae
+   a lista vertical normal (ver comentario de arriba). */
+.umbral.is-pin-active .umbral__content{
+  position:absolute;z-index:5;inset:0;
+  display:flex;align-items:flex-end;
+  padding:var(--sp-8) var(--sp-6) var(--sp-10);
+}
+.umbral.is-pin-active .umbral__content::before{
+  content:"";position:absolute;inset:0;
+  background:linear-gradient(0deg, rgba(11,34,31,.72) 0%, rgba(11,34,31,.14) 56%, transparent 80%);
+  pointer-events:none;
+}
+.umbral.is-pin-active .umbral__phases{
+  display:grid;width:100%;max-width:30rem;
+}
+.umbral__phase{
+  position:relative;
   padding-block:var(--sp-6);
   border-top:1px solid var(--pw-line-on-dark);
 }
-.method-step:first-child{border-top:none;padding-top:0;}
-.method-step:last-child{padding-bottom:0;}
-.method-step.is-active{opacity:1;}
-.method-step__num{font-size:.75rem;letter-spacing:.14em;color:#8fd9c9;}
-.method-step__en{font-size:clamp(1.4rem,3vw,2.1rem);font-weight:500;}
-.method-step__es{
-  grid-column:2;
-  font-size:.95rem;
-  color:rgba(255,255,255,.7);margin-top:.35rem;
-  max-width:46ch;
+.umbral__phase:first-child{border-top:none;padding-top:0;}
+.umbral__phase:last-child{padding-bottom:0;}
+.umbral.is-pin-active .umbral__phase{
+  grid-area:1/1;
+  border-top:none;padding-block:0;
+  opacity:0;
+  transform:translateY(16px);
+  transition:opacity var(--dur-slow) var(--ease-out), transform var(--dur-slow) var(--ease-out);
+  transition-delay:0ms!important;
+  pointer-events:none;
 }
-.method__cta{margin-top:var(--sp-16);}
-/* En móvil las fases se leen en vertical, sin barra ni sticky: nada retiene
-   el scroll y todas las fases quedan legibles. */
-@media (max-width:859px){
-  .method-step{opacity:1;}
+.umbral.is-pin-active .umbral__phase.is-active{
+  opacity:1;
+  transform:translateY(0);
+  pointer-events:auto;
+}
+.umbral__phase-eyebrow{display:block;font-size:.75rem;letter-spacing:.14em;color:#8fd9c9;}
+.umbral__phase-title{font-size:clamp(1.5rem,3.2vw,2.3rem);font-weight:500;margin-top:.3rem;color:var(--pw-white);}
+.umbral__phase-text{font-size:.95rem;color:rgba(255,255,255,.75);margin-top:.4rem;max-width:42ch;}
+
+/* Indicador "01 — 02 — 03 — 04 — 05": puramente decorativo (aria-hidden),
+   solo visible en modo fijado — el contenido real y accesible ya está
+   en .umbral__phases, en el orden natural del documento. */
+.umbral__progress{display:none;list-style:none;margin:0;padding:0;}
+.umbral.is-pin-active .umbral__progress{
+  display:flex;align-items:center;gap:var(--sp-2);
+  position:absolute;z-index:6;top:var(--sp-6);left:var(--sp-6);right:var(--sp-6);
+}
+.umbral__progress-item{
+  font-size:.75rem;letter-spacing:.1em;
+  color:rgba(255,255,255,.4);
+  transition:color var(--dur-med) var(--ease-out);
+}
+.umbral__progress-item.is-active{color:var(--pw-white);font-weight:600;}
+.umbral__progress-item.is-done{color:#8fd9c9;}
+.umbral__progress-seg{
+  flex:1 1 auto;height:1px;min-width:var(--sp-6);
+  background:rgba(255,255,255,.18);
+  transition:background var(--dur-med) var(--ease-out);
+}
+.umbral__progress-seg.is-done{background:#8fd9c9;}
+
+.umbral__cta{margin-top:var(--sp-16);position:relative;z-index:1;}
+
+/* Salida hacia Primera visita: única franja a todo el ancho (fuera de
+   .container) que funde el verde de marca hacia --pw-mist, para que el
+   siguiente fondo claro llegue sin corte — mismo criterio de "sin
+   cortes bruscos" que pide la dirección para la transición de salida. */
+.umbral__exit{
+  height:clamp(4rem,9vw,7rem);
+  margin-top:var(--sp-16);
+  background:linear-gradient(180deg, var(--pw-primary-900), var(--pw-mist));
 }
 
 /* ---------- 12. Primera visita ---------- */
@@ -890,6 +1129,103 @@ a:focus-visible,button:focus-visible,input:focus-visible{
   flex:0 0 auto;
   font-size:.72rem;letter-spacing:.14em;
   color:var(--pw-accent);
+}
+
+/* ---------- 12b. Primera visita (Home) — timeline vinculada al scroll ----------
+   Solo afecta a .first-visit (Home): servicios.html y physiotherapy.html
+   reutilizan el mismo .first-visit__steps/.first-visit__step con la marca
+   plana original (contador CSS en ::before) y no deben verse afectados, así
+   que todo lo de aquí va scopeado bajo .first-visit y usa clases nuevas
+   (.first-visit__marker, __step-body, __step-num, __step-text) que solo
+   existen en la marca anidada de Home.
+
+   Filosofía igual que Marshall Method: mejora progresiva. Sin la clase
+   .is-timeline-active (añadida por JS solo si hay IntersectionObserver y
+   no hay prefers-reduced-motion) los cinco pasos se ven simplemente todos
+   visibles a la vez, con el punto y la línea en un tono neutro — nunca
+   hay contenido oculto esperando una animación que no va a llegar.
+
+   El título/CTA de la izquierda (.first-visit__intro) se queda sticky con
+   CSS puro (sin JS de scroll) mientras la columna derecha, más alta que él
+   gracias al espaciado generoso entre pasos, se recorre — y deja de ser
+   sticky solo con llegar al final del grid, sin necesidad de lógica extra. */
+.first-visit .first-visit__steps{counter-reset:none;}
+.first-visit .first-visit__step{
+  counter-increment:none;
+  display:block;
+  position:relative;
+  align-items:unset;gap:0;
+  padding-block:var(--sp-8);
+  padding-left:2.75rem;
+  border-top:none;
+  font-size:1rem;
+}
+.first-visit .first-visit__step::before{content:none;}
+
+@media (min-width:860px){
+  .first-visit__intro{position:sticky;top:var(--fv-sticky-top,6rem);align-self:start;}
+}
+
+.first-visit__marker{
+  position:absolute;
+  left:0;top:0;bottom:0;
+  width:1.5rem;
+  display:flex;justify-content:center;
+}
+.first-visit__marker::before{
+  content:'';
+  position:absolute;
+  top:0;bottom:0;left:50%;
+  width:1px;
+  background:var(--pw-line);
+  transform:translateX(-50%);
+  transition:background var(--dur-med) var(--ease-out);
+}
+.first-visit .first-visit__step:first-child .first-visit__marker::before{top:calc(var(--sp-8) + .78rem);}
+.first-visit .first-visit__step:last-child .first-visit__marker::before{bottom:calc(var(--sp-8) + .78rem);}
+
+.first-visit__dot{
+  position:absolute;
+  left:50%;top:calc(var(--sp-8) + .78rem);
+  transform:translate(-50%,-50%);
+  width:.55rem;height:.55rem;border-radius:50%;
+  background:var(--pw-white);
+  border:2px solid var(--pw-line);
+  transition:background var(--dur-med) var(--ease-out), border-color var(--dur-med) var(--ease-out), transform var(--dur-med) var(--ease-out), box-shadow var(--dur-med) var(--ease-out);
+}
+.first-visit__step-body{display:flex;align-items:baseline;flex-wrap:wrap;gap:var(--sp-4);}
+.first-visit__step-num{
+  flex:0 0 auto;
+  font-size:.85rem;font-weight:600;letter-spacing:.06em;
+  color:var(--pw-primary);
+  font-variant-numeric:tabular-nums;
+}
+.first-visit__step-text{flex:1 1 12rem;min-width:0;margin:0;font-size:1.05rem;line-height:1.55;color:var(--pw-ink);}
+
+/* Estados narrativos — solo con .is-timeline-active (JS + sin motion reducido) */
+.first-visit.is-timeline-active .first-visit__step{
+  opacity:.4;
+  transform:translateY(10px);
+  transition:opacity var(--dur-slow) var(--ease-out), transform var(--dur-slow) var(--ease-out);
+}
+.first-visit.is-timeline-active .first-visit__step.is-active,
+.first-visit.is-timeline-active .first-visit__step.is-done{
+  opacity:1;
+  transform:translateY(0);
+}
+.first-visit.is-timeline-active .first-visit__step.is-done{opacity:.75;}
+
+.first-visit.is-timeline-active .first-visit__step.is-active .first-visit__marker::before,
+.first-visit.is-timeline-active .first-visit__step.is-done .first-visit__marker::before{
+  background:var(--pw-primary);
+}
+.first-visit.is-timeline-active .first-visit__step.is-active .first-visit__dot{
+  background:var(--pw-primary);border-color:var(--pw-primary);
+  transform:translate(-50%,-50%) scale(1.35);
+  box-shadow:0 0 0 4px rgba(35,115,105,.15);
+}
+.first-visit.is-timeline-active .first-visit__step.is-done .first-visit__dot{
+  background:var(--pw-primary);border-color:var(--pw-primary);
 }
 
 /* ---------- 13. Equipo profesional ----------
@@ -1348,6 +1684,10 @@ a:focus-visible,button:focus-visible,input:focus-visible{
 .area-carousel__img--wellness{object-position:70% 32%;}
 .area-carousel__img--strength{object-position:46% 35%;}
 .area-carousel__img--pilates{object-position:42% 30%;}
+/* FASE 7: fotografía real de Stretching (ver ASSET_SOURCES.md). Mismo
+   criterio de recorte que .service-panel__img--stretching (contenedor
+   3/4, muy cercano al ratio nativo de la foto). */
+.area-carousel__img--stretching{object-position:44% 38%;}
 .area-carousel__img--domicilio{object-position:center;}
 .area-carousel__media::after{
   content:"";position:absolute;inset:0;
@@ -1375,10 +1715,14 @@ a:focus-visible,button:focus-visible,input:focus-visible{
 .area-carousel__card-link:focus-visible .area-carousel__cta svg{transform:translateX(4px);}
 
 /* -- Composición base (también móvil): tarjeta activa centrada y más
-   grande, dos tarjetas visibles a cada lado, escala/opacidad decrecientes
+   grande, tarjetas visibles a cada lado, escala/opacidad decrecientes
    y extremos parcialmente recortados por el ancho limitado del viewport.
-   Los 5 <li> siempre tienen un data-position (0/±1/±2), así que estas
-   reglas son incondicionales y el JS solo reescribe el atributo. -- */
+   Los 6 <li> siempre tienen un data-position (0/±1/±2/-3), así que estas
+   reglas son incondicionales y el JS solo reescribe el atributo. La
+   tarjeta -3 (Stretching) extiende el mismo patrón de reducción: el total
+   par de tarjetas hace que el abanico ya no sea simétrico (un nivel más
+   en el lado izquierdo), asumido para no rediseñar el algoritmo de
+   areaCarousel(). -- */
 .area-carousel__card[data-position="0"]{order:0;opacity:1;transform:translateY(0) scale(1);z-index:5;}
 .area-carousel__card[data-position="0"] .area-carousel__title{font-size:1.05rem;}
 
@@ -1391,6 +1735,8 @@ a:focus-visible,button:focus-visible,input:focus-visible{
 .area-carousel__card[data-position="-2"]{width:6.5rem;opacity:.42;transform:translateY(1.75rem) scale(.88);z-index:3;}
 .area-carousel__card[data-position="2"]{order:2;}
 .area-carousel__card[data-position="-2"]{order:-2;}
+
+.area-carousel__card[data-position="-3"]{width:4.5rem;opacity:.2;transform:translateY(2.15rem) scale(.82);z-index:2;order:-3;}
 
 @media (min-width:1024px){
   .area-carousel__viewport{
@@ -1408,6 +1754,8 @@ a:focus-visible,button:focus-visible,input:focus-visible{
 
   .area-carousel__card[data-position="2"],
   .area-carousel__card[data-position="-2"]{width:10.5rem;transform:translateY(2.75rem) scale(.88);}
+
+  .area-carousel__card[data-position="-3"]{width:7.5rem;transform:translateY(3.5rem) scale(.82);}
 }
 
 .area-carousel__note{
@@ -1769,6 +2117,28 @@ a:focus-visible,button:focus-visible,input:focus-visible{
   .page-tarifas .area-tile{min-height:32rem;}
 }
 
+/* Composición para 5 elementos: con 4 tarjetas la cuadrícula 2×2 cierra
+   perfecta, pero la quinta (Stretching) deja una única tarjeta suelta en
+   su propia fila, pegada a la izquierda con un hueco vacío al lado — lee
+   como sobrante en vez de como parte del mismo sistema. En vez de
+   ensanchar la tarjeta (lo que cambiaría la proporción de su contenedor
+   y, por tanto, el recorte visible de la foto con object-fit:cover), se
+   ocupa toda la fila (grid-column:1/-1) pero se fija un width idéntico al
+   de una tarjeta normal de la cuadrícula y se centra: mismo tamaño y
+   recorte exactos, solo cambia su posición dentro de la fila. */
+@media (min-width:640px){
+  .page-tarifas .area-tile[data-area="Stretching"]{
+    grid-column:1 / -1;
+    justify-self:center;
+    width:calc(50% - (var(--sp-6) / 2));
+  }
+}
+@media (min-width:1100px){
+  .page-tarifas .area-tile[data-area="Stretching"]{
+    width:calc(50% - (var(--sp-8) / 2));
+  }
+}
+
 /* Estado seleccionado: anillo + insignia + texto, nunca solo color. */
 .page-tarifas .area-tile.is-selected{
   box-shadow:0 0 0 3px var(--pw-white), 0 0 0 5px var(--pw-primary);
@@ -1796,9 +2166,15 @@ a:focus-visible,button:focus-visible,input:focus-visible{
 .page-tarifas .area-tile[data-area="Pilates"] .area-tile__media img{object-position:42% 30%;}
 .page-tarifas .area-tile[data-area="Fuerza"] .area-tile__media img{object-position:46% 35%;}
 .page-tarifas .area-tile[data-area="Bienestar"] .area-tile__media img{object-position:70% 32%;}
+/* FASE 7: fotografía real de Stretching, de encuadre vertical (retrato) a
+   diferencia de las demás (paisaje): aquí el contenedor recorta sobre todo
+   en el eje vertical, así que es el valor Y el que hay que ajustar para
+   priorizar la pierna elevada y las manos por encima del centro. */
+.page-tarifas .area-tile[data-area="Stretching"] .area-tile__media img{object-position:50% 20%;}
 @media (max-width:639px){
   .page-tarifas .area-tile[data-area="Fisioterapia"] .area-tile__media img{object-position:65% 28%;}
   .page-tarifas .area-tile[data-area="Bienestar"] .area-tile__media img{object-position:78% 30%;}
+  .page-tarifas .area-tile[data-area="Stretching"] .area-tile__media img{object-position:50% 24%;}
 }
 .page-tarifas .area-tile:hover .area-tile__media img,
 .page-tarifas .area-tile:focus-within .area-tile__media img{transform:scale(1.05);}
@@ -2483,8 +2859,11 @@ a:focus-visible,button:focus-visible,input:focus-visible{
    ========================================================================== */
 
 /* Corrección AA: mismo criterio ya aplicado en .page-home y .page-servicios
-   para los números de .first-visit__step (--pw-accent no llega a AA). */
-.page-physio .first-visit__step::before{color:var(--pw-primary);}
+   para los números de .first-visit__step (--pw-accent no llega a AA).
+   FASE 5 (Stretching): .page-stretching reutiliza exactamente el mismo
+   criterio, así que se añade al mismo selector en vez de duplicar la regla. */
+.page-physio .first-visit__step::before,
+.page-stretching .first-visit__step::before{color:var(--pw-primary);}
 
 /* ----- Hero de Fisioterapia: composición editorial a dos columnas -----
    FASE 8. El .page-hero base (§19) es de un solo bloque de texto sin foto;
@@ -2493,31 +2872,50 @@ a:focus-visible,button:focus-visible,input:focus-visible{
    menos altura/espacio vacío que el hero base. En móvil el orden natural
    del DOM ya coloca el contenido antes que la foto, sin necesidad de
    "order". Mismo tratamiento visual (aspect-ratio 4/3→3/4, filtro) que
-   .service-photo más abajo, para no introducir un lenguaje visual nuevo. */
-.page-physio .page-hero__inner{
+   .service-photo más abajo, para no introducir un lenguaje visual nuevo.
+   FASE 5 (Stretching): misma página de servicio individual, mismo hero
+   partido — se añade .page-stretching a los mismos selectores en vez de
+   redefinir el componente. */
+.page-physio .page-hero__inner,
+.page-stretching .page-hero__inner{
   padding-block:clamp(6rem,12vh,8rem) clamp(3rem,7vh,4.5rem);
 }
-.page-physio .page-hero__grid{display:grid;grid-template-columns:minmax(0,1fr);gap:var(--sp-10);}
-.page-physio .page-hero__text{margin-block:var(--sp-6) var(--sp-8);}
-.page-physio .page-hero__photo{
+.page-physio .page-hero__grid,
+.page-stretching .page-hero__grid{display:grid;grid-template-columns:minmax(0,1fr);gap:var(--sp-10);}
+.page-physio .page-hero__text,
+.page-stretching .page-hero__text{margin-block:var(--sp-6) var(--sp-8);}
+.page-physio .page-hero__photo,
+.page-stretching .page-hero__photo{
   margin:0;
   aspect-ratio:4/3;
   overflow:hidden;
   border-radius:var(--radius-tile,20px);
 }
-.page-physio .page-hero__photo img{
+.page-physio .page-hero__photo img,
+.page-stretching .page-hero__photo img{
   width:100%;height:100%;
-  object-fit:cover;object-position:60% center;
+  object-fit:cover;
   filter:saturate(1.05) contrast(1.04) brightness(.97);
 }
+.page-physio .page-hero__photo img{object-position:60% center;}
+/* FASE 7: fotografía real de Stretching, de retrato (0.8), muy distinta de
+   la de Fisioterapia: en el hero móvil (4/3) el recorte es vertical, así
+   que se prioriza el tercio superior (pierna elevada + manos de la
+   profesional) sobre el centro geométrico. */
+.page-stretching .page-hero__photo img{object-position:center 26%;}
 @media (min-width:860px){
-  .page-physio .page-hero__grid{
+  .page-physio .page-hero__grid,
+  .page-stretching .page-hero__grid{
     grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);
     gap:var(--sp-16);
     align-items:center;
   }
-  .page-physio .page-hero__photo{aspect-ratio:3/4;}
+  .page-physio .page-hero__photo,
+  .page-stretching .page-hero__photo{aspect-ratio:3/4;}
   .page-physio .page-hero__photo img{object-position:65% center;}
+  /* En 3/4 el recorte pasa a ser horizontal y mínimo (0.8 vs 0.75): basta
+     un ligero desplazamiento a la izquierda del centro. */
+  .page-stretching .page-hero__photo img{object-position:42% center;}
 }
 
 /* ----- "Cuándo empezar por aquí": texto + fotografía de referencia -----
@@ -2527,9 +2925,11 @@ a:focus-visible,button:focus-visible,input:focus-visible{
 /* Fisioterapia: el texto ahora es un único párrafo breve (antes eran dos),
    así que el bloque queda con más aire del necesario entre el hero y la
    siguiente sección. Se reduce el padding-block ~17% respecto a la base
-   (var(--sp-24) = 6rem) solo en esta página, conservando el mismo ritmo
-   editorial y el resto de reglas compartidas de .service-context. */
-.page-physio .service-context{padding-block:5rem;}
+   (var(--sp-24) = 6rem) en esta página y en Stretching (FASE 5, mismo
+   criterio de texto breve), conservando el mismo ritmo editorial y el
+   resto de reglas compartidas de .service-context. */
+.page-physio .service-context,
+.page-stretching .service-context{padding-block:5rem;}
 .service-context__grid{display:grid;gap:var(--sp-12);}
 .service-context__text .area-block__text{max-width:56ch;}
 .service-photo{
@@ -2544,6 +2944,10 @@ a:focus-visible,button:focus-visible,input:focus-visible{
   object-fit:cover;object-position:center 30%;
   filter:saturate(1.05) contrast(1.04) brightness(.97);
 }
+/* FASE 7: fotografía real de Stretching (mismo archivo que el hero, otro
+   recorte). En 4/3 móvil el recorte es vertical: se prioriza el tercio
+   superior, igual que en el hero de esta misma página. */
+.page-stretching .service-photo img{object-position:center 24%;}
 @media (min-width:860px){
   .service-context__grid{
     grid-template-columns:1.1fr .9fr;
@@ -2551,24 +2955,37 @@ a:focus-visible,button:focus-visible,input:focus-visible{
     align-items:center;
   }
   .service-photo{order:0;aspect-ratio:3/4;}
+  /* En 3/4 el recorte pasa a horizontal y mínimo (0.8 vs 0.75). */
+  .page-stretching .service-photo img{object-position:47% center;}
 }
 
-/* ----- "Problemas y ámbitos que abordamos": título estático + cinta -----
-   Sustituye la antigua franja de confianza (datos personales/de
-   colegiación). Título fijo arriba; debajo, una única línea horizontal en
-   movimiento continuo con los conceptos ya existentes en el contenido de
-   la página (sin patologías nuevas). Implementada solo con CSS (rail
-   duplicado + keyframe translateX -50%, sin scroll horizontal real: el
-   viewport tiene overflow:hidden). Sin dependencia de JS: la pausa al
-   pasar el cursor o al enfocar con teclado es puro CSS (ver
+/* ----- "Problemas y ámbitos que abordamos": franja editorial de transición -----
+   FASE 1: deja de comportarse como sección propia y pasa a ser una franja
+   corta que introduce "Ámbitos en los que podemos ayudarte" (misma
+   --pw-mist, sin borde inferior: el borde superior es el único límite,
+   frente a .service-context en blanco). Titular con el peso de un texto
+   de apoyo, no de un h2 grande, aunque semánticamente sigue siendo un h2
+   (jerarquía de encabezados intacta). Sustituye a su vez la antigua franja
+   de confianza (datos personales/de colegiación). Debajo, la misma línea
+   horizontal en movimiento continuo con los conceptos ya existentes en el
+   contenido de la página (sin patologías nuevas). Implementada solo con
+   CSS (rail duplicado + keyframe translateX -50%, sin scroll horizontal
+   real: el viewport tiene overflow:hidden). Sin dependencia de JS: la
+   pausa al pasar el cursor o al enfocar con teclado es puro CSS (ver
    .problem-ticker__viewport:hover/:focus-within más abajo). La segunda
    <ul> es un duplicado visual puro, por eso lleva aria-hidden="true". */
-.problem-ticker{padding-block:var(--sp-12) var(--sp-16);background:var(--pw-mist);border-block:1px solid var(--pw-line);}
+.problem-ticker{padding-block:var(--sp-8) var(--sp-4);background:var(--pw-mist);border-top:1px solid var(--pw-line);}
 .problem-ticker__head{
   display:flex;align-items:center;justify-content:space-between;gap:var(--sp-6);
-  flex-wrap:wrap;margin-bottom:var(--sp-8);
+  flex-wrap:wrap;margin-bottom:var(--sp-4);
 }
-.problem-ticker__head .section-heading{margin:0;max-width:34ch;}
+.problem-ticker__head .section-heading{
+  margin:0;
+  max-width:40ch;
+  font-size:clamp(1.05rem,1.6vw,1.35rem);
+  font-weight:500;
+  color:var(--pw-ink-70);
+}
 .problem-ticker__viewport{
   width:100%;overflow:hidden;
   mask-image:linear-gradient(to right,transparent,#000 4%,#000 96%,transparent);
@@ -2611,8 +3028,12 @@ a:focus-visible,button:focus-visible,input:focus-visible{
 /* ----- Subespecialidades: lista editorial, no cuadrícula de tarjetas -----
    Líneas separadas por borde, numeración tipográfica en vez de iconos;
    en pantallas grandes se reparten en dos columnas manteniendo el orden
-   de lectura por filas. */
-.specialty-list{padding-block:var(--sp-24);background:var(--pw-mist);border-block:1px solid var(--pw-line);}
+   de lectura por filas. FASE 1: sin borde superior (continúa la misma
+   --pw-mist de .problem-ticker justo encima, sin línea entre ambas) y con
+   menos padding inferior que superior (la franja "Relación entre áreas"
+   comparte esta misma --pw-mist justo después y debe leerse como el cierre
+   de esta sección, no como un bloque nuevo). */
+.specialty-list{padding-top:var(--sp-16);padding-bottom:var(--sp-8);background:var(--pw-mist);}
 .specialty-list__head{max-width:60ch;}
 .specialty-list__items{
   list-style:none;margin:var(--sp-12) 0 0;padding:0;
@@ -2653,11 +3074,36 @@ a:focus-visible,button:focus-visible,input:focus-visible{
   .specialty-item{padding-block:var(--sp-8);}
 }
 
+/* Micro-reveal por ámbito: reutiliza [data-reveal]/.is-visible tal cual
+   (misma IntersectionObserver, mismo fallback de 2.5s, mismo <noscript>
+   global que fuerza opacity:1 en todo [data-reveal]), solo con un
+   translateY menor (14px en vez de 28px) para que sea casi imperceptible.
+   Num, título y texto quedan como observados independientes: cada uno
+   dispara su propia entrada al cruzar el viewport, con --i (fraccionario,
+   0/.4/.8) como único desfase entre los tres — nunca bounce/elastic/zoom,
+   mismos easings de marca que el resto del sitio. */
+.specialty-item__num[data-reveal],
+.specialty-item__title[data-reveal],
+.specialty-item__desc[data-reveal]{
+  transform:translateY(14px);
+}
+.specialty-item__num[data-reveal]{
+  color:var(--pw-ink-50);
+  transition:opacity var(--dur-slow) var(--ease-emphatic), transform var(--dur-slow) var(--ease-emphatic), color var(--dur-slow) var(--ease-emphatic);
+}
+.specialty-item__num[data-reveal].is-visible{color:var(--pw-primary);}
+
 /* ----- Relación entre las áreas -----
    Bloque breve de una sola columna de texto, deliberadamente ligero
    (no es un componente de tarjetas ni de lista con enlaces): un párrafo
-   corto y, como mucho, un enlace a una ruta real ya existente. */
-.area-relation{padding-block:var(--sp-12);background:var(--pw-white);border-top:1px solid var(--pw-line);}
+   corto y, como mucho, un enlace a una ruta real ya existente. FASE 1:
+   deja de ser una sección propia en blanco y pasa a funcionar como el
+   cierre de "Ámbitos en los que podemos ayudarte": misma --pw-mist que
+   .specialty-list, sin borde entre ambas (la línea bajo el último ámbito,
+   .specialty-list__items li:last-child, ya marca el eje compartido) y
+   con muy poco padding superior. El padding inferior, más generoso,
+   introduce el cambio real de fondo (a blanco) de "Cómo es el proceso". */
+.area-relation{padding-top:var(--sp-4);padding-bottom:var(--sp-8);background:var(--pw-mist);}
 .area-relation__inner{max-width:56ch;}
 .area-relation__text{
   font-size:var(--fs-lead);
@@ -2672,42 +3118,151 @@ a:focus-visible,button:focus-visible,input:focus-visible{
 }
 .area-relation__cta:hover,.area-relation__cta:focus-visible{text-decoration:underline;}
 
-/* ----- Cómo es el proceso -----
-   Reutiliza .first-visit__steps fuera de .first-visit; solo hace falta el
-   encabezado propio de la sección. */
+/* ----- Cómo es el proceso: "service-process" -----
+   FASE 2: componente reutilizable pensado para las futuras service pages
+   (Bienestar, Fuerza, Pilates Reformer, Stretching), no exclusivo de
+   Fisioterapia. Misma familia visual que .first-visit (Home) —columna
+   sticky a la izquierda + pasos a la derecha con línea/punto—, pero con
+   nombres genéricos (service-process__*) y sin cantidad de pasos fija:
+   el JS (serviceProcessTimeline) detecta [data-sp-steps]/[data-sp-step]
+   dinámicamente, así que esto funciona igual con 3, 5 o 6 pasos.
+
+   Mejora progresiva idéntica a .first-visit: sin JS (o con
+   prefers-reduced-motion) los pasos se quedan estáticos, todos visibles,
+   con la línea/punto en tono neutro — nunca hay contenido esperando una
+   animación que no va a llegar. El sticky de la introducción es CSS puro
+   (position:sticky) y solo se activa a partir de 860px; por debajo, todo
+   fluye en una sola columna sin forzar ningún comportamiento de scroll. */
 .process{padding-block:var(--sp-24);background:var(--pw-white);}
-.process__head{max-width:60ch;margin-bottom:var(--sp-10);}
-.process .first-visit__steps{max-width:var(--container);}
+.service-process__grid{display:grid;gap:var(--sp-10);}
+.service-process__intro{max-width:60ch;}
+@media (min-width:860px){
+  .service-process__grid{grid-template-columns:1.05fr .95fr;gap:var(--sp-24);align-items:start;}
+  .service-process__intro{position:sticky;top:var(--sp-sticky-top,6rem);align-self:start;}
+}
+
+.service-process__steps{display:grid;list-style:none;margin:0;padding:0;}
+.service-process__step{
+  display:block;
+  position:relative;
+  padding-block:var(--sp-8);
+  padding-left:2.75rem;
+}
+
+.service-process__marker{
+  position:absolute;
+  left:0;top:0;bottom:0;
+  width:1.5rem;
+  display:flex;justify-content:center;
+}
+.service-process__marker::before{
+  content:'';
+  position:absolute;
+  top:0;bottom:0;left:50%;
+  width:1px;
+  background:var(--pw-line);
+  transform:translateX(-50%);
+  transition:background var(--dur-med) var(--ease-out);
+}
+.service-process__step:first-child .service-process__marker::before{top:calc(var(--sp-8) + .78rem);}
+.service-process__step:last-child .service-process__marker::before{bottom:calc(var(--sp-8) + .78rem);}
+
+.service-process__dot{
+  position:absolute;
+  left:50%;top:calc(var(--sp-8) + .78rem);
+  transform:translate(-50%,-50%);
+  width:.55rem;height:.55rem;border-radius:50%;
+  background:var(--pw-white);
+  border:2px solid var(--pw-line);
+  transition:background var(--dur-med) var(--ease-out), border-color var(--dur-med) var(--ease-out), transform var(--dur-med) var(--ease-out), box-shadow var(--dur-med) var(--ease-out);
+}
+.service-process__body{display:flex;align-items:baseline;flex-wrap:wrap;gap:var(--sp-4);}
+.service-process__number{
+  flex:0 0 auto;
+  font-size:.85rem;font-weight:600;letter-spacing:.06em;
+  color:var(--pw-primary);
+  font-variant-numeric:tabular-nums;
+}
+.service-process__text{flex:1 1 12rem;min-width:0;margin:0;font-size:1.05rem;line-height:1.55;color:var(--pw-ink);}
+
+/* Estados narrativos — solo con .is-process-active (JS + sin motion reducido) */
+.service-process.is-process-active .service-process__step{
+  opacity:.4;
+  transform:translateY(10px);
+  transition:opacity var(--dur-slow) var(--ease-out), transform var(--dur-slow) var(--ease-out);
+}
+.service-process.is-process-active .service-process__step.is-active,
+.service-process.is-process-active .service-process__step.is-done{
+  opacity:1;
+  transform:translateY(0);
+}
+.service-process.is-process-active .service-process__step.is-done{opacity:.75;}
+
+.service-process.is-process-active .service-process__step.is-active .service-process__marker::before,
+.service-process.is-process-active .service-process__step.is-done .service-process__marker::before{
+  background:var(--pw-primary);
+}
+.service-process.is-process-active .service-process__step.is-active .service-process__dot{
+  background:var(--pw-primary);border-color:var(--pw-primary);
+  transform:translate(-50%,-50%) scale(1.35);
+  box-shadow:0 0 0 4px rgba(35,115,105,.15);
+}
+.service-process.is-process-active .service-process__step.is-done .service-process__dot{
+  background:var(--pw-primary);border-color:var(--pw-primary);
+}
+
+/* Por debajo de 860px: sin sticky, espaciado más compacto para evitar un
+   scroll de la sección desproporcionado en móvil/tablet. */
+@media (max-width:859px){
+  .service-process__step{padding-block:var(--sp-5);padding-left:2.25rem;}
+  .service-process__step:first-child .service-process__marker::before{top:calc(var(--sp-5) + .78rem);}
+  .service-process__step:last-child .service-process__marker::before{bottom:calc(var(--sp-5) + .78rem);}
+  .service-process__dot{top:calc(var(--sp-5) + .78rem);}
+}
 
 /* ----- Fisioterapia a domicilio + enlace a tarifas -----
    Mismo fondo y ritmo que el bloque equivalente de Servicios; separa el
    aviso de "a domicilio" del enlace general a tarifas sin usar tarjetas. */
-.home-care-note{padding-block:var(--sp-24);background:var(--pw-mist);border-block:1px solid var(--pw-line);}
-/* .home-care-note__* reemplaza al antiguo .areas__extra/.areas__all-link
-   (huérfanos desde que ese componente se renombró a
-   .services__transition-extra/-all-link para el escenario oscuro de
-   Servicios): mismo fondo/ritmo que ese bloque, adaptado a texto oscuro
-   sobre --pw-mist y con los dos enlaces agrupados en un único bloque de
-   acciones en vez de repartidos en dos contenedores sueltos. */
-.home-care-note__body{
+/* ----- "service-feature": módulo reutilizable de característica destacada -----
+   FASE 3: generaliza el antiguo .home-care-note ("Fisioterapia a
+   domicilio") en un bloque que cualquier futura página de servicio pueda
+   usar para presentar una modalidad, tecnología o característica
+   diferencial — con eyebrow opcional, título, texto, CTA opcional y
+   fotografía opcional. Sin cards, iconos ni interacciones nuevas: sigue
+   siendo una franja editorial simple.
+
+   Caso base (sin fotografía, el único usado hoy en "Fisioterapia a
+   domicilio"): franja flex texto/acciones, idéntica en valores a la
+   antigua .home-care-note (mismo fondo --pw-mist, mismo padding, mismo
+   punto de quiebre a 720px) — ningún cambio visual respecto a antes.
+
+   Variante con fotografía (.service-feature--with-photo, no usada
+   todavía en esta página): __grid pasa a grid con áreas nombradas para
+   no depender de un envoltorio extra ni de auto-placement frágil; la
+   fotografía reutiliza los mismos valores (aspect-ratio 4/3→3/4 en
+   860px, radio, filtro) que .service-context/.service-photo, para que el
+   tratamiento fotográfico sea consistente en toda la página. */
+.service-feature{padding-block:var(--sp-24);background:var(--pw-mist);border-block:1px solid var(--pw-line);}
+.service-feature__grid{
   display:flex;flex-direction:column;align-items:flex-start;gap:var(--sp-8);
 }
 @media (min-width:720px){
-  .home-care-note__body{flex-direction:row;align-items:center;justify-content:space-between;gap:var(--sp-10);}
+  .service-feature__grid{flex-direction:row;align-items:center;justify-content:space-between;gap:var(--sp-10);}
 }
-.home-care-note__text{max-width:52ch;}
-.home-care-note__label{margin-bottom:var(--sp-3);}
-.home-care-note__title{margin-top:0;font-size:1.5rem;}
-.home-care-note__desc{margin-top:var(--sp-4);color:var(--pw-ink-70);line-height:1.6;}
+.service-feature__text{max-width:52ch;}
+.service-feature__eyebrow{margin-bottom:var(--sp-3);}
+.service-feature__title{margin-top:0;font-size:1.5rem;}
+.service-feature__desc{margin-top:var(--sp-4);color:var(--pw-ink-70);line-height:1.6;}
+.service-feature__desc + .service-feature__desc{margin-top:var(--sp-3);}
 
-.home-care-note__actions{
+.service-feature__actions{
   display:flex;flex-direction:column;align-items:flex-start;gap:var(--sp-4);
   flex-shrink:0;
 }
 @media (min-width:720px){
-  .home-care-note__actions{flex-direction:row;align-items:center;gap:var(--sp-8);}
+  .service-feature__actions{flex-direction:row;align-items:center;gap:var(--sp-8);}
 }
-.home-care-note__link{
+.service-feature__link{
   display:inline-flex;align-items:center;gap:.5rem;
   padding-block:.35rem;
   font-size:.8rem;font-weight:500;letter-spacing:.08em;text-transform:uppercase;
@@ -2715,7 +3270,58 @@ a:focus-visible,button:focus-visible,input:focus-visible{
   border-bottom:1px solid currentColor;
   transition:color var(--dur-fast) var(--ease-out);
 }
-.home-care-note__link:hover{color:var(--pw-primary-600);}
-.home-care-note__arrow{transition:transform var(--dur-fast) var(--ease-out);}
-.home-care-note__link:hover .home-care-note__arrow,
-.home-care-note__link:focus-visible .home-care-note__arrow{transform:translateX(4px);}
+.service-feature__link:hover{color:var(--pw-primary-600);}
+.service-feature__arrow{transition:transform var(--dur-fast) var(--ease-out);}
+.service-feature__link:hover .service-feature__arrow,
+.service-feature__link:focus-visible .service-feature__arrow{transform:translateX(4px);}
+
+/* Variante con fotografía: opcional, preparada para cuando un futuro
+   service-feature la necesite (texto corto/largo, con/sin CTA, foto
+   vertical/horizontal ya resueltos por el mismo aspect-ratio fluido que
+   .service-photo). Áreas nombradas en vez de reordenar con order:
+   más explícito y no depende de que texto/acciones compartan wrapper.
+
+   Orden móvil deliberadamente "texto → foto → acciones", NO calcado del
+   "foto primero" de .service-context/.service-photo: en un bloque de
+   característica/modalidad puntual (a diferencia de un bloque "cuándo
+   empezar" con foto de referencia grande) la lectura natural es entender
+   primero de qué se trata y solo después ver la foto de apoyo. */
+.service-feature--with-photo{background:var(--pw-white);border-block:none;}
+.service-feature--with-photo .service-feature__grid{
+  display:grid;
+  grid-template-areas:"text" "photo" "actions";
+  gap:var(--sp-8);
+  align-items:start;
+}
+.service-feature--with-photo .service-feature__text{grid-area:text;max-width:none;}
+.service-feature--with-photo .service-feature__actions{grid-area:actions;}
+.service-feature__photo{
+  grid-area:photo;
+  margin:0;
+  aspect-ratio:4/3;
+  overflow:hidden;
+  border-radius:var(--radius-tile,20px);
+}
+.service-feature__photo img{
+  width:100%;height:100%;
+  object-fit:cover;object-position:center 30%;
+  filter:saturate(1.05) contrast(1.04) brightness(.97);
+}
+@media (min-width:860px){
+  .service-feature--with-photo .service-feature__grid{
+    grid-template-columns:1.1fr .9fr;
+    grid-template-areas:"text photo" "actions photo";
+    gap:var(--sp-4) var(--sp-16);
+    align-items:center;
+  }
+  .service-feature__photo{aspect-ratio:3/4;}
+}
+
+/* Variante preparada (sin uso todavía) para invertir la fotografía al
+   lado izquierdo sin tocar el HTML, mismo criterio que .area-block--reverse. */
+@media (min-width:860px){
+  .service-feature--photo-left .service-feature__grid{
+    grid-template-columns:.9fr 1.1fr;
+    grid-template-areas:"photo text" "photo actions";
+  }
+}

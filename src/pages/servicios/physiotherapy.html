@@ -44,6 +44,7 @@
           <a href="wellness.html">Bienestar</a>
           <a href="strength.html">Fuerza</a>
           <a href="pilates.html">Pilates</a>
+          <a href="stretching.html">Stretching</a>
           <a href="fisioterapia-a-domicilio.html">Fisioterapia a domicilio</a>
           <a class="nav-dropdown__all" href="../servicios.html">Ver todos los servicios</a>
         </div>
@@ -130,6 +131,7 @@
         <a href="wellness.html">Bienestar</a>
         <a href="strength.html">Fuerza</a>
         <a href="pilates.html">Pilates</a>
+        <a href="stretching.html">Stretching</a>
         <a href="fisioterapia-a-domicilio.html">Fisioterapia a domicilio</a>
         <a class="m-acc__all" href="../servicios.html">Ver todos los servicios</a>
       </div>
@@ -313,36 +315,43 @@
         <p class="section-lead">Todas parten del mismo proceso: entender tu punto de partida, adaptar el tratamiento y ayudarte a avanzar con un objetivo claro.</p>
       </div>
 
-      <ul class="specialty-list__items" data-reveal style="--i:1">
+      <!-- Cada ámbito revela num/título/texto por separado (data-reveal
+           individual con --i fraccionario = stagger interno muy sutil, no
+           un fade de bloque completo): reutiliza tal cual la utilidad
+           genérica [data-reveal] de main.js (misma IntersectionObserver,
+           mismo fallback de 2.5s, mismo comportamiento con JS desactivado
+           vía el <noscript> del <head>), solo con un translateY menor
+           (14px vs 28px por defecto) definido más abajo en styles.css. -->
+      <ul class="specialty-list__items">
         <li class="specialty-item">
-          <span class="specialty-item__num">01</span>
-          <h3 class="specialty-item__title">Fisioterapia general</h3>
-          <p class="specialty-item__desc">Valoración y tratamiento del dolor o la limitación funcional en el día a día.</p>
+          <span class="specialty-item__num" data-reveal style="--i:0">01</span>
+          <h3 class="specialty-item__title" data-reveal style="--i:.4">Fisioterapia general</h3>
+          <p class="specialty-item__desc" data-reveal style="--i:.8">Valoración y tratamiento del dolor o la limitación funcional en el día a día.</p>
         </li>
         <li class="specialty-item">
-          <span class="specialty-item__num">02</span>
-          <h3 class="specialty-item__title">Fisioterapia traumatológica</h3>
-          <p class="specialty-item__desc">Recuperación tras lesión, cirugía o proceso musculoesquelético.</p>
+          <span class="specialty-item__num" data-reveal style="--i:0">02</span>
+          <h3 class="specialty-item__title" data-reveal style="--i:.4">Fisioterapia traumatológica</h3>
+          <p class="specialty-item__desc" data-reveal style="--i:.8">Recuperación tras lesión, cirugía o proceso musculoesquelético.</p>
         </li>
         <li class="specialty-item">
-          <span class="specialty-item__num">03</span>
-          <h3 class="specialty-item__title">Fisioterapia neurológica</h3>
-          <p class="specialty-item__desc">Trabajo de movimiento y función en procesos de origen neurológico.</p>
+          <span class="specialty-item__num" data-reveal style="--i:0">03</span>
+          <h3 class="specialty-item__title" data-reveal style="--i:.4">Fisioterapia neurológica</h3>
+          <p class="specialty-item__desc" data-reveal style="--i:.8">Trabajo de movimiento y función en procesos de origen neurológico.</p>
         </li>
         <li class="specialty-item">
-          <span class="specialty-item__num">04</span>
-          <h3 class="specialty-item__title">Fisioterapia oncológica</h3>
-          <p class="specialty-item__desc">Acompañamiento fisioterapéutico durante o después de un proceso oncológico.</p>
+          <span class="specialty-item__num" data-reveal style="--i:0">04</span>
+          <h3 class="specialty-item__title" data-reveal style="--i:.4">Fisioterapia oncológica</h3>
+          <p class="specialty-item__desc" data-reveal style="--i:.8">Acompañamiento fisioterapéutico durante o después de un proceso oncológico.</p>
         </li>
         <li class="specialty-item">
-          <span class="specialty-item__num">05</span>
-          <h3 class="specialty-item__title">Suelo pélvico</h3>
-          <p class="specialty-item__desc">Valoración y tratamiento específico de la musculatura del suelo pélvico.</p>
+          <span class="specialty-item__num" data-reveal style="--i:0">05</span>
+          <h3 class="specialty-item__title" data-reveal style="--i:.4">Suelo pélvico</h3>
+          <p class="specialty-item__desc" data-reveal style="--i:.8">Valoración y tratamiento específico de la musculatura del suelo pélvico.</p>
         </li>
         <li class="specialty-item">
-          <span class="specialty-item__num">06</span>
-          <h3 class="specialty-item__title">Fisioterapia dermatofuncional</h3>
-          <p class="specialty-item__desc">Tratamiento fisioterapéutico orientado a piel y tejido conectivo.</p>
+          <span class="specialty-item__num" data-reveal style="--i:0">06</span>
+          <h3 class="specialty-item__title" data-reveal style="--i:.4">Fisioterapia dermatofuncional</h3>
+          <p class="specialty-item__desc" data-reveal style="--i:.8">Tratamiento fisioterapéutico orientado a piel y tejido conectivo.</p>
         </li>
       </ul>
     </div>
@@ -364,59 +373,103 @@
   <section class="area-relation" aria-label="Relación entre las áreas de Physio Wellness">
     <div class="container area-relation__inner" data-reveal>
       <p class="eyebrow section-eyebrow">Relación entre áreas</p>
-      <p class="area-relation__text">La fisioterapia puede ser el punto de partida. Según tu situación y evolución, el proceso puede continuar con trabajo de bienestar, fuerza o Pilates Reformer para recuperar movimiento, ganar capacidad y mantener los avances.</p>
+      <p class="area-relation__text">La fisioterapia puede ser el punto de partida. Según tu situación y evolución, el proceso puede continuar con trabajo de bienestar, fuerza, Pilates Reformer o stretching para recuperar movimiento, ganar capacidad y mantener los avances.</p>
       <a class="area-relation__cta" href="../servicios.html">Ver todas las áreas →</a>
     </div>
   </section>
 
   <!-- ============ Cómo es el proceso ============
-       Reutiliza .first-visit__steps (ya usado en Home y Servicios) con los
-       mismos pasos, sin inventar ningún paso nuevo. La antigua franja de
-       confianza (nombre propio, colegiación, años de experiencia, número
-       de pacientes) se ha retirado de esta página: son datos que deben
-       vivir en un único sitio con fuente global verificada (p. ej. Equipo
-       en Home) y no se recolocan aquí todavía para no duplicar/desincronizar
-       esa información. -->
-  <section class="process" id="como-es-el-proceso">
-    <div class="container">
-      <div class="process__head" data-reveal>
+       FASE 2: componente propio y reutilizable (.service-process), ya no
+       reutiliza .first-visit__steps de Home. Mismo tipo de patrón que
+       .first-visit (Home) — IntersectionObserver ligero + sticky de CSS
+       puro en la columna de introducción, sin pinning ni scroll-jacking,
+       sin competir con The Marshall Method — pero como clases propias,
+       genéricas: data-sp-steps/data-sp-step no asumen ninguna cantidad
+       fija de pasos (serviceProcessTimeline, en main.js, detecta cuántos
+       hay), así que este mismo componente podrá reutilizarse en futuros
+       servicios con 3, 4 o 6 pasos sin tocar el JS. Mejora progresiva:
+       sin IntersectionObserver o con prefers-reduced-motion, los 5 pasos
+       quedan visibles a la vez, sin sticky, como lista editorial normal.
+       La antigua franja de confianza (nombre propio, colegiación, años de
+       experiencia, número de pacientes) sigue sin recolocarse aquí: son
+       datos que deben vivir en un único sitio con fuente global
+       verificada (p. ej. Equipo en Home). -->
+  <section class="process service-process" id="como-es-el-proceso">
+    <div class="container service-process__grid">
+      <div class="service-process__intro" data-reveal>
         <p class="eyebrow section-eyebrow">Cómo es el proceso</p>
         <h2 class="section-heading">Cinco pasos, desde la primera visita</h2>
       </div>
 
-      <ol class="first-visit__steps" data-reveal style="--i:1">
-        <li class="first-visit__step">Escuchamos qué te preocupa y tu situación actual.</li>
-        <li class="first-visit__step">Realizamos una valoración inicial.</li>
-        <li class="first-visit__step">Definimos contigo el objetivo del tratamiento.</li>
-        <li class="first-visit__step">Empezamos la intervención cuando es adecuado.</li>
-        <li class="first-visit__step">Te llevas recomendaciones y los siguientes pasos.</li>
+      <ol class="service-process__steps" data-sp-steps>
+        <li class="service-process__step" data-sp-step>
+          <span class="service-process__marker" aria-hidden="true"><span class="service-process__dot"></span></span>
+          <div class="service-process__body">
+            <span class="service-process__number" aria-hidden="true">01</span>
+            <p class="service-process__text">Escuchamos qué te preocupa y tu situación actual.</p>
+          </div>
+        </li>
+        <li class="service-process__step" data-sp-step>
+          <span class="service-process__marker" aria-hidden="true"><span class="service-process__dot"></span></span>
+          <div class="service-process__body">
+            <span class="service-process__number" aria-hidden="true">02</span>
+            <p class="service-process__text">Realizamos una valoración inicial.</p>
+          </div>
+        </li>
+        <li class="service-process__step" data-sp-step>
+          <span class="service-process__marker" aria-hidden="true"><span class="service-process__dot"></span></span>
+          <div class="service-process__body">
+            <span class="service-process__number" aria-hidden="true">03</span>
+            <p class="service-process__text">Definimos contigo el objetivo del tratamiento.</p>
+          </div>
+        </li>
+        <li class="service-process__step" data-sp-step>
+          <span class="service-process__marker" aria-hidden="true"><span class="service-process__dot"></span></span>
+          <div class="service-process__body">
+            <span class="service-process__number" aria-hidden="true">04</span>
+            <p class="service-process__text">Empezamos la intervención cuando es adecuado.</p>
+          </div>
+        </li>
+        <li class="service-process__step" data-sp-step>
+          <span class="service-process__marker" aria-hidden="true"><span class="service-process__dot"></span></span>
+          <div class="service-process__body">
+            <span class="service-process__number" aria-hidden="true">05</span>
+            <p class="service-process__text">Te llevas recomendaciones y los siguientes pasos.</p>
+          </div>
+        </li>
       </ol>
     </div>
   </section>
 
-  <!-- ============ Fisioterapia a domicilio + enlace a tarifas ============
-       Antes reutilizaba .areas__extra/.areas__all-link (Home), pero ese
-       componente fue renombrado a .services__transition-extra/-all-link al
-       construir el nuevo escenario fijado de Servicios (para un fondo
-       oscuro, con texto en blanco/rgba) y esta página se quedó con las
-       clases antiguas sin ningún selector que las atendiera: la sección
-       quedaba totalmente sin estilos. Clases propias (.home-care-note__*)
-       en vez de recuperar las antiguas .areas__* tal cual, ya que ese
-       nombre ya no describe nada en el sistema actual y el destino final
-       (fondo claro --pw-mist) diverge del componente oscuro con el que
-       comparte origen. El destino de "a domicilio" es la sección real ya
-       construida en Tarifas: la página propia todavía no existe. -->
-  <section class="home-care-note">
+  <!-- ============ Fisioterapia a domicilio: "service-feature" ============
+       FASE 3: antes era .home-care-note, un bloque específico de esta
+       sección. Ahora es "service-feature", un módulo genérico (eyebrow
+       opcional + título + texto + CTA opcional + fotografía opcional) para
+       cualquier futuro servicio/tecnología/modalidad destacada, no solo
+       "a domicilio". Esta instancia concreta sigue siendo solo texto + CTA
+       (sin fotografía): el caso base de .service-feature es justo ese, una
+       franja flex texto/acciones idéntica a la de antes, sin ningún cambio
+       visual. Si una futura página necesita fotografía, la modificadora
+       .service-feature--with-photo (ver styles.css) reordena __grid a dos
+       columnas con los mismos valores (aspect-ratio, filtro, radio) que ya
+       usa .service-context/.service-photo en esta misma página, para que
+       el tratamiento fotográfico sea coherente en todo el sitio.
+
+       El destino de "a domicilio" sigue siendo la sección real ya
+       construida en Tarifas (#a-domicilio): la página propia todavía no
+       existe, así que el enlace no apunta a
+       servicios/fisioterapia-a-domicilio.html. -->
+  <section class="service-feature">
     <div class="container">
-      <div class="home-care-note__body" data-reveal>
-        <div class="home-care-note__text">
-          <p class="eyebrow home-care-note__label">Una modalidad de Fisioterapia</p>
-          <h2 class="home-care-note__title">Fisioterapia a domicilio</h2>
-          <p class="home-care-note__desc">Si no puedes desplazarte al centro, puedes realizar tu proceso de fisioterapia a domicilio, con el mismo seguimiento.</p>
+      <div class="service-feature__grid" data-reveal>
+        <div class="service-feature__text">
+          <p class="eyebrow service-feature__eyebrow">Una modalidad de Fisioterapia</p>
+          <h2 class="service-feature__title">Fisioterapia a domicilio</h2>
+          <p class="service-feature__desc">Si no puedes desplazarte al centro, puedes realizar tu proceso de fisioterapia a domicilio, con el mismo seguimiento.</p>
         </div>
-        <div class="home-care-note__actions">
-          <a class="home-care-note__link" href="../tarifas.html#a-domicilio">Ver condiciones a domicilio <span class="home-care-note__arrow" aria-hidden="true">→</span></a>
-          <a class="home-care-note__link" href="../tarifas.html#en-la-clinica">Ver todas las tarifas <span class="home-care-note__arrow" aria-hidden="true">→</span></a>
+        <div class="service-feature__actions">
+          <a class="service-feature__link" href="../tarifas.html#a-domicilio">Ver condiciones a domicilio <span class="service-feature__arrow" aria-hidden="true">→</span></a>
+          <a class="service-feature__link" href="../tarifas.html#en-la-clinica">Ver todas las tarifas <span class="service-feature__arrow" aria-hidden="true">→</span></a>
         </div>
       </div>
     </div>

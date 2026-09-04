@@ -353,9 +353,9 @@ var prefersReducedMotion = window.matchMedia && window.matchMedia('(prefers-redu
 /* ---------- "Elige tu área": panel activo + contexto asociado ----------
    Cada panel es un <button aria-pressed> que marca el área elegida; el
    enlace "Ver tarifas" de cada panel sigue siendo un <a href="#en-la-clinica">
-   real y funciona igual sin JavaScript (las cuatro áreas ya comparten el
+   real y funciona igual sin JavaScript (las cinco áreas ya comparten el
    mismo precio, visible más abajo, con el texto fijo "Tarifa en clínica
-   compartida por las cuatro áreas." que NO cambia con la selección). Esto
+   compartida por las cinco áreas." que NO cambia con la selección). Esto
    solo añade: el estado seleccionado (aria-pressed + clase is-selected, con
    su borde/insignia/texto propios) y la actualización del panel de contexto
    lateral/apilado (nombre del área, descripción de enfoque y CTA), que
@@ -383,7 +383,12 @@ var prefersReducedMotion = window.matchMedia && window.matchMedia('(prefers-redu
 
       if(contextTitle) contextTitle.textContent = area;
       if(contextText) contextText.textContent = desc;
-      if(contextCta) contextCta.textContent = 'Ver tarifas de ' + area;
+      if(contextCta){
+        contextCta.textContent = 'Ver tarifas de ' + area;
+        contextCta.href = '#en-la-clinica';
+        contextCta.removeAttribute('target');
+        contextCta.removeAttribute('rel');
+      }
     };
 
     tiles.forEach(function(tile){
@@ -513,7 +518,7 @@ var prefersReducedMotion = window.matchMedia && window.matchMedia('(prefers-redu
    para cubrir el recorrido horizontal completo. La rueda, el trackpad y el
    touch nunca se interceptan: todo el efecto es una función pura de la
    posición de scroll vertical ya existente (mismo patrón que
-   methodSequence(), leída de forma pasiva y aplicada con
+   umbralSequence(), leída de forma pasiva y aplicada con
    requestAnimationFrame). Sin JS, por debajo de 1100px, con motion
    reducido, o si no hay desbordamiento suficiente, la sección se queda tal
    cual: un riel de scroll horizontal nativo (ver CSS, mismo patrón que
@@ -532,11 +537,12 @@ var prefersReducedMotion = window.matchMedia && window.matchMedia('(prefers-redu
     var panels = grid.querySelectorAll('.service-panel');
     var transitionEl = grid.querySelector('.services__transition');
     if(!panels.length || !transitionEl) return;
-    /* Las cinco "paradas" del riel: los cuatro servicios + el panel de
-       transición. Flechas, teclado y el indicador 01/04 trabajan siempre
-       sobre este mismo array, tanto en modo fijado como en el riel nativo
-       de respaldo, para no duplicar la lógica de sincronización. */
+    /* Las paradas del riel: los N servicios (panels.length, dinámico) + el
+       panel de transición. Flechas, teclado y el indicador 01/0N trabajan
+       siempre sobre este mismo array, tanto en modo fijado como en el riel
+       nativo de respaldo, para no duplicar la lógica de sincronización. */
     var stopEls = Array.prototype.slice.call(panels).concat([transitionEl]);
+    var serviceCount = panels.length;
 
     var progressWrap = section.querySelector('[data-services-progress]');
     var progressCurrent = section.querySelector('.services__progress-current');
@@ -566,20 +572,21 @@ var prefersReducedMotion = window.matchMedia && window.matchMedia('(prefers-redu
       resetInline();
     };
 
-    /* Traduce el índice de parada (0-3 = servicios, 4 = panel de
-       transición) al texto "01/04"…"04/04" y al estado disabled/is-final
-       de flechas e indicador. Es el único punto que toca ese estado, tanto
-       si lo dispara el scroll (fijado o riel nativo) como un clic o una
-       tecla, para que nunca queden desincronizados entre sí. */
+    /* Traduce el índice de parada (0..serviceCount-1 = servicios,
+       serviceCount = panel de transición) al texto "01/0N"…"0N/0N" y al
+       estado disabled/is-final de flechas e indicador. Es el único punto
+       que toca ese estado, tanto si lo dispara el scroll (fijado o riel
+       nativo) como un clic o una tecla, para que nunca queden
+       desincronizados entre sí. */
     var updateNav = function(index){
       currentIndex = index;
       var hasOverflow = maxTranslate > 0;
 
       if(progressCurrent){
-        var label = index < 4 ? '0' + (index + 1) : '04';
+        var label = index < serviceCount ? '0' + (index + 1) : ('0' + serviceCount);
         if(progressCurrent.textContent !== label) progressCurrent.textContent = label;
       }
-      if(progressWrap) progressWrap.classList.toggle('is-final', index >= 4);
+      if(progressWrap) progressWrap.classList.toggle('is-final', index >= serviceCount);
 
       if(prevBtn) prevBtn.disabled = !hasOverflow || index <= 0;
       if(nextBtn) nextBtn.disabled = !hasOverflow || index >= stopEls.length - 1;
@@ -757,40 +764,392 @@ var prefersReducedMotion = window.matchMedia && window.matchMedia('(prefers-redu
   }catch(e){ console.warn('servicesPinScroll', e); }
 })();
 
-/* ---------- The Marshall Method: secuencia scroll-driven ---------- */
-(function methodSequence(){
+/* ---------- The Marshall Method — "El umbral": escena fijada al scroll ----------
+   A diferencia del antiguo methodSequence() (que solo saltaba de fase en
+   fase), aquí el pin queda activo en cualquier ancho — móvil incluido —
+   mientras no haya motion reducido y la ventana tenga alto suficiente;
+   lo único que cambia por breakpoint es cuánto scroll dura el recorrido
+   (getStepFraction) y la intensidad física de cada capa (blur, recorrido
+   de las veladuras, grosor del encuadre: variables --u-blur-max /
+   --u-veil-travel / --u-frame-max en CSS §11), nunca la lógica de aquí.
+   Cada frame de scroll (rAF, sin preventDefault ni sustituir el scroll
+   nativo — mismo patrón que servicesPinScroll()) calcula una posición de
+   fase continua (0 en "Escuchar" puro, 4 en "Evolucionar" puro) e
+   interpola KEYFRAMES para escribir variables CSS numéricas en
+   .umbral__stage: JS nunca decide color ni forma, solo mueve escalares.
+   Sin JS, con motion reducido o en una ventana muy baja, measure() nunca
+   activa el pin: las capas decorativas se quedan en display:none (CSS) y
+   las cinco fases se leen como lista vertical normal vía [data-reveal],
+   versión estática accesible que pide la dirección. */
+(function umbralSequence(){
   try{
-    var wrap = document.querySelector('.method');
-    if(!wrap) return;
-    var steps = wrap.querySelectorAll('.method-step');
-    var fill = wrap.querySelector('.method__bar-fill');
-    if(!steps.length) return;
+    var section = document.querySelector('.umbral');
+    var pinWrap = section && section.querySelector('[data-umbral-pin]');
+    var stage = pinWrap && pinWrap.querySelector('[data-umbral-stage]');
+    var phasesHost = stage && stage.querySelector('[data-umbral-phases]');
+    var numHost = stage && stage.querySelector('[data-umbral-num]');
+    var header = document.getElementById('site-header');
+    var bookBar = document.querySelector('.book-bar');
+    if(!section || !pinWrap || !stage || !phasesHost || !numHost || !header) return;
+
+    var phases = phasesHost.querySelectorAll('.umbral__phase');
+    var digits = numHost.querySelectorAll('.umbral__num-digit');
+    var progressItems = section.querySelectorAll('[data-progress-index]');
+    var progressSegs = section.querySelectorAll('[data-progress-seg-index]');
+    if(phases.length !== 5 || digits.length !== 5) return;
+
+    /* Una entrada por fase ("momento"): JS solo interpola linealmente
+       entre dos entradas consecutivas según la posición continua de
+       scroll, nunca decide estos valores en tiempo real. Ajustables aquí
+       tras ver el resultado en pantalla (paso 10 del encargo), sin tocar
+       la lógica de cálculo de más abajo.
+       veilA/veilB: 0=solapadas en el centro, 1=separadas del todo.
+       veilAOp/veilBOp: opacidad de cada veladura.
+       blur: 0=nítido, 1=blur máximo (§ --u-blur-max).
+       coreX/coreY: posición del núcleo de luz (fracción 0..1 del escenario).
+       coreScale/coreGlow: escala e intensidad del halo.
+       coreWarm: 0=luz fría, 1=luz cálida.
+       frame: 0=encuadre abierto del todo, 1=encuadre cerrado (§ --u-frame-max).
+       bgDark: 0=halo neutro/mist visible, 1=sin halo (escena "cerrada"). */
+    var KEYFRAMES = [
+      /* 0 — Escuchar: contenida, veladuras casi cerradas, luz fría difusa. */
+      {veilA:.02, veilB:.05, veilAOp:.95, veilBOp:.92, blur:1,
+       coreX:.5, coreY:.46, coreScale:.5, coreGlow:.26, coreWarm:0,
+       frame:1, bgDark:1, numScale:.62},
+      /* 1 — Valorar: se abre ligeramente, baja el blur, aparece foco. */
+      {veilA:.16, veilB:.32, veilAOp:.86, veilBOp:.72, blur:.68,
+       coreX:.48, coreY:.44, coreScale:.68, coreGlow:.46, coreWarm:.08,
+       frame:.72, bgDark:.8, numScale:.84},
+      /* 2 — Tratar: clímax. Máxima intensidad y profundidad, veladura B
+         se retira con claridad, numeral enorme y cortado por el viewport. */
+      {veilA:.46, veilB:.92, veilAOp:.6, veilBOp:.2, blur:.16,
+       coreX:.57, coreY:.4, coreScale:1.2, coreGlow:1, coreWarm:.26,
+       frame:.3, bgDark:.46, numScale:1.42},
+      /* 3 — Acompañar: la composición respira, baja la tensión, la luz
+         deriva lateralmente y se estabiliza. */
+      {veilA:.68, veilB:.98, veilAOp:.36, veilBOp:.12, blur:.3,
+       coreX:.67, coreY:.5, coreScale:.92, coreGlow:.58, coreWarm:.6,
+       frame:.14, bgDark:.22, numScale:1.06},
+      /* 4 — Evolucionar: abierta, luminosa, cálida y tranquila; las
+         veladuras casi desaparecen y aparece el CTA como cierre. */
+      {veilA:.86, veilB:1, veilAOp:.08, veilBOp:.03, blur:.12,
+       coreX:.58, coreY:.52, coreScale:1.02, coreGlow:.66, coreWarm:1,
+       frame:0, bgDark:0, numScale:.96}
+    ];
+
+    /* Recorrido de scroll por transición de fase, en fracción de la
+       altura visible — más corto cuanto más estrecha la pantalla, para
+       que móvil tenga "menos recorrido y menor duración" (encargo,
+       punto de accesibilidad/tablet-móvil) sin cambiar la intensidad
+       visual, que ya varía solo por CSS (§11). Con 5 fases el recorrido
+       total del pin es ~1 + 4*fraction alturas de viewport. */
+    var getStepFraction = function(){
+      var w = window.innerWidth;
+      if(w < 640) return .32;
+      if(w < 960) return .44;
+      return .58;
+    };
+
+    var active = false;
+    var headerOffset = 0;
+    var maxScroll = 0;
+    var ticking = false;
+    var currentIndex = -1;
+
+    var lerp = function(a, b, t){ return a + (b - a) * t; };
+
+    /* Interpola KEYFRAMES en la posición continua de fase (0..4) y
+       escribe el resultado como variables CSS en .umbral__stage: toda
+       la forma/color de la escena vive en CSS (§11), esto solo mueve
+       números. Las cinco cifras del numeral funden su propia opacidad
+       según su distancia a la posición actual (envolvente triangular),
+       así 01→05 se disuelve de forma continua en vez de "contar". */
+    var render = function(phasePos){
+      var clamped = Math.min(Math.max(phasePos, 0), KEYFRAMES.length - 1);
+      var i = Math.min(Math.floor(clamped), KEYFRAMES.length - 2);
+      var t = clamped - i;
+      var a = KEYFRAMES[i], b = KEYFRAMES[i + 1];
+
+      var v = {
+        veilA: lerp(a.veilA, b.veilA, t),
+        veilB: lerp(a.veilB, b.veilB, t),
+        veilAOp: lerp(a.veilAOp, b.veilAOp, t),
+        veilBOp: lerp(a.veilBOp, b.veilBOp, t),
+        blur: lerp(a.blur, b.blur, t),
+        coreX: lerp(a.coreX, b.coreX, t),
+        coreY: lerp(a.coreY, b.coreY, t),
+        coreScale: lerp(a.coreScale, b.coreScale, t),
+        coreGlow: lerp(a.coreGlow, b.coreGlow, t),
+        coreWarm: lerp(a.coreWarm, b.coreWarm, t),
+        frame: lerp(a.frame, b.frame, t),
+        bgDark: lerp(a.bgDark, b.bgDark, t),
+        numScale: lerp(a.numScale, b.numScale, t)
+      };
+
+      var s = stage.style;
+      s.setProperty('--u-veil-a-gap', v.veilA);
+      s.setProperty('--u-veil-b-gap', v.veilB);
+      s.setProperty('--u-veil-a-opacity', v.veilAOp);
+      s.setProperty('--u-veil-b-opacity', v.veilBOp);
+      s.setProperty('--u-veil-blur', v.blur);
+      s.setProperty('--u-core-x', v.coreX);
+      s.setProperty('--u-core-y', v.coreY);
+      s.setProperty('--u-core-scale', v.coreScale);
+      s.setProperty('--u-core-glow', v.coreGlow);
+      s.setProperty('--u-core-warm', v.coreWarm);
+      s.setProperty('--u-frame-inset', v.frame);
+      s.setProperty('--u-bg-dark', v.bgDark);
+      numHost.style.setProperty('--u-num-scale', v.numScale);
+
+      digits.forEach(function(digit, idx){
+        digit.style.opacity = Math.max(0, 1 - Math.abs(clamped - idx));
+      });
+
+      var index = Math.min(4, Math.round(clamped));
+      if(index !== currentIndex){
+        currentIndex = index;
+        phases.forEach(function(phase, i2){
+          phase.classList.toggle('is-active', i2 === index);
+        });
+        progressItems.forEach(function(item, i2){
+          item.classList.toggle('is-active', i2 === index);
+          item.classList.toggle('is-done', i2 < index);
+        });
+        progressSegs.forEach(function(seg, i2){
+          seg.classList.toggle('is-done', i2 < index);
+        });
+      }
+    };
+
+    var resetInline = function(){
+      pinWrap.style.height = '';
+      stage.style.height = '';
+      section.classList.remove('is-pin-active');
+      currentIndex = -1;
+      phases.forEach(function(phase){ phase.classList.remove('is-active'); });
+      progressItems.forEach(function(item){ item.classList.remove('is-active','is-done'); });
+      progressSegs.forEach(function(seg){ seg.classList.remove('is-done'); });
+    };
+
+    var deactivate = function(){
+      if(!active) return;
+      active = false;
+      resetInline();
+    };
+
+    /* aplica el progreso actual del escenario fijado: se llama tanto en
+       cada frame de scroll como justo después de (re)activar, para no
+       dejar un frame con la fase desalineada respecto al scroll real */
+    var applyProgress = function(){
+      ticking = false;
+      if(!active) return;
+
+      var rect = pinWrap.getBoundingClientRect();
+      var scrolled = headerOffset - rect.top;
+      scrolled = Math.min(Math.max(scrolled, 0), maxScroll);
+      var progress = maxScroll > 0 ? scrolled / maxScroll : 0;
+      render(progress * (phases.length - 1));
+    };
 
     var onScroll = function(){
-      var wrapRect = wrap.getBoundingClientRect();
-      var vh = window.innerHeight;
+      if(!active || ticking) return;
+      ticking = true;
+      window.requestAnimationFrame(applyProgress);
+    };
 
-      if(fill){
-        var total = wrap.offsetHeight - vh * 0.6;
-        var scrolled = Math.min(Math.max(-wrapRect.top, 0), Math.max(total,1));
-        var pct = total > 0 ? (scrolled/total)*100 : 0;
-        fill.style.height = pct + '%';
+    /* Decide si el modo fijado tiene sentido (motion, alto de ventana) y,
+       si lo tiene, calcula la altura extra real a partir del viewport
+       actual — nunca de valores fijos dependientes de una resolución
+       concreta. Deliberadamente sin condición de ancho mínimo: el
+       encargo pide que móvil y tablet conserven la escena fijada, solo
+       reducida (ver getStepFraction y las variables --u-* en CSS §11). */
+    var measure = function(){
+      var canPin = !prefersReducedMotion && window.innerHeight >= 480;
+
+      if(!canPin){
+        deactivate();
+        return;
       }
 
-      steps.forEach(function(step){
-        var r = step.getBoundingClientRect();
-        var center = r.top + r.height/2;
-        if(center < vh*0.75 && center > vh*0.1){
-          step.classList.add('is-active');
-        } else {
-          step.classList.remove('is-active');
-        }
-      });
+      headerOffset = header.offsetHeight || 0;
+      /* En móvil/tablet el book-bar fijo inferior (§5 CSS, oculto desde
+         960px) tapa lo que quede en el borde inferior del viewport; se
+         resta su alto real (0 cuando está oculto) para que el contenido
+         de la escena, alineado abajo, no quede parcialmente oculto. */
+      var bookBarHeight = (bookBar && bookBar.offsetHeight) || 0;
+      var innerHeight = Math.max(window.innerHeight - headerOffset - bookBarHeight, 1);
+      var stepDistance = innerHeight * getStepFraction();
+      maxScroll = stepDistance * (phases.length - 1);
+
+      document.documentElement.style.setProperty('--umbral-pin-top', headerOffset + 'px');
+      stage.style.height = innerHeight + 'px';
+      pinWrap.style.height = (innerHeight + maxScroll) + 'px';
+      section.classList.add('is-pin-active');
+      active = true;
+
+      applyProgress();
     };
-    onScroll();
+
+    var resizeTimer = null;
+    var scheduleMeasure = function(){
+      if(resizeTimer) window.clearTimeout(resizeTimer);
+      resizeTimer = window.setTimeout(measure, 150);
+    };
+
+    measure();
     window.addEventListener('scroll', onScroll, {passive:true});
-    window.addEventListener('resize', onScroll);
-  }catch(e){ console.warn('methodSequence', e); }
+    window.addEventListener('resize', scheduleMeasure);
+    window.addEventListener('orientationchange', scheduleMeasure);
+    window.addEventListener('load', scheduleMeasure);
+
+    if(document.fonts && document.fonts.ready){
+      document.fonts.ready.then(scheduleMeasure)['catch'](function(){});
+    }
+
+    if('ResizeObserver' in window){
+      var ro = new ResizeObserver(scheduleMeasure);
+      ro.observe(phasesHost);
+      ro.observe(stage);
+    }
+
+    if(window.matchMedia){
+      var mqReduced = window.matchMedia('(prefers-reduced-motion: reduce)');
+      if(mqReduced.addEventListener) mqReduced.addEventListener('change', scheduleMeasure);
+      else if(mqReduced.addListener) mqReduced.addListener(scheduleMeasure);
+    }
+  }catch(e){ console.warn('umbralSequence', e); }
+})();
+
+/* ---------- Primera visita: timeline ligada al scroll (Home) ----------
+   Deliberadamente mucho más ligero que umbralSequence(): no hay pinning,
+   no hay listener de scroll ni cálculo continuo de posición. Solo un
+   IntersectionObserver (igual que revealOnScroll(), misma familia de
+   herramientas ya usada en el proyecto) con una banda fina cerca del
+   centro del viewport: cuando el borde de un paso la cruza —entrando o
+   saliendo, en cualquier dirección de scroll— ese paso pasa a ser el
+   activo. No hace falta distinguir "entrar" de "salir": basta con
+   reaccionar a isIntersecting=true, que dispara igual subiendo o bajando.
+
+   El desplazamiento sticky del bloque izquierdo (.first-visit__intro) es
+   CSS puro (position:sticky); aquí solo se mide una vez —y en resize— la
+   altura real del header para no tapar el título, con el mismo patrón que
+   --services-pin-top/--umbral-pin-top.
+
+   Mejora progresiva: si no hay IntersectionObserver o hay
+   prefers-reduced-motion, la función no añade .is-timeline-active y los
+   cinco pasos se quedan en su estado base (todos visibles, línea en tono
+   neutro) definido en CSS sin depender de JS. */
+(function firstVisitTimeline(){
+  try{
+    var section = document.querySelector('.first-visit');
+    var stepsHost = section && section.querySelector('[data-fv-steps]');
+    var steps = stepsHost ? Array.prototype.slice.call(stepsHost.querySelectorAll('[data-fv-step]')) : [];
+    var header = document.getElementById('site-header');
+    if(!section || !stepsHost || !steps.length) return;
+    if(!('IntersectionObserver' in window) || prefersReducedMotion) return;
+
+    var activeIndex = 0;
+
+    function applyState(){
+      steps.forEach(function(step, i){
+        step.classList.toggle('is-active', i === activeIndex);
+        step.classList.toggle('is-done', i < activeIndex);
+      });
+    }
+
+    function setStickyOffset(){
+      var h = (header && header.offsetHeight) || 0;
+      document.documentElement.style.setProperty('--fv-sticky-top', (h + 24) + 'px');
+    }
+
+    section.classList.add('is-timeline-active');
+    applyState();
+    setStickyOffset();
+
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(entry){
+        if(!entry.isIntersecting) return;
+        var idx = steps.indexOf(entry.target);
+        if(idx === -1 || idx === activeIndex) return;
+        activeIndex = idx;
+        applyState();
+      });
+    }, {root:null, rootMargin:'-42% 0px -50% 0px', threshold:0});
+    steps.forEach(function(step){ io.observe(step); });
+
+    var resizeTimer;
+    window.addEventListener('resize', function(){
+      clearTimeout(resizeTimer);
+      resizeTimer = setTimeout(setStickyOffset, 150);
+    }, {passive:true});
+    window.addEventListener('orientationchange', setStickyOffset);
+    if(document.fonts && document.fonts.ready) document.fonts.ready.then(setStickyOffset)['catch'](function(){});
+  }catch(e){ console.warn('firstVisitTimeline', e); }
+})();
+
+/* ---------- Service pages: "service-process" (Cómo es el proceso) ----------
+   FASE 2 de la SERVICE PAGE MASTER: versión genérica de firstVisitTimeline
+   para las páginas de servicio (physiotherapy.html y futuras). Misma
+   filosofía (IntersectionObserver + sticky por CSS, sin ticking/rAF, sin
+   competir con Marshall Method), pero sin asumir ni la cantidad de pasos
+   ni que solo hay una sección en la página: recorre todas las
+   [data-sp-steps] que encuentre y cuenta sus [data-sp-step] hijos, así que
+   un futuro service page con 3, 4 o 6 pasos funciona sin tocar este JS.
+
+   Mejora progresiva: si no hay IntersectionObserver o hay
+   prefers-reduced-motion, no se añade .is-process-active y los pasos se
+   quedan en su estado base (todos visibles) definido en CSS. */
+(function serviceProcessTimeline(){
+  try{
+    var sections = Array.prototype.slice.call(document.querySelectorAll('.service-process'));
+    if(!sections.length) return;
+    if(!('IntersectionObserver' in window) || prefersReducedMotion) return;
+
+    var header = document.getElementById('site-header');
+
+    function setStickyOffset(){
+      var h = (header && header.offsetHeight) || 0;
+      document.documentElement.style.setProperty('--sp-sticky-top', (h + 24) + 'px');
+    }
+    setStickyOffset();
+
+    sections.forEach(function(section){
+      var stepsHost = section.querySelector('[data-sp-steps]');
+      var steps = stepsHost ? Array.prototype.slice.call(stepsHost.querySelectorAll('[data-sp-step]')) : [];
+      if(!stepsHost || !steps.length) return;
+
+      var activeIndex = 0;
+
+      function applyState(){
+        steps.forEach(function(step, i){
+          step.classList.toggle('is-active', i === activeIndex);
+          step.classList.toggle('is-done', i < activeIndex);
+        });
+      }
+
+      section.classList.add('is-process-active');
+      applyState();
+
+      var io = new IntersectionObserver(function(entries){
+        entries.forEach(function(entry){
+          if(!entry.isIntersecting) return;
+          var idx = steps.indexOf(entry.target);
+          if(idx === -1 || idx === activeIndex) return;
+          activeIndex = idx;
+          applyState();
+        });
+      }, {root:null, rootMargin:'-42% 0px -50% 0px', threshold:0});
+      steps.forEach(function(step){ io.observe(step); });
+    });
+
+    var resizeTimer;
+    window.addEventListener('resize', function(){
+      clearTimeout(resizeTimer);
+      resizeTimer = setTimeout(setStickyOffset, 150);
+    }, {passive:true});
+    window.addEventListener('orientationchange', setStickyOffset);
+    if(document.fonts && document.fonts.ready) document.fonts.ready.then(setStickyOffset)['catch'](function(){});
+  }catch(e){ console.warn('serviceProcessTimeline', e); }
 })();
 
 /* ---------- reseñas: fragmento recortado con lectura completa ----------
@@ -904,7 +1263,7 @@ var prefersReducedMotion = window.matchMedia && window.matchMedia('(prefers-redu
    .area-carousel__card ya trae su composición (tamaño, desplazamiento,
    opacidad, orden) resuelta por CSS a partir de data-position (ver
    styles.css, sección 20). El DOM mantiene siempre el mismo orden fijo
-   (physio, wellness, strength, pilates, domicilio); lo único que cambia es
+   (physio, wellness, strength, stretching, pilates, domicilio); lo único que cambia es
    qué posición (-2..2) le corresponde a cada tarjeta según cuál esté
    activa, así que avanzar/retroceder/saltar es solo reescribir el
    data-position de las 5 tarjetas — el CSS anima el resto por su cuenta. */

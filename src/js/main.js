@@ -1227,23 +1227,102 @@ var prefersReducedMotion = window.matchMedia && window.matchMedia('(prefers-redu
   }catch(e){ console.warn('quoteToggles', e); }
 })();
 
-/* ---------- 15. Testimonios editoriales por scroll vertical ----------
-   El avance entre historias depende exclusivamente del scroll vertical:
-   las fotografías contextuales ascienden como capas físicas desde abajo
-   cubriendo a la anterior, mientras los textos se coordinan en sincronía.
-   Completamente reversible al hacer scroll hacia arriba y sin temporizadores. */
+/* ---------- 15. Testimonios editoriales por scroll vertical (Sistema escalable N) ----------
+   Arquitectura desacoplada y paramétrica: lee la fuente semántica única (#testimonials-flow),
+   hidrata el escenario sticky interactivo (.testimonials__stage y .testimonials__text-stage)
+   y calcula dinámicamente alturas, capas de apilamiento y ventanas de transición según N.
+   Con prefers-reduced-motion o sin JS, permanece intacto el flujo normal accesible. */
 (function testimonialsScroll(){
   try{
     if(prefersReducedMotion) return;
 
     var track = document.getElementById('testimonials-track');
-    var layer2 = document.getElementById('photo-layer-2');
-    var layer3 = document.getElementById('photo-layer-3');
-    var story1 = document.getElementById('story-1');
-    var story2 = document.getElementById('story-2');
-    var story3 = document.getElementById('story-3');
+    var flow = document.getElementById('testimonials-flow');
+    var stage = document.getElementById('testimonials-stage');
+    var textStage = document.getElementById('testimonials-text-stage');
 
-    if(!track || !layer2 || !layer3 || !story1 || !story2 || !story3) return;
+    if(!track || !flow || !stage || !textStage) return;
+
+    var items = flow.querySelectorAll('.testimonials__item');
+    var N = items.length;
+    if(N < 2) return;
+
+    var layers = [];
+    var stories = [];
+
+    /* Hidratar dinámicamente las capas fotográficas y las historias de texto */
+    stage.innerHTML = '';
+    textStage.innerHTML = '';
+
+    for(var i = 0; i < N; i++){
+      /* Capa de foto */
+      var layer = document.createElement('div');
+      layer.className = 'testimonials__photo-layer';
+      layer.style.zIndex = i + 1;
+      layer.style.transform = i === 0 ? 'translate3d(0, 0, 0)' : 'translate3d(0, 100%, 0)';
+
+      var srcImg = items[i].querySelector('img');
+      if(srcImg){
+        var cloneImg = srcImg.cloneNode(true);
+        if(srcImg.style.objectPosition){
+          cloneImg.style.objectPosition = srcImg.style.objectPosition;
+        }
+        layer.appendChild(cloneImg);
+      }
+      stage.appendChild(layer);
+      layers.push(layer);
+
+      /* Historia de texto */
+      var story = document.createElement('article');
+      story.className = 'testimonials__story';
+      var textWrap = items[i].querySelector('.testimonials__item-text');
+      if(textWrap){
+        story.innerHTML = textWrap.innerHTML;
+      }
+      if(i === 0){
+        story.style.opacity = '1';
+        story.style.transform = 'translate3d(0, 0, 0)';
+        story.style.visibility = 'visible';
+        story.style.pointerEvents = 'auto';
+      } else {
+        story.style.opacity = '0';
+        story.style.transform = 'translate3d(0, 16px, 0)';
+        story.style.visibility = 'hidden';
+        story.style.pointerEvents = 'none';
+      }
+      textStage.appendChild(story);
+      stories.push(story);
+    }
+
+    /* Activar pista sticky interactiva (puramente visual para usuarios videntes)
+       y ocultar la fuente semántica SOLO visualmente mediante clip accesible,
+       manteniéndola 100% navegable en el Accessibility Tree para lectores de pantalla. */
+    track.hidden = false;
+    track.setAttribute('aria-hidden', 'true');
+    flow.classList.add('testimonials__flow--visually-hidden');
+    flow.removeAttribute('aria-hidden');
+
+    /* Cálculo dinámico de métricas: altura de pista sublineal y altura de text-stage */
+    var updateMetrics = function(){
+      var isMobile = (window.innerWidth || document.documentElement.clientWidth) <= 860;
+      var transInc = isMobile
+        ? Math.max(55, 85 - (N - 2) * 10)
+        : Math.max(65, 100 - (N - 2) * 10);
+      var totalVh = 100 + (N - 1) * transInc;
+      track.style.setProperty('--testimonials-track-height', totalVh + 'vh');
+      track.style.height = totalVh + 'vh';
+
+      /* Ajuste dinámico de altura mínima del text-stage según la historia más alta */
+      var maxStoryH = 0;
+      for(var j = 0; j < stories.length; j++){
+        var sh = stories[j].offsetHeight || stories[j].scrollHeight || 0;
+        if(sh > maxStoryH) maxStoryH = sh;
+      }
+      if(maxStoryH > 0){
+        textStage.style.minHeight = maxStoryH + 'px';
+      }
+    };
+    updateMetrics();
 
     var ticking = false;
 
@@ -1259,12 +1338,22 @@ var prefersReducedMotion = window.matchMedia && window.matchMedia('(prefers-redu
       }
     };
 
+    /* Progresión paramétrica continua para N testimonios:
+       Garantiza la prioridad LECTURA > TRANSICIÓN adaptando la proporción según N
+       sin saltos discretos ni condicionales fijos, conservando exactamente el 18%/22%/21% en N=3. */
+    var W_final = Math.max(0.16, 0.21 - (N - 3) * 0.025);
+    var P_active = 1 - W_final;
+    var numCycles = N - 1;
+    var cycleLen = P_active / numCycles;
+    var stableRatio = Math.min(0.55, 0.455 + (N - 3) * 0.035);
+    var stableLen = cycleLen * stableRatio;
+    var transLen = cycleLen - stableLen;
+
     var onScroll = function(){
       ticking = false;
       var rect = track.getBoundingClientRect();
       var vh = window.innerHeight || document.documentElement.clientHeight;
 
-      /* Fuera de pantalla: optimizar y no calcular */
       if(rect.bottom < -50 || rect.top > vh + 50) return;
 
       var totalScroll = track.offsetHeight - vh;
@@ -1275,83 +1364,67 @@ var prefersReducedMotion = window.matchMedia && window.matchMedia('(prefers-redu
       if(p < 0) p = 0;
       if(p > 1) p = 1;
 
-      /* Segmento 1: Historia 1 activa (p: 0.00 -> 0.18) */
-      if(p <= 0.18){
-        layer2.style.transform = 'translate3d(0, 100%, 0)';
-        layer3.style.transform = 'translate3d(0, 100%, 0)';
-        updateStory(story1, 1, 0);
-        updateStory(story2, 0, 16);
-        updateStory(story3, 0, 16);
+      /* Zona final de reposo: Último testimonio consolidado y estable */
+      if(p >= P_active){
+        for(var i = 1; i < N; i++){
+          layers[i].style.transform = 'translate3d(0, 0%, 0)';
+        }
+        for(var i = 0; i < N - 1; i++){
+          updateStory(stories[i], 0, -14);
+        }
+        updateStory(stories[N - 1], 1, 0);
+        return;
       }
-      /* Transición 1 -> 2: Foto 2 asciende desde abajo (p: 0.18 -> 0.40) */
-      else if(p <= 0.40){
-        var t1 = (p - 0.18) / 0.22; // 0 -> 1
-        var y2 = (1 - t1) * 100;
-        layer2.style.transform = 'translate3d(0, ' + y2.toFixed(2) + '%, 0)';
-        layer3.style.transform = 'translate3d(0, 100%, 0)';
 
-        /* Texto 1 se desvanece suavemente */
-        if(t1 <= 0.38){
-          var sub1 = t1 / 0.38;
-          updateStory(story1, 1 - sub1, -sub1 * 14);
-          updateStory(story2, 0, 16);
-        }
-        /* Pausa limpia mientras la foto cruza el centro */
-        else if(t1 <= 0.54){
-          updateStory(story1, 0, -14);
-          updateStory(story2, 0, 16);
-        }
-        /* Texto 2 entra con la foto consolidándose */
-        else {
-          var sub2 = (t1 - 0.54) / 0.46;
-          updateStory(story1, 0, -14);
-          updateStory(story2, sub2, (1 - sub2) * 14);
-        }
-        updateStory(story3, 0, 16);
-      }
-      /* Segmento 2: Historia 2 estable (p: 0.40 -> 0.58) */
-      else if(p <= 0.58){
-        layer2.style.transform = 'translate3d(0, 0%, 0)';
-        layer3.style.transform = 'translate3d(0, 100%, 0)';
-        updateStory(story1, 0, -14);
-        updateStory(story2, 1, 0);
-        updateStory(story3, 0, 16);
-      }
-      /* Transición 2 -> 3: Foto 3 asciende desde abajo (p: 0.58 -> 0.79) */
-      else if(p <= 0.79){
-        var t2 = (p - 0.58) / 0.21; // 0 -> 1
-        var y3 = (1 - t2) * 100;
-        layer2.style.transform = 'translate3d(0, 0%, 0)';
-        layer3.style.transform = 'translate3d(0, ' + y3.toFixed(2) + '%, 0)';
+      /* Ciclo activo k */
+      var k = Math.floor(p / cycleLen);
+      if(k >= numCycles) k = numCycles - 1;
+      var cycleStart = k * cycleLen;
+      var transStart = cycleStart + stableLen;
 
-        /* Texto 2 se desvanece */
-        if(t2 <= 0.38){
-          var sub2Exit = t2 / 0.38;
-          updateStory(story1, 0, -14);
-          updateStory(story2, 1 - sub2Exit, -sub2Exit * 14);
-          updateStory(story3, 0, 16);
-        }
-        /* Pausa limpia */
-        else if(t2 <= 0.54){
-          updateStory(story1, 0, -14);
-          updateStory(story2, 0, -14);
-          updateStory(story3, 0, 16);
-        }
-        /* Texto 3 entra */
-        else {
-          var sub3 = (t2 - 0.54) / 0.46;
-          updateStory(story1, 0, -14);
-          updateStory(story2, 0, -14);
-          updateStory(story3, sub3, (1 - sub3) * 14);
-        }
+      /* Capas anteriores: completamente arriba (0%) */
+      for(var i = 1; i <= k; i++){
+        layers[i].style.transform = 'translate3d(0, 0%, 0)';
       }
-      /* Segmento 3: Historia 3 consolidada y estable antes del unpin (p: 0.79 -> 1.00) */
-      else {
-        layer2.style.transform = 'translate3d(0, 0%, 0)';
-        layer3.style.transform = 'translate3d(0, 0%, 0)';
-        updateStory(story1, 0, -14);
-        updateStory(story2, 0, -14);
-        updateStory(story3, 1, 0);
+      /* Capas posteriores: completamente abajo (100%) */
+      for(var i = k + 2; i < N; i++){
+        layers[i].style.transform = 'translate3d(0, 100%, 0)';
+      }
+
+      /* Textos anteriores: ocultos arriba (-14px) */
+      for(var i = 0; i < k; i++){
+        updateStory(stories[i], 0, -14);
+      }
+      /* Textos posteriores: ocultos abajo (+16px) */
+      for(var i = k + 2; i < N; i++){
+        updateStory(stories[i], 0, 16);
+      }
+
+      /* Dentro del ciclo k: estado estable vs transición k -> k+1 */
+      if(p < transStart){
+        layers[k + 1].style.transform = 'translate3d(0, 100%, 0)';
+        updateStory(stories[k], 1, 0);
+        if(k + 1 < N) updateStory(stories[k + 1], 0, 16);
+      } else {
+        var t = (p - transStart) / transLen;
+        if(t < 0) t = 0;
+        if(t > 1) t = 1;
+
+        var yNext = (1 - t) * 100;
+        layers[k + 1].style.transform = 'translate3d(0, ' + yNext.toFixed(2) + '%, 0)';
+
+        if(t <= 0.38){
+          var subExit = t / 0.38;
+          updateStory(stories[k], 1 - subExit, -subExit * 14);
+          updateStory(stories[k + 1], 0, 16);
+        } else if(t <= 0.54){
+          updateStory(stories[k], 0, -14);
+          updateStory(stories[k + 1], 0, 16);
+        } else {
+          var subEnter = (t - 0.54) / 0.46;
+          updateStory(stories[k], 0, -14);
+          updateStory(stories[k + 1], subEnter, (1 - subEnter) * 14);
+        }
       }
     };
 
@@ -1365,11 +1438,14 @@ var prefersReducedMotion = window.matchMedia && window.matchMedia('(prefers-redu
     window.addEventListener('resize', function(){
       if(!ticking){
         ticking = true;
-        window.requestAnimationFrame(onScroll);
+        window.requestAnimationFrame(function(){
+          updateMetrics();
+          onScroll();
+        });
       }
     }, { passive: true });
 
-    /* Ejecución inicial al cargar */
+    /* Inicialización al cargar */
     onScroll();
   }catch(e){ console.warn('testimonialsScroll', e); }
 })();

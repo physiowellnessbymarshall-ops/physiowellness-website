@@ -1398,10 +1398,10 @@ a:focus-visible,button:focus-visible,input:focus-visible{
   position:relative;
 }
 
-/* Pista de scroll vertical que da recorrido a las 3 historias */
+/* Pista de scroll vertical escalable según N testimonios */
 .testimonials__track{
   position:relative;
-  height:280vh; /* Recorrido natural para las 3 historias */
+  height:var(--testimonials-track-height, 280vh); /* Calculado dinámicamente según N */
 }
 
 /* Contenedor sticky que se mantiene anclado en pantalla mientras dura el recorrido */
@@ -1452,39 +1452,12 @@ a:focus-visible,button:focus-visible,input:focus-visible{
   will-change:transform;
 }
 
-.testimonials__photo-layer--1{
-  z-index:1;
-  transform:translate3d(0, 0, 0);
-}
-
-.testimonials__photo-layer--2{
-  z-index:2;
-  transform:translate3d(0, var(--layer2-y, 100%), 0);
-}
-
-.testimonials__photo-layer--3{
-  z-index:3;
-  transform:translate3d(0, var(--layer3-y, 100%), 0);
-}
-
 .testimonials__photo-layer img{
   width:100%;
   height:100%;
   object-fit:cover;
-  object-position:center;
+  object-position:var(--focal-point, center);
   display:block;
-}
-
-.testimonials__photo-layer--1 img{
-  object-position:center 30%;
-}
-
-.testimonials__photo-layer--2 img{
-  object-position:center 45%;
-}
-
-.testimonials__photo-layer--3 img{
-  object-position:center 35%;
 }
 
 /* Columna 2: Contenido editorial */
@@ -1539,24 +1512,6 @@ a:focus-visible,button:focus-visible,input:focus-visible{
   pointer-events:none;
   visibility:hidden;
   will-change:opacity, transform;
-}
-
-.testimonials__story--1{
-  /* Por defecto historia 1 visible inicialmente */
-  opacity:var(--story1-opacity, 1);
-  transform:translate3d(0, var(--story1-y, 0), 0);
-  pointer-events:auto;
-  visibility:visible;
-}
-
-.testimonials__story--2{
-  opacity:var(--story2-opacity, 0);
-  transform:translate3d(0, var(--story2-y, 16px), 0);
-}
-
-.testimonials__story--3{
-  opacity:var(--story3-opacity, 0);
-  transform:translate3d(0, var(--story3-y, 16px), 0);
 }
 
 .testimonials__quote-wrap{
@@ -1643,17 +1598,16 @@ a:focus-visible,button:focus-visible,input:focus-visible{
   color:var(--pw-ink-50);
 }
 
-/* Modo en flujo normal para prefers-reduced-motion (oculto por defecto) */
-.testimonials__reduced-flow{
-  display:none;
+/* Fuente semántica única en flujo normal (usada sin JS y en prefers-reduced-motion) */
+.testimonials__flow{
   padding-block:var(--sp-20);
 }
 
-.testimonials__header--reduced{
+.testimonials__header--flow{
   margin-bottom:var(--sp-12);
 }
 
-.testimonials__reduced-item{
+.testimonials__item{
   display:grid;
   grid-template-columns:minmax(0, 44%) minmax(0, 56%);
   gap:clamp(1.5rem, 4vw, 3.5rem);
@@ -1663,21 +1617,53 @@ a:focus-visible,button:focus-visible,input:focus-visible{
   border-bottom:1px solid var(--pw-line);
 }
 
-.testimonials__reduced-item:last-of-type{
+.testimonials__item:last-of-type{
   border-bottom:none;
   margin-bottom:0;
   padding-bottom:var(--sp-6);
 }
 
-.testimonials__reduced-text{
+.testimonials__item-media{
+  position:relative;
+  width:100%;
+  aspect-ratio:4 / 5;
+  border-radius:var(--radius, 2px);
+  overflow:hidden;
+  background:var(--pw-mist);
+  border:1px solid var(--pw-line);
+}
+
+.testimonials__item-media img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  object-position:var(--focal-point, center);
+  display:block;
+}
+
+.testimonials__item-text{
   display:flex;
   flex-direction:column;
+}
+
+/* Cuando el visor sticky interactivo está activo, la fuente semántica se oculta solo visualmente,
+   permaneciendo 100% disponible y navegable para tecnologías asistivas (lectores de pantalla) */
+.testimonials__flow--visually-hidden{
+  position:absolute!important;
+  width:1px!important;
+  height:1px!important;
+  padding:0!important;
+  margin:-1px!important;
+  overflow:hidden!important;
+  clip:rect(0,0,0,0)!important;
+  white-space:normal!important;
+  border:0!important;
 }
 
 /* Responsivo para móviles y tablets */
 @media (max-width:860px){
   .testimonials__track{
-    height:250vh; /* Pacing cómodo para scroll móvil */
+    height:var(--testimonials-track-height, 250vh);
   }
 
   .testimonials__sticky{
@@ -1699,12 +1685,12 @@ a:focus-visible,button:focus-visible,input:focus-visible{
 
   .testimonials__stage{
     aspect-ratio:auto;
-    height:clamp(170px, 28svh, 230px);
+    height:clamp(135px, 22svh, 210px);
     width:100%;
   }
 
   .testimonials__text-stage{
-    min-height:200px;
+    min-height:190px;
   }
 
   .testimonials__quote-wrap{
@@ -1712,8 +1698,8 @@ a:focus-visible,button:focus-visible,input:focus-visible{
   }
 
   .testimonials__quote{
-    font-size:clamp(.95rem, 3.4vw, 1.06rem);
-    line-height:1.48;
+    font-size:clamp(.92rem, 3.2vw, 1.05rem);
+    line-height:1.46;
   }
 
   .testimonials__meta{
@@ -1727,10 +1713,16 @@ a:focus-visible,button:focus-visible,input:focus-visible{
     padding-top:var(--sp-3);
   }
 
-  .testimonials__reduced-item{
+  .testimonials__item{
     display:flex;
     flex-direction:column;
     gap:var(--sp-6);
+  }
+
+  .testimonials__item-media{
+    aspect-ratio:auto;
+    height:clamp(135px, 22svh, 210px);
+    width:100%;
   }
 }
 
@@ -1739,9 +1731,13 @@ a:focus-visible,button:focus-visible,input:focus-visible{
   .testimonials__track{
     display:none!important;
   }
-  .testimonials__reduced-flow{
-    display:flex!important;
-    flex-direction:column;
+  .testimonials__flow{
+    display:block!important;
+    position:static!important;
+    width:auto!important;
+    height:auto!important;
+    overflow:visible!important;
+    clip:auto!important;
   }
 }
 

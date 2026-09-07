@@ -694,7 +694,7 @@ a:focus-visible,button:focus-visible,input:focus-visible{
 }
 
 .services__grid{
-  display:flex;gap:var(--sp-8);align-items:center;
+  display:flex;gap:clamp(1.25rem,2vw,1.75rem);align-items:center;
   width:max-content;
   height:100%;
   padding-inline:clamp(1.5rem,4vw,2.75rem);
@@ -703,7 +703,7 @@ a:focus-visible,button:focus-visible,input:focus-visible{
 
 .service-panel{
   flex:0 0 auto;
-  width:clamp(380px,42vw,560px);
+  width:clamp(360px,36vw,480px);
   scroll-snap-align:start;
   display:flex;flex-direction:column;
   background:rgba(255,255,255,.03);
@@ -762,22 +762,20 @@ a:focus-visible,button:focus-visible,input:focus-visible{
   .service-panel__media{aspect-ratio:4/3;}
 }
 
-/* Panel final de transición: quinto elemento del riel (tramo 2 del
+/* Panel final de transición: sexto elemento del riel (tramo 2 del
    escenario fijado en escritorio; última tarjeta del scroll nativo en el
-   resto de casos). Servicio complementario + puente hacia Method. */
+   resto de casos). Servicio complementario y acceso al catálogo completo. */
 .services__transition{
   flex:0 0 auto;
-  width:clamp(560px,54vw,820px);
+  width:clamp(360px,36vw,480px);
   scroll-snap-align:start;
-  display:flex;flex-direction:column;justify-content:center;gap:var(--sp-8);
-  padding:var(--sp-10);
+  display:flex;flex-direction:column;justify-content:center;gap:var(--sp-6);
+  padding:clamp(var(--sp-6),3vw,var(--sp-8));
   border:1px solid rgba(255,255,255,.14);
   background:rgba(255,255,255,.03);
 }
-/* El ancho mínimo de 560px de arriba desborda cualquier viewport móvil
-   (<719px); esta regla debe ir después de la base para ganar la cascada
-   con la misma especificidad (antes vivía dentro del media query de
-   arriba y perdía por orden de aparición, causando scroll horizontal). */
+/* El ancho mínimo de arriba desborda cualquier viewport móvil (<719px);
+   esta regla debe ir después de la base para ganar la cascada con la misma especificidad. */
 @media (max-width:719px){
   .services__transition{width:100%;}
 }
@@ -817,12 +815,30 @@ a:focus-visible,button:focus-visible,input:focus-visible{
   padding-bottom:.25rem;
 }
 
-.services__transition-bridge{
-  padding-top:var(--sp-6);
-  border-top:1px solid rgba(255,255,255,.16);
-  font-size:1.05rem;font-weight:500;
-  color:var(--pw-white);
-  max-width:48ch;
+/* Transición editorial en flujo normal: micropausa de respiración antes de The Marshall Method */
+.services__bridge{
+  padding-block:clamp(3.5rem,6vw,5.5rem) clamp(2.5rem,4vw,4.5rem);
+  display:flex;
+  justify-content:center;
+  text-align:center;
+  position:relative;
+}
+.services__bridge-text{
+  font-size:clamp(1.15rem,2.2vw,1.55rem);
+  font-weight:400;
+  line-height:1.45;
+  color:rgba(255,255,255,.88);
+  max-width:44ch;
+  letter-spacing:-0.01em;
+  position:relative;
+}
+.services__bridge-text::before{
+  content:"";
+  display:block;
+  width:2.5rem;
+  height:1px;
+  background:rgba(143,217,201,.4);
+  margin:0 auto clamp(1.25rem,2.5vw,2rem);
 }
 
 /* ---------- 11. The Marshall Method — "El umbral" ----------
@@ -1117,7 +1133,7 @@ a:focus-visible,button:focus-visible,input:focus-visible{
    eliminando cualquier corte brusco antes de la siguiente sección (§18 Fase 2). */
 .umbral__exit{
   height:clamp(6rem,11vw,9.5rem);
-  margin-top:var(--sp-14);
+  margin-top:clamp(3.5rem,5.5vw,5rem);
   background:linear-gradient(180deg,
     var(--pw-primary-900) 0%,
     rgba(18,60,55,.94) 22%,
@@ -1133,19 +1149,19 @@ a:focus-visible,button:focus-visible,input:focus-visible{
    fotografía real de bienvenida de la clínica, insignia de 60 minutos y
    relato progresivo de 5 momentos que disipa la incertidumbre del paciente. */
 .first-visit{
-  padding-block:var(--sp-20) var(--sp-24);
+  padding-block:clamp(6.5rem,9.5vw,9.5rem) clamp(7.5rem,10.5vw,10.5rem);
   background:var(--pw-mist);
   border-bottom:1px solid var(--pw-line);
 }
-.first-visit__grid{display:grid;gap:var(--sp-12);}
+.first-visit__grid{display:grid;gap:clamp(2.5rem,5vw,3.5rem);}
 @media (min-width:860px){
-  .first-visit__grid{grid-template-columns:1.05fr .95fr;gap:var(--sp-20);align-items:start;}
+  .first-visit__grid{grid-template-columns:1.05fr .95fr;gap:clamp(3.5rem,5.5vw,5.5rem);align-items:start;}
 }
 
 /* Insignia editorial de 60 min: anotación tipográfica limpia, sin aspecto de píldora SaaS (§2 QA) */
 .first-visit__badge-row{
   display:flex;align-items:center;flex-wrap:wrap;gap:var(--sp-3);
-  margin-bottom:var(--sp-3);
+  margin-bottom:clamp(.85rem,1.4vw,1.25rem);
 }
 .first-visit__badge-row .section-eyebrow{margin-bottom:0;}
 .first-visit__duration{
@@ -1163,12 +1179,12 @@ a:focus-visible,button:focus-visible,input:focus-visible{
   background:var(--pw-accent);
 }
 
-.first-visit__lead{margin-top:var(--sp-4);max-width:44ch;}
+.first-visit__lead{margin-top:clamp(1.4rem,2.2vw,1.9rem);max-width:44ch;}
 
 /* Fotografía editorial de bienvenida: encuadre integrado, sombra mínima (§3 QA) */
 .first-visit__media{
   position:relative;
-  margin-top:var(--sp-8);
+  margin-top:clamp(2.75rem,4vw,3.75rem);
   border-radius:var(--radius-md);
   overflow:hidden;
   background:rgba(18,60,55,.04);
@@ -1201,28 +1217,31 @@ a:focus-visible,button:focus-visible,input:focus-visible{
   background:var(--pw-accent);
 }
 
-.first-visit__actions{display:flex;flex-wrap:wrap;gap:var(--sp-4);margin-top:var(--sp-8);}
+.first-visit__actions{display:flex;flex-wrap:wrap;gap:var(--sp-4);margin-top:clamp(2.75rem,4vw,3.75rem);}
 .first-visit__mobile-actions{display:none;}
 
 @media (max-width:859px){
-  .first-visit{padding-bottom:var(--sp-24);}
+  .first-visit{padding-bottom:clamp(5.5rem,8.5vw,8rem);}
   .first-visit__actions{display:none;}
   .first-visit__mobile-actions{
     display:flex;flex-direction:column;gap:var(--sp-3);
-    margin-top:var(--sp-10);margin-bottom:var(--sp-16);
+    margin-top:clamp(2.75rem,5.5vw,4rem);margin-bottom:0;
   }
 }
 .first-visit .btn--outline{border-color:var(--pw-line);color:var(--pw-primary-900);}
 .first-visit .btn--outline:hover{border-color:var(--pw-accent);background:rgba(38,152,136,.08);}
 
 /* Timeline editorial: marcadores sutiles y línea fina, protagonismo tipográfico (§1 QA) */
-.first-visit__steps{counter-reset:none;display:grid;}
+.first-visit__steps{
+  --fv-step-pad:clamp(1.75rem,2.5vw,2.35rem);
+  counter-reset:none;display:grid;
+}
 .first-visit .first-visit__step{
   counter-increment:none;
   display:block;
   position:relative;
   align-items:unset;gap:0;
-  padding-block:var(--sp-6);
+  padding-block:var(--fv-step-pad);
   padding-left:2.75rem;
   border-top:none;
   font-size:1rem;
@@ -1248,12 +1267,12 @@ a:focus-visible,button:focus-visible,input:focus-visible{
   transform:translateX(-50%);
   transition:background var(--dur-med) var(--ease-out);
 }
-.first-visit .first-visit__step:first-child .first-visit__marker::before{top:calc(var(--sp-6) + .6rem);}
-.first-visit .first-visit__step:last-child .first-visit__marker::before{bottom:calc(var(--sp-6) + .6rem);}
+.first-visit .first-visit__step:first-child .first-visit__marker::before{top:calc(var(--fv-step-pad) + .6rem);}
+.first-visit .first-visit__step:last-child .first-visit__marker::before{bottom:calc(var(--fv-step-pad) + .6rem);}
 
 .first-visit__dot{
   position:absolute;
-  left:50%;top:calc(var(--sp-6) + .6rem);
+  left:50%;top:calc(var(--fv-step-pad) + .6rem);
   transform:translate(-50%,-50%);
   width:.45rem;height:.45rem;border-radius:50%;
   background:var(--pw-white);
@@ -1271,7 +1290,7 @@ a:focus-visible,button:focus-visible,input:focus-visible{
 .first-visit__step-content{flex:1 1 auto;min-width:0;}
 .first-visit__step-title{
   font-size:1.05rem;font-weight:550;line-height:1.35;
-  color:var(--pw-ink);margin:0 0 .2rem 0;
+  color:var(--pw-ink);margin:0 0 .25rem 0;
   transition:color var(--dur-med) var(--ease-out);
 }
 .first-visit__step-desc{
@@ -1323,7 +1342,7 @@ a:focus-visible,button:focus-visible,input:focus-visible{
    Retrato y texto en horizontal a partir de tablet: reequilibra la
    proporción retrato/texto y evita que la sección ocupe una franja
    vertical excesiva, sobre todo en móvil (ratio 3/4 en vez de 4/5). */
-.team{padding-block:var(--sp-24);background:var(--pw-white);}
+.team{padding-block:clamp(7.5rem,11vw,10.5rem) var(--sp-24);background:var(--pw-white);}
 .team__head{max-width:40rem;margin-bottom:var(--sp-12);}
 .team__grid{display:grid;gap:var(--sp-10);grid-template-columns:1fr;}
 @media (min-width:640px){ .team__grid{grid-template-columns:repeat(2,1fr);} }

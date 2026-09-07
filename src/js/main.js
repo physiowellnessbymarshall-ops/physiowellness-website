@@ -674,7 +674,10 @@ var prefersReducedMotion = window.matchMedia && window.matchMedia('(prefers-redu
       headerOffset = header.offsetHeight || 0;
 
       var innerHeight = Math.max(window.innerHeight - headerOffset, 1);
-      var wrapHeight = innerHeight + maxTranslate;
+      /* Permanencia breve y deliberada (~130px) para que el último panel tenga
+         tiempo real de lectura serena antes del unpin, evitando desenganches bruscos. */
+      var finalRunway = Math.round(Math.min(140, Math.max(90, innerHeight * 0.16)));
+      var wrapHeight = innerHeight + maxTranslate + finalRunway;
 
       document.documentElement.style.setProperty('--services-pin-top', headerOffset + 'px');
       pinInner.style.height = innerHeight + 'px';

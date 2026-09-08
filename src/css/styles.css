@@ -1805,6 +1805,7 @@ a:focus-visible,button:focus-visible,input:focus-visible{
    movimiento continuo; solo entonces se sustituye el scroll nativo por
    overflow:hidden + arrastre propio (misma cinta, ahora animada). */
 .google-reviews__viewport{
+  position:relative;
   width:100%;
   /* Ancla de container query para .google-review-card (ver más abajo):
      es el único ancestro de las tarjetas con un ancho ya definido y
@@ -1820,6 +1821,31 @@ a:focus-visible,button:focus-visible,input:focus-visible{
   -webkit-overflow-scrolling:touch;
   scrollbar-width:thin;
   scrollbar-color:var(--pw-primary) transparent;
+}
+
+/* Gradient fade edges para marquee */
+.google-reviews__viewport::before{
+  content:'';
+  position:absolute;
+  left:0;
+  top:0;
+  bottom:0;
+  width:60px;
+  background:linear-gradient(to right,var(--pw-white),transparent);
+  pointer-events:none;
+  z-index:10;
+}
+
+.google-reviews__viewport::after{
+  content:'';
+  position:absolute;
+  right:0;
+  top:0;
+  bottom:0;
+  width:60px;
+  background:linear-gradient(to left,var(--pw-white),transparent);
+  pointer-events:none;
+  z-index:10;
 }
 .google-reviews__viewport::-webkit-scrollbar{height:6px;}
 .google-reviews__viewport::-webkit-scrollbar-thumb{background:var(--pw-line);border-radius:999px;}
@@ -1863,6 +1889,13 @@ a:focus-visible,button:focus-visible,input:focus-visible{
 .google-reviews__rail{
   display:flex;gap:var(--sp-6);
   will-change:transform;
+  animation-play-state:running;
+  transition:animation-play-state 0.2s;
+}
+
+/* Pausar animación al hover */
+.google-reviews__viewport:hover .google-reviews__rail{
+  animation-play-state:paused;
 }
 .google-reviews__list{
   list-style:none;margin:0;padding:0;
@@ -3408,9 +3441,35 @@ a:focus-visible,button:focus-visible,input:focus-visible{
   color:var(--pw-ink-70);
 }
 .problem-ticker__viewport{
+  position:relative;
   width:100%;overflow:hidden;
   mask-image:linear-gradient(to right,transparent,#000 4%,#000 96%,transparent);
   -webkit-mask-image:linear-gradient(to right,transparent,#000 4%,#000 96%,transparent);
+}
+
+/* Gradient fade edges */
+.problem-ticker__viewport::before{
+  content:'';
+  position:absolute;
+  left:0;
+  top:0;
+  bottom:0;
+  width:60px;
+  background:linear-gradient(to right,var(--pw-mist),transparent);
+  pointer-events:none;
+  z-index:10;
+}
+
+.problem-ticker__viewport::after{
+  content:'';
+  position:absolute;
+  right:0;
+  top:0;
+  bottom:0;
+  width:60px;
+  background:linear-gradient(to left,var(--pw-mist),transparent);
+  pointer-events:none;
+  z-index:10;
 }
 .problem-ticker__rail{
   display:flex;width:max-content;gap:var(--sp-10);

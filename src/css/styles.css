@@ -15,6 +15,7 @@
   --pw-primary-600:#1c5c54;   /* hover / estado activo, derivado */
   --pw-primary-900:#123c37;   /* fondo profundo (cabecera sólida, secciones oscuras), derivado */
   --pw-accent:#269888;        /* acento confirmado por el inventario maestro */
+  --pw-accent-accessible:#8fd9c9; /* para textos pequeños (8fd9c9 = 7.5:1 sobre oscuro) */
   --pw-white:#ffffff;
   --pw-ink:#12201d;           /* texto principal, casi negro con matiz verde */
   --pw-ink-70:rgba(18,32,29,.7);
@@ -121,13 +122,13 @@ a:focus-visible,button:focus-visible,input:focus-visible{
   letter-spacing:.2em;
   text-transform:uppercase;
   font-weight:600;
-  color:var(--pw-accent);
+  color:var(--pw-primary);
 }
 .eyebrow::before{
-  content:"";display:block;width:2rem;height:1px;background:var(--pw-accent);
+  content:"";display:block;width:2rem;height:1px;background:var(--pw-primary);
 }
-.eyebrow--on-dark{color:#8fd9c9;}
-.eyebrow--on-dark::before{background:#8fd9c9;}
+.eyebrow--on-dark{color:var(--pw-accent-accessible);}
+.eyebrow--on-dark::before{background:var(--pw-accent-accessible);}
 
 /* ---------- 3. Botones ---------- */
 .btn{
@@ -3743,5 +3744,44 @@ a:focus-visible,button:focus-visible,input:focus-visible{
   .service-feature--photo-left .service-feature__grid{
     grid-template-columns:.9fr 1.1fr;
     grid-template-areas:"photo text" "photo actions";
+  }
+}
+
+/* ========== FOCUS STATES (Accesibilidad) ========== */
+
+/* Botones primarios */
+.btn:focus-visible{
+  outline:2px solid var(--pw-accent);
+  outline-offset:2px;
+  border-radius:2px;
+}
+
+/* Enlaces (.service-feature__link, .area-relation__cta) */
+a:not(.booking-panel__help):focus-visible,
+.service-feature__link:focus-visible,
+.area-relation__cta:focus-visible{
+  outline:2px solid var(--pw-accent);
+  outline-offset:2px;
+}
+
+/* Nav items */
+.nav-item__btn:focus-visible,
+.mobile-nav__link:focus-visible{
+  outline:2px dashed var(--pw-accent);
+  outline-offset:4px;
+}
+
+/* Aumentar touch target en móvil */
+@media (max-width:768px){
+  .btn{
+    min-height:44px;
+    min-width:44px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+  }
+
+  a[class*="link"]{
+    min-height:44px;
   }
 }

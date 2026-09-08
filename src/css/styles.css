@@ -3394,7 +3394,7 @@ a:focus-visible,button:focus-visible,input:focus-visible{
    pausa al pasar el cursor o al enfocar con teclado es puro CSS (ver
    .problem-ticker__viewport:hover/:focus-within más abajo). La segunda
    <ul> es un duplicado visual puro, por eso lleva aria-hidden="true". */
-.problem-ticker{padding-block:var(--sp-8) var(--sp-4);background:var(--pw-mist);border-top:1px solid var(--pw-line);}
+.problem-ticker{padding-block:var(--sp-12);background:var(--pw-mist);border-top:1px solid var(--pw-line);}
 .problem-ticker__head{
   display:flex;align-items:center;justify-content:space-between;gap:var(--sp-6);
   flex-wrap:wrap;margin-bottom:var(--sp-4);
@@ -3453,7 +3453,7 @@ a:focus-visible,button:focus-visible,input:focus-visible{
    menos padding inferior que superior (la franja "Relación entre áreas"
    comparte esta misma --pw-mist justo después y debe leerse como el cierre
    de esta sección, no como un bloque nuevo). */
-.specialty-list{padding-top:var(--sp-16);padding-bottom:var(--sp-8);background:var(--pw-mist);}
+.specialty-list{padding-block:var(--sp-12);background:var(--pw-mist);}
 .specialty-list__head{max-width:60ch;}
 .specialty-list__items{
   list-style:none;margin:var(--sp-12) 0 0;padding:0;
@@ -3523,7 +3523,7 @@ a:focus-visible,button:focus-visible,input:focus-visible{
    .specialty-list__items li:last-child, ya marca el eje compartido) y
    con muy poco padding superior. El padding inferior, más generoso,
    introduce el cambio real de fondo (a blanco) de "Cómo es el proceso". */
-.area-relation{padding-top:var(--sp-4);padding-bottom:var(--sp-8);background:var(--pw-mist);}
+.area-relation{padding-block:var(--sp-12) var(--sp-8);background:var(--pw-mist);}
 .area-relation__inner{max-width:56ch;}
 .area-relation__text{
   font-size:var(--fs-lead);
@@ -3671,7 +3671,7 @@ a:focus-visible,button:focus-visible,input:focus-visible{
 }
 .service-feature__text{max-width:52ch;}
 .service-feature__eyebrow{margin-bottom:var(--sp-3);}
-.service-feature__title{margin-top:0;font-size:1.5rem;}
+.service-feature__title{margin-top:0;font-size:var(--fs-h3);}
 .service-feature__desc{margin-top:var(--sp-4);color:var(--pw-ink-70);line-height:1.6;}
 .service-feature__desc + .service-feature__desc{margin-top:var(--sp-3);}
 

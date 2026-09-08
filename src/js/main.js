@@ -1920,3 +1920,126 @@ var prefersReducedMotion = window.matchMedia && window.matchMedia('(prefers-redu
     applyResponsiveMode();
   }catch(e){ console.warn('googleReviewsMarquee', e); }
 })();
+
+/* ---------- Método Marshall — Experiencia narrativa y cinética (Fase 2) ----------
+   Página dedicada (src/pages/metodo.html / .page-metodo).
+   Sincroniza:
+   1. Frame cinematográfico expansivo del Hero mediante scroll scrub pasivo
+   2. Espina bio-cinética lateral (barra de progreso vertical y pulso activo)
+   3. Navegación sticky sincronizada con las 5 fases clínicas
+   4. Smooth scroll accesible compensado por header y sticky nav
+   Respeta prefersReducedMotion y opera 100% con scroll nativo pasivo sin trabas. */
+(function metodoMarshallExperience(){
+  try{
+    var page = document.querySelector('.page-metodo');
+    if(!page) return;
+
+    var cinemaWrap = document.getElementById('hero-cinema-wrap');
+    var threadBar = document.getElementById('method-thread-bar');
+    var threadPulse = document.getElementById('method-thread-pulse');
+    var scenes = Array.prototype.slice.call(document.querySelectorAll('.method-scene'));
+    var navItems = Array.prototype.slice.call(document.querySelectorAll('.method-system__nav-item'));
+    var navLinks = Array.prototype.slice.call(document.querySelectorAll('.method-system__nav-link'));
+
+    /* 1. Sincronización activa de las 5 fases en el riel sticky */
+    var activeIndex = 0;
+    function updateActivePhase(idx){
+      if(idx === activeIndex) return;
+      activeIndex = idx;
+      navItems.forEach(function(item, i){
+        var isActive = i === idx;
+        item.classList.toggle('is-active', isActive);
+        var link = item.querySelector('.method-system__nav-link');
+        if(link){
+          if(isActive){
+            link.setAttribute('aria-current', 'true');
+          }else{
+            link.removeAttribute('aria-current');
+          }
+        }
+      });
+    }
+
+    if('IntersectionObserver' in window){
+      var sceneObserver = new IntersectionObserver(function(entries){
+        entries.forEach(function(entry){
+          if(entry.isIntersecting){
+            var idx = parseInt(entry.target.getAttribute('data-phase-index'), 10);
+            if(!isNaN(idx)){
+              updateActivePhase(idx);
+            }
+          }
+        });
+      }, {
+        rootMargin: '-25% 0px -40% 0px',
+        threshold: 0.15
+      });
+
+      scenes.forEach(function(s){ sceneObserver.observe(s); });
+    }
+
+    /* Navegación suave con compensación de barra sticky */
+    navLinks.forEach(function(link){
+      link.addEventListener('click', function(e){
+        var href = link.getAttribute('href');
+        if(!href || href.indexOf('#') !== 0) return;
+        var target = document.querySelector(href);
+        if(!target) return;
+        e.preventDefault();
+        var targetOffset = target.getBoundingClientRect().top + window.scrollY - 130;
+        window.scrollTo({
+          top: Math.max(0, targetOffset),
+          behavior: prefersReducedMotion ? 'auto' : 'smooth'
+        });
+        history.replaceState(null, '', href);
+      });
+    });
+
+    /* 2. Scroll Scrub Pasivo: Hero Cinematográfico y Espina Lateral */
+    var ticking = false;
+    var lastScrollY = -1;
+
+    function onScroll(){
+      if(ticking) return;
+      ticking = true;
+      window.requestAnimationFrame(render);
+    }
+
+    function render(){
+      ticking = false;
+      var y = window.scrollY || window.pageYOffset || 0;
+      if(y === lastScrollY) return;
+      lastScrollY = y;
+
+      var docHeight = document.documentElement.scrollHeight - window.innerHeight;
+      var progress = docHeight > 0 ? Math.min(Math.max(y / docHeight, 0), 1) : 0;
+
+      page.classList.toggle('has-scrolled', y > 50);
+
+      /* Barra de progreso de la espina bio-cinética lateral */
+      if(threadBar){
+        threadBar.style.height = (progress * 100).toFixed(1) + '%';
+      }
+      if(threadPulse){
+        threadPulse.style.top = (progress * 100).toFixed(1) + '%';
+      }
+
+      /* Hero Cinematic Frame: expansión armónica de 88% a 98% en los primeros 450px de scroll */
+      if(!prefersReducedMotion && cinemaWrap){
+        var scrub = Math.min(Math.max(y / 450, 0), 1);
+        var heroWidth = 88 + (scrub * 10);
+        var heroRadius = 24 - (scrub * 18);
+        var heroScale = 1.0 + (scrub * 0.05);
+
+        cinemaWrap.style.setProperty('--hero-width', heroWidth.toFixed(2) + '%');
+        cinemaWrap.style.setProperty('--hero-radius', heroRadius.toFixed(1) + 'px');
+        cinemaWrap.style.setProperty('--hero-scale', heroScale.toFixed(3));
+      }
+    }
+
+    window.addEventListener('scroll', onScroll, {passive: true});
+    render();
+
+  }catch(e){ console.warn('metodoMarshallExperience', e); }
+})();
+

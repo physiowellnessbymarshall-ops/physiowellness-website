@@ -3546,11 +3546,13 @@ a:focus-visible,button:focus-visible,input:focus-visible{
   color:var(--pw-ink-70);
   max-width:52ch;
 }
-@media (min-width:860px){
+@media (min-width:640px){
   .specialty-list__items{
     grid-template-columns:1fr 1fr;
     column-gap:var(--sp-16);
   }
+}
+@media (min-width:860px){
   .specialty-item{padding-block:var(--sp-8);}
 }
 

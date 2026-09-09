@@ -187,8 +187,8 @@ Las imágenes funcionan como universo visual de la experiencia real del centro (
 
 | Capa | Archivos servidos | Origen / Licencia | Descripción de la escena | Rol en la secuencia |
 | :--- | :--- | :--- | :--- | :--- |
-| Capa 1 (Base) | `src/assets/img/stock/hero-fisio-720.webp` / `-1440.webp` | Pexels (Yan Krukau), ya en repositorio | Fisioterapeuta realizando valoración de movilidad y tratamiento manual en camilla junto a ventanal de luz natural. | Escena inicial para la Historia 1 (enfoque en sesión y alivio en camilla). |
-| Capa 2 (Asciende) | `src/assets/img/hero-clinic.webp` | Fotografía real propia del centro (Sitges) | Espacio físico de consulta: camilla hidráulica, espaldera, PowerPlate, gran espejo e iluminación cálida. | Asciende desde abajo al hacer scroll hacia la Historia 2 (instalaciones impecables y profesionalidad). |
+| Capa 1 (Base) | `seat-news-appointment-new-design-director-diez.jpg.avif` | Aportada para testimonio de Jorge Díaz | Retrato de Jorge Díaz. | Escena inicial para la Historia 1 (Jorge Díaz). |
+| Capa 2 (Asciende) | `src/assets/img/reviews/david-johnson-720.webp` / `-1200.webp` | Aportada por el paciente / cliente (David Johnson), 2026-09-09 | Retrato real de David Johnson sonriente en exterior con camisa azul claro. | Asciende desde abajo al hacer scroll hacia la Historia 2 (David Johnson). |
 | Capa 3 (Asciende) | `src/assets/img/local/local-lounge-720.webp` / `-1440.webp` | Fotografía real propia del centro (Sitges) | Zona de bienvenida y espera con luz natural, sillones verde oliva de terciopelo, mesa dorada, mármol y plantas. | Asciende desde abajo al hacer scroll hacia la Historia 3 (atención, calma y cuidado global). |
 
 - **Integración**: `.testimonials__photo-layer` dentro del marco sticky `.testimonials__stage` (`aspect-ratio: 4/5`), con capas absolutas controladas por `translateY()` según el progreso del scroll pasivo de la página.

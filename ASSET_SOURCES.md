@@ -193,4 +193,59 @@ Las imágenes funcionan como universo visual de la experiencia real del centro (
 
 - **Integración**: `.testimonials__photo-layer` dentro del marco sticky `.testimonials__stage` (`aspect-ratio: 4/5`), con capas absolutas controladas por `translateY()` según el progreso del scroll pasivo de la página.
 
+## Fisioterapia: dirección artística, segunda pasada (FASE 9)
+
+Segunda pasada sobre `src/pages/servicios/physiotherapy.html`: no cambia la
+fotografía del hero (`hero-fisio`, FASE 8, sin tocar) ni la de "Cuándo
+empezar" (`area-physio`, ya documentada más arriba), pero añade fotografía
+propia del proceso clínico en el resto de la página y reutiliza fotografía
+real del centro ya documentada en otras secciones de este archivo.
+
+### Fotografía propia del proceso de Fisioterapia
+
+Cuatro fotos aportadas por el cliente (mismo shooting: mismo fisioterapeuta
+con polo verde, misma sala cálida con estantería de madera y plantas),
+incorporadas al repositorio en `src/assets/img/disciplines/fisio/` con
+nombre de archivo = UUID de origen, en dos anchos (`-720.webp` y
+`-1440.webp`, este último a 1122×1402px reales, sin upscale).
+
+| Archivo (`-720`/`-1440`) | Escena | Uso en la página |
+| ----- | ------ | ----------------- |
+| `0df88b9f-0f58-4dbf-b5cc-001eb67eb239` | Movilización lumbar/cadera, paciente mayor tumbada de lado. | `.photo-break` (franja panorámica a sangre completa, entre el ticker de problemas y "Ámbitos"). |
+| `3618ab1e-11e0-412a-9ad7-bea6708c17f4` | Detalle de manos, tratamiento de muñeca/mano. | `.service-context__detail` (foto flotante superpuesta junto a "Cuándo empezar") y una de las fotos en rotación de `.service-process__visual` ("Cinco pasos"). |
+| `5af02bda-9e2c-442f-af09-c3c4f8285313` | Valoración de hombro/brazo. | Foto inicial de `.specialty-list__visual` (columna sticky de "Ámbitos"). |
+| `ae26bb46-82b0-4914-8159-5d01e68f3f81` | Tratamiento de tobillo/pie. | Rotación de `.specialty-list__visual` / `.service-process__visual` vía `data-crossfade-src` en cada `[data-sp-step]`. |
+
+| Campo | Detalle |
+| ----- | ------- |
+| Origen | Aportadas por el cliente (mismo shooting que otras fotos propias del centro) |
+| Licencia | No aplica (fotografía propia, sin licencia de stock que anotar) |
+| Fecha de incorporación | 2026-09-08 |
+| Transformaciones aplicadas | Ninguna gradación de color: redimensionado a 720w/1122w (ancho real del archivo, sin upscale) y exportación a WebP calidad ~82-84, `method=6` — mismo criterio que el resto de fotografía propia del sitio (`domicilio-visita`, `stretching`). |
+
+**Nota ética/de representación**: estas cuatro fotos no se asocian 1:1 con
+un ámbito clínico concreto (por ejemplo, no se reserva la foto de la
+paciente mayor para "neurológica" ni la de detalle de mano para "suelo
+pélvico"): se usan como universo visual ambiental del proceso de
+fisioterapia en general, para no sugerir que una persona fotografiada
+tiene un diagnóstico concreto. Mismo criterio ya aplicado a las fotos
+contextuales de los testimonios de la Home (ver sección anterior).
+
+### Reutilización de fotografía real del centro ya documentada
+
+Tres momentos nuevos de la página (`.testimonial-feature`, el puente al
+Método Marshall y el CTA final) reutilizan fotografía real del centro que
+ya tiene ficha en este archivo, en vez de encargar o procesar fotos nuevas:
+
+| Sección nueva | Archivo | Ya documentado en |
+| ------------- | ------- | ------------------ |
+| `.testimonial-feature__photo` (fondo ambiental junto a la reseña de "A.") | `src/assets/img/local/local-lounge-720.webp` / `-1440.webp` | Sección "Testimonios editoriales de la Home" (Capa 3), arriba. |
+| `.discipline-bridge` (puente a Método Marshall) | `src/assets/img/hero-clinic.webp` | Sección "Testimonios editoriales de la Home" (Capa 2) y hero de Tarifas. |
+| `.cta-final--photo` (CTA final de la página) | `src/assets/img/local/local-gym-720.webp` / `-1440.webp` | Ficha general de fotografía propia del centro, línea 62-63. |
+
+La foto de `local-lounge` en `.testimonial-feature` es, igual que en la
+Home, ambiente del centro y no un retrato de la autora de la reseña
+("A."): mismo criterio ético de no asociar una cara o escena real a una
+persona concreta que no ha sido fotografiada.
+
 

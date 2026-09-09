@@ -246,7 +246,18 @@
        (.page-physio .page-hero--split): contenido a la izquierda, foto a
        la derecha en escritorio; en móvil el contenido y los CTA van
        primero y la foto queda después, sin recortes agresivos. Foto
-       verificada en ASSET_SOURCES.md (Pexels, licencia comercial libre). -->
+       verificada en ASSET_SOURCES.md (Pexels, licencia comercial libre).
+
+       FASE 9 (segunda pasada de dirección artística): la foto gana peso
+       (columna más ancha, ratio más vertical) y aparece con una máscara
+       (clip-path) al cargar en vez de solo opacidad/translate, gestionada
+       por pageHeroPhotoReveal() en main.js — deshabilitada por completo
+       con prefers-reduced-motion (igual que el resto del sistema de
+       movimiento). Titular reformulado para insistir en "entender" como
+       primer paso (coherente con "Cuándo empezar por Fisioterapia", justo
+       debajo) en vez de repetir "recuperar/tratar" ya presente en el
+       breadcrumb/eyebrow. Se añade un indicador de scroll discreto al pie
+       del hero (estático si el usuario prefiere movimiento reducido). -->
   <section class="page-hero page-hero--split">
     <div class="container page-hero__inner">
       <nav class="breadcrumb page-hero__breadcrumb" aria-label="Ruta de navegación" data-reveal>
@@ -261,7 +272,7 @@
         <div class="page-hero__content">
           <div data-reveal style="--i:1">
             <p class="eyebrow eyebrow--on-dark page-hero__eyebrow">Fisioterapia</p>
-            <h1 class="page-hero__title">Recuperar, tratar y volver a funcionar mejor</h1>
+            <h1 class="page-hero__title">Entender lo que te limita, para volver a moverte mejor</h1>
           </div>
 
           <div class="page-hero__text" data-reveal style="--i:2">
@@ -278,9 +289,11 @@
         </div>
 
         <figure class="page-hero__photo" data-reveal style="--i:2">
-          <img src="../../assets/img/stock/hero-fisio-1440.webp" srcset="../../assets/img/stock/hero-fisio-720.webp 720w, ../../assets/img/stock/hero-fisio-1440.webp 1440w" sizes="(min-width:860px) 40vw, 100vw" alt="Fisioterapeuta ayudando a una paciente a elevar la pierna durante una valoración de movilidad, en una sala con luz natural." width="1440" height="960" loading="eager" fetchpriority="high">
+          <img src="../../assets/img/stock/hero-fisio-1440.webp" srcset="../../assets/img/stock/hero-fisio-720.webp 720w, ../../assets/img/stock/hero-fisio-1440.webp 1440w" sizes="(min-width:860px) 46vw, 100vw" alt="Fisioterapeuta ayudando a una paciente a elevar la pierna durante una valoración de movilidad, en una sala con luz natural." width="1440" height="960" loading="eager" fetchpriority="high">
         </figure>
       </div>
+
+      <div class="page-hero__cue" aria-hidden="true" data-reveal style="--i:4"><span></span></div>
     </div>
   </section>
 
@@ -290,7 +303,16 @@
        Tarifas). No es fotografía del centro ni del equipo real: es
        imagen de referencia aportada por el cliente para esta disciplina,
        reutilizada aquí en vez de encargar o buscar una nueva. Titular y
-       texto distintos del hero a propósito, para no repetir el mensaje. -->
+       texto distintos del hero a propósito, para no repetir el mensaje.
+
+       FASE 9: copy sin cambios (instrucción explícita); se añade una
+       segunda foto en capas (.service-context__detail), superpuesta en
+       una esquina de la foto principal — técnica editorial de "imagen
+       flotante" con el mismo --radius-tile y filtro que el resto de fotos
+       de la página. Usa una de las 4 fotos reales nuevas del proceso de
+       Fisioterapia (ver ASSET_SOURCES.md, FASE 9): detalle de manos sobre
+       muñeca, como primer contacto visual con "el proceso" antes de
+       llegar a la sección dedicada más abajo. -->
   <section class="service-context" id="cuando-empezar">
     <div class="container service-context__grid">
       <div class="service-context__text" data-reveal>
@@ -300,9 +322,14 @@
           <p>Antes de tratar, hacemos una valoración inicial: qué te duele, cómo te limita y qué esperas conseguir. Es el punto de partida para todo el mundo, sea cual sea tu caso, y a partir de ahí el proceso puede combinar tratamiento, movimiento, ejercicios y recomendaciones según lo que necesites.</p>
         </div>
       </div>
-      <figure class="service-photo" data-reveal style="--i:1" aria-hidden="true">
-        <img src="../../assets/img/stock/area-physio-1440.webp" srcset="../../assets/img/stock/area-physio-720.webp 720w, ../../assets/img/stock/area-physio-1440.webp 1440w" sizes="(min-width:860px) 42vw, 100vw" alt="" loading="lazy" width="1440" height="960">
-      </figure>
+      <div class="service-context__visual" data-reveal style="--i:1">
+        <figure class="service-photo" aria-hidden="true">
+          <img src="../../assets/img/stock/area-physio-1440.webp" srcset="../../assets/img/stock/area-physio-720.webp 720w, ../../assets/img/stock/area-physio-1440.webp 1440w" sizes="(min-width:860px) 42vw, 100vw" alt="" loading="lazy" width="1440" height="960">
+        </figure>
+        <figure class="service-context__detail" aria-hidden="true">
+          <img src="../../assets/img/disciplines/fisio/3618ab1e-11e0-412a-9ad7-bea6708c17f4-720.webp" alt="" loading="lazy" width="720" height="899">
+        </figure>
+      </div>
     </div>
   </section>
 
@@ -344,6 +371,21 @@
     </div>
   </section>
 
+  <!-- ============ Ruptura fotográfica ============
+       FASE 9 (nueva): franja a sangre completa (fuera de .container, igual
+       criterio que .google-reviews__viewport más abajo: sin overflow en
+       html/body, solo dentro de esta sección) entre el ticker y la lista
+       de ámbitos. Rompe el tramo más plano de la página (puro texto sobre
+       fondo claro) con una sola fotografía grande y una frase corta. Usa
+       una de las 4 fotos reales nuevas del proceso de Fisioterapia (ver
+       ASSET_SOURCES.md, FASE 9): movilización de cadera/lumbar. -->
+  <section class="photo-break">
+    <figure class="photo-break__media" aria-hidden="true">
+      <img src="../../assets/img/disciplines/fisio/0df88b9f-0f58-4dbf-b5cc-001eb67eb239-1440.webp" srcset="../../assets/img/disciplines/fisio/0df88b9f-0f58-4dbf-b5cc-001eb67eb239-720.webp 720w, ../../assets/img/disciplines/fisio/0df88b9f-0f58-4dbf-b5cc-001eb67eb239-1440.webp 1122w" sizes="100vw" alt="" loading="lazy" width="1122" height="1402">
+    </figure>
+    <p class="photo-break__caption" data-reveal>Cada caso empieza igual: entender antes de tratar.</p>
+  </section>
+
   <!-- ============ Ámbitos en los que podemos ayudarte ============
        Lista editorial, no una cuadrícula de seis tarjetas iguales: mismos
        seis ámbitos ya publicados en servicios.html, con una línea
@@ -352,13 +394,33 @@
        garantizados, a falta de contenido clínico confirmado). El eyebrow
        ya no dice "Subespecialidades": esa palabra podía leerse como una
        acreditación profesional formal que no es lo que se quiere comunicar
-       aquí, así que se sustituye por un enunciado puramente descriptivo. -->
+       aquí, así que se sustituye por un enunciado puramente descriptivo.
+
+       FASE 9: en escritorio (≥860px) la cabecera se fija (position:sticky,
+       igual criterio que .service-process__intro) junto a una fotografía
+       contextual que rota cada dos ámbitos. Reutiliza el mismo mecanismo
+       de serviceProcessTimeline (main.js) marcando esta lista también con
+       data-sp-steps/data-sp-step en vez de crear un sistema paralelo: el
+       ámbito activo (el que cruza el centro del viewport) gana opacidad
+       completa, el resto se atenúa, y la foto contextual hace crossfade
+       según el índice activo (mismo helper que "Cómo es el proceso" más
+       abajo). Las tres fotos rotan en pares (01-02 / 03-04 / 05-06) y son
+       fotografía ambiental del proceso, nunca asociada 1:1 a un ámbito
+       clínico concreto (ver nota ética en ASSET_SOURCES.md, FASE 9): no
+       se usa la foto de valoración de hombro solo para "neurológica", ni
+       la de tobillo solo para "suelo pélvico". En móvil no hay sticky: la
+       lista cae en el orden natural, sin fotografía intercalada. -->
   <section class="specialty-list" id="ambitos-fisioterapia">
-    <div class="container">
-      <div class="specialty-list__head" data-reveal>
-        <p class="eyebrow section-eyebrow">Ámbitos de fisioterapia</p>
-        <h2 class="section-heading">Ámbitos en los que podemos ayudarte</h2>
-        <p class="section-lead">Todas parten del mismo proceso: entender tu punto de partida, adaptar el tratamiento y ayudarte a avanzar con un objetivo claro.</p>
+    <div class="container specialty-list__layout">
+      <div class="specialty-list__intro">
+        <div class="specialty-list__head" data-reveal>
+          <p class="eyebrow section-eyebrow">Ámbitos de fisioterapia</p>
+          <h2 class="section-heading">Ámbitos en los que podemos ayudarte</h2>
+          <p class="section-lead">Todas parten del mismo proceso: entender tu punto de partida, adaptar el tratamiento y ayudarte a avanzar con un objetivo claro.</p>
+        </div>
+        <div class="specialty-list__visual" data-crossfade aria-hidden="true">
+          <img data-crossfade-img src="../../assets/img/disciplines/fisio/5af02bda-9e2c-442f-af09-c3c4f8285313-720.webp" alt="" loading="lazy" width="720" height="899">
+        </div>
       </div>
 
       <!-- Cada ámbito revela num/título/texto por separado (data-reveal
@@ -368,33 +430,33 @@
            mismo fallback de 2.5s, mismo comportamiento con JS desactivado
            vía el <noscript> del <head>), solo con un translateY menor
            (14px vs 28px por defecto) definido más abajo en styles.css. -->
-      <ul class="specialty-list__items">
-        <li class="specialty-item">
+      <ul class="specialty-list__items" data-sp-steps data-crossfade-group>
+        <li class="specialty-item" data-sp-step data-crossfade-src="../../assets/img/disciplines/fisio/5af02bda-9e2c-442f-af09-c3c4f8285313-720.webp">
           <span class="specialty-item__num" data-reveal style="--i:0">01</span>
           <h3 class="specialty-item__title" data-reveal style="--i:.4">Fisioterapia general</h3>
           <p class="specialty-item__desc" data-reveal style="--i:.8">Valoración y tratamiento del dolor o la limitación funcional en el día a día.</p>
         </li>
-        <li class="specialty-item">
+        <li class="specialty-item" data-sp-step data-crossfade-src="../../assets/img/disciplines/fisio/5af02bda-9e2c-442f-af09-c3c4f8285313-720.webp">
           <span class="specialty-item__num" data-reveal style="--i:0">02</span>
           <h3 class="specialty-item__title" data-reveal style="--i:.4">Fisioterapia traumatológica</h3>
           <p class="specialty-item__desc" data-reveal style="--i:.8">Recuperación tras lesión, cirugía o proceso musculoesquelético.</p>
         </li>
-        <li class="specialty-item">
+        <li class="specialty-item" data-sp-step data-crossfade-src="../../assets/img/disciplines/fisio/ae26bb46-82b0-4914-8159-5d01e68f3f81-720.webp">
           <span class="specialty-item__num" data-reveal style="--i:0">03</span>
           <h3 class="specialty-item__title" data-reveal style="--i:.4">Fisioterapia neurológica</h3>
           <p class="specialty-item__desc" data-reveal style="--i:.8">Trabajo de movimiento y función en procesos de origen neurológico.</p>
         </li>
-        <li class="specialty-item">
+        <li class="specialty-item" data-sp-step data-crossfade-src="../../assets/img/disciplines/fisio/ae26bb46-82b0-4914-8159-5d01e68f3f81-720.webp">
           <span class="specialty-item__num" data-reveal style="--i:0">04</span>
           <h3 class="specialty-item__title" data-reveal style="--i:.4">Fisioterapia oncológica</h3>
           <p class="specialty-item__desc" data-reveal style="--i:.8">Acompañamiento fisioterapéutico durante o después de un proceso oncológico.</p>
         </li>
-        <li class="specialty-item">
+        <li class="specialty-item" data-sp-step data-crossfade-src="../../assets/img/disciplines/fisio/0df88b9f-0f58-4dbf-b5cc-001eb67eb239-720.webp">
           <span class="specialty-item__num" data-reveal style="--i:0">05</span>
           <h3 class="specialty-item__title" data-reveal style="--i:.4">Suelo pélvico</h3>
           <p class="specialty-item__desc" data-reveal style="--i:.8">Valoración y tratamiento específico de la musculatura del suelo pélvico.</p>
         </li>
-        <li class="specialty-item">
+        <li class="specialty-item" data-sp-step data-crossfade-src="../../assets/img/disciplines/fisio/0df88b9f-0f58-4dbf-b5cc-001eb67eb239-720.webp">
           <span class="specialty-item__num" data-reveal style="--i:0">06</span>
           <h3 class="specialty-item__title" data-reveal style="--i:.4">Fisioterapia dermatofuncional</h3>
           <p class="specialty-item__desc" data-reveal style="--i:.8">Tratamiento fisioterapéutico orientado a piel y tejido conectivo.</p>
@@ -424,6 +486,61 @@
     </div>
   </section>
 
+  <!-- ============ Servicios y modalidades ============
+       FASE 9 (nueva): a diferencia de "Ámbitos" (el QUÉ clínico), esta
+       sección explica el CÓMO — los formatos reales de sesión en los que
+       se organiza cualquier tratamiento de Fisioterapia. Los 5 formatos
+       son los mismos ya reales en el panel de reserva de esta página y en
+       Tarifas: no se inventa ningún formato nuevo. Lista editorial (no
+       cards), fila = etiqueta + duración/modalidad + enlace a la tarifa
+       correspondiente, sin repetir la tabla completa de precios.
+       Drenaje linfático, masaje terapéutico e INDIBA se mencionan como
+       técnicas complementarias que un tratamiento puede incorporar, no
+       como ámbito ni formato propio: en el código real están clasificadas
+       como servicios de Wellness (servicios.html) o, en el caso de
+       INDIBA, no tienen ficha propia todavía, así que aquí se quedan como
+       texto sin enlace (no se crea un enlace nuevo hacia wellness.html,
+       que tampoco existe todavía). -->
+  <section class="service-menu" id="servicios-modalidades">
+    <div class="container">
+      <div class="service-menu__head" data-reveal>
+        <p class="eyebrow section-eyebrow">Servicios y modalidades</p>
+        <h2 class="section-heading">Cómo se organiza una sesión</h2>
+        <p class="section-lead">Los ámbitos de arriba son el qué; esto es el cómo: los formatos reales en los que se organiza el seguimiento, en clínica o a domicilio.</p>
+      </div>
+
+      <ul class="service-menu__list">
+        <li class="service-menu__item" data-reveal>
+          <span class="service-menu__label">Primera consulta presencial</span>
+          <span class="service-menu__meta">60 min · En clínica</span>
+          <a class="service-menu__link" href="../tarifas.html#en-la-clinica">Ver tarifa <span class="service-menu__arrow" aria-hidden="true">→</span></a>
+        </li>
+        <li class="service-menu__item" data-reveal>
+          <span class="service-menu__label">Primera consulta a domicilio</span>
+          <span class="service-menu__meta">60 min · A domicilio</span>
+          <a class="service-menu__link" href="../tarifas.html#a-domicilio">Ver tarifa <span class="service-menu__arrow" aria-hidden="true">→</span></a>
+        </li>
+        <li class="service-menu__item" data-reveal>
+          <span class="service-menu__label">Seguimiento</span>
+          <span class="service-menu__meta">30 min · En clínica</span>
+          <a class="service-menu__link" href="../tarifas.html#en-la-clinica">Ver tarifa <span class="service-menu__arrow" aria-hidden="true">→</span></a>
+        </li>
+        <li class="service-menu__item" data-reveal>
+          <span class="service-menu__label">Seguimiento</span>
+          <span class="service-menu__meta">50 min · En clínica</span>
+          <a class="service-menu__link" href="../tarifas.html#en-la-clinica">Ver tarifa <span class="service-menu__arrow" aria-hidden="true">→</span></a>
+        </li>
+        <li class="service-menu__item" data-reveal>
+          <span class="service-menu__label">Seguimiento a domicilio</span>
+          <span class="service-menu__meta">50 min · A domicilio</span>
+          <a class="service-menu__link" href="../tarifas.html#a-domicilio">Ver tarifa <span class="service-menu__arrow" aria-hidden="true">→</span></a>
+        </li>
+      </ul>
+
+      <p class="service-menu__note" data-reveal>Según tu tratamiento, también podemos incorporar técnicas complementarias como drenaje linfático, masaje terapéutico o INDIBA.</p>
+    </div>
+  </section>
+
   <!-- ============ Cómo es el proceso ============
        FASE 2: componente propio y reutilizable (.service-process), ya no
        reutiliza .first-visit__steps de Home. Mismo tipo de patrón que
@@ -439,44 +556,58 @@
        La antigua franja de confianza (nombre propio, colegiación, años de
        experiencia, número de pacientes) sigue sin recolocarse aquí: son
        datos que deben vivir en un único sitio con fuente global
-       verificada (p. ej. Equipo en Home). -->
+       verificada (p. ej. Equipo en Home).
+
+       FASE 9: se añade (a) una fotografía en la columna sticky que hace
+       crossfade según el paso activo (mismo helper de crossfade que
+       "Ámbitos" arriba), (b) una línea de progreso vertical que se rellena
+       según activeIndex/steps.length (--sp-progress, fijada por
+       serviceProcessTimeline en main.js) y (c) la integración narrativa de
+       "Primera visita": una frase que explica por qué se empieza
+       valorando y un enlace a la sección real ya construida en Home
+       (index.html#primera-visita) en vez de duplicar aquí su contenido. -->
   <section class="process service-process" id="como-es-el-proceso">
     <div class="container service-process__grid">
       <div class="service-process__intro" data-reveal>
         <p class="eyebrow section-eyebrow">Cómo es el proceso</p>
         <h2 class="section-heading">Cinco pasos, desde la primera visita</h2>
+        <p class="service-process__note">Empezamos siempre valorando, no tratando a ciegas: es lo que nos permite definir contigo un objetivo claro antes de intervenir.</p>
+        <a class="service-process__link" href="../../../index.html#primera-visita">Así es la primera visita, en detalle <span class="service-feature__arrow" aria-hidden="true">→</span></a>
+        <figure class="service-process__visual" data-crossfade aria-hidden="true">
+          <img data-crossfade-img src="../../assets/img/disciplines/fisio/3618ab1e-11e0-412a-9ad7-bea6708c17f4-720.webp" alt="" loading="lazy" width="720" height="899">
+        </figure>
       </div>
 
-      <ol class="service-process__steps" data-sp-steps>
-        <li class="service-process__step" data-sp-step>
+      <ol class="service-process__steps" data-sp-steps data-crossfade-group>
+        <li class="service-process__step" data-sp-step data-crossfade-src="../../assets/img/disciplines/fisio/3618ab1e-11e0-412a-9ad7-bea6708c17f4-720.webp">
           <span class="service-process__marker" aria-hidden="true"><span class="service-process__dot"></span></span>
           <div class="service-process__body">
             <span class="service-process__number" aria-hidden="true">01</span>
             <p class="service-process__text">Escuchamos qué te preocupa y tu situación actual.</p>
           </div>
         </li>
-        <li class="service-process__step" data-sp-step>
+        <li class="service-process__step" data-sp-step data-crossfade-src="../../assets/img/disciplines/fisio/3618ab1e-11e0-412a-9ad7-bea6708c17f4-720.webp">
           <span class="service-process__marker" aria-hidden="true"><span class="service-process__dot"></span></span>
           <div class="service-process__body">
             <span class="service-process__number" aria-hidden="true">02</span>
             <p class="service-process__text">Realizamos una valoración inicial.</p>
           </div>
         </li>
-        <li class="service-process__step" data-sp-step>
+        <li class="service-process__step" data-sp-step data-crossfade-src="../../assets/img/disciplines/fisio/5af02bda-9e2c-442f-af09-c3c4f8285313-720.webp">
           <span class="service-process__marker" aria-hidden="true"><span class="service-process__dot"></span></span>
           <div class="service-process__body">
             <span class="service-process__number" aria-hidden="true">03</span>
             <p class="service-process__text">Definimos contigo el objetivo del tratamiento.</p>
           </div>
         </li>
-        <li class="service-process__step" data-sp-step>
+        <li class="service-process__step" data-sp-step data-crossfade-src="../../assets/img/disciplines/fisio/ae26bb46-82b0-4914-8159-5d01e68f3f81-720.webp">
           <span class="service-process__marker" aria-hidden="true"><span class="service-process__dot"></span></span>
           <div class="service-process__body">
             <span class="service-process__number" aria-hidden="true">04</span>
             <p class="service-process__text">Empezamos la intervención cuando es adecuado.</p>
           </div>
         </li>
-        <li class="service-process__step" data-sp-step>
+        <li class="service-process__step" data-sp-step data-crossfade-src="../../assets/img/disciplines/fisio/ae26bb46-82b0-4914-8159-5d01e68f3f81-720.webp">
           <span class="service-process__marker" aria-hidden="true"><span class="service-process__dot"></span></span>
           <div class="service-process__body">
             <span class="service-process__number" aria-hidden="true">05</span>
@@ -485,6 +616,13 @@
         </li>
       </ol>
     </div>
+
+    <div class="container">
+      <blockquote class="pull-quote" data-reveal>
+        <p>“Muy buenas manos, técnica y conocimiento profundo, con un trato muy atento y personalizado (…) ya noté mejoría desde la primera sesión.”</p>
+        <cite>I. G. · Reseña de Google</cite>
+      </blockquote>
+    </div>
   </section>
 
   <!-- ============ Fisioterapia a domicilio: "service-feature" ============
@@ -492,20 +630,22 @@
        sección. Ahora es "service-feature", un módulo genérico (eyebrow
        opcional + título + texto + CTA opcional + fotografía opcional) para
        cualquier futuro servicio/tecnología/modalidad destacada, no solo
-       "a domicilio". Esta instancia concreta sigue siendo solo texto + CTA
-       (sin fotografía): el caso base de .service-feature es justo ese, una
-       franja flex texto/acciones idéntica a la de antes, sin ningún cambio
-       visual. Si una futura página necesita fotografía, la modificadora
-       .service-feature--with-photo (ver styles.css) reordena __grid a dos
-       columnas con los mismos valores (aspect-ratio, filtro, radio) que ya
-       usa .service-context/.service-photo en esta misma página, para que
-       el tratamiento fotográfico sea coherente en todo el sitio.
+       "a domicilio".
+
+       FASE 9: se activa por primera vez la modificadora
+       .service-feature--with-photo (definida en styles.css desde la FASE 3
+       pero sin uso hasta ahora) con la fotografía real "domicilio-visita"
+       (persona llevando el maletín de tratamiento a la puerta de una
+       casa), ya documentada en ASSET_SOURCES.md. Se coloca justo después
+       de "Servicios y modalidades" por proximidad narrativa (es, en sí
+       misma, una modalidad más), no como bloque administrativo aislado al
+       final de la página.
 
        El destino de "a domicilio" sigue siendo la sección real ya
        construida en Tarifas (#a-domicilio): la página propia todavía no
        existe, así que el enlace no apunta a
        servicios/fisioterapia-a-domicilio.html. -->
-  <section class="service-feature">
+  <section class="service-feature service-feature--with-photo">
     <div class="container">
       <div class="service-feature__grid" data-reveal>
         <div class="service-feature__text">
@@ -513,6 +653,9 @@
           <h2 class="service-feature__title">Fisioterapia a domicilio</h2>
           <p class="service-feature__desc">Si no puedes desplazarte al centro, puedes realizar tu proceso de fisioterapia a domicilio, con el mismo seguimiento.</p>
         </div>
+        <figure class="service-feature__photo">
+          <img src="../../assets/img/stock/domicilio-visita-1122.webp" srcset="../../assets/img/stock/domicilio-visita-720.webp 720w, ../../assets/img/stock/domicilio-visita-1122.webp 1122w" sizes="(min-width:860px) 38vw, 100vw" alt="Fisioterapeuta llegando con su maletín de tratamiento a la puerta de una vivienda para una visita a domicilio." loading="lazy" width="1122" height="1402">
+        </figure>
         <div class="service-feature__actions">
           <a class="service-feature__link" href="../tarifas.html#a-domicilio">Ver condiciones a domicilio <span class="service-feature__arrow" aria-hidden="true">→</span></a>
           <a class="service-feature__link" href="../tarifas.html#en-la-clinica">Ver todas las tarifas <span class="service-feature__arrow" aria-hidden="true">→</span></a>
@@ -521,148 +664,86 @@
     </div>
   </section>
 
-  <!-- ============ Reseñas de Google ============
-       Seis reseñas reales y verificadas en la ficha pública de Google de
-       Physio Wellness by Marshall (Sitges), distintas de la reseña de
-       Ignacio Castells Soler ya publicada en index.html. Texto íntegro
-       original, sin corregir/resumir/traducir. Autoría mostrada solo con
-       iniciales (decisión explícita del cliente, no el nombre público
-       completo).
+  <!-- ============ Testimonio protagonista ============
+       FASE 9: sustituye, solo en esta página, la cinta de 6 tarjetas
+       (.google-reviews) por un único testimonio protagonista con
+       tipografía grande + fotografía ambiental del espacio (misma foto
+       de local-lounge ya usada en Método Marshall, no una foto de
+       tratamiento): la reseña habla de un dolor de espalda concreto, así
+       que a propósito no se ilustra con ninguna de las fotos de proceso
+       de Fisioterapia para no sugerir una asociación 1:1 diagnóstico↔foto
+       (ver nota ética en ASSET_SOURCES.md, FASE 9). Reseña real e íntegra
+       de "A.", ya publicada en esta página antes de esta fase.
 
-       Movimiento continuo (googleReviewsMarquee en main.js): la única
-       lista semántica es [data-reviews-track]; el bucle infinito se
-       consigue clonándola por JS y marcando el duplicado aria-hidden +
-       inert (sin tarjetas focuseables dentro, así que no hace falta
-       gestionar tabindex una a una). Sin JavaScript (o con
-       prefers-reduced-motion), el duplicado nunca se crea: solo queda la
-       lista real, visible y explorable con scroll horizontal nativo
-       (overflow-x:auto en [data-reviews-viewport]). -->
-  <section class="google-reviews" aria-label="Reseñas de Google de pacientes">
-    <div class="container">
-      <div class="google-reviews__head">
+       .google-reviews (CSS/JS, marquee de 6 tarjetas) NO se toca: sigue
+       tal cual en uso real en stretching.html, así que esta sección usa
+       nombres de clase propios (.testimonial-feature) en vez de heredar
+       ese componente. Debajo, un segundo testimonio breve (T. M.) a modo
+       de cita entrelazada (misma .pull-quote que "Cómo es el proceso"),
+       como puente hacia el Método Marshall. -->
+  <section class="testimonial-feature" aria-label="Reseña de un paciente">
+    <div class="container testimonial-feature__grid">
+      <figure class="testimonial-feature__photo" data-reveal aria-hidden="true">
+        <img src="../../assets/img/local/local-lounge-1440.webp" srcset="../../assets/img/local/local-lounge-720.webp 720w, ../../assets/img/local/local-lounge-1440.webp 1440w" sizes="(min-width:860px) 38vw, 100vw" alt="" loading="lazy" width="1440" height="2160">
+      </figure>
+      <div class="testimonial-feature__body" data-reveal style="--i:1">
         <p class="eyebrow section-eyebrow">Reseñas de Google</p>
-        <h2 class="section-heading"><span class="google-reviews__highlight">Experiencias reales</span> de quienes han confiado en Physio Wellness</h2>
+        <p class="testimonial-feature__stars" aria-hidden="true">★★★★★</p>
+        <span class="sr-only">Valoración: 5 de 5 estrellas</span>
+        <blockquote class="testimonial-feature__quote">
+          <p>“He tenido una muy buena experiencia en esta clínica de fisioterapia. El tratamiento me ayudó de verdad a quitarme el dolor de espalda, y noté una mejoría importante después de las sesiones. Abril, la administradora, es muy amable, atenta y organizada, lo que hace que cada visita sea cómoda y sin complicaciones.”</p>
+          <p>“Un agradecimiento especial a Marshall, un fisioterapeuta muy cualificado, profesional, atento y que realmente sabe lo que hace. Me sentí seguro y bien cuidado durante todo el proceso.”</p>
+        </blockquote>
+        <cite class="testimonial-feature__cite">A. · Reseña de Google</cite>
       </div>
     </div>
 
-    <!-- La cinta vive fuera de .container a propósito: puede superar el
-         ancho del encabezado (1240px) pero nunca el del documento, ya que
-         .google-reviews (la section) no tiene max-width propio y ocupa el
-         100% del body. El desbordamiento horizontal está contenido dentro
-         de este viewport (overflow-x:auto de base; overflow:hidden solo
-         cuando JS activa el movimiento continuo), nunca en html/body. -->
-    <div class="google-reviews__viewport" data-reviews-viewport>
-      <div class="google-reviews__rail" data-reviews-rail>
-        <ul class="google-reviews__list" data-reviews-track>
-          <li class="google-review-card">
-            <span class="google-review-card__tag">Experiencia en la clínica</span>
-            <p class="google-review-card__rating">
-              <span class="google-review-card__stars" aria-hidden="true">★★★★★</span>
-              <span class="sr-only">Valoración: 5 de 5 estrellas</span>
-            </p>
-            <blockquote class="google-review-card__quote">
-              <p>Marçal es un excelente profesional, en dos sesiones la mejoría es total.</p>
-              <p>Las instalaciones impecables, y también destacar la eficiencia y amabilidad de Abril.</p>
-            </blockquote>
-            <footer class="google-review-card__meta">
-              <span class="google-review-card__author">M. A. B. F.</span>
-              <span class="google-review-card__source">Reseña de Google</span>
-            </footer>
-          </li>
+    <div class="container">
+      <blockquote class="pull-quote pull-quote--compact" data-reveal>
+        <p>“Tiene un buen conocimiento del cuerpo y sabe cómo hacer que el paciente se sienta mejor tanto de forma inmediata como a largo plazo.”</p>
+        <cite>T. M. · Reseña de Google</cite>
+      </blockquote>
+    </div>
+  </section>
 
-          <li class="google-review-card">
-            <span class="google-review-card__tag">Fisioterapia</span>
-            <p class="google-review-card__rating">
-              <span class="google-review-card__stars" aria-hidden="true">★★★★★</span>
-              <span class="sr-only">Valoración: 5 de 5 estrellas</span>
-            </p>
-            <blockquote class="google-review-card__quote">
-              <p>Recomiendo totalmente a este fisioterapeuta a cualquiera que necesite una atención de calidad. Tiene un conocimiento muy amplio, es atento y está realmente comprometido con la recuperación de sus pacientes. Desde la primera sesión se tomó el tiempo de entender la raíz del problema, no solo los síntomas, y creó un plan de tratamiento personalizado que marcó una diferencia real.</p>
-              <p>¡Gracias!</p>
-            </blockquote>
-            <footer class="google-review-card__meta">
-              <span class="google-review-card__author">J. D.</span>
-              <span class="google-review-card__source">Reseña de Google</span>
-            </footer>
-          </li>
-
-          <li class="google-review-card">
-            <span class="google-review-card__tag">Profesionalidad</span>
-            <p class="google-review-card__rating">
-              <span class="google-review-card__stars" aria-hidden="true">★★★★★</span>
-              <span class="sr-only">Valoración: 5 de 5 estrellas</span>
-            </p>
-            <blockquote class="google-review-card__quote">
-              <p>Marçal es muy profesional, resolutivo y transmite confianza. Soy paciente oncológica y su tratamiento está dando muy buen resultado. También me ha dado unos ejercicios que puedo hacer en mi casa . Estoy muy conforme.</p>
-            </blockquote>
-            <footer class="google-review-card__meta">
-              <span class="google-review-card__author">C. C. G.</span>
-              <span class="google-review-card__source">Reseña de Google</span>
-            </footer>
-          </li>
-
-          <li class="google-review-card">
-            <span class="google-review-card__tag">Atención personalizada</span>
-            <p class="google-review-card__rating">
-              <span class="google-review-card__stars" aria-hidden="true">★★★★★</span>
-              <span class="sr-only">Valoración: 5 de 5 estrellas</span>
-            </p>
-            <blockquote class="google-review-card__quote">
-              <p>Muy buenas manos, técnica y conocimiento profundo, con un trato muy atento y personalizado. Disponen de todo tipo de maquinaria cuando hace falta. Estoy tratando una lesión de rodilla y ya noté mejoría desde la primera sesión.</p>
-              <p>Totalmente recomendable, Marçal y su equipo son de lo mejor.</p>
-            </blockquote>
-            <footer class="google-review-card__meta">
-              <span class="google-review-card__author">I. G.</span>
-              <span class="google-review-card__source">Reseña de Google</span>
-            </footer>
-          </li>
-
-          <li class="google-review-card">
-            <span class="google-review-card__tag">Trato y acompañamiento</span>
-            <p class="google-review-card__rating">
-              <span class="google-review-card__stars" aria-hidden="true">★★★★★</span>
-              <span class="sr-only">Valoración: 5 de 5 estrellas</span>
-            </p>
-            <blockquote class="google-review-card__quote">
-              <p>He tenido una muy buena experiencia en esta clínica de fisioterapia. El tratamiento me ayudó de verdad a quitarme el dolor de espalda, y noté una mejoría importante después de las sesiones. Abril, la administradora, es muy amable, atenta y organizada, lo que hace que cada visita sea cómoda y sin complicaciones.</p>
-              <p>Un agradecimiento especial a Marshall, un fisioterapeuta muy cualificado, profesional, atento y que realmente sabe lo que hace. Me sentí seguro y bien cuidado durante todo el proceso. Recomiendo totalmente este centro a cualquiera que tenga dolor de espalda o busque fisioterapia de calidad.</p>
-            </blockquote>
-            <footer class="google-review-card__meta">
-              <span class="google-review-card__author">A.</span>
-              <span class="google-review-card__source">Reseña de Google</span>
-            </footer>
-          </li>
-
-          <li class="google-review-card">
-            <span class="google-review-card__tag">Recuperación</span>
-            <p class="google-review-card__rating">
-              <span class="google-review-card__stars" aria-hidden="true">★★★★★</span>
-              <span class="sr-only">Valoración: 5 de 5 estrellas</span>
-            </p>
-            <blockquote class="google-review-card__quote">
-              <p>Encontré este centro y me han gustado mucho las sesiones que he tenido. Tiene un buen conocimiento del cuerpo y sabe cómo hacer que el paciente se sienta mejor tanto de forma inmediata como a largo plazo.</p>
-            </blockquote>
-            <footer class="google-review-card__meta">
-              <span class="google-review-card__author">T. M.</span>
-              <span class="google-review-card__source">Reseña de Google</span>
-            </footer>
-          </li>
-        </ul>
-      </div>
+  <!-- ============ Puente al Método Marshall ============
+       FASE 9 (nueva): "Fisioterapia" es una de las áreas de Physio
+       Wellness, pero el Método Marshall es el proceso que las conecta
+       todas. Componente propio (.discipline-bridge, variante de
+       .photo-banner) con nombre deliberadamente distinto de
+       ".method-bridge": esa clase ya existe en styles.css para una escena
+       de transición interna de src/pages/metodo.html (cita + 5 estaciones
+       de scroll), un componente totalmente distinto; reutilizar el mismo
+       nombre aquí heredaría o chocaría con esas reglas sin necesidad.
+       Fotografía: hero-clinic.webp, ya reutilizada como motivo del
+       espacio en Home, Método Marshall y Tarifas (ver ASSET_SOURCES.md).
+       Enlaza a la página real ../metodo.html (no a index.html#metodo). -->
+  <section class="photo-banner discipline-bridge" aria-label="El Método Marshall">
+    <figure class="photo-banner__media" aria-hidden="true">
+      <img src="../../assets/img/hero-clinic.webp" alt="" loading="lazy" width="2000" height="1331">
+    </figure>
+    <div class="container photo-banner__inner" data-reveal>
+      <p class="eyebrow eyebrow--on-dark">El Método Marshall</p>
+      <h2 class="photo-banner__title">La fisioterapia es el punto de partida de un proceso más amplio</h2>
+      <p class="photo-banner__lead">Valoración clínica, terapia manual y movimiento guiado en un único proceso continuo, más allá de la sesión aislada.</p>
+      <a class="btn btn--outline" href="../metodo.html">Descubrir el Método Marshall</a>
     </div>
   </section>
 
   <!-- ============ CTA final ============
-       Antes había aquí un segundo bloque (.first-visit "¿No sabes si esto
-       es lo que necesitas?") justo encima de este CTA final: mismo mensaje
-       de fondo y los mismos dos botones repetidos sin nada entre medio,
-       a diferencia de Home/Servicios donde .first-visit y .cta-final
-       siempre están separados por más contenido. Se retira para no
-       duplicar la misma llamada a la acción dos veces seguidas; su
-       contenido único (los 5 pasos) ya vive en la sección "Cómo es el
-       proceso" de esta misma página. -->
-  <section class="cta-final">
-    <div class="container cta-final__inner" data-reveal>
+       FASE 9: pasa de fondo sólido a .photo-banner (misma familia que el
+       puente al Método, fotografía distinta —local-gym, sin uso previo
+       en ninguna página— para no repetir la misma imagen dos veces
+       seguidas). Antes había aquí un segundo bloque (.first-visit "¿No
+       sabes si esto es lo que necesitas?") justo encima de este CTA
+       final: mismo mensaje de fondo y los mismos dos botones repetidos
+       sin nada entre medio. Sigue sin recolocarse: su contenido único
+       (los 5 pasos) ya vive en "Cómo es el proceso". -->
+  <section class="cta-final cta-final--photo photo-banner">
+    <figure class="photo-banner__media" aria-hidden="true">
+      <img src="../../assets/img/local/local-gym-1440.webp" srcset="../../assets/img/local/local-gym-720.webp 720w, ../../assets/img/local/local-gym-1440.webp 1440w" sizes="100vw" alt="" loading="lazy" width="1440" height="960">
+    </figure>
+    <div class="container cta-final__inner photo-banner__inner" data-reveal>
       <h2 class="cta-final__title">Tu siguiente paso empieza por entender tu caso</h2>
       <p class="cta-final__lead">Si tienes dolor, una lesión o no sabes por dónde empezar, la primera visita es el punto de partida.</p>
       <div class="cta-final__actions">

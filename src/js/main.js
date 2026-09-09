@@ -1167,10 +1167,20 @@ var prefersReducedMotion = window.matchMedia && window.matchMedia('(prefers-redu
 
    Mejora progresiva: si no hay IntersectionObserver o hay
    prefers-reduced-motion, no se añade .is-process-active y los pasos se
-   quedan en su estado base (todos visibles) definido en CSS. */
+   quedan en su estado base (todos visibles) definido en CSS.
+
+   FASE 9: dos añadidos, sin duplicar el observer:
+   (a) generaliza el selector de secciones más allá de ".service-process"
+   a cualquier ".specialty-list" con su propio [data-sp-steps] (Ámbitos,
+   en physiotherapy.html), reutilizando exactamente el mismo bucle;
+   (b) al cambiar de paso activo, además de is-active/is-done, fija
+   --sp-progress (activeIndex+1 / nº de pasos, usada por la línea de
+   progreso de .service-process__visual) y dispara el crossfade de la
+   fotografía asociada (swapCrossfadeImage), si la sección tiene
+   [data-crossfade-group] y data-crossfade-src por paso. */
 (function serviceProcessTimeline(){
   try{
-    var sections = Array.prototype.slice.call(document.querySelectorAll('.service-process'));
+    var sections = Array.prototype.slice.call(document.querySelectorAll('.service-process, .specialty-list'));
     if(!sections.length) return;
     if(!('IntersectionObserver' in window) || prefersReducedMotion) return;
 
@@ -1182,10 +1192,28 @@ var prefersReducedMotion = window.matchMedia && window.matchMedia('(prefers-redu
     }
     setStickyOffset();
 
+    /* Fundido cruzado genérico: oculta la imagen actual, sustituye su src
+       a mitad del fundido (mismo tiempo que --dur-fast en CSS) y la
+       vuelve a mostrar. Sin trabajo si el src ya es el correcto. */
+    function swapCrossfadeImage(img, src){
+      if(!img || !src || img.getAttribute('src') === src) return;
+      img.classList.add('is-fading');
+      window.setTimeout(function(){
+        img.setAttribute('src', src);
+        img.classList.remove('is-fading');
+      }, 250);
+    }
+
     sections.forEach(function(section){
       var stepsHost = section.querySelector('[data-sp-steps]');
       var steps = stepsHost ? Array.prototype.slice.call(stepsHost.querySelectorAll('[data-sp-step]')) : [];
       if(!stepsHost || !steps.length) return;
+
+      var crossfadeImg = null;
+      if(stepsHost.hasAttribute('data-crossfade-group')){
+        var visual = section.querySelector('[data-crossfade]');
+        crossfadeImg = visual ? visual.querySelector('[data-crossfade-img]') : null;
+      }
 
       var activeIndex = 0;
 
@@ -1194,6 +1222,8 @@ var prefersReducedMotion = window.matchMedia && window.matchMedia('(prefers-redu
           step.classList.toggle('is-active', i === activeIndex);
           step.classList.toggle('is-done', i < activeIndex);
         });
+        section.style.setProperty('--sp-progress', (activeIndex + 1) / steps.length);
+        if(crossfadeImg) swapCrossfadeImage(crossfadeImg, steps[activeIndex].getAttribute('data-crossfade-src'));
       }
 
       section.classList.add('is-process-active');
@@ -1979,42 +2009,13 @@ var prefersReducedMotion = window.matchMedia && window.matchMedia('(prefers-redu
   }catch(e){ console.warn('googleReviewsMarquee', e); }
 })();
 
-/* ---------- hero de Método Marshall: entrada + ligero zoom con el scroll ----------
-   Función aparte de heroExitTransition/pageHeroMedia (no toca la Home ni
-   Tarifas): mismo lenguaje de movimiento ya validado ahí (entrada suave de
-   la fotografía, zoom sutil al bajar), aplicado a .method-hero
-   (src/pages/metodo.html). Solo escribe transform/opacity. */
-(function methodHeroMedia(){
-  try{
-    var hero = document.querySelector('.method-hero');
-    if(!hero) return;
-
-    requestAnimationFrame(function(){
-      requestAnimationFrame(function(){ hero.classList.add('is-ready'); });
-    });
-
-    if(prefersReducedMotion) return;
-    var img = hero.querySelector('.method-hero__media img');
-    if(!img) return;
-
-    var onScroll = function(){
-      var vh = window.innerHeight;
-      var progress = Math.min(Math.max(window.scrollY / vh, 0), 1);
-      img.style.transform = 'scale(' + (1.02 + progress * 0.06) + ')';
-    };
-    onScroll();
-    window.addEventListener('scroll', onScroll, {passive:true});
-    window.addEventListener('resize', onScroll);
-  }catch(e){ console.warn('methodHeroMedia', e); }
-})();
-
 /* ---------- Método Marshall — Experiencia narrativa y cinética (Fase 2) ----------
    Página dedicada (src/pages/metodo.html / .page-metodo).
    Sincroniza:
    1. Frame cinematográfico expansivo del Hero mediante scroll scrub pasivo
    2. Espina bio-cinética lateral (barra de progreso vertical y pulso activo)
-   3. Navegación sticky sincronizada con las 5 fases clínicas
-   4. Smooth scroll accesible compensado por header y sticky nav
+   La sincronización de las 5 fases clínicas con la navegación sticky y su
+   smooth scroll viven ahora en metodoFasesSystem() (Fase 3, más abajo).
    Respeta prefersReducedMotion y opera 100% con scroll nativo pasivo sin trabas. */
 (function metodoMarshallExperience(){
   try{
@@ -2024,65 +2025,8 @@ var prefersReducedMotion = window.matchMedia && window.matchMedia('(prefers-redu
     var cinemaWrap = document.getElementById('hero-cinema-wrap');
     var threadBar = document.getElementById('method-thread-bar');
     var threadPulse = document.getElementById('method-thread-pulse');
-    var scenes = Array.prototype.slice.call(document.querySelectorAll('.method-scene'));
-    var navItems = Array.prototype.slice.call(document.querySelectorAll('.method-system__nav-item'));
-    var navLinks = Array.prototype.slice.call(document.querySelectorAll('.method-system__nav-link'));
 
-    /* 1. Sincronización activa de las 5 fases en el riel sticky */
-    var activeIndex = 0;
-    function updateActivePhase(idx){
-      if(idx === activeIndex) return;
-      activeIndex = idx;
-      navItems.forEach(function(item, i){
-        var isActive = i === idx;
-        item.classList.toggle('is-active', isActive);
-        var link = item.querySelector('.method-system__nav-link');
-        if(link){
-          if(isActive){
-            link.setAttribute('aria-current', 'true');
-          }else{
-            link.removeAttribute('aria-current');
-          }
-        }
-      });
-    }
-
-    if('IntersectionObserver' in window){
-      var sceneObserver = new IntersectionObserver(function(entries){
-        entries.forEach(function(entry){
-          if(entry.isIntersecting){
-            var idx = parseInt(entry.target.getAttribute('data-phase-index'), 10);
-            if(!isNaN(idx)){
-              updateActivePhase(idx);
-            }
-          }
-        });
-      }, {
-        rootMargin: '-25% 0px -40% 0px',
-        threshold: 0.15
-      });
-
-      scenes.forEach(function(s){ sceneObserver.observe(s); });
-    }
-
-    /* Navegación suave con compensación de barra sticky */
-    navLinks.forEach(function(link){
-      link.addEventListener('click', function(e){
-        var href = link.getAttribute('href');
-        if(!href || href.indexOf('#') !== 0) return;
-        var target = document.querySelector(href);
-        if(!target) return;
-        e.preventDefault();
-        var targetOffset = target.getBoundingClientRect().top + window.scrollY - 130;
-        window.scrollTo({
-          top: Math.max(0, targetOffset),
-          behavior: prefersReducedMotion ? 'auto' : 'smooth'
-        });
-        history.replaceState(null, '', href);
-      });
-    });
-
-    /* 2. Scroll Scrub Pasivo: Hero Cinematográfico y Espina Lateral */
+    /* Scroll Scrub Pasivo: Hero Cinematográfico y Espina Lateral */
     var ticking = false;
     var lastScrollY = -1;
 
@@ -2128,5 +2072,277 @@ var prefersReducedMotion = window.matchMedia && window.matchMedia('(prefers-redu
     render();
 
   }catch(e){ console.warn('metodoMarshallExperience', e); }
+})();
+
+/* ---------- Método Marshall — Las 5 fases como escena continua (Fase 3) ----------
+   Página dedicada (src/pages/metodo.html). En escritorio amplio y sin
+   motion reducido, fija .method-system__stage (sticky) y funde las 5
+   <article class="method-scene"> entre sí según una posición continua de
+   scroll (0..4) — mismo patrón de pin + rAF que umbralSequence() (más
+   arriba): nunca preventDefault() sobre el scroll, nunca temporizador,
+   solo interpolación lineal de la posición de scroll dentro de
+   .method-system__pin-wrap. Sincroniza en el mismo frame: el panel activo
+   (opacidad + microdesplazamiento, texto y foto real juntos, a diferencia
+   de El umbral que solo funde texto contra una escena abstracta), el
+   numeral editorial compartido (01-05, se disuelve dígito a dígito como
+   .umbral__num), el fondo del escenario (interpola entre los tonos
+   claro/niebla reales de cada fase) y el riel sticky de navegación (clase
+   activa + línea de progreso continua).
+   Sin JS, con motion reducido, o por debajo de 960px de ancho / 560px de
+   alto (el layout de 2 columnas de .method-scene__container ya requiere
+   960px), measure() nunca activa el pin: las 5 fases quedan en su flujo
+   normal de documento —el fallback real, no una versión "cortada"— y la
+   navegación sticky se sincroniza con el mismo IntersectionObserver
+   discreto que usaba la Fase 2. */
+(function metodoFasesSystem(){
+  try{
+    var system = document.querySelector('.method-system');
+    var pinWrap = system && system.querySelector('[data-fases-pin]');
+    var stage = pinWrap && pinWrap.querySelector('[data-fases-stage]');
+    var panelsHost = stage && stage.querySelector('[data-fases-panels]');
+    var numHost = stage && stage.querySelector('[data-fases-num]');
+    var header = document.getElementById('site-header');
+    var stickyNav = document.getElementById('method-system-nav');
+    var navProgress = document.querySelector('[data-fases-nav-progress]');
+    if(!system || !pinWrap || !stage || !panelsHost || !numHost || !header || !stickyNav) return;
+
+    var scenes = Array.prototype.slice.call(panelsHost.querySelectorAll('.method-scene'));
+    var digits = numHost.querySelectorAll('.method-system__stage-num-digit');
+    var navItems = Array.prototype.slice.call(document.querySelectorAll('.method-system__nav-item'));
+    var navLinks = Array.prototype.slice.call(document.querySelectorAll('.method-system__nav-link'));
+    if(scenes.length !== 5 || digits.length !== 5) return;
+
+    /* Tono de fondo real de cada fase — misma alternancia que
+       .method-scene--0N en CSS: JS solo interpola estos tres canales RGB
+       entre fases consecutivas, nunca decide un color nuevo. */
+    var BG = [
+      [255,255,255], /* 01 Escuchar — blanco */
+      [243,246,245], /* 02 Valorar — niebla */
+      [255,255,255], /* 03 Tratar — blanco */
+      [243,246,245], /* 04 Acompañar — niebla */
+      [255,255,255]  /* 05 Evolucionar — blanco */
+    ];
+
+    var lerp = function(a,b,t){ return a + (b - a) * t; };
+
+    var active = false;
+    var headerOffset = 0;
+    var maxScroll = 0;
+    var ticking = false;
+    var currentIndex = -1;
+
+    /* Recorrido de scroll por transición de fase, en fracción de la altura
+       visible del escenario. Deliberadamente más corto que umbralSequence:
+       un panel con texto + foto real ya comunica progresión por sí mismo y
+       no necesita tanto "aire" como la escena abstracta de luz de El
+       umbral. */
+    var getStepFraction = function(){ return .62; };
+
+    var isReducedMotion = function(){
+      return (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) || prefersReducedMotion;
+    };
+
+    /* Fuente única de verdad del ítem activo del riel sticky, tanto en modo
+       fijado (posición continua redondeada) como en el fallback por
+       IntersectionObserver (índice discreto). */
+    var setActiveNav = function(idx){
+      if(idx === currentIndex) return;
+      currentIndex = idx;
+      navItems.forEach(function(item, i){
+        var isActive = i === idx;
+        item.classList.toggle('is-active', isActive);
+        var link = item.querySelector('.method-system__nav-link');
+        if(link){
+          if(isActive) link.setAttribute('aria-current', 'true');
+          else link.removeAttribute('aria-current');
+        }
+      });
+    };
+
+    /* Interpola la posición continua de fase (0..4): funde opacidad y
+       microdesplazamiento de cada panel completo (texto + foto real) con
+       la misma curva cosenoidal que .umbral__phase, funde dígito a dígito
+       el numeral compartido, interpola el fondo del escenario y sincroniza
+       el riel sticky + su línea de progreso. */
+    var render = function(phasePos){
+      var clamped = Math.min(Math.max(phasePos, 0), scenes.length - 1);
+
+      scenes.forEach(function(scene, idx){
+        var dist = clamped - idx;
+        var absDist = Math.abs(dist);
+        var op = 0;
+        var yShift = 0;
+        if(absDist < 0.85){
+          op = Math.max(0, Math.cos((absDist / 0.85) * Math.PI * 0.5));
+          yShift = dist * 22;
+        }
+        var isVis = op > 0.01;
+        scene.style.opacity = isVis ? op.toFixed(3) : '0';
+        scene.style.transform = isVis ? 'translate3d(0, ' + yShift.toFixed(1) + 'px, 0)' : 'translate3d(0, 26px, 0)';
+        scene.style.visibility = isVis ? 'visible' : 'hidden';
+        scene.style.pointerEvents = op > 0.55 ? 'auto' : 'none';
+      });
+
+      digits.forEach(function(digit, idx){
+        digit.style.opacity = Math.max(0, 1 - Math.abs(clamped - idx));
+      });
+
+      var i = Math.min(Math.floor(clamped), BG.length - 2);
+      var t = clamped - i;
+      var a = BG[i], b = BG[i + 1];
+      var r = Math.round(lerp(a[0], b[0], t));
+      var g = Math.round(lerp(a[1], b[1], t));
+      var bl = Math.round(lerp(a[2], b[2], t));
+      stage.style.setProperty('--fases-bg', 'rgb(' + r + ',' + g + ',' + bl + ')');
+
+      setActiveNav(Math.min(scenes.length - 1, Math.round(clamped)));
+      if(navProgress){
+        navProgress.style.width = ((clamped / (scenes.length - 1)) * 100).toFixed(1) + '%';
+      }
+    };
+
+    /* Fallback (mobile, tablet, motion reducido o ventana baja): el riel
+       sticky vuelve al IntersectionObserver discreto de la Fase 2, sobre
+       las mismas 5 <article>, ahora en su flujo normal de documento. */
+    var sceneObserver = null;
+    var attachFallbackObserver = function(){
+      if(sceneObserver || !('IntersectionObserver' in window)) return;
+      sceneObserver = new IntersectionObserver(function(entries){
+        entries.forEach(function(entry){
+          if(entry.isIntersecting){
+            var idx = parseInt(entry.target.getAttribute('data-phase-index'), 10);
+            if(!isNaN(idx)) setActiveNav(idx);
+          }
+        });
+      }, { rootMargin: '-25% 0px -40% 0px', threshold: 0.15 });
+      scenes.forEach(function(s){ sceneObserver.observe(s); });
+    };
+    var detachFallbackObserver = function(){
+      if(!sceneObserver) return;
+      sceneObserver.disconnect();
+      sceneObserver = null;
+    };
+
+    var resetInline = function(){
+      pinWrap.style.height = '';
+      stage.style.height = '';
+      system.classList.remove('is-pin-active');
+      stage.style.removeProperty('--fases-pin-top');
+      stage.style.removeProperty('--fases-bg');
+      scenes.forEach(function(scene){
+        scene.style.opacity = '';
+        scene.style.transform = '';
+        scene.style.visibility = '';
+        scene.style.pointerEvents = '';
+      });
+      digits.forEach(function(digit){ digit.style.opacity = ''; });
+      if(navProgress) navProgress.style.width = '0%';
+      currentIndex = -1;
+    };
+
+    var applyProgress = function(){
+      ticking = false;
+      if(!active) return;
+
+      var rect = pinWrap.getBoundingClientRect();
+      var scrolled = headerOffset - rect.top;
+      scrolled = Math.min(Math.max(scrolled, 0), maxScroll);
+      var progress = maxScroll > 0 ? scrolled / maxScroll : 0;
+      render(progress * (scenes.length - 1));
+    };
+
+    var onScroll = function(){
+      if(!active || ticking) return;
+      ticking = true;
+      window.requestAnimationFrame(applyProgress);
+    };
+
+    /* Decide si el modo fijado tiene sentido y, si lo tiene, calcula la
+       altura extra real a partir del viewport actual — nunca de valores
+       fijos dependientes de una resolución concreta (mismo criterio que
+       umbralSequence). */
+    var measure = function(){
+      var canPin = !isReducedMotion() && window.innerWidth >= 960 && window.innerHeight >= 560;
+
+      if(!canPin){
+        if(active){
+          active = false;
+          resetInline();
+        }
+        attachFallbackObserver();
+        return;
+      }
+
+      detachFallbackObserver();
+      headerOffset = header.offsetHeight + stickyNav.offsetHeight;
+      var innerHeight = Math.max(window.innerHeight - headerOffset, 1);
+      var stepDistance = innerHeight * getStepFraction();
+      maxScroll = stepDistance * (scenes.length - 1);
+
+      stage.style.setProperty('--fases-pin-top', headerOffset + 'px');
+      stage.style.height = innerHeight + 'px';
+      pinWrap.style.height = (innerHeight + maxScroll) + 'px';
+      system.classList.add('is-pin-active');
+      active = true;
+
+      applyProgress();
+    };
+
+    var resizeTimer = null;
+    var scheduleMeasure = function(){
+      if(resizeTimer) window.clearTimeout(resizeTimer);
+      resizeTimer = window.setTimeout(measure, 150);
+    };
+
+    /* Navegación suave: con el pin activo, cada fase ya no tiene un
+       offsetTop propio (todas comparten la posición del escenario sticky),
+       así que se calcula el punto exacto del recorrido fijado; sin pin,
+       se usa el desplazamiento normal a su <article>, igual que en la
+       Fase 2. */
+    navLinks.forEach(function(link, idx){
+      link.addEventListener('click', function(e){
+        var href = link.getAttribute('href');
+        if(!href || href.indexOf('#') !== 0) return;
+        e.preventDefault();
+        var targetTop;
+        if(active){
+          var rect = pinWrap.getBoundingClientRect();
+          var pinWrapDocTop = rect.top + window.scrollY;
+          var frac = idx / (scenes.length - 1);
+          targetTop = pinWrapDocTop - headerOffset + frac * maxScroll;
+        }else{
+          var target = document.querySelector(href);
+          if(!target) return;
+          targetTop = target.getBoundingClientRect().top + window.scrollY - 130;
+        }
+        window.scrollTo({
+          top: Math.max(0, targetTop),
+          behavior: prefersReducedMotion ? 'auto' : 'smooth'
+        });
+        history.replaceState(null, '', href);
+      });
+    });
+
+    measure();
+    window.addEventListener('scroll', onScroll, {passive:true});
+    window.addEventListener('resize', scheduleMeasure);
+    window.addEventListener('orientationchange', scheduleMeasure);
+    window.addEventListener('load', scheduleMeasure);
+
+    if(window.matchMedia){
+      var rmQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+      if(rmQuery.addEventListener) rmQuery.addEventListener('change', scheduleMeasure);
+      else if(rmQuery.addListener) rmQuery.addListener(scheduleMeasure);
+    }
+
+    if(document.fonts && document.fonts.ready){
+      document.fonts.ready.then(scheduleMeasure)['catch'](function(){});
+    }
+
+    if('ResizeObserver' in window){
+      var ro = new ResizeObserver(scheduleMeasure);
+      ro.observe(panelsHost);
+    }
+  }catch(e){ console.warn('metodoFasesSystem', e); }
 })();
 

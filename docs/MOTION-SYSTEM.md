@@ -171,9 +171,12 @@ desborda 5 líneas (`-webkit-line-clamp:5`, activado por
 `[data-clamped]`). Se re-evalúa en resize (un fragmento puede dejar de
 necesitar recorte al ensanchar).
 
-**Cinta de reseñas de Google (`googleReviewsMarquee`, `main.js:1390-1630`,
-página de Fisioterapia)**: bucle infinito por `transform`, sin
-`<marquee>` ni librería nueva.
+**Cinta de reseñas de Google (`googleReviewsMarquee`, `main.js:1781-2018`,
+página de Stretching)**: bucle infinito por `transform`, sin
+`<marquee>` ni librería nueva. (FASE 9: la página de Fisioterapia sustituyó
+su marquee de 6 tarjetas por `.testimonial-feature`, ver sección propia más
+abajo; el CSS/JS de `.google-reviews` no se tocó y sigue siendo el mismo
+componente, ahora usado solo por Stretching.)
 - Solo existen 6 reseñas reales en el DOM (`[data-reviews-track]`); el
   nodo duplicado que cierra el bucle se clona en runtime y se marca
   `aria-hidden="true"` + `inert`, así lectores de pantalla y teclado nunca
@@ -215,6 +218,55 @@ página de Fisioterapia)**: bucle infinito por `transform`, sin
   gesto horizontal se resuelve en JS, el vertical lo gestiona el
   navegador nativamente (mismo principio que la cinta de reseñas).
 
+## Timeline sticky + fundido de foto (páginas de servicio, `serviceProcessTimeline`)
+
+`main.js:1181-1252`. Nace en FASE 8 como el motor de "Cómo es el proceso"
+(`.service-process`) y en FASE 9 se generaliza, sin duplicar lógica, para
+cubrir también "Ámbitos en los que podemos ayudarte" (`.specialty-list`) en
+`src/pages/servicios/physiotherapy.html`.
+
+- Mismo patrón que `firstVisitTimeline`: un único `IntersectionObserver`
+  por sección con una banda fina cerca del centro del viewport
+  (`rootMargin:'-42% 0px -50% 0px'`), sin listener de scroll propio. El
+  paso (`[data-sp-step]`) cuyo borde cruza la banda pasa a `is-active`; los
+  anteriores quedan `is-done`.
+- La sección ejecuta `document.querySelectorAll('.service-process,
+  .specialty-list')` y repite el mismo montaje para cada una que tenga
+  `[data-sp-steps]` con pasos dentro — añadir esta lógica a una futura
+  página de servicio (Fuerza, Pilates, Bienestar) es añadir esa clase a la
+  lista, no escribir un observer nuevo.
+- **Línea de progreso**: en cada cambio de paso activo, JS fija
+  `section.style.setProperty('--sp-progress', (activeIndex+1)/steps.length)`
+  en el `<section>`; el CSS (`.service-process__visual::after`) pinta el
+  relleno de la línea con `height:calc(var(--sp-progress,0) * 100%)` y
+  `transition:height var(--dur-med)`. JS no anima nada directamente, solo
+  actualiza el porcentaje.
+- **Fundido cruzado de foto** (`swapCrossfadeImage`, dentro de la misma
+  IIFE): si `[data-sp-steps]` tiene `data-crossfade-group`, cada
+  `[data-sp-step]` puede declarar `data-crossfade-src` con la imagen que le
+  corresponde. Al activarse ese paso, la función añade `.is-fading` a
+  `[data-crossfade-img]` (CSS baja su opacidad a 0 en `var(--dur-fast)`),
+  sustituye el `src` a los 250ms (mismo tiempo que `--dur-fast`) y quita
+  `.is-fading`. Sin trabajo si el `src` ya es el correcto (evita
+  parpadeos al reobservar el mismo paso). Reutilizado tal cual entre
+  `.specialty-list__visual` y `.service-process__visual`: es el único
+  componente nuevo de motion de FASE 9, pensado para cualquier página de
+  servicio futura con el mismo patrón "columna sticky + foto que cambia
+  con el contenido".
+- **Sticky en sí es CSS puro** (`.specialty-list__intro` /
+  `.service-process__intro{position:sticky}`), igual que en
+  `firstVisitTimeline`: JS solo mide la altura real del header
+  (`setStickyOffset`) para fijar `--sp-sticky-top` sin taparlo con el
+  header fijo, en carga, resize, `orientationchange` y
+  `document.fonts.ready`.
+- Mejora progresiva limpia: sin `IntersectionObserver` o con
+  `prefers-reduced-motion`, la función no hace nada — el sticky (CSS)
+  sigue funcionando igual, pero ningún paso recibe `is-active`/`is-done`,
+  `--sp-progress` nunca se fija (la línea de progreso queda en 0%) y la
+  foto se queda fija en el `src` inicial del HTML, sin fundidos. Se
+  considera un resultado final aceptable (sin animación, no roto), mismo
+  criterio que el resto del sistema.
+
 ## Reveal genérico (`[data-reveal]`)
 
 `main.js:416-444` (`revealOnScroll`) + CSS `[data-reveal]` (`styles.css:505-513`).
@@ -229,6 +281,15 @@ página de Fisioterapia)**: bucle infinito por `transform`, sin
   nunca deja contenido invisible de forma permanente.
 - Con `prefers-reduced-motion`, el `transition-delay` se anula
   (`!important`) vía CSS, no se desactiva la utilidad entera.
+- **Variante de máscara (FASE 9, hero de Fisioterapia)**: `.page-physio
+  .page-hero__photo[data-reveal]` (`styles.css`, bloque "FASE 9") no usa el
+  `opacity`/`translateY` genérico — sobrescribe la transición para animar
+  `clip-path` (`inset(0 0 100% 0)` → `inset(0 0 0% 0)`, efecto cortina de
+  abajo a arriba) y deja `opacity:1;transform:none` fijos. Sigue siendo
+  `revealOnScroll()` quien añade `.is-visible`; no hay JS nuevo, solo un
+  selector CSS más específico para ESTE elemento. Bajo
+  `prefers-reduced-motion` la regla global (`transition-duration:.01ms`)
+  hace que el resultado final sea el mismo sin animación perceptible.
 
 ## Franja de confianza — conteo de cifras
 

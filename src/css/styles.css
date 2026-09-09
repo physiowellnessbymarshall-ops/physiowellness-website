@@ -3846,188 +3846,6 @@ a:focus-visible,button:focus-visible,input:focus-visible{
   .service-process__dot{top:calc(var(--sp-5) + .78rem);}
 }
 
-/* ==========================================================================
-   Método Marshall — Hero editorial y primera transición (FASE 2)
-   Página nueva: src/pages/metodo.html. El hero de página interior ya
-   existente (§19, .page-hero) se consideró demasiado convencional para esta
-   página insignia, así que aquí se define un componente propio
-   (.method-hero, .method-bridge) en vez de reutilizar esas variantes.
-   Reutiliza tokens, .container, .btn, .breadcrumb, [data-reveal] y el
-   lenguaje de degradado de conexión ya validado en .umbral__exit (§11);
-   solo se define lo que no tenía ya equivalente reutilizable.
-   Fotografía: hero-fisio-720/1440.webp, ya usada en el hero de Fisioterapia
-   y en la Home (#resenas) — no hay foto exclusiva de Método todavía (ver
-   ASSET_SOURCES.md, misma reutilización documentada y motivada ahí).
-   No toca ningún selector existente (.hero, .umbral, .page-hero...).
-   ========================================================================== */
-
-.method-hero{
-  position:relative;
-  overflow:hidden;
-  background:var(--pw-mist);
-}
-
-/* Fotografía: en móvil/tablet ocupa el ancho completo del viewport (se
-   "escapa" del .container con el truco width:100vw + margin-left:50% +
-   translateX(-50%), sin depender del valor exacto del padding lateral del
-   contenedor) con un único corte diagonal preciso en la esquina inferior
-   izquierda — no es un rectángulo plano ni una forma decorativa libre. En
-   escritorio (≥1024px) pasa a ocupar el 46% derecho a sangre completa
-   (ver media query), y el título queda a la izquierda sin solaparse con
-   ella para no comprometer nunca el contraste del texto. */
-.method-hero__media{
-  position:relative;
-  z-index:0;
-  margin:0;
-  width:100vw;
-  margin-left:50%;
-  transform:translateX(-50%);
-  aspect-ratio:4/5;
-  clip-path:polygon(0 0, 100% 0, 100% 100%, 0 90%);
-  opacity:0;
-  transition:opacity var(--dur-slow) var(--ease-emphatic);
-}
-.method-hero.is-ready .method-hero__media{opacity:1;}
-.method-hero__media img{
-  width:100%;height:100%;
-  object-fit:cover;
-  object-position:center 30%;
-  filter:saturate(1.05) contrast(1.03) brightness(.98);
-  transform:scale(1.02);
-}
-
-.method-hero__inner{
-  position:relative;
-  z-index:1;
-  padding-block:clamp(6.5rem,14vh,8.5rem) var(--sp-16);
-}
-.method-hero__breadcrumb{margin-bottom:var(--sp-8);}
-
-/* El bloque de texto "emerge" del corte diagonal de la foto: se solapa por
-   encima gracias a que va después en el DOM (mismo fondo --pw-mist que el
-   resto de la sección, así que no hay ninguna costura visible salvo donde
-   cubre el triángulo cortado de la foto). */
-.method-hero__text{
-  position:relative;
-  margin-top:-3.25rem;
-  max-width:34rem;
-}
-.method-hero__title{
-  font-size:clamp(2.75rem,11vw,5.5rem);
-  color:var(--pw-primary-900);
-  margin-bottom:var(--sp-6);
-}
-.method-hero__subtitle{
-  font-size:var(--fs-h3);
-  font-weight:500;
-  color:var(--pw-ink);
-  max-width:22ch;
-  margin-bottom:var(--sp-5);
-}
-.method-hero__lead{
-  font-size:var(--fs-lead);
-  color:var(--pw-ink-70);
-  max-width:44ch;
-  margin-bottom:var(--sp-8);
-}
-.method-hero__actions{display:flex;flex-wrap:wrap;align-items:center;gap:var(--sp-4);}
-
-/* Salida hacia la siguiente escena: mismo lenguaje de degradado ya validado
-   en .umbral__exit (§11) pero invertido (claro → oscuro), para conectar
-   este hero con el fondo oscuro de .method-bridge sin corte brusco. Al
-   quedar dentro de .method-hero (position:relative) y compartir con
-   .method-hero__media el mismo ancestro con overflow:hidden, la foto se
-   extiende también detrás de este degradado y se disuelve en él en vez de
-   cortarse de golpe. */
-.method-hero__exit{
-  position:relative;
-  z-index:2;
-  height:clamp(6rem,11vw,9.5rem);
-  background:linear-gradient(180deg,
-    var(--pw-mist) 0%,
-    rgba(186,235,225,.24) 24%,
-    rgba(52,108,98,.48) 46%,
-    rgba(18,60,55,.94) 78%,
-    var(--pw-primary-900) 100%);
-}
-
-@media (min-width:768px){
-  .method-hero__media{
-    aspect-ratio:16/9;
-    clip-path:polygon(0 0, 100% 0, 100% 100%, 0 96%);
-  }
-  .method-hero__inner{max-width:42rem;margin-inline:auto;}
-  .method-hero__text{margin-top:-2.5rem;}
-  .method-hero__title{font-size:clamp(3.25rem,6vw,4.5rem);}
-}
-
-@media (min-width:1024px){
-  .method-hero{min-height:88vh;}
-  .method-hero__media{
-    position:absolute;
-    z-index:0;
-    top:0;right:0;bottom:0;
-    left:auto;
-    width:46%;
-    margin:0;
-    transform:none;
-    aspect-ratio:auto;
-    clip-path:polygon(14% 0, 100% 0, 100% 100%, 0 100%);
-  }
-  .method-hero__inner{
-    max-width:none;
-    margin-inline:0;
-    min-height:88vh;
-    display:flex;
-    flex-direction:column;
-    justify-content:center;
-    padding-block:clamp(6rem,10vh,7rem) clamp(3rem,6vh,4rem);
-  }
-  .method-hero__text{margin-top:0;max-width:27rem;}
-}
-
-@media (prefers-reduced-motion:reduce){
-  .method-hero__media img{transform:none;}
-}
-
-/* ----- Primera transición: "Cada cuerpo cuenta una historia diferente" -----
-   Continúa en el mismo tono oscuro que .method-hero__exit y que el resto
-   del recorrido de Método Marshall (fases 01-05, todavía fuera del alcance
-   de esta fase). El fondo coincide con .site-footer (--pw-primary-900), así
-   que si esta sección queda temporalmente pegada al pie no hay ninguna
-   costura visible mientras no exista el contenido intermedio. */
-.method-bridge{
-  background:var(--pw-primary-900);
-  padding-block:var(--sp-24) var(--sp-16);
-  text-align:center;
-}
-.method-bridge__inner{max-width:44rem;}
-.method-bridge__statement{
-  font-size:clamp(1.75rem,4.6vw,3.25rem);
-  font-weight:500;
-  line-height:1.2;
-  letter-spacing:-.01em;
-  color:var(--pw-white);
-}
-
-/* Indicación de scroll discreta, puramente decorativa (sin destino propio
-   todavía: las fases 01-05 se añadirán en una fase posterior). Reutiliza el
-   mismo keyframe que .page-tarifas .page-hero__scroll-cue (§ Tarifas). */
-.method-bridge__cue{
-  margin:var(--sp-16) auto 0;
-  width:1px;height:var(--sp-12);
-  display:none;
-}
-.method-bridge__cue span{
-  display:block;width:100%;height:100%;
-  background:linear-gradient(180deg, rgba(255,255,255,.7), rgba(255,255,255,0));
-  animation:pw-scroll-cue 1.8s var(--ease-out) infinite;
-}
-@media (min-width:860px){ .method-bridge__cue{display:block;} }
-@media (prefers-reduced-motion:reduce){
-  .method-bridge__cue span{animation:none;opacity:.5;}
-}
-
 /* ----- Fisioterapia a domicilio + enlace a tarifas -----
    Mismo fondo y ritmo que el bloque equivalente de Servicios; separa el
    aviso de "a domicilio" del enlace general a tarifas sin usar tarjetas. */
@@ -4619,6 +4437,20 @@ a:not(.booking-panel__help):focus-visible,
   color:#ffffff;
 }
 
+/* Línea de progreso continuo bajo el riel sticky (Fase 3): su ancho lo
+   escribe metodoFasesSystem() en cada frame como % de las 5 fases
+   recorridas; en 0% (fallback sin pin) queda invisible por altura 0. */
+.method-system__nav-progress{
+  height:2px;
+  background:var(--pw-line);
+}
+.method-system__nav-progress-bar{
+  display:block;
+  height:100%;
+  width:0%;
+  background:var(--pw-primary);
+}
+
 /* Escenes individuals de fase (.method-scene) */
 .method-scene{
   padding-block:clamp(4.5rem,10vh,7.5rem);
@@ -4711,37 +4543,33 @@ a:not(.booking-panel__help):focus-visible,
   margin:0 0 var(--sp-8);
   max-width:54ch;
 }
-.method-scene__highlights{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(140px,1fr));
-  gap:var(--sp-3);
-  margin-top:var(--sp-6);
+/* Sustituye las antiguas tres "pill" con caja/borde por fase (Fase 3,
+   auditoría de mini-cards): microcopy editorial en lista, sin contenedores
+   — misma información, priorizando composición tipográfica sobre cards. */
+.method-scene__meta{
+  list-style:none;
+  margin:var(--sp-6) 0 0;
+  padding:0;
+  max-width:36rem;
 }
-.method-scene__pill{
-  background:rgba(255,255,255,.9);
-  border:1px solid var(--pw-line);
-  padding:.75rem 1rem;
-  border-radius:2px;
+.method-scene__meta-item{
   display:flex;
-  flex-direction:column;
-  gap:.2rem;
+  align-items:baseline;
+  justify-content:space-between;
+  gap:var(--sp-4);
+  padding-block:.55rem;
+  border-top:1px solid var(--pw-line);
+  font-size:.9rem;
 }
-.method-scene--01 .method-scene__pill,
-.method-scene--03 .method-scene__pill,
-.method-scene--05 .method-scene__pill{
-  background:var(--pw-mist);
-}
-.method-scene__pill-label{
-  font-size:.7rem;
+.method-scene__meta-item:first-child{border-top:none;}
+.method-scene__meta-label{
   font-weight:600;
-  letter-spacing:.08em;
-  text-transform:uppercase;
+  letter-spacing:.02em;
   color:var(--pw-primary);
 }
-.method-scene__pill-val{
-  font-size:.875rem;
-  font-weight:500;
-  color:var(--pw-ink);
+.method-scene__meta-val{
+  color:var(--pw-ink-70);
+  text-align:right;
 }
 
 /* Columna de media de cada fase */
@@ -4858,6 +4686,76 @@ a:not(.booking-panel__help):focus-visible,
   color:var(--pw-primary);
 }
 
+/* ---------- Fase 3: escena fijada y continua de las 5 fases ----------
+   JS: metodoFasesSystem() (main.js). Sin JS, con motion reducido o por
+   debajo de los umbrales mínimos que decide measure() (ancho/alto de
+   ventana), NUNCA se añade .is-pin-active: las 5 <article> quedan en su
+   flujo normal de documento, una tras otra, con su propia fotografía y
+   numeral — la experiencia de hoy, íntegra, es el fallback real (mismo
+   principio que .umbral, §11). Con el pin activo, las 5 fases se apilan
+   exactas unas sobre otras dentro de .method-system__stage (sticky) y
+   se funden entre sí por opacidad/transform según una posición continua
+   de scroll (0..4 fases), nunca por temporizador ni por clic. */
+.method-system__pin-wrap{position:relative;}
+.method-system__stage{position:relative;}
+.method-system.is-pin-active .method-system__stage{
+  position:sticky;
+  top:var(--fases-pin-top,0px);
+  overflow:hidden;
+  background:var(--fases-bg,var(--pw-white));
+}
+.method-system__stage-inner{
+  position:relative;
+  height:100%;
+  display:flex;
+  flex-direction:column;
+}
+/* Numeral editorial compartido: solo existe visualmente con el pin activo
+   (en el fallback, cada fase ya muestra su propio .method-scene__num). Los
+   5 dígitos quedan superpuestos (inset:0) y JS funde su opacidad según la
+   distancia a la posición continua actual — mismo patrón que .umbral__num
+   (§11): la cifra activa nunca "salta", se disuelve. */
+.method-system__stage-num{display:none;}
+.method-system.is-pin-active .method-system__stage-num{
+  display:block;
+  position:relative;
+  flex-shrink:0;
+  height:clamp(3.2rem,6vw,4.6rem);
+  margin-block:var(--sp-6) var(--sp-2);
+}
+.method-system__stage-num-digit{
+  position:absolute;
+  inset:0 auto auto 0;
+  font-size:clamp(3.2rem,6vw,4.6rem);
+  line-height:1;
+  font-weight:500;
+  letter-spacing:-.03em;
+  color:rgba(35,115,105,.24);
+  font-feature-settings:"tnum";
+  opacity:0;
+}
+.method-system__stage-panels{position:relative;flex:1;min-height:0;}
+.method-system.is-pin-active .method-scene{
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+  padding-block:0;
+  background:transparent!important;
+  display:flex;
+  align-items:flex-start;
+  overflow:hidden;
+}
+.method-system.is-pin-active .method-scene__container{
+  width:100%;
+  max-height:100%;
+  padding-block:clamp(1.5rem,4vh,3rem) 0;
+}
+.method-system.is-pin-active .method-scene__num,
+.method-system.is-pin-active .method-scene__handoff{
+  display:none;
+}
+
 /* Ajustaments per alçada reduïda a les escenes */
 @media (max-height:800px) and (min-width:960px){
   .method-scene{
@@ -4873,7 +4771,7 @@ a:not(.booking-panel__help):focus-visible,
 .method-movement{
   background:var(--pw-mist);
   border-block:1px solid var(--pw-line);
-  padding-block:clamp(5rem,10vh,8rem);
+  padding-block:clamp(4rem,8vh,6.5rem);
 }
 .method-movement__container{
   max-width:var(--container);
@@ -4887,46 +4785,56 @@ a:not(.booking-panel__help):focus-visible,
   max-width:62ch;
   margin:0;
 }
-.method-movement__grid{
+/* Llista editorial (abans, 3 targetes amb icona): el numeral fa la feina
+   que abans feia la il·lustració decorativa, sense contenidor ni ombra. */
+.method-movement__list{
   display:grid;
   grid-template-columns:1fr;
-  gap:var(--sp-8);
+  gap:var(--sp-10);
+  border-top:1px solid var(--pw-line);
 }
 @media (min-width:860px){
-  .method-movement__grid{
+  .method-movement__list{
     grid-template-columns:repeat(3,1fr);
-    gap:clamp(1.5rem,3vw,3rem);
+    gap:0;
+    border-top:1px solid var(--pw-line);
   }
 }
-.method-movement__card{
-  background:var(--pw-white);
-  border:1px solid var(--pw-line);
-  padding:clamp(1.75rem,3vw,2.5rem);
-  border-radius:2px;
+.method-movement__item{
   display:flex;
   flex-direction:column;
-  gap:var(--sp-4);
-  transition:transform var(--dur-fast) var(--ease-out),border-color var(--dur-fast);
+  gap:var(--sp-3);
+  padding-top:var(--sp-8);
 }
-.method-movement__card:hover{
-  transform:translateY(-4px);
-  border-color:var(--pw-primary);
+@media (min-width:860px){
+  .method-movement__item{
+    padding:var(--sp-8) clamp(1.5rem,3vw,2.5rem) 0;
+    border-left:1px solid var(--pw-line);
+  }
+  .method-movement__item:first-child{
+    padding-left:0;
+    border-left:0;
+  }
 }
-.method-movement__symbol{
-  color:var(--pw-primary);
-  margin-bottom:var(--sp-2);
+.method-movement__item-num{
+  font-size:clamp(2.25rem,4vw,2.9rem);
+  font-weight:300;
+  line-height:1;
+  letter-spacing:-.02em;
+  color:var(--pw-ink-50);
 }
-.method-movement__card-title{
-  font-size:1.25rem;
+.method-movement__item-title{
+  font-size:1.2rem;
   font-weight:600;
   color:var(--pw-ink);
   margin:0;
 }
-.method-movement__card-desc{
+.method-movement__item-desc{
   font-size:.95rem;
   line-height:1.65;
   color:var(--pw-ink-70);
   margin:0;
+  max-width:38ch;
 }
 
 /* ---------- 7. Moment de respiració (.method-pause) ---------- */
@@ -5044,27 +4952,20 @@ a:not(.booking-panel__help):focus-visible,
   color:var(--pw-ink-70);
   margin:0;
 }
-.method-practice__therapist-card{
-  margin-top:var(--sp-6);
-  padding:var(--sp-5);
-  background:var(--pw-mist);
-  border-radius:2px;
-  border:1px solid var(--pw-line);
+.method-practice__therapist{
+  margin-top:var(--sp-8);
+  padding-top:var(--sp-6);
+  border-top:1px solid var(--pw-line);
   display:flex;
   align-items:center;
   gap:var(--sp-4);
 }
 .method-practice__therapist-thumb{
-  width:64px;
-  height:64px;
+  width:56px;
+  height:56px;
   border-radius:50%;
-  overflow:hidden;
-  flex-shrink:0;
-}
-.method-practice__therapist-thumb img{
-  width:100%;
-  height:100%;
   object-fit:cover;
+  flex-shrink:0;
 }
 .method-practice__therapist-name{
   font-size:1rem;
@@ -5085,9 +4986,20 @@ a:not(.booking-panel__help):focus-visible,
 .method-practice__figure img{
   width:100%;
   height:auto;
-  border-radius:20px;
+  border-radius:var(--radius-tile,20px);
   display:block;
-  box-shadow:0 20px 48px -12px rgba(18,32,29,.1);
+}
+/* La fotografia de la consulta es desprèn del grid pel cantó dret en
+   escriptori (mateixa fórmula de sagnat que .page-hero__photo): trenca
+   deliberadament la simetria "imatge en targeta arrodonida" que ja s'ha
+   vist 5 vegades a les fases, sense inventar un efecte nou. */
+@media (min-width:960px){
+  .method-practice__figure{
+    margin-right:calc(-1 * (max(0px, (100vw - var(--container)) / 2) + clamp(1.5rem,4vw,2.75rem)));
+  }
+  .method-practice__figure img{
+    border-radius:var(--radius-tile,20px) 0 0 var(--radius-tile,20px);
+  }
 }
 .method-practice__caption{
   margin-top:var(--sp-4);
@@ -5097,6 +5009,7 @@ a:not(.booking-panel__help):focus-visible,
   font-style:normal;
   padding-left:var(--sp-3);
   border-left:2px solid var(--pw-primary);
+  max-width:52ch;
 }
 
 /* ---------- 9. Ressenya editorial humana (.method-quote) ---------- */
@@ -5105,14 +5018,6 @@ a:not(.booking-panel__help):focus-visible,
   color:var(--pw-white);
   padding-block:clamp(5.5rem,12vh,8.5rem);
   position:relative;
-  overflow:hidden;
-}
-.method-quote::before{
-  content:'';
-  position:absolute;
-  inset:0;
-  background:radial-gradient(circle at 80% 20%,rgba(38,152,136,.12) 0%,transparent 60%);
-  pointer-events:none;
 }
 .method-quote__container{
   max-width:880px;
@@ -5143,8 +5048,8 @@ a:not(.booking-panel__help):focus-visible,
   padding:0;
 }
 .method-quote__text{
-  font-size:clamp(1.2rem,2.2vw,1.65rem);
-  line-height:1.6;
+  font-size:clamp(1.25rem,2.2vw,1.75rem);
+  line-height:1.55;
   font-weight:400;
   color:rgba(255,255,255,.92);
   margin:0;
@@ -5271,5 +5176,376 @@ a:not(.booking-panel__help):focus-visible,
     transform:none!important;
   }
 }
+
+/* ==========================================================================
+   FASE 9 — Fisioterapia: dirección artística (segunda pasada)
+   Bloque nuevo, autocontenido, para src/pages/servicios/physiotherapy.html.
+   Todo lo que es específico de esta página va con seudo-clases
+   .page-physio para no afectar a Stretching (que comparte .page-hero,
+   .service-context y .service-feature con Fisioterapia, ver §"Página de
+   área de servicio" más arriba). Los componentes con nombre propio nuevo
+   (.photo-break, .service-menu, .pull-quote, .photo-banner,
+   .testimonial-feature, [data-crossfade]) no necesitan ese prefijo: no
+   existen todavía en ninguna otra página.
+   ========================================================================== */
+
+/* ----- Hero: la foto gana peso y sangra al borde en escritorio -----
+   FASE 8 dejaba el hero con columnas casi iguales (1.1fr/.9fr) y la foto
+   contenida dentro de .container, igual que Stretching. Esta segunda
+   pasada solo pide más peso fotográfico en Fisioterapia: se sobrescribe
+   aquí, con selectores .page-physio, sin tocar las reglas compartidas de
+   §"Página de área de servicio" (Stretching sigue con el hero contenido
+   tal cual). La foto se libera del padding derecho de .container con el
+   mismo cálculo que .method-hero__media usa para el sangrado lateral,
+   adaptado a "solo el lado derecho" (la columna de texto se queda dentro
+   del contenedor, alineada con el resto de la página). */
+@media (min-width:860px){
+  .page-physio .page-hero__grid{
+    grid-template-columns:minmax(0,.86fr) minmax(0,1.14fr);
+  }
+  .page-physio .page-hero__photo{
+    margin-right:calc(-1 * (max(0px, (100vw - var(--container)) / 2) + clamp(1.5rem,4vw,2.75rem)));
+    border-radius:var(--radius-tile,20px) 0 0 var(--radius-tile,20px);
+  }
+}
+.page-physio .page-hero__title{
+  font-size:var(--fs-display);
+  max-width:15ch;
+}
+
+/* ----- Hero: máscara de entrada de la fotografía + indicador de scroll -----
+   Reutiliza el [data-reveal]/.is-visible genérico (§7) ya disparado por
+   revealOnScroll() en main.js: no hace falta JS nuevo. Aquí solo se
+   sobrescribe, con un selector más específico, CÓMO entra la fotografía
+   del hero (clip-path en vez de opacity/translateY) y se añade el
+   indicador de scroll como una entrada [data-reveal] más de la lista.
+   Bajo prefers-reduced-motion la transición pasa a .01ms por la regla
+   global (§2), así que el resultado final es el mismo sin animación. */
+.page-physio .page-hero__photo[data-reveal]{
+  opacity:1;
+  transform:none;
+  clip-path:inset(0 0 100% 0);
+  transition:clip-path var(--dur-slow) var(--ease-emphatic);
+  transition-delay:calc(var(--i,0) * 90ms);
+}
+.page-physio .page-hero__photo[data-reveal].is-visible{clip-path:inset(0 0 0% 0);}
+
+.page-hero__cue{display:flex;justify-content:center;margin-top:var(--sp-10);}
+.page-hero__cue span{
+  position:relative;
+  display:block;
+  width:1px;height:2.75rem;
+  overflow:hidden;
+  background:linear-gradient(to bottom, rgba(255,255,255,.5), rgba(255,255,255,0));
+}
+.page-hero__cue span::before{
+  content:'';
+  position:absolute;
+  left:0;top:-100%;width:100%;height:100%;
+  background:var(--pw-white);
+  animation:pageHeroCueDrop 1.8s var(--ease-out) infinite;
+}
+@keyframes pageHeroCueDrop{
+  0%{transform:translateY(0);}
+  100%{transform:translateY(200%);}
+}
+
+/* ----- "Cuándo empezar": fotografía flotante en capas -----
+   .service-context__visual pasa a ser el hijo directo de la rejilla (antes
+   lo era .service-photo): hereda aquí el mismo order:-1/0 que antes tenía
+   .service-photo (definido más arriba, §"Cuándo empezar..."), para que la
+   foto se siga viendo primero en móvil sin tocar esa regla. El desfase
+   negativo de .service-context__detail está deliberadamente acotado por
+   debajo del gutter mínimo del .container (1.5rem) para que nunca provoque
+   scroll horizontal, ni siquiera en el viewport más estrecho soportado. */
+.service-context__visual{position:relative;order:-1;}
+@media (min-width:860px){
+  .service-context__visual{order:0;}
+}
+.service-context__detail{
+  position:absolute;
+  right:clamp(-1rem,-3vw,-1.25rem);
+  bottom:clamp(-1rem,-3vw,-1.5rem);
+  z-index:1;
+  margin:0;
+  width:clamp(5.5rem,26vw,8.5rem);
+  aspect-ratio:4/5;
+  overflow:hidden;
+  border-radius:var(--radius-tile,20px);
+  border:4px solid var(--pw-white);
+  box-shadow:0 12px 28px rgba(18,60,55,.18);
+}
+.service-context__detail img{
+  width:100%;height:100%;
+  object-fit:cover;object-position:center 30%;
+  filter:saturate(1.05) contrast(1.04) brightness(.97);
+}
+
+/* ----- Ruptura fotográfica a sangre completa ----- */
+.photo-break{position:relative;overflow:hidden;background:var(--pw-primary-900);}
+.photo-break__media{
+  margin:0;
+  width:100vw;
+  margin-left:50%;
+  transform:translateX(-50%);
+  aspect-ratio:16/9;
+  overflow:hidden;
+}
+.photo-break__media img{
+  width:100%;height:100%;
+  object-fit:cover;object-position:center 32%;
+  filter:saturate(1.05) contrast(1.04) brightness(.9);
+}
+.photo-break__caption{
+  position:absolute;
+  left:50%;bottom:var(--sp-8);
+  transform:translateX(-50%);
+  margin:0;
+  max-width:88vw;
+  padding:.6rem 1.35rem;
+  background:rgba(18,60,55,.55);
+  color:var(--pw-white);
+  font-size:var(--fs-small);
+  font-weight:500;
+  text-align:center;
+  border-radius:999px;
+}
+@media (min-width:640px){
+  .photo-break__media{aspect-ratio:21/9;}
+}
+
+/* ----- Ámbitos: cabecera fija + fotografía contextual con crossfade -----
+   Reutiliza serviceProcessTimeline (main.js): esta lista también lleva
+   [data-sp-steps]/[data-sp-step], así que entra en el mismo bucle que
+   "Cómo es el proceso" y recibe la misma clase de estado
+   (.is-process-active en la section, .is-active/.is-done en cada item).
+   Por debajo de 860px no hay sticky ni fotografía (mismo criterio que el
+   resto de la página): el atenuado por índice activo tampoco se aplica
+   ahí, para no dejar ámbitos "apagados" sin la foto que lo justifique. */
+.specialty-list__layout{display:block;}
+.specialty-list__visual{display:none;}
+@media (min-width:860px){
+  .specialty-list__layout{
+    display:grid;
+    grid-template-columns:.95fr 1.05fr;
+    gap:var(--sp-24);
+    align-items:start;
+  }
+  .specialty-list__intro{
+    position:sticky;
+    top:var(--sp-sticky-top,6rem);
+    align-self:start;
+    display:grid;
+    gap:var(--sp-8);
+  }
+  .specialty-list__visual{display:block;max-width:22rem;}
+  .specialty-list__items{grid-template-columns:1fr;}
+
+  .specialty-list.is-process-active .specialty-item{
+    opacity:.4;
+    transition:opacity var(--dur-slow) var(--ease-out);
+  }
+  .specialty-list.is-process-active .specialty-item.is-active,
+  .specialty-list.is-process-active .specialty-item.is-done{opacity:1;}
+  .specialty-list.is-process-active .specialty-item.is-done{opacity:.75;}
+}
+
+/* ----- Fotografía con crossfade (compartida: Ámbitos + Cómo es el proceso) -----
+   Componente pequeño y reutilizable (punto 13/14 del brief): cualquier
+   futura sección con [data-sp-steps] puede añadir [data-crossfade] +
+   [data-crossfade-img] + data-crossfade-src por paso sin CSS nuevo.
+   crossfadeStepPhotos() (main.js) alterna la clase .is-fading (opacity:0)
+   y sustituye el src a mitad de transición; con prefers-reduced-motion la
+   duración pasa a .01ms por la regla global (§2), así que el cambio de
+   foto es instantáneo en vez de con fundido. */
+[data-crossfade]{
+  margin:0;
+  aspect-ratio:3/4;
+  overflow:hidden;
+  border-radius:var(--radius-tile,20px);
+}
+[data-crossfade] img{
+  width:100%;height:100%;
+  object-fit:cover;object-position:center 30%;
+  filter:saturate(1.05) contrast(1.04) brightness(.97);
+  transition:opacity var(--dur-fast) var(--ease-out);
+}
+[data-crossfade] img.is-fading{opacity:0;}
+
+/* ----- Servicios y modalidades: lista editorial de formatos de sesión ----- */
+.service-menu{padding-block:var(--sp-16);background:var(--pw-white);border-top:1px solid var(--pw-line);}
+.service-menu__head{max-width:60ch;margin-bottom:var(--sp-10);}
+.service-menu__list{list-style:none;margin:0;padding:0;display:grid;}
+.service-menu__item{
+  display:grid;
+  grid-template-columns:1fr auto;
+  align-items:center;
+  gap:var(--sp-2) var(--sp-6);
+  padding-block:var(--sp-5);
+  border-top:1px solid var(--pw-line);
+}
+.service-menu__list li:last-child{border-bottom:1px solid var(--pw-line);}
+.service-menu__label{grid-column:1;font-weight:600;color:var(--pw-ink);}
+.service-menu__meta{grid-column:1;font-size:.85rem;color:var(--pw-ink-70);}
+.service-menu__link{
+  grid-column:2;grid-row:1 / 3;
+  display:inline-flex;align-items:center;gap:.4rem;
+  font-size:.8rem;font-weight:600;letter-spacing:.04em;text-transform:uppercase;
+  color:var(--pw-primary);
+  white-space:nowrap;
+  transition:color var(--dur-fast) var(--ease-out);
+}
+.service-menu__link:hover{color:var(--pw-primary-600);}
+.service-menu__arrow{transition:transform var(--dur-fast) var(--ease-out);}
+.service-menu__link:hover .service-menu__arrow,
+.service-menu__link:focus-visible .service-menu__arrow{transform:translateX(4px);}
+.service-menu__note{margin-top:var(--sp-8);font-size:.9rem;color:var(--pw-ink-70);max-width:60ch;}
+@media (min-width:640px){
+  .service-menu__item{grid-template-columns:1fr auto auto;column-gap:var(--sp-8);}
+  .service-menu__label{grid-column:1;}
+  .service-menu__meta{grid-column:2;}
+  .service-menu__link{grid-column:3;grid-row:auto;}
+}
+
+/* ----- Cómo es el proceso: nota + enlace a Primera visita + foto + progreso -----
+   La línea de progreso vertical (::after) se calcula con --sp-progress
+   (fijada por serviceProcessTimeline en main.js según activeIndex/pasos),
+   superpuesta al borde de la fotografía sticky. Desfase negativo pequeño
+   (-1rem), siempre dentro del hueco entre columnas (gap var(--sp-24) en
+   escritorio), así que nunca se solapa con la columna de pasos ni con el
+   gutter del contenedor. */
+.service-process__note{margin-top:var(--sp-5);color:var(--pw-ink-70);max-width:52ch;}
+.service-process__link{
+  display:inline-flex;align-items:center;gap:.5rem;
+  margin-top:var(--sp-5);
+  font-size:.85rem;font-weight:600;letter-spacing:.02em;
+  color:var(--pw-primary);
+  border-bottom:1px solid currentColor;
+  padding-block:.2rem;
+  transition:color var(--dur-fast) var(--ease-out);
+}
+.service-process__link:hover{color:var(--pw-primary-600);}
+.service-process__link:hover .service-feature__arrow,
+.service-process__link:focus-visible .service-feature__arrow{transform:translateX(4px);}
+.service-process__visual{
+  position:relative;
+  margin-top:var(--sp-6);
+  max-width:26rem;
+  aspect-ratio:4/3;
+}
+@media (min-width:860px){
+  .service-process__visual{margin-top:var(--sp-8);max-width:22rem;aspect-ratio:3/4;}
+  .service-process__visual::before{
+    content:'';
+    position:absolute;
+    left:-1rem;top:0;bottom:0;
+    width:2px;
+    background:var(--pw-line);
+  }
+  .service-process__visual::after{
+    content:'';
+    position:absolute;
+    left:-1rem;top:0;
+    width:2px;
+    height:calc(var(--sp-progress,0) * 100%);
+    background:var(--pw-primary);
+    transition:height var(--dur-med) var(--ease-out);
+  }
+}
+
+/* ----- Cita entrelazada reutilizable (proceso + testimonio) ----- */
+.pull-quote{
+  max-width:44rem;
+  margin:var(--sp-16) auto 0;
+  padding-top:var(--sp-8);
+  border-top:1px solid var(--pw-line);
+  text-align:center;
+}
+.pull-quote p{
+  font-size:var(--fs-h3);
+  font-weight:500;
+  color:var(--pw-primary-900);
+  line-height:1.4;
+  margin:0 0 var(--sp-4);
+}
+.pull-quote cite{
+  display:block;
+  font-style:normal;
+  font-size:.8rem;
+  letter-spacing:.06em;
+  text-transform:uppercase;
+  color:var(--pw-ink-50);
+}
+.pull-quote--compact{margin-top:var(--sp-12);}
+.pull-quote--compact p{font-size:var(--fs-lead);}
+
+/* ----- Testimonio protagonista (sustituye la cinta de 6 en esta página) ----- */
+.testimonial-feature{padding-block:var(--sp-24);background:var(--pw-white);}
+.testimonial-feature__grid{display:grid;gap:var(--sp-10);align-items:center;}
+.testimonial-feature__photo{
+  margin:0;
+  aspect-ratio:4/3;
+  overflow:hidden;
+  border-radius:var(--radius-tile,20px);
+}
+.testimonial-feature__photo img{
+  width:100%;height:100%;
+  object-fit:cover;object-position:center 30%;
+  filter:saturate(1.05) contrast(1.04) brightness(.97);
+}
+.testimonial-feature__stars{margin:var(--sp-4) 0 0;color:var(--pw-primary);letter-spacing:.12em;font-size:.9rem;}
+.testimonial-feature__quote{margin:var(--sp-4) 0 var(--sp-5);}
+.testimonial-feature__quote p{
+  font-size:var(--fs-h3);
+  font-weight:500;
+  color:var(--pw-primary-900);
+  line-height:1.4;
+}
+.testimonial-feature__quote p + p{margin-top:var(--sp-4);}
+.testimonial-feature__cite{
+  display:block;
+  font-style:normal;
+  font-size:.85rem;
+  color:var(--pw-ink-70);
+  letter-spacing:.02em;
+}
+@media (min-width:860px){
+  .testimonial-feature__grid{grid-template-columns:.85fr 1.15fr;gap:var(--sp-16);}
+  .testimonial-feature__photo{aspect-ratio:3/4;}
+}
+
+/* ----- "photo-banner": franja a sangre completa con foto + velo + CTA -----
+   Base compartida por el puente al Método Marshall (.discipline-bridge) y
+   por el CTA final de esta página (.cta-final--photo). Nombre distinto de
+   ".method-bridge" (ya usado dentro de src/pages/metodo.html para una
+   escena de transición interna no relacionada) para no heredar ni chocar
+   con esas reglas. */
+.photo-banner{position:relative;overflow:hidden;color:var(--pw-white);text-align:center;}
+.photo-banner__media{position:absolute;inset:0;margin:0;z-index:0;}
+.photo-banner__media img{
+  width:100%;height:100%;
+  object-fit:cover;
+  filter:saturate(1.05) contrast(1.04) brightness(.85);
+}
+.photo-banner__media::after{
+  content:'';
+  position:absolute;inset:0;
+  background:linear-gradient(180deg, rgba(18,60,55,.55), rgba(18,60,55,.84));
+}
+.photo-banner__inner{
+  position:relative;z-index:1;
+  max-width:38rem;
+  margin-inline:auto;
+  padding-block:var(--sp-32);
+  display:flex;flex-direction:column;align-items:center;gap:var(--sp-6);
+}
+.photo-banner__title{font-size:var(--fs-h2);}
+.photo-banner__lead{font-size:var(--fs-lead);color:rgba(255,255,255,.84);}
+
+.discipline-bridge .eyebrow--on-dark{margin-bottom:var(--sp-2);}
+
+.cta-final--photo.cta-final{padding-block:0;background:none;}
+.cta-final--photo .cta-final__inner{padding-block:var(--sp-32);}
+.cta-final--photo .cta-final__lead{color:rgba(255,255,255,.84);}
 
 

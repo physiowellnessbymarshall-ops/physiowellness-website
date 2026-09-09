@@ -4924,12 +4924,28 @@ a:not(.booking-panel__help):focus-visible,
   content:'';
   position:absolute;
   left:calc(-1 * var(--sp-6) - 5px);
-  top:.35rem;
+  top:.5rem;
   width:9px;
   height:9px;
   border-radius:50%;
   background:var(--pw-primary);
   box-shadow:0 0 0 4px var(--pw-white),0 0 0 5px rgba(35,115,105,.3);
+}
+/* El numeral fantasma repeteix el vocabulari de .method-scene__num i
+   .method-movement__item-num: el pas de la primera visita és una
+   continuació de la mateixa progressió numerada, no un servei nou. */
+.method-practice__step-head{
+  display:flex;
+  align-items:baseline;
+  gap:var(--sp-3);
+  margin-bottom:.3rem;
+}
+.method-practice__step-num{
+  font-size:1.4rem;
+  font-weight:300;
+  line-height:1;
+  letter-spacing:-.02em;
+  color:var(--pw-ink-50);
 }
 .method-practice__step-time{
   font-size:.75rem;
@@ -4937,8 +4953,7 @@ a:not(.booking-panel__help):focus-visible,
   letter-spacing:.1em;
   text-transform:uppercase;
   color:var(--pw-primary);
-  display:block;
-  margin-bottom:.3rem;
+  margin:0;
 }
 .method-practice__step-title{
   font-size:1.2rem;
@@ -5062,6 +5077,16 @@ a:not(.booking-panel__help):focus-visible,
   padding-top:var(--sp-6);
   border-top:1px solid var(--pw-line-on-dark);
 }
+/* Mateix format circular de 56px que .method-practice__therapist-thumb:
+   el paciente que testimonia i el fisioterapeuta que trata comparteixen
+   el mateix tractament fotogràfic, sense inventar un component nou. */
+.method-quote__author-photo{
+  width:56px;
+  height:56px;
+  border-radius:50%;
+  object-fit:cover;
+  flex-shrink:0;
+}
 .method-quote__name{
   display:block;
   font-size:1.05rem;
@@ -5076,80 +5101,54 @@ a:not(.booking-panel__help):focus-visible,
   margin-top:.2rem;
 }
 
-/* ---------- 10. Tancament del recorregut i CTAs (.method-closing) ---------- */
+/* ---------- 10. Tancament del recorregut — torna al punt de partida (.method-closing) ----------
+   Variant de .photo-banner (definida més avall): mateixa fotografia que el
+   Hero d'aquesta pàgina, amb un desvaniment final cap a --pw-primary-900
+   perquè es fongui sense talls amb el fons del footer (mateix color exacte). */
 .method-closing{
-  background:var(--pw-mist);
-  border-top:1px solid var(--pw-line);
-  padding-block:clamp(5.5rem,12vh,9rem);
   text-align:center;
-  position:relative;
 }
-.method-closing__container{
-  max-width:800px;
+.method-closing .photo-banner__media::after{
+  background:linear-gradient(180deg, rgba(18,60,55,.45) 0%, rgba(18,60,55,.86) 68%, var(--pw-primary-900) 100%);
 }
-.method-closing__thread-dest{
-  display:inline-flex;
-  align-items:center;
-  justify-content:center;
-  width:28px;
-  height:28px;
-  border-radius:50%;
-  border:1.5px dashed var(--pw-primary);
-  margin-bottom:var(--sp-6);
+.method-closing__inner{
+  max-width:44rem;
 }
-.method-closing__dest-node{
-  width:8px;
-  height:8px;
-  border-radius:50%;
-  background:var(--pw-primary);
-  box-shadow:0 0 10px var(--pw-accent);
+.method-closing__recap{
+  margin-bottom:var(--sp-2);
+}
+.method-closing__recap-you{
+  color:var(--pw-white);
+  font-weight:700;
 }
 .method-closing__title{
-  font-size:var(--fs-h2);
-  font-weight:500;
-  line-height:1.2;
-  letter-spacing:-.02em;
-  color:var(--pw-ink);
-  margin:0 0 var(--sp-5);
+  margin:0;
 }
 .method-closing__lead{
-  font-size:var(--fs-lead);
-  line-height:1.65;
-  color:var(--pw-ink-70);
-  margin:0 auto var(--sp-8);
-  max-width:58ch;
+  margin:0;
+  max-width:52ch;
 }
-.method-closing__actions{
+.method-closing__cta{
+  min-width:240px;
+}
+.method-closing__secondary{
   display:flex;
   flex-wrap:wrap;
   justify-content:center;
   align-items:center;
-  gap:var(--sp-4);
-  margin-bottom:var(--sp-8);
+  gap:var(--sp-3);
+  font-size:.85rem;
 }
-.method-closing__cta{
-  min-width:220px;
-}
-.method-closing__help{
-  display:inline-flex;
-}
-.method-closing__whatsapp{
-  display:inline-flex;
-  align-items:center;
-  gap:.6rem;
-  font-size:.875rem;
-  color:var(--pw-ink-70);
+.method-closing__secondary a{
+  color:rgba(255,255,255,.72);
   text-decoration:none;
-  padding:.4rem .8rem;
-  border-radius:2px;
   transition:color var(--dur-fast);
 }
-.method-closing__whatsapp svg{
-  color:var(--pw-primary);
-  flex-shrink:0;
+.method-closing__secondary a:hover{
+  color:var(--pw-white);
 }
-.method-closing__whatsapp:hover{
-  color:var(--pw-primary);
+.method-closing__secondary-sep{
+  color:rgba(255,255,255,.35);
 }
 
 /* ---------- 11. Accessibilitat per a prefers-reduced-motion ---------- */

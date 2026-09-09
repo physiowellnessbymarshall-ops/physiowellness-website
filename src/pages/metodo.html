@@ -633,48 +633,30 @@
         </p>
       </div>
 
-      <div class="method-movement__grid">
+      <div class="method-movement__list">
         <!-- Principio 1: Amplitud -->
-        <div class="method-movement__card" data-reveal style="--i:0">
-          <div class="method-movement__symbol" aria-hidden="true">
-            <svg viewBox="0 0 64 64" width="48" height="48" fill="none">
-              <circle cx="32" cy="32" r="28" stroke="currentColor" stroke-width="1.5" stroke-dasharray="3 4" opacity=".5"/>
-              <path d="M 32,10 A 22 22 0 0 1 54 32" stroke="currentColor" stroke-width="2"/>
-              <circle cx="32" cy="10" r="3" fill="currentColor"/>
-            </svg>
-          </div>
-          <h3 class="method-movement__card-title">Amplitud articular</h3>
-          <p class="method-movement__card-desc">
+        <div class="method-movement__item" data-reveal style="--i:0">
+          <span class="method-movement__item-num" aria-hidden="true">01</span>
+          <h3 class="method-movement__item-title">Amplitud articular</h3>
+          <p class="method-movement__item-desc">
             Recuperar el rango natural de movimiento en cada articulación sin restricciones ni pellizcos, permitiendo al cuerpo expresarse sin rigidez.
           </p>
         </div>
 
         <!-- Principio 2: Control motor -->
-        <div class="method-movement__card" data-reveal style="--i:1">
-          <div class="method-movement__symbol" aria-hidden="true">
-            <svg viewBox="0 0 64 64" width="48" height="48" fill="none">
-              <rect x="14" y="14" width="36" height="36" rx="2" stroke="currentColor" stroke-width="1.5" opacity=".5"/>
-              <circle cx="32" cy="32" r="6" fill="currentColor"/>
-              <line x1="32" y1="8" x2="32" y2="56" stroke="currentColor" stroke-width="1" opacity=".4"/>
-            </svg>
-          </div>
-          <h3 class="method-movement__card-title">Control y alineación</h3>
-          <p class="method-movement__card-desc">
+        <div class="method-movement__item" data-reveal style="--i:1">
+          <span class="method-movement__item-num" aria-hidden="true">02</span>
+          <h3 class="method-movement__item-title">Control y alineación</h3>
+          <p class="method-movement__item-desc">
             Estabilizar el centro antes de exigir carga. El control neuromuscular profundo enseña a los músculos adecuados a activarse en el momento preciso.
           </p>
         </div>
 
         <!-- Principio 3: Fuerza y carga -->
-        <div class="method-movement__card" data-reveal style="--i:2">
-          <div class="method-movement__symbol" aria-hidden="true">
-            <svg viewBox="0 0 64 64" width="48" height="48" fill="none">
-              <path d="M 12,48 L 32,16 L 52,48 Z" stroke="currentColor" stroke-width="1.5" opacity=".5"/>
-              <line x1="20" y1="36" x2="44" y2="36" stroke="currentColor" stroke-width="2"/>
-              <circle cx="32" cy="16" r="3" fill="currentColor"/>
-            </svg>
-          </div>
-          <h3 class="method-movement__card-title">Capacidad y resiliencia</h3>
-          <p class="method-movement__card-desc">
+        <div class="method-movement__item" data-reveal style="--i:2">
+          <span class="method-movement__item-num" aria-hidden="true">03</span>
+          <h3 class="method-movement__item-title">Capacidad y resiliencia</h3>
+          <p class="method-movement__item-desc">
             Dosificar el esfuerzo para que tendones, ligamentos y fibras musculares toleren las demandas reales de tu trabajo, tus aficiones y tus deportes.
           </p>
         </div>
@@ -712,7 +694,10 @@
         <!-- Columna de detalls pràctics -->
         <div class="method-practice__timeline" data-reveal>
           <div class="method-practice__step">
-            <span class="method-practice__step-time">Minutos 00–20</span>
+            <div class="method-practice__step-head">
+              <span class="method-practice__step-num" aria-hidden="true">01</span>
+              <span class="method-practice__step-time">Minutos 00–20</span>
+            </div>
             <h3 class="method-practice__step-title">Entrevista y valoración funcional 1 a 1</h3>
             <p class="method-practice__step-desc">
               Hablamos de tu historial, analizamos pruebas médicas previas si las aportas y realizamos los test de movilidad y dolor en consulta privada.
@@ -720,7 +705,10 @@
           </div>
 
           <div class="method-practice__step">
-            <span class="method-practice__step-time">Minutos 20–50</span>
+            <div class="method-practice__step-head">
+              <span class="method-practice__step-num" aria-hidden="true">02</span>
+              <span class="method-practice__step-time">Minutos 20–50</span>
+            </div>
             <h3 class="method-practice__step-title">Tratamiento manual directo en camilla</h3>
             <p class="method-practice__step-desc">
               Intervención inmediata sobre el foco lesional. No te vas solo con un diagnóstico: sales con tratamiento físico aplicado en la misma visita.
@@ -728,17 +716,18 @@
           </div>
 
           <div class="method-practice__step">
-            <span class="method-practice__step-time">Minutos 50–60</span>
+            <div class="method-practice__step-head">
+              <span class="method-practice__step-num" aria-hidden="true">03</span>
+              <span class="method-practice__step-time">Minutos 50–60</span>
+            </div>
             <h3 class="method-practice__step-title">Explicación clara y plan personalizado</h3>
             <p class="method-practice__step-desc">
               Te explicamos qué ocurre en tu cuerpo con lenguaje comprensible, marcamos objetivos realistas y acordamos los pasos del proceso sin sesiones de relleno.
             </p>
           </div>
 
-          <div class="method-practice__therapist-card">
-            <div class="method-practice__therapist-thumb">
-              <img src="../assets/img/team/marcal-ramirez.jpg" alt="Marçal Ramirez Roig, fisioterapeuta de Physio Wellness by Marshall en Sitges" width="120" height="120">
-            </div>
+          <div class="method-practice__therapist">
+            <img class="method-practice__therapist-thumb" src="../assets/img/team/marcal-ramirez.jpg" alt="Marçal Ramirez Roig, fisioterapeuta de Physio Wellness by Marshall en Sitges" width="120" height="120">
             <div class="method-practice__therapist-info">
               <p class="method-practice__therapist-name">Marçal Ramirez Roig</p>
               <p class="method-practice__therapist-meta">Fisioterapeuta col. 14.599 · Más de 10 años de experiencia clínica y más de 1.500 pacientes acompañados en Sitges.</p>
@@ -778,6 +767,7 @@
         </blockquote>
 
         <footer class="method-quote__author-row">
+          <img class="method-quote__author-photo" src="../../seat-news-appointment-new-design-director-diez.jpg.avif" alt="" width="56" height="56" loading="lazy">
           <div class="method-quote__author-details">
             <cite class="method-quote__name">Jorge Díaz</cite>
             <span class="method-quote__meta">Paciente de Physio Wellness · Reseña verificada en Google (5,0 / 5)</span>
@@ -787,33 +777,48 @@
     </div>
   </section>
 
-  <!-- ============ 8. TANCAMENT DEL RECORREGUT I CONVERGÈNCIA CTA ============ -->
-  <section class="method-closing" id="empezar" aria-label="Comenzar el Método Marshall">
-    <div class="container method-closing__container" data-reveal>
-      <div class="method-closing__thread-dest" aria-hidden="true">
-        <span class="method-closing__dest-node"></span>
+  <!-- ============ 8. TANCAMENT DEL RECORREGUT — TORNA AL PUNT DE PARTIDA ============
+       Reutilitza la família .photo-banner (ja present a physiotherapy.html)
+       amb la mateixa fotografia del Hero: l'usuari torna visualment on va
+       començar, ara amb el recorregut complet. La línia de recapitulació
+       reutilitza exactament les classes .method-bridge__station* de
+       l'escena de transició inicial, com a resum en comptes d'anticipació. -->
+  <section class="method-closing photo-banner" id="empezar" aria-label="Comenzar el Método Marshall">
+    <figure class="photo-banner__media" aria-hidden="true">
+      <img src="../assets/img/disciplines/metodo/0df88b9f-0f58-4dbf-b5cc-001eb67eb239-1440.webp"
+           srcset="../assets/img/disciplines/metodo/0df88b9f-0f58-4dbf-b5cc-001eb67eb239-720.webp 720w, ../assets/img/disciplines/metodo/0df88b9f-0f58-4dbf-b5cc-001eb67eb239-1440.webp 1440w"
+           sizes="100vw" alt="" loading="lazy" width="1122" height="1402">
+    </figure>
+
+    <div class="container photo-banner__inner method-closing__inner" data-reveal>
+      <div class="method-bridge__stations method-closing__recap" aria-hidden="true">
+        <span class="method-bridge__station"><span class="method-bridge__station-dot"></span>01</span>
+        <span class="method-bridge__station-sep">→</span>
+        <span class="method-bridge__station"><span class="method-bridge__station-dot"></span>02</span>
+        <span class="method-bridge__station-sep">→</span>
+        <span class="method-bridge__station"><span class="method-bridge__station-dot"></span>03</span>
+        <span class="method-bridge__station-sep">→</span>
+        <span class="method-bridge__station"><span class="method-bridge__station-dot"></span>04</span>
+        <span class="method-bridge__station-sep">→</span>
+        <span class="method-bridge__station"><span class="method-bridge__station-dot"></span>05</span>
+        <span class="method-bridge__station-sep">→</span>
+        <span class="method-closing__recap-you">Tú</span>
       </div>
 
-      <p class="eyebrow section-eyebrow">TU PUNTO DE PARTIDA</p>
-      <h2 class="method-closing__title">El método tiene un único objetivo: acompañarte a recuperar tu mejor versión</h2>
-      <p class="method-closing__lead">
+      <p class="eyebrow eyebrow--on-dark section-eyebrow">TU PUNTO DE PARTIDA</p>
+      <h2 class="photo-banner__title method-closing__title">El método tiene un único objetivo: acompañarte a recuperar tu mejor versión</h2>
+      <p class="photo-banner__lead method-closing__lead">
         Ahora que conoces cómo trabajamos, el siguiente paso es empezar tu propio proceso. Reserva tu primera visita y valoraremos tu caso en detalle en nuestro centro de Sitges.
       </p>
 
-      <div class="method-closing__actions">
-        <a class="btn btn--primary btn--wrap method-closing__cta" href="https://www.docfav.com/portal/physio-wellness-by-marshall" target="_blank" rel="noopener">
-          Reservar primera visita
-        </a>
-        <a class="btn btn--outline-dark" href="servicios.html">
-          Conocer nuestros servicios
-        </a>
-      </div>
+      <a class="btn btn--primary btn--wrap method-closing__cta" href="https://www.docfav.com/portal/physio-wellness-by-marshall" target="_blank" rel="noopener">
+        Reservar primera visita
+      </a>
 
-      <div class="method-closing__help">
-        <a href="https://wa.me/34644678344" target="_blank" rel="noopener" class="method-closing__whatsapp">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
-          <span>¿Tienes dudas sobre si el Método Marshall es adecuado para tu dolencia? Consúltanos por WhatsApp</span>
-        </a>
+      <div class="method-closing__secondary">
+        <a href="servicios.html">Conocer nuestros servicios</a>
+        <span class="method-closing__secondary-sep" aria-hidden="true">·</span>
+        <a href="https://wa.me/34644678344" target="_blank" rel="noopener">¿Dudas? Escríbenos por WhatsApp</a>
       </div>
     </div>
   </section>

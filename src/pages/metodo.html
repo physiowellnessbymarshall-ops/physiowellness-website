@@ -177,24 +177,25 @@
 
 <main id="main">
 
-  <!-- ============ 1. HERO CINEMATOGRÀFIC — PRIMER MOMENT "WOW" ============ -->
+  <!-- ============ 1. HERO EDITORIAL — INTRODUCCIÓN AL MÉTODO ============ -->
   <section class="method-hero" id="hero-metodo">
-    <div class="container method-hero__intro" data-reveal>
-      <div class="method-hero__meta">
-        <p class="eyebrow method-hero__eyebrow">PHYSIO WELLNESS / MÉTODO MARSHALL</p>
-        <span class="method-hero__badge">Metodología Clínica · Sitges</span>
-      </div>
+    <div class="container method-hero__container">
+      <!-- Contenido principal: narrativa + CTA -->
+      <div class="method-hero__intro" data-reveal>
+        <div class="method-hero__meta">
+          <p class="eyebrow method-hero__eyebrow">PHYSIO WELLNESS / MÉTODO MARSHALL</p>
+          <span class="method-hero__badge">Metodología Clínica · Sitges</span>
+        </div>
 
-      <h1 class="method-hero__title">Método Marshall</h1>
+        <h1 class="method-hero__title">Método Marshall</h1>
 
-      <div class="method-hero__statement">
-        <p class="method-hero__claim">
-          <span class="method-hero__claim-line">No empezamos donde duele.</span>
-          <span class="method-hero__claim-line method-hero__claim-line--accent">Empezamos entendiendo por qué.</span>
-        </p>
-      </div>
+        <div class="method-hero__statement">
+          <p class="method-hero__claim">
+            <span class="method-hero__claim-line">No empezamos donde duele.</span>
+            <span class="method-hero__claim-line method-hero__claim-line--accent">Empezamos entendiendo por qué.</span>
+          </p>
+        </div>
 
-      <div class="method-hero__bottom-row">
         <p class="method-hero__lead">
           Una metodología propia en Sitges que transforma la sesión aislada en un proceso continuo de valoración clínica, terapia manual y movimiento guiado.
         </p>
@@ -207,25 +208,19 @@
           </a>
         </div>
       </div>
-    </div>
 
-    <!-- Frame Cinematogràfic Central que s'expandeix amb el primer scroll -->
-    <div class="method-hero__cinema-wrap" id="hero-cinema-wrap" data-reveal style="--i:1">
-      <div class="method-hero__cinema-stage" id="hero-cinema-stage">
-        <div class="method-hero__cinema-frame">
-          <img src="../assets/img/disciplines/metodo/0df88b9f-0f58-4dbf-b5cc-001eb67eb239-1440.webp"
-               srcset="../assets/img/disciplines/metodo/0df88b9f-0f58-4dbf-b5cc-001eb67eb239-720.webp 720w, ../assets/img/disciplines/metodo/0df88b9f-0f58-4dbf-b5cc-001eb67eb239-1440.webp 1440w"
-               sizes="(min-width: 1200px) 85vw, 94vw"
-               alt="Terapia manual y valoración clínica en Physio Wellness Sitges"
+      <!-- Imagen con mayor escala editorial -->
+      <div class="method-hero__visual" data-reveal style="--i:1">
+        <div class="method-hero__visual-frame">
+          <img src="../assets/img/disciplines/metodo/ae26bb46-82b0-4914-8159-5d01e68f3f81-1440.webp"
+               srcset="../assets/img/disciplines/metodo/ae26bb46-82b0-4914-8159-5d01e68f3f81-720.webp 720w, ../assets/img/disciplines/metodo/ae26bb46-82b0-4914-8159-5d01e68f3f81-1440.webp 1440w"
+               sizes="(min-width: 1200px) 50vw, 92vw"
+               alt="Valoración clínica y proceso diagnóstico en Physio Wellness Sitges"
                width="1122" height="1402"
                loading="eager" fetchpriority="high"
-               class="method-hero__cinema-img" id="hero-cinema-img">
-
-          <div class="method-hero__cinema-overlay">
-            <div class="container method-hero__cinema-caption">
-              <span class="method-hero__cinema-tag">01 · Contacto y Tratamiento Manual</span>
-              <p class="method-hero__cinema-quote">El cuerpo no miente cuando se le escucha con precisión.</p>
-            </div>
+               class="method-hero__visual-img">
+          <div class="method-hero__visual-caption" aria-hidden="true">
+            <p>Valoración precisa del punto de partida.</p>
           </div>
         </div>
       </div>
@@ -299,9 +294,22 @@
           </li>
         </ol>
       </div>
+      <div class="method-system__nav-progress">
+        <span class="method-system__nav-progress-bar" data-fases-nav-progress></span>
+      </div>
     </div>
 
-    <div class="method-system__scenes">
+    <div class="method-system__pin-wrap" data-fases-pin>
+      <div class="method-system__stage" data-fases-stage>
+        <div class="method-system__stage-inner">
+          <div class="method-system__stage-num" data-fases-num aria-hidden="true">
+            <span class="method-system__stage-num-digit">01</span>
+            <span class="method-system__stage-num-digit">02</span>
+            <span class="method-system__stage-num-digit">03</span>
+            <span class="method-system__stage-num-digit">04</span>
+            <span class="method-system__stage-num-digit">05</span>
+          </div>
+          <div class="method-system__stage-panels" data-fases-panels>
 
       <!-- ============ FASE 01: ESCUCHAR ============ -->
       <article class="method-scene method-scene--01" id="fase-01" data-phase-index="0">
@@ -324,20 +332,20 @@
               <span>Entorno: Consulta y Bienvenida · Sitges</span>
             </div>
 
-            <div class="method-scene__highlights">
-              <div class="method-scene__pill">
-                <span class="method-scene__pill-label">Entrevista clínica</span>
-                <span class="method-scene__pill-val">Sin reloj acelerado</span>
-              </div>
-              <div class="method-scene__pill">
-                <span class="method-scene__pill-label">Contexto vital</span>
-                <span class="method-scene__pill-val">Rutinas, trabajo y deporte</span>
-              </div>
-              <div class="method-scene__pill">
-                <span class="method-scene__pill-label">Objetivo</span>
-                <span class="method-scene__pill-val">Poner nombre y rumbo</span>
-              </div>
-            </div>
+            <ul class="method-scene__meta">
+              <li class="method-scene__meta-item">
+                <span class="method-scene__meta-label">Entrevista clínica</span>
+                <span class="method-scene__meta-val">Sin reloj acelerado</span>
+              </li>
+              <li class="method-scene__meta-item">
+                <span class="method-scene__meta-label">Contexto vital</span>
+                <span class="method-scene__meta-val">Rutinas, trabajo y deporte</span>
+              </li>
+              <li class="method-scene__meta-item">
+                <span class="method-scene__meta-label">Objetivo</span>
+                <span class="method-scene__meta-val">Poner nombre y rumbo</span>
+              </li>
+            </ul>
           </div>
 
           <div class="method-scene__media" data-reveal style="--i:1">
@@ -384,20 +392,20 @@
               <span>Disciplina: Fisioterapia Clínica · Valoración Articular</span>
             </div>
 
-            <div class="method-scene__highlights">
-              <div class="method-scene__pill">
-                <span class="method-scene__pill-label">Movilidad articular</span>
-                <span class="method-scene__pill-val">Test de rango y tope final</span>
-              </div>
-              <div class="method-scene__pill">
-                <span class="method-scene__pill-label">Control motor</span>
-                <span class="method-scene__pill-val">Detección de compensaciones</span>
-              </div>
-              <div class="method-scene__pill">
-                <span class="method-scene__pill-label">Diagnóstico</span>
-                <span class="method-scene__pill-val">Causa vs. síntoma reflejo</span>
-              </div>
-            </div>
+            <ul class="method-scene__meta">
+              <li class="method-scene__meta-item">
+                <span class="method-scene__meta-label">Movilidad articular</span>
+                <span class="method-scene__meta-val">Test de rango y tope final</span>
+              </li>
+              <li class="method-scene__meta-item">
+                <span class="method-scene__meta-label">Control motor</span>
+                <span class="method-scene__meta-val">Detección de compensaciones</span>
+              </li>
+              <li class="method-scene__meta-item">
+                <span class="method-scene__meta-label">Diagnóstico</span>
+                <span class="method-scene__meta-val">Causa vs. síntoma reflejo</span>
+              </li>
+            </ul>
           </div>
 
           <div class="method-scene__media" data-reveal style="--i:1">
@@ -445,34 +453,34 @@
               <span>Disciplina: Fisioterapia y Terapia Manual Avanzada</span>
             </div>
 
-            <div class="method-scene__highlights">
-              <div class="method-scene__pill">
-                <span class="method-scene__pill-label">Terapia manual</span>
-                <span class="method-scene__pill-val">Precisión de contacto y descarga</span>
-              </div>
-              <div class="method-scene__pill">
-                <span class="method-scene__pill-label">Tecnología</span>
-                <span class="method-scene__pill-val">Herramientas basadas en evidencia</span>
-              </div>
-              <div class="method-scene__pill">
-                <span class="method-scene__pill-label">Efecto</span>
-                <span class="method-scene__pill-val">Alivio del dolor y distensión</span>
-              </div>
-            </div>
+            <ul class="method-scene__meta">
+              <li class="method-scene__meta-item">
+                <span class="method-scene__meta-label">Terapia manual</span>
+                <span class="method-scene__meta-val">Precisión de contacto y descarga</span>
+              </li>
+              <li class="method-scene__meta-item">
+                <span class="method-scene__meta-label">Tecnología</span>
+                <span class="method-scene__meta-val">Herramientas basadas en evidencia</span>
+              </li>
+              <li class="method-scene__meta-item">
+                <span class="method-scene__meta-label">Efecto</span>
+                <span class="method-scene__meta-val">Alivio del dolor y distensión</span>
+              </li>
+            </ul>
           </div>
 
           <div class="method-scene__media" data-reveal style="--i:1">
-            <!-- Fotografia real de tractament manual en camilla (0df88b9f) -->
+            <!-- Fotografia de intervención manual—perspectiva alternativa (3618ab1e) -->
             <div class="method-scene__media-frame method-scene__media-frame--portrait">
-              <img src="../assets/img/disciplines/fisio/0df88b9f-0f58-4dbf-b5cc-001eb67eb239-1440.webp"
-                   srcset="../assets/img/disciplines/fisio/0df88b9f-0f58-4dbf-b5cc-001eb67eb239-720.webp 720w, ../assets/img/disciplines/fisio/0df88b9f-0f58-4dbf-b5cc-001eb67eb239-1440.webp 1440w"
+              <img src="../assets/img/disciplines/fisio/3618ab1e-11e0-412a-9ad7-bea6708c17f4-1440.webp"
+                   srcset="../assets/img/disciplines/fisio/3618ab1e-11e0-412a-9ad7-bea6708c17f4-720.webp 720w, ../assets/img/disciplines/fisio/3618ab1e-11e0-412a-9ad7-bea6708c17f4-1440.webp 1440w"
                    sizes="(min-width: 960px) 44vw, 92vw"
-                   alt="Terapia manual y normalización articular en camilla en Physio Wellness"
+                   alt="Intervención manual y liberación de movilidad en Physio Wellness"
                    width="1122" height="1402" loading="lazy">
 
               <div class="method-scene__caption-card" aria-hidden="true">
-                <span class="method-scene__caption-title">Terapia en camilla</span>
-                <span class="method-scene__caption-desc">Normalizar el tono muscular y liberar la articulación.</span>
+                <span class="method-scene__caption-title">Intervención precisa</span>
+                <span class="method-scene__caption-desc">Restaurar movilidad y funcionalidad con terapia manual avanzada.</span>
               </div>
             </div>
           </div>
@@ -506,20 +514,20 @@
               <span>Disciplinas: Pilates Reformer + Fuerza Funcional</span>
             </div>
 
-            <div class="method-scene__highlights">
-              <div class="method-scene__pill">
-                <span class="method-scene__pill-label">Pilates Reformer</span>
-                <span class="method-scene__pill-val">Alineación y resistencia fluida</span>
-              </div>
-              <div class="method-scene__pill">
-                <span class="method-scene__pill-label">Fuerza adaptada</span>
-                <span class="method-scene__pill-val">Carga progresiva y control</span>
-              </div>
-              <div class="method-scene__pill">
-                <span class="method-scene__pill-label">Confianza</span>
-                <span class="method-scene__pill-val">Superar el miedo al dolor</span>
-              </div>
-            </div>
+            <ul class="method-scene__meta">
+              <li class="method-scene__meta-item">
+                <span class="method-scene__meta-label">Pilates Reformer</span>
+                <span class="method-scene__meta-val">Alineación y resistencia fluida</span>
+              </li>
+              <li class="method-scene__meta-item">
+                <span class="method-scene__meta-label">Fuerza adaptada</span>
+                <span class="method-scene__meta-val">Carga progresiva y control</span>
+              </li>
+              <li class="method-scene__meta-item">
+                <span class="method-scene__meta-label">Confianza</span>
+                <span class="method-scene__meta-val">Superar el miedo al dolor</span>
+              </li>
+            </ul>
           </div>
 
           <!-- Composició dual de fotografies: Pilates Reformer + Força amb politja -->
@@ -576,20 +584,20 @@
               <span>Disciplinas: Stretching Asistido + Bienestar / Autocuidado</span>
             </div>
 
-            <div class="method-scene__highlights">
-              <div class="method-scene__pill">
-                <span class="method-scene__pill-label">Pautas claras</span>
-                <span class="method-scene__pill-val">Herramientas para tu rutina</span>
-              </div>
-              <div class="method-scene__pill">
-                <span class="method-scene__pill-label">Resiliencia</span>
-                <span class="method-scene__pill-val">Prevención activa de recaídas</span>
-              </div>
-              <div class="method-scene__pill">
-                <span class="method-scene__pill-label">Independencia</span>
-                <span class="method-scene__pill-val">Tú llevas el control</span>
-              </div>
-            </div>
+            <ul class="method-scene__meta">
+              <li class="method-scene__meta-item">
+                <span class="method-scene__meta-label">Pautas claras</span>
+                <span class="method-scene__meta-val">Herramientas para tu rutina</span>
+              </li>
+              <li class="method-scene__meta-item">
+                <span class="method-scene__meta-label">Resiliencia</span>
+                <span class="method-scene__meta-val">Prevención activa de recaídas</span>
+              </li>
+              <li class="method-scene__meta-item">
+                <span class="method-scene__meta-label">Independencia</span>
+                <span class="method-scene__meta-val">Tú llevas el control</span>
+              </li>
+            </ul>
           </div>
 
           <!-- Composició dual de fotografies: Stretching assistit + Benestar miofascial -->
@@ -619,44 +627,47 @@
         </div>
       </article>
 
-    </div>
+            </div><!-- /.method-system__stage-panels -->
+          </div><!-- /.method-system__stage-inner -->
+        </div><!-- /.method-system__stage -->
+      </div><!-- /.method-system__pin-wrap -->
   </section>
 
-  <!-- ============ 4. EL MOVIMENT COM A LLENGUATGE VISUAL ============ -->
-  <section class="method-movement" aria-label="El movimiento del cuerpo en Physio Wellness">
+  <!-- ============ 4. RESPIRACIÓN EDITORIAL — TRES PILARES DE MOVIMIENTO ============ -->
+  <section class="method-movement" aria-label="Tres pilares del movimiento en Physio Wellness">
     <div class="container method-movement__container">
       <div class="method-movement__head" data-reveal>
         <p class="eyebrow section-eyebrow">MOVIMIENTO CON PROPÓSITO</p>
         <h2 class="section-heading">El cuerpo está diseñado para moverse, no para inmovilizarse</h2>
-        <p class="section-lead method-movement__lead">
-          En el Método Marshall el movimiento no es un añadido opcional al final del tratamiento. Es la herramienta terapéutica que reeduca el sistema nervioso y consolida cada mejora lograda en camilla.
+      </div>
+
+      <div class="method-movement__intro" data-reveal>
+        <p class="method-movement__context">
+          En el Método Marshall el movimiento no es un añadido opcional al final del tratamiento. Es la herramienta terapéutica que reeduca el sistema nervioso y consolida cada mejora lograda en la intervención clínica.
         </p>
       </div>
 
-      <div class="method-movement__list">
-        <!-- Principio 1: Amplitud -->
-        <div class="method-movement__item" data-reveal style="--i:0">
-          <span class="method-movement__item-num" aria-hidden="true">01</span>
-          <h3 class="method-movement__item-title">Amplitud articular</h3>
-          <p class="method-movement__item-desc">
+      <div class="method-movement__pillars" data-reveal style="--i:1">
+        <!-- Pilar 1: Movilidad -->
+        <div class="method-movement__pillar method-movement__pillar--1" aria-label="Movilidad articular">
+          <h3 class="method-movement__pillar-title">Movilidad</h3>
+          <p class="method-movement__pillar-desc">
             Recuperar el rango natural de movimiento en cada articulación sin restricciones ni pellizcos, permitiendo al cuerpo expresarse sin rigidez.
           </p>
         </div>
 
-        <!-- Principio 2: Control motor -->
-        <div class="method-movement__item" data-reveal style="--i:1">
-          <span class="method-movement__item-num" aria-hidden="true">02</span>
-          <h3 class="method-movement__item-title">Control y alineación</h3>
-          <p class="method-movement__item-desc">
+        <!-- Pilar 2: Control -->
+        <div class="method-movement__pillar method-movement__pillar--2" aria-label="Control neuromuscular">
+          <h3 class="method-movement__pillar-title">Control</h3>
+          <p class="method-movement__pillar-desc">
             Estabilizar el centro antes de exigir carga. El control neuromuscular profundo enseña a los músculos adecuados a activarse en el momento preciso.
           </p>
         </div>
 
-        <!-- Principio 3: Fuerza y carga -->
-        <div class="method-movement__item" data-reveal style="--i:2">
-          <span class="method-movement__item-num" aria-hidden="true">03</span>
-          <h3 class="method-movement__item-title">Capacidad y resiliencia</h3>
-          <p class="method-movement__item-desc">
+        <!-- Pilar 3: Capacidad -->
+        <div class="method-movement__pillar method-movement__pillar--3" aria-label="Capacidad funcional">
+          <h3 class="method-movement__pillar-title">Capacidad</h3>
+          <p class="method-movement__pillar-desc">
             Dosificar el esfuerzo para que tendones, ligamentos y fibras musculares toleren las demandas reales de tu trabajo, tus aficiones y tus deportes.
           </p>
         </div>
@@ -664,17 +675,12 @@
     </div>
   </section>
 
-  <!-- ============ 5. MOMENT DE RESPIRACIÓ — PAUSA I SILENCI VISUAL ============ -->
-  <section class="method-pause" aria-label="Momento de reflexión">
+  <!-- ============ 5. TRANSICIÓN NARRATIVA — HACIA LA AUTONOMÍA ============ -->
+  <section class="method-pause" aria-label="Cambio de perspectiva">
     <div class="container method-pause__container">
-      <div class="method-pause__inner" data-reveal>
-        <p class="method-pause__phrase method-pause__phrase--1">No buscamos que vuelvas a como estabas.</p>
-        <div class="method-pause__divider" aria-hidden="true">
-          <span class="method-pause__divider-line"></span>
-          <span class="method-pause__divider-dot"></span>
-          <span class="method-pause__divider-line"></span>
-        </div>
-        <p class="method-pause__phrase method-pause__phrase--2">Buscamos que entiendas cómo avanzar.</p>
+      <div class="method-pause__content" data-reveal>
+        <p class="method-pause__main">No buscamos que vuelvas a como estabas.</p>
+        <p class="method-pause__accent">Buscamos que entiendas cómo avanzar.</p>
       </div>
     </div>
   </section>
@@ -727,7 +733,7 @@
           </div>
 
           <div class="method-practice__therapist">
-            <img class="method-practice__therapist-thumb" src="../assets/img/team/marcal-ramirez.jpg" alt="Marçal Ramirez Roig, fisioterapeuta de Physio Wellness by Marshall en Sitges" width="120" height="120">
+            <img class="method-practice__therapist-thumb" src="../assets/img/team/marcal-ramirez.jpg" alt="Marçal Ramirez Roig, fisioterapeuta de Physio Wellness by Marshall en Sitges" width="120" height="120" loading="lazy">
             <div class="method-practice__therapist-info">
               <p class="method-practice__therapist-name">Marçal Ramirez Roig</p>
               <p class="method-practice__therapist-meta">Fisioterapeuta col. 14.599 · Más de 10 años de experiencia clínica y más de 1.500 pacientes acompañados en Sitges.</p>
@@ -757,17 +763,17 @@
       <div class="method-quote__box" data-reveal>
         <div class="method-quote__header">
           <span class="eyebrow eyebrow--on-dark method-quote__eyebrow">RESULTADO HUMANO</span>
-          <div class="method-quote__stars" aria-label="5 de 5 estrellas" aria-hidden="true">★★★★★</div>
+          <div class="method-quote__stars" aria-hidden="true">★★★★★</div>
         </div>
 
         <blockquote class="method-quote__body">
           <p class="method-quote__text">
-            “Recomiendo encarecidamente a este fisioterapeuta a cualquier persona que necesite una atención de alta calidad. Es un profesional con muchos conocimientos, atento y realmente comprometido con la recuperación de sus pacientes. Desde la primera sesión, se tomó el tiempo necesario para entender el origen del problema, y no solo los síntomas, y creó un plan de tratamiento personalizado que marcó una gran diferencia. ¡Muchas gracias!”
+            “Desde la primera sesión se tomó el tiempo necesario para entender el origen del problema, no solo los síntomas.”
           </p>
         </blockquote>
 
         <footer class="method-quote__author-row">
-          <img class="method-quote__author-photo" src="../../seat-news-appointment-new-design-director-diez.jpg.avif" alt="" width="56" height="56" loading="lazy">
+          <img class="method-quote__author-photo" src="../assets/img/seat-news-appointment-new-design-director-diez.jpg.avif" alt="" width="56" height="56" loading="lazy">
           <div class="method-quote__author-details">
             <cite class="method-quote__name">Jorge Díaz</cite>
             <span class="method-quote__meta">Paciente de Physio Wellness · Reseña verificada en Google (5,0 / 5)</span>
@@ -791,20 +797,6 @@
     </figure>
 
     <div class="container photo-banner__inner method-closing__inner" data-reveal>
-      <div class="method-bridge__stations method-closing__recap" aria-hidden="true">
-        <span class="method-bridge__station"><span class="method-bridge__station-dot"></span>01</span>
-        <span class="method-bridge__station-sep">→</span>
-        <span class="method-bridge__station"><span class="method-bridge__station-dot"></span>02</span>
-        <span class="method-bridge__station-sep">→</span>
-        <span class="method-bridge__station"><span class="method-bridge__station-dot"></span>03</span>
-        <span class="method-bridge__station-sep">→</span>
-        <span class="method-bridge__station"><span class="method-bridge__station-dot"></span>04</span>
-        <span class="method-bridge__station-sep">→</span>
-        <span class="method-bridge__station"><span class="method-bridge__station-dot"></span>05</span>
-        <span class="method-bridge__station-sep">→</span>
-        <span class="method-closing__recap-you">Tú</span>
-      </div>
-
       <p class="eyebrow eyebrow--on-dark section-eyebrow">TU PUNTO DE PARTIDA</p>
       <h2 class="photo-banner__title method-closing__title">El método tiene un único objetivo: acompañarte a recuperar tu mejor versión</h2>
       <p class="photo-banner__lead method-closing__lead">
@@ -849,29 +841,29 @@
       </div>
 
       <div class="footer-col">
-        <p class="footer-title">Método y Centro</p>
+        <p class="footer-title">Physio Wellness</p>
         <ul class="footer-links">
           <li><a href="metodo.html" aria-current="page">Método Marshall</a></li>
           <li><a href="conocenos/primera-visita.html">Primera visita</a></li>
           <li><a href="conocenos/equipo.html">Equipo</a></li>
           <li><a href="conocenos/el-centro.html">El centro</a></li>
-          <li><a href="tarifas.html">Tarifas y condiciones</a></li>
-          <li><a href="contacto.html">Contacto</a></li>
+          <li><a href="tarifas.html">Tarifas</a></li>
         </ul>
       </div>
 
       <div class="footer-col">
         <p class="footer-title">Contacto</p>
-        <p class="footer-meta">Carrer de Sant Bartomeu, 14<br>08870 Sitges, Barcelona</p>
-        <p class="footer-meta"><a href="tel:+34644678344">+34 644 678 344</a><br><a href="mailto:info@physiowellness.es">info@physiowellness.es</a></p>
+        <p class="footer-meta">Avinguda Camí dels Capellans, 79, local 3<br>Sitges</p>
+        <p class="footer-meta"><a href="tel:+34644678344">+34 644 67 83 44</a><br><a href="mailto:hola@physiowellness.es">hola@physiowellness.es</a></p>
       </div>
     </div>
 
     <div class="footer-bottom">
       <span>© 2026 Physio Wellness by Marshall. Todos los derechos reservados.</span>
       <div class="footer-bottom-links">
-        <a href="../../index.html#contacto">Aviso legal</a>
-        <a href="../../index.html#contacto">Privacidad</a>
+        <a href="#">Aviso legal</a>
+        <a href="#">Privacidad</a>
+        <a href="#">Cookies</a>
       </div>
     </div>
   </div>

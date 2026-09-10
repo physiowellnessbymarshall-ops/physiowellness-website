@@ -2163,6 +2163,37 @@ a:focus-visible,button:focus-visible,input:focus-visible{
 .site-footer__legal a{opacity:.85;}
 .site-footer__legal a:hover{opacity:1;}
 
+/* Footer institucional ampliado (solo metodo.html): Marca / Servicios /
+   Physio Wellness / Contacto. Reutiliza el lenguaje visual de .site-footer
+   pero con una columna más, como cierre de un recorrido más largo. */
+.footer-grid{
+  display:grid;
+  gap:var(--sp-10);
+  padding-bottom:var(--sp-12);
+  border-bottom:1px solid var(--pw-line-on-dark);
+}
+@media (min-width:720px){
+  .footer-grid{grid-template-columns:1.3fr repeat(3,1fr);gap:var(--sp-8);}
+}
+.footer-brand .brand{display:inline-flex;margin-bottom:var(--sp-4);}
+.footer-brand .brand img{height:4.5rem;width:auto;}
+.footer-desc{font-size:.85rem;line-height:1.6;color:rgba(255,255,255,.6);max-width:24rem;}
+.footer-title{font-size:.7rem;letter-spacing:.12em;text-transform:uppercase;color:#8fd9c9;margin-bottom:var(--sp-4);}
+.footer-links{display:grid;gap:.7rem;font-size:.88rem;list-style:none;padding:0;margin:0;}
+.footer-links a{opacity:.82;transition:opacity var(--dur-fast) var(--ease-out);}
+.footer-links a:hover{opacity:1;color:var(--pw-accent);}
+.footer-meta{font-size:.88rem;line-height:1.7;color:rgba(255,255,255,.82);margin:0 0 var(--sp-4);}
+.footer-meta:last-child{margin-bottom:0;}
+.footer-meta a{opacity:.9;}
+.footer-meta a:hover{opacity:1;color:var(--pw-accent);}
+.footer-bottom{
+  display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:var(--sp-4);
+  padding-top:var(--sp-8);font-size:.75rem;color:rgba(255,255,255,.5);
+}
+.footer-bottom-links{display:flex;flex-wrap:wrap;gap:var(--sp-4);}
+.footer-bottom-links a{opacity:.85;}
+.footer-bottom-links a:hover{opacity:1;}
+
 /* ---------- 19. Cabecera de página interior ----------
    Las páginas internas no repiten el hero a pantalla completa de la Home:
    abren con un bloque editorial oscuro, más corto, que deja el contenido
@@ -4185,63 +4216,51 @@ a:not(.booking-panel__help):focus-visible,
   transform:translateY(4px);
 }
 
-/* Frame Cinematogràfic Expansiu */
-.method-hero__cinema-wrap{
-  width:var(--hero-width,88%);
-  max-width:1380px;
-  margin:0 auto;
-  transition:width .2s var(--ease-out);
+/* Layout editorial del hero (imagen + narrativa) */
+.method-hero__container{
+  display:grid;
+  grid-template-columns:1fr;
+  gap:clamp(3rem,8vw,5.5rem);
+  align-items:center;
+  margin-block:clamp(2rem,6vh,4rem);
 }
-.method-hero__cinema-stage{
+@media (min-width:960px){
+  .method-hero__container{
+    grid-template-columns:1fr 1fr;
+  }
+}
+
+.method-hero__visual{
+  order:-1; /* Imagen arriba en mobile, derecha en desktop */
+}
+.method-hero__visual-frame{
   position:relative;
-  border-radius:var(--hero-radius,24px);
   overflow:hidden;
-  box-shadow:0 32px 72px -16px rgba(18,32,29,.16);
-  background:var(--pw-mist);
-  transition:border-radius .2s var(--ease-out);
+  border-radius:0.5rem;
+  aspect-ratio:1122/1402;
 }
-.method-hero__cinema-frame{
-  position:relative;
-  aspect-ratio:16/9;
-  max-height:clamp(380px,62vh,680px);
-  overflow:hidden;
-}
-.method-hero__cinema-img{
+.method-hero__visual-img{
   width:100%;
   height:100%;
   object-fit:cover;
-  object-position:center 30%;
   display:block;
-  transform:scale(var(--hero-scale,1));
-  transition:transform .3s var(--ease-out);
 }
-.method-hero__cinema-overlay{
+.method-hero__visual-caption{
   position:absolute;
-  inset:0;
-  background:linear-gradient(to top,rgba(18,32,29,.72) 0%,rgba(18,32,29,.15) 50%,transparent 100%);
-  display:flex;
-  align-items:flex-end;
-  pointer-events:none;
+  bottom:0;
+  left:0;
+  right:0;
+  background:linear-gradient(to top,rgba(0,0,0,.7),transparent);
+  padding:var(--sp-4);
+  color:var(--pw-white);
+  font-size:var(--fs-small);
+  text-align:center;
 }
-.method-hero__cinema-caption{
-  padding:var(--sp-6) var(--sp-8);
-}
-.method-hero__cinema-tag{
-  font-size:.72rem;
-  font-weight:600;
-  letter-spacing:.14em;
-  text-transform:uppercase;
-  color:#8fd9c9;
-  display:block;
-  margin-bottom:.35rem;
-}
-.method-hero__cinema-quote{
-  margin:0;
-  font-size:clamp(1.1rem,2vw,1.45rem);
-  font-weight:400;
-  font-style:italic;
-  color:rgba(255,255,255,.94);
-  max-width:48ch;
+
+@media (min-width:960px){
+  .method-hero__visual{
+    order:unset;
+  }
 }
 
 /* Control d'alçada per a MacBooks */
@@ -4252,7 +4271,6 @@ a:not(.booking-panel__help):focus-visible,
   }
   .method-hero__title{margin-bottom:var(--sp-3);}
   .method-hero__statement{margin-bottom:var(--sp-4);}
-  .method-hero__cinema-frame{max-height:clamp(320px,50vh,460px);}
 }
 
 /* ---------- 4. Escena de transició (.method-bridge) ---------- */
@@ -4780,57 +4798,55 @@ a:not(.booking-panel__help):focus-visible,
   max-width:760px;
   margin-bottom:clamp(3rem,6vh,5rem);
 }
-.method-movement__lead{
+/* Tres pilares editoriales: MOVILIDAD / CONTROL / CAPACIDAD */
+.method-movement__intro{
+  max-width:760px;
+  margin-bottom:clamp(2.5rem,5vh,4rem);
+}
+.method-movement__context{
+  font-size:var(--fs-lead);
+  line-height:1.6;
   color:var(--pw-ink-70);
-  max-width:62ch;
   margin:0;
 }
-/* Llista editorial (abans, 3 targetes amb icona): el numeral fa la feina
-   que abans feia la il·lustració decorativa, sense contenidor ni ombra. */
-.method-movement__list{
+.method-movement__pillars{
   display:grid;
   grid-template-columns:1fr;
-  gap:var(--sp-10);
+  gap:clamp(2.5rem,5vw,4rem);
   border-top:1px solid var(--pw-line);
+  padding-top:clamp(2.5rem,5vh,4rem);
 }
 @media (min-width:860px){
-  .method-movement__list{
+  .method-movement__pillars{
     grid-template-columns:repeat(3,1fr);
-    gap:0;
-    border-top:1px solid var(--pw-line);
+    gap:clamp(2rem,3vw,3.5rem);
   }
 }
-.method-movement__item{
+.method-movement__pillar{
   display:flex;
   flex-direction:column;
   gap:var(--sp-3);
-  padding-top:var(--sp-8);
 }
 @media (min-width:860px){
-  .method-movement__item{
-    padding:var(--sp-8) clamp(1.5rem,3vw,2.5rem) 0;
+  .method-movement__pillar{
+    padding-top:0;
     border-left:1px solid var(--pw-line);
+    padding-left:clamp(1.5rem,3vw,2.5rem);
   }
-  .method-movement__item:first-child{
+  .method-movement__pillar--1{
     padding-left:0;
     border-left:0;
   }
 }
-.method-movement__item-num{
-  font-size:clamp(2.25rem,4vw,2.9rem);
-  font-weight:300;
-  line-height:1;
-  letter-spacing:-.02em;
-  color:var(--pw-ink-50);
-}
-.method-movement__item-title{
-  font-size:1.2rem;
+.method-movement__pillar-title{
+  font-size:clamp(1.3rem,2vw,1.6rem);
   font-weight:600;
-  color:var(--pw-ink);
+  color:var(--pw-primary);
   margin:0;
+  letter-spacing:.01em;
 }
-.method-movement__item-desc{
-  font-size:.95rem;
+.method-movement__pillar-desc{
+  font-size:var(--fs-body);
   line-height:1.65;
   color:var(--pw-ink-70);
   margin:0;
@@ -4847,39 +4863,29 @@ a:not(.booking-panel__help):focus-visible,
 .method-pause__container{
   max-width:840px;
 }
-.method-pause__phrase{
-  margin:0;
-  letter-spacing:-.02em;
+
+/* Transición narrativa breve */
+.method-pause__content{
+  display:flex;
+  flex-direction:column;
+  gap:clamp(1.5rem,3vh,2.5rem);
+  max-width:660px;
 }
-.method-pause__phrase--1{
-  font-size:clamp(1.65rem,3.4vw,2.6rem);
-  line-height:1.3;
+.method-pause__main{
+  font-size:clamp(1.5rem,3vw,2.2rem);
+  line-height:1.35;
   color:var(--pw-ink-70);
   font-weight:400;
+  letter-spacing:-.01em;
+  margin:0;
 }
-.method-pause__divider{
-  display:inline-flex;
-  align-items:center;
-  gap:var(--sp-4);
-  margin-block:var(--sp-6);
-  opacity:.4;
-}
-.method-pause__divider-line{
-  width:60px;
-  height:1px;
-  background:var(--pw-line);
-}
-.method-pause__divider-dot{
-  width:6px;
-  height:6px;
-  border-radius:50%;
-  background:var(--pw-primary);
-}
-.method-pause__phrase--2{
-  font-size:clamp(1.9rem,4vw,3.1rem);
-  line-height:1.2;
+.method-pause__accent{
+  font-size:clamp(1.75rem,3.5vw,2.6rem);
+  line-height:1.25;
   color:var(--pw-primary);
   font-weight:600;
+  letter-spacing:-.01em;
+  margin:0;
 }
 
 /* ---------- 8. De la teoria a la persona (.method-practice) ---------- */
@@ -4997,22 +5003,27 @@ a:not(.booking-panel__help):focus-visible,
 .method-practice__figure{
   margin:0;
   position:relative;
+  aspect-ratio:4/3;
+  max-height:clamp(440px,58vh,600px);
+  border-radius:var(--radius-tile,20px);
+  overflow:hidden;
 }
 .method-practice__figure img{
   width:100%;
-  height:auto;
-  border-radius:var(--radius-tile,20px);
+  height:100%;
+  object-fit:cover;
   display:block;
 }
 /* La fotografia de la consulta es desprèn del grid pel cantó dret en
    escriptori (mateixa fórmula de sagnat que .page-hero__photo): trenca
    deliberadament la simetria "imatge en targeta arrodonida" que ja s'ha
-   vist 5 vegades a les fases, sense inventar un efecte nou. */
+   vist 5 vegades a les fases, sense inventar un efecte nou. Alçada capada
+   (mateix patró que .method-scene__media-frame--portrait) perquè el
+   sagnat fins a la vora del viewport no faci la foto molt més alta que
+   la columna de timeline en escriptoris grans. */
 @media (min-width:960px){
   .method-practice__figure{
     margin-right:calc(-1 * (max(0px, (100vw - var(--container)) / 2) + clamp(1.5rem,4vw,2.75rem)));
-  }
-  .method-practice__figure img{
     border-radius:var(--radius-tile,20px) 0 0 var(--radius-tile,20px);
   }
 }
@@ -5031,11 +5042,11 @@ a:not(.booking-panel__help):focus-visible,
 .method-quote{
   background:var(--pw-primary-900);
   color:var(--pw-white);
-  padding-block:clamp(5.5rem,12vh,8.5rem);
+  padding-block:clamp(4.5rem,9vh,7rem);
   position:relative;
 }
 .method-quote__container{
-  max-width:880px;
+  max-width:760px;
   position:relative;
   z-index:2;
 }
@@ -5063,10 +5074,11 @@ a:not(.booking-panel__help):focus-visible,
   padding:0;
 }
 .method-quote__text{
-  font-size:clamp(1.25rem,2.2vw,1.75rem);
-  line-height:1.55;
+  font-size:clamp(1.6rem,3.2vw,2.4rem);
+  line-height:1.35;
+  letter-spacing:-.01em;
   font-weight:400;
-  color:rgba(255,255,255,.92);
+  color:rgba(255,255,255,.96);
   margin:0;
   font-style:italic;
 }
@@ -5111,18 +5123,12 @@ a:not(.booking-panel__help):focus-visible,
 .method-closing .photo-banner__media::after{
   background:linear-gradient(180deg, rgba(18,60,55,.45) 0%, rgba(18,60,55,.86) 68%, var(--pw-primary-900) 100%);
 }
-.method-closing__inner{
-  max-width:44rem;
-}
-.method-closing__recap{
-  margin-bottom:var(--sp-2);
-}
-.method-closing__recap-you{
-  color:var(--pw-white);
-  font-weight:700;
+.method-closing .photo-banner__inner{
+  max-width:56rem;
 }
 .method-closing__title{
-  margin:0;
+  margin:0 auto;
+  max-width:34ch;
 }
 .method-closing__lead{
   margin:0;
@@ -5156,13 +5162,7 @@ a:not(.booking-panel__help):focus-visible,
   .method-thread-track{
     display:none!important;
   }
-  .method-hero__cinema-wrap{
-    width:100%!important;
-  }
-  .method-hero__cinema-stage{
-    border-radius:var(--radius-tile)!important;
-  }
-  .method-hero__cinema-img,
+  .method-hero__visual-img,
   .method-scene__media-frame img{
     transition:none!important;
     transform:none!important;

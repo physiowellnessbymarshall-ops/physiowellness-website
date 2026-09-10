@@ -2026,6 +2026,16 @@ var prefersReducedMotion = window.matchMedia && window.matchMedia('(prefers-redu
     var threadBar = document.getElementById('method-thread-bar');
     var threadPulse = document.getElementById('method-thread-pulse');
 
+    /* El hilo lateral es un recurso narrativo del recorrido Hero → Método →
+       las 5 fases (Fase 1 de refinamiento): representa "entrada al método →
+       Escuchar → Valorar → Tratar → Acompañar → Evolucionar → final", no el
+       scroll de la página entera. Por eso su progreso y su visibilidad se
+       miden contra el final real de .method-system (cierre de "05
+       Evolucionar"), nunca contra document.documentElement.scrollHeight:
+       pasado ese punto (Primera visita, testimonio, CTA, footer) el hilo
+       deja de tener sentido conceptual y se oculta, no se queda al 100%. */
+    var threadEndSection = document.querySelector('.method-system');
+
     /* Scroll Scrub Pasivo: Hero Cinematográfico y Espina Lateral */
     var ticking = false;
     var lastScrollY = -1;
@@ -2042,10 +2052,13 @@ var prefersReducedMotion = window.matchMedia && window.matchMedia('(prefers-redu
       if(y === lastScrollY) return;
       lastScrollY = y;
 
-      var docHeight = document.documentElement.scrollHeight - window.innerHeight;
-      var progress = docHeight > 0 ? Math.min(Math.max(y / docHeight, 0), 1) : 0;
+      var threadEndY = threadEndSection
+        ? threadEndSection.getBoundingClientRect().bottom + y
+        : (document.documentElement.scrollHeight - window.innerHeight);
+      var progress = threadEndY > 0 ? Math.min(Math.max(y / threadEndY, 0), 1) : 0;
+      var pastThread = y > threadEndY;
 
-      page.classList.toggle('has-scrolled', y > 50);
+      page.classList.toggle('has-scrolled', y > 50 && !pastThread);
 
       /* Barra de progreso de la espina bio-cinética lateral */
       if(threadBar){

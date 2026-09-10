@@ -248,4 +248,17 @@ Home, ambiente del centro y no un retrato de la autora de la reseña
 ("A."): mismo criterio ético de no asociar una cara o escena real a una
 persona concreta que no ha sido fotografiada.
 
+## Instalaciones / Espacio de la Home (`#instalaciones`, 2026-09-10)
+
+Renovación editorial de la galería de instalaciones del centro en `index.html`. Se sustituye la fotografía secundaria de bicicletas/cardio (`local-strength.jpg`) y se incorpora la fotografía propia del espacio de fisioterapia con protagonismo absoluto, desplegando un Bento editorial de 5 piezas:
+
+| Posición | Archivo servido | Origen / Licencia | Descripción de la escena |
+| :--- | :--- | :--- | :--- |
+| **Hero 2x2** | `src/assets/img/local/local-fisio-720.webp` / `-1440.webp` | Fotografía profesional propia (sesión Sandra, #07) | Cabina principal de fisioterapia con camilla hidràulica articulada, espaldera de madera blanca, gran espejo retroiluminado LED, PowerPlate, columna anatómica y suelo de roble. |
+| **1x1** | `src/assets/img/local/local-pilates-720.webp` / `-1440.webp` | Fotografía profesional propia (sesión Sandra, Local 2 #05) | Estudio de Pilates Reformer con torre Pilatu de madera noble y espejo de arco. |
+| **1x1** | `src/assets/img/local/local-gym-720.webp` / `-1440.webp` | Fotografía profesional propia (sesión Sandra, Local 2 #03) | Sala de fuerza y readaptación con rack multipower Force USA, banco regulable y pesas Titanium Strength. |
+| **1x1** | `src/assets/img/local/local-fisio-natural-720.webp` / `-1440.webp` | Fotografía profesional propia (sesión Sandra, #26) | Consulta de fisioterapia con gran ventanal a la calle ("Here Begins Your Wellness"), luz natural exterior, camilla y taburete ergonómico. |
+| **1x1** | `src/assets/img/local/local-lounge-720.webp` / `-1440.webp` | Fotografía profesional propia (sesión Sandra, Local 2 #09) | Zona de bienvenida y espera con sillones de terciopelo verde oliva, mesa cónica dorada y pared de mármol. |
+
+
 

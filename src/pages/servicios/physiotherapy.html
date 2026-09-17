@@ -273,9 +273,30 @@
        debajo) en vez de repetir "recuperar/tratar" ya presente en el
        breadcrumb/eyebrow. Se añade un indicador de scroll discreto al pie
        del hero (estático si el usuario prefiere movimiento reducido). -->
-  <section class="page-hero page-hero--split">
-    <div class="container page-hero__inner">
-      <nav class="breadcrumb page-hero__breadcrumb" aria-label="Ruta de navegación" data-reveal>
+  <!-- ============ Service Hero System (Fisioterapia) ============
+       Nuevo sistema base de héroe editorial para páginas de servicios.
+       Estructura asimétrica a pantalla completa (min-height: 100vh / 100dvh):
+       - Jerarquía de copy renovada con descriptor numérico, titular amplio y párrafo de confianza
+       - CTA principal en botón sólido y CTA secundario en enlace editorial con interacción
+       - Fotografía cinematográfica integrada sin aspecto de card, con sangrado fluido al extremo derecho
+       - Microtipografía informativa inferior (duración, formato, ubicación)
+       - Indicador de continuidad sutil ("DESCUBRIR ↓") hacia la siguiente sección
+
+       AJUSTE (revisión de identificación de página): la antigua marca de
+       agua "FISIOTERAPIA" a gran escala de fondo (.service-hero__watermark,
+       aún definida en styles.css para las demás disciplinas cuando se
+       activen) se retira de esta página por exceso de peso visual —
+       competía con el titular y ensuciaba la cabecera. La identificación
+       de "Fisioterapia" ahora recae en el eyebrow ".service-hero__descriptor"
+       ("01 — FISIOTERAPIA", ligeramente reforzado) y en una etiqueta
+       vertical muy discreta (.service-hero__tag) integrada en el borde
+       izquierdo de la fotografía, sobre la zona ya oscurecida por
+       ".service-hero__media-gradient" — visible solo en escritorio
+       (≥960px), donde hay foto junto a la que anclarla; en móvil se oculta
+       para no añadir ruido a una composición ya apilada. -->
+  <section class="service-hero service-hero--physio" id="hero">
+    <div class="service-hero__container">
+      <nav class="breadcrumb service-hero__breadcrumb" aria-label="Ruta de navegación">
         <ol>
           <li><a href="../../../index.html">Inicio</a></li>
           <li><a href="../servicios.html">Servicios</a></li>
@@ -283,32 +304,72 @@
         </ol>
       </nav>
 
-      <div class="page-hero__grid">
-        <div class="page-hero__content">
-          <div data-reveal style="--i:1">
-            <p class="eyebrow eyebrow--on-dark page-hero__eyebrow">Fisioterapia</p>
-            <h1 class="page-hero__title">Entender lo que te limita, para volver a moverte mejor</h1>
-          </div>
+      <div class="service-hero__grid">
+        <div class="service-hero__content">
+          <p class="service-hero__descriptor">01 — FISIOTERAPIA</p>
+          <h1 class="service-hero__headline">Entender lo que te limita,<br>para volver a moverte mejor.</h1>
+          <p class="service-hero__lead">No hace falta llegar con un diagnóstico cerrado. Empezamos entendiendo qué te ocurre y qué necesitas para volver a moverte con confianza.</p>
 
-          <div class="page-hero__text" data-reveal style="--i:2">
-            <p>No hace falta llegar con un diagnóstico cerrado: la primera visita sirve para valorar tu dolor, lesión o limitación y decidir juntos cómo tratarlo.</p>
-          </div>
-
-          <div data-reveal style="--i:3">
-            <div class="page-hero__actions">
-              <a class="btn btn--primary" href="https://www.docfav.com/portal/physio-wellness-by-marshall" target="_blank" rel="noopener">Reservar primera visita</a>
-              <a class="btn btn--outline btn--wrap" href="https://wa.me/34644678344" target="_blank" rel="noopener">¿No sabes qué reservar? Escríbenos</a>
-            </div>
-            <p class="page-hero__micro">Primera visita de 60 minutos · En clínica o a domicilio · Necesaria antes de los seguimientos</p>
+          <div class="service-hero__actions">
+            <a class="btn btn--primary service-hero__cta-primary" href="https://www.docfav.com/portal/physio-wellness-by-marshall" target="_blank" rel="noopener">
+              <span>Reservar primera visita</span>
+              <svg class="service-hero__cta-arrow" width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+                <path d="M1 7h11M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </a>
+            <a class="service-hero__cta-secondary" href="https://wa.me/34644678344" target="_blank" rel="noopener">
+              <span>¿No sabes qué reservar? Escríbenos</span>
+              <svg class="service-hero__secondary-arrow" width="11" height="11" viewBox="0 0 11 11" fill="none" aria-hidden="true">
+                <path d="M1 10L10 1M10 1H3M10 1V8" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </a>
           </div>
         </div>
 
-        <figure class="page-hero__photo" data-reveal style="--i:2">
-          <img src="../../assets/img/stock/hero-fisio-1440.webp" srcset="../../assets/img/stock/hero-fisio-720.webp 720w, ../../assets/img/stock/hero-fisio-1440.webp 1440w" sizes="(min-width:860px) 46vw, 100vw" alt="Fisioterapeuta ayudando a una paciente a elevar la pierna durante una valoración de movilidad, en una sala con luz natural." width="1440" height="960" loading="eager" fetchpriority="high">
-        </figure>
+        <div class="service-hero__media-col">
+          <figure class="service-hero__figure">
+            <img 
+              src="../../assets/img/disciplines/fisio/5af02bda-9e2c-442f-af09-c3c4f8285313-1440.webp" 
+              srcset="../../assets/img/disciplines/fisio/5af02bda-9e2c-442f-af09-c3c4f8285313-720.webp 720w, ../../assets/img/disciplines/fisio/5af02bda-9e2c-442f-af09-c3c4f8285313-1440.webp 1122w" 
+              sizes="(min-width: 1200px) 54vw, (min-width: 860px) 52vw, 100vw" 
+              alt="Fisioterapeuta realizando una valoración precisa de movilidad articular en consulta cálida de Physio Wellness Sitges" 
+              width="1122" 
+              height="1402" 
+              loading="eager" 
+              fetchpriority="high"
+            >
+            <div class="service-hero__media-gradient" aria-hidden="true"></div>
+            <span class="service-hero__tag" aria-hidden="true">
+              <span class="service-hero__tag-line"></span>
+              Fisioterapia
+            </span>
+          </figure>
+        </div>
       </div>
 
-      <div class="page-hero__cue" aria-hidden="true" data-reveal style="--i:4"><span></span></div>
+      <div class="service-hero__meta-strip">
+        <div class="service-hero__meta-items">
+          <div class="service-hero__meta-item">
+            <span class="service-hero__meta-index">01</span>
+            <span class="service-hero__meta-text">PRIMERA VISITA · 60 MIN</span>
+          </div>
+          <div class="service-hero__meta-sep" aria-hidden="true">/</div>
+          <div class="service-hero__meta-item">
+            <span class="service-hero__meta-index">02</span>
+            <span class="service-hero__meta-text">CENTRO + DOMICILIO</span>
+          </div>
+          <div class="service-hero__meta-sep" aria-hidden="true">/</div>
+          <div class="service-hero__meta-item">
+            <span class="service-hero__meta-index">03</span>
+            <span class="service-hero__meta-text">SITGES</span>
+          </div>
+        </div>
+
+        <a href="#que-podemos-ayudarte" class="service-hero__scroll-cue" aria-label="Desplazarse a la siguiente sección">
+          <span>DESCUBRIR</span>
+          <span class="service-hero__scroll-arrow" aria-hidden="true">↓</span>
+        </a>
+      </div>
     </div>
   </section>
 

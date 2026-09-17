@@ -535,17 +535,17 @@ var prefersReducedMotion = window.matchMedia && window.matchMedia('(prefers-redu
     if(!window.matchMedia) return;
 
     var panels = grid.querySelectorAll('.service-panel');
-    var transitionEl = grid.querySelector('.services__transition');
-    if(!panels.length || !transitionEl) return;
-    /* Las paradas del riel: los N servicios (panels.length, dinámico) + el
-       panel de transición. Flechas, teclado y el indicador 01/0N trabajan
-       siempre sobre este mismo array, tanto en modo fijado como en el riel
-       nativo de respaldo, para no duplicar la lógica de sincronización. */
-    var stopEls = Array.prototype.slice.call(panels).concat([transitionEl]);
+    if(!panels.length) return;
+    /* Las paradas del riel corresponden exclusivamente a las cinco formas
+       principales de cuidarte (.service-panel). Flechas, teclado y el
+       indicador 01/05 trabajan sobre estos 5 servicios. Fisioterapia a
+       domicilio vive como bloque complementario lateral desacoplado del contador. */
+    var stopEls = Array.prototype.slice.call(panels);
     var serviceCount = panels.length;
 
     var progressWrap = section.querySelector('[data-services-progress]');
     var progressCurrent = section.querySelector('.services__progress-current');
+    var progressTotal = section.querySelector('.services__progress-total');
     var prevBtn = section.querySelector('[data-services-prev]');
     var nextBtn = section.querySelector('[data-services-next]');
 
@@ -572,21 +572,18 @@ var prefersReducedMotion = window.matchMedia && window.matchMedia('(prefers-redu
       resetInline();
     };
 
-    /* Traduce el índice de parada (0..serviceCount-1 = servicios,
-       serviceCount = panel de transición) al texto "01/0N"…"0N/0N" y al
-       estado disabled/is-final de flechas e indicador. Es el único punto
-       que toca ese estado, tanto si lo dispara el scroll (fijado o riel
-       nativo) como un clic o una tecla, para que nunca queden
-       desincronizados entre sí. */
+    /* Actualiza el indicador 01/05…05/05 y el estado disabled de flechas. */
     var updateNav = function(index){
       currentIndex = index;
       var hasOverflow = maxTranslate > 0;
 
       if(progressCurrent){
-        var label = index < serviceCount ? '0' + (index + 1) : ('0' + serviceCount);
+        var label = '0' + (index + 1);
         if(progressCurrent.textContent !== label) progressCurrent.textContent = label;
       }
-      if(progressWrap) progressWrap.classList.toggle('is-final', index >= serviceCount);
+      if(progressTotal && progressTotal.textContent !== '0' + serviceCount){
+        progressTotal.textContent = '0' + serviceCount;
+      }
 
       if(prevBtn) prevBtn.disabled = !hasOverflow || index <= 0;
       if(nextBtn) nextBtn.disabled = !hasOverflow || index >= stopEls.length - 1;
@@ -2950,7 +2947,255 @@ var prefersReducedMotion = window.matchMedia && window.matchMedia('(prefers-redu
   }catch(e){ console.warn('contactFormHandler', e); }
 })();
 
+/* ---------- Snow Performance: Matriz interactiva de capacidades ---------- */
+(function snowCapacitiesInit(){
+  try{
+    var tabs = document.querySelectorAll('[data-capacity-tab]');
+    var panels = document.querySelectorAll('.capacity-panel');
+    if(!tabs.length || !panels.length) return;
 
+    tabs.forEach(function(tab){
+      tab.addEventListener('click', function(){
+        var targetId = this.getAttribute('data-capacity-tab');
+        tabs.forEach(function(t){
+          t.classList.remove('is-active');
+          t.setAttribute('aria-selected', 'false');
+        });
+        panels.forEach(function(p){
+          p.classList.remove('is-active');
+        });
+        this.classList.add('is-active');
+        this.setAttribute('aria-selected', 'true');
+        var panel = document.getElementById(targetId);
+        if(panel) panel.classList.add('is-active');
+      });
+    });
 
+    /* Compatibilidad offline para enlaces /snow-performance si se abre vía file:// */
+    if(window.location.protocol === 'file:'){
+      var snowLinks = document.querySelectorAll('a[href="/snow-performance"]');
+      var isInsideSubdir = window.location.pathname.indexOf('/src/pages/') !== -1;
+      var targetPath = isInsideSubdir ? '../../snow-performance/index.html' : 'snow-performance/index.html';
+      snowLinks.forEach(function(link){
+        link.setAttribute('href', targetPath);
+      });
+    }
+  }catch(e){ console.warn('snowCapacitiesInit', e); }
+})();
 
+/* ---------- Snow Performance: Seasonal Takeover Parallax sutil ---------- */
+(function snowTakeoverParallaxInit(){
+  try{
+    var section = document.querySelector('.seasonal-takeover');
+    var bg = document.querySelector('[data-snow-bg]');
+    if(!section || !bg) return;
+
+    var prefersReduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if(prefersReduced) return;
+
+    var ticking = false;
+    function updateParallax(){
+      ticking = false;
+      if(window.innerWidth < 768) {
+        bg.style.transform = '';
+        return;
+      }
+      var rect = section.getBoundingClientRect();
+      var vh = window.innerHeight || document.documentElement.clientHeight;
+      if(rect.top < vh && rect.bottom > 0){
+        /* Desplazamiento parallax suave: -24px a +24px según avance en viewport */
+        var progress = (vh - rect.top) / (vh + rect.height);
+        var offset = (progress - 0.5) * 48;
+        bg.style.transform = 'translate3d(0, ' + offset.toFixed(1) + 'px, 0)';
+      }
+    }
+
+    window.addEventListener('scroll', function(){
+      if(!ticking){
+        window.requestAnimationFrame(updateParallax);
+        ticking = true;
+      }
+    }, {passive: true});
+
+    window.addEventListener('resize', function(){
+      if(!ticking){
+        window.requestAnimationFrame(updateParallax);
+        ticking = true;
+      }
+    }, {passive: true});
+
+    updateParallax();
+  }catch(e){ console.warn('snowTakeoverParallaxInit', e); }
+})();
+
+/* ---------- Snow Performance: vídeo de fondo (carga diferida + play/pause por viewport) ----------
+   Vídeo POV esquí/snowboard en loop, sin controles, sin audio. Se retrasa
+   la carga (sin `src` en el HTML, solo `data-src`) hasta que la sección
+   entra en viewport, y se pausa al salir para no seguir decodificando
+   fuera de pantalla. Con prefers-reduced-motion no se carga ni se
+   reproduce nunca: se queda el `poster` (misma fotografía que se usaba
+   antes de incorporar vídeo) y el CSS de reduced-motion ya deja esa capa
+   en su estado final sin blur ni escala de entrada.
+   Añade `.is-in-view` a `.seasonal-takeover` para disparar, vía CSS, la
+   "llegada a pista" (ver .seasonal-program__bg-media en styles.css); usa
+   la misma red de seguridad por timeout que revealOnScroll(), por si el
+   IntersectionObserver no llegara a disparar. */
+(function snowTakeoverVideoInit(){
+  try{
+    var section = document.querySelector('.seasonal-takeover');
+    var video = document.querySelector('[data-snow-video]');
+    if(!section || !video) return;
+
+    if(prefersReducedMotion) return;
+
+    var breakpoint = (window.matchMedia && window.matchMedia('(max-width:767px)').matches) ? 'mobile' : 'desktop';
+    var sources = video.querySelectorAll('source[data-src]');
+    var toLoad = [];
+    sources.forEach(function(s){
+      if(s.getAttribute('data-breakpoint') === breakpoint) toLoad.push(s);
+    });
+    if(!toLoad.length){
+      sources.forEach(function(s){
+        if(s.getAttribute('data-breakpoint') === 'desktop') toLoad.push(s);
+      });
+    }
+    if(!toLoad.length) return; /* sin fuentes todavía: se queda el poster */
+
+    var revealed = false;
+    var reveal = function(){
+      if(revealed) return;
+      revealed = true;
+      section.classList.add('is-in-view');
+    };
+    window.setTimeout(reveal, 2500);
+
+    var started = false;
+    var startVideo = function(){
+      if(started) return;
+      started = true;
+      toLoad.forEach(function(s){ s.setAttribute('src', s.getAttribute('data-src')); });
+      video.load();
+      video.play().catch(function(){ /* autoplay bloqueado: se queda el poster */ });
+    };
+
+    if('IntersectionObserver' in window){
+      var io = new IntersectionObserver(function(entries){
+        entries.forEach(function(entry){
+          if(entry.isIntersecting){
+            reveal();
+            startVideo();
+            if(video.paused) video.play().catch(function(){});
+          } else if(started && !video.paused){
+            video.pause();
+          }
+        });
+      }, {threshold: .25});
+      io.observe(section);
+    } else {
+      reveal();
+      startVideo();
+    }
+  }catch(e){ console.warn('snowTakeoverVideoInit', e); }
+})();
+
+/* ---------- Galería Instalaciones: Lightbox nativo ---------- */
+(function initFacilityLightbox(){
+  try{
+    var dialog = document.getElementById('facility-lightbox');
+    var items = Array.from(document.querySelectorAll('.facility__item[data-full-src]'));
+    if(!dialog || !items.length) return;
+
+    var img = document.getElementById('lightbox-img');
+    var caption = document.getElementById('lightbox-caption');
+    var prevBtn = document.getElementById('lightbox-prev');
+    var nextBtn = document.getElementById('lightbox-next');
+    var closeButtons = dialog.querySelectorAll('[data-close-lightbox]');
+
+    var currentIndex = 0;
+
+    function showImage(index){
+      if(index < 0) index = items.length - 1;
+      if(index >= items.length) index = 0;
+      currentIndex = index;
+
+      var currentItem = items[currentIndex];
+      var fullSrc = currentItem.getAttribute('data-full-src');
+      var capText = currentItem.getAttribute('data-caption') || '';
+      var nativeImg = currentItem.querySelector('img');
+      var altText = nativeImg ? nativeImg.getAttribute('alt') : capText;
+
+      if(img){
+        img.setAttribute('src', fullSrc);
+        img.setAttribute('alt', altText);
+      }
+      if(caption){
+        caption.textContent = capText;
+      }
+    }
+
+    function openLightbox(index){
+      showImage(index);
+      if(typeof dialog.showModal === 'function'){
+        dialog.showModal();
+      }else{
+        dialog.setAttribute('open', '');
+      }
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeLightbox(){
+      if(typeof dialog.close === 'function'){
+        dialog.close();
+      }else{
+        dialog.removeAttribute('open');
+      }
+      document.body.style.overflow = '';
+    }
+
+    items.forEach(function(item, idx){
+      item.addEventListener('click', function(e){
+        e.preventDefault();
+        openLightbox(idx);
+      });
+    });
+
+    closeButtons.forEach(function(btn){
+      btn.addEventListener('click', function(e){
+        e.preventDefault();
+        closeLightbox();
+      });
+    });
+
+    if(prevBtn){
+      prevBtn.addEventListener('click', function(e){
+        e.stopPropagation();
+        showImage(currentIndex - 1);
+      });
+    }
+
+    if(nextBtn){
+      nextBtn.addEventListener('click', function(e){
+        e.stopPropagation();
+        showImage(currentIndex + 1);
+      });
+    }
+
+    dialog.addEventListener('keydown', function(e){
+      if(e.key === 'Escape'){
+        closeLightbox();
+      }else if(e.key === 'ArrowLeft'){
+        showImage(currentIndex - 1);
+      }else if(e.key === 'ArrowRight'){
+        showImage(currentIndex + 1);
+      }
+    });
+
+    dialog.addEventListener('click', function(e){
+      if(e.target === dialog){
+        closeLightbox();
+      }
+    });
+
+  }catch(e){ console.warn('initFacilityLightbox', e); }
+})();
 

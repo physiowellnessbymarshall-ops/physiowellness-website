@@ -3,27 +3,22 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Stretching en Sitges | Physio Wellness</title>
-<meta name="description" content="Sesiones de Stretching en Sitges para mejorar tu movilidad, ganar flexibilidad y liberar tensión, con Physio Wellness by Marshall. Reserva tu sesión.">
-<link rel="canonical" href="https://physiowellness.es/es/servicios/stretching/">
-<link rel="alternate" hreflang="es" href="https://physiowellness.es/es/servicios/stretching/">
-<link rel="alternate" hreflang="ca" href="https://physiowellness.es/ca/serveis/stretching/">
-<link rel="alternate" hreflang="en" href="https://physiowellness.es/en/services/stretching/">
+<title>Entrenamiento de Fuerza en Sitges | Physio Wellness</title>
+<meta name="description" content="Entrenamiento de fuerza y readaptación física en Sitges con Physio Wellness by Marshall. Desarrolla fuerza, control y rendimiento con un plan individualizado.">
+<link rel="canonical" href="https://physiowellness.es/es/servicios/fuerza/">
+<link rel="alternate" hreflang="es" href="https://physiowellness.es/es/servicios/fuerza/">
+<link rel="alternate" hreflang="ca" href="https://physiowellness.es/ca/serveis/forca/">
+<link rel="alternate" hreflang="en" href="https://physiowellness.es/en/services/strength/">
 <link rel="icon" href="../../assets/img/logo-icon-black.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Jost:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../../css/styles.css">
-<!-- [data-reveal] (§7 de styles.css) parte de opacity:0 y depende de main.js
-     para mostrarse. Si JavaScript está desactivado del todo, nunca se añade
-     la clase .is-visible y el contenido quedaría invisible. Mismo override
-     ya usado en physiotherapy.html/tarifas.html, aplicado aquí porque esta
-     página reutiliza el mismo mecanismo de revelado. -->
 <noscript><style>
   [data-reveal]{opacity:1!important;transform:none!important;}
 </style></noscript>
 </head>
-<body class="page-servicios page-stretching">
+<body class="page-servicios page-strength">
 
 <a class="skip-link" href="#main">Saltar al contenido</a>
 
@@ -42,9 +37,9 @@
         <div class="nav-dropdown" id="nav-servicios" hidden>
           <a href="physiotherapy.html">Fisioterapia</a>
           <a href="wellness.html">Bienestar</a>
-          <a href="strength.html">Fuerza</a>
+          <a href="strength.html" aria-current="page">Fuerza</a>
           <a href="pilates.html">Pilates</a>
-          <a href="stretching.html" aria-current="page">Stretching</a>
+          <a href="stretching.html">Stretching</a>
           <a href="fisioterapia-a-domicilio.html">Fisioterapia a domicilio</a>
           <a class="nav-dropdown__all" href="../servicios.html">Ver todos los servicios</a>
         </div>
@@ -70,7 +65,7 @@
 
     <div class="header-actions">
       <nav class="lang-switch" aria-label="Selector de idioma">
-        <a href="stretching.html" aria-current="true">ES</a><span>/</span>
+        <a href="strength.html" aria-current="true">ES</a><span>/</span>
         <a href="../../../ca/index.html">CA</a><span>/</span>
         <a href="../../../en/index.html">EN</a>
       </nav>
@@ -129,9 +124,9 @@
       <div class="m-acc__panel" id="m-servicios" hidden>
         <a href="physiotherapy.html">Fisioterapia</a>
         <a href="wellness.html">Bienestar</a>
-        <a href="strength.html">Fuerza</a>
+        <a href="strength.html" aria-current="page">Fuerza</a>
         <a href="pilates.html">Pilates</a>
-        <a href="stretching.html" aria-current="page">Stretching</a>
+        <a href="stretching.html">Stretching</a>
         <a href="fisioterapia-a-domicilio.html">Fisioterapia a domicilio</a>
         <a class="m-acc__all" href="../servicios.html">Ver todos los servicios</a>
       </div>
@@ -157,7 +152,7 @@
 
   <div class="mobile-menu__bottom">
     <nav class="lang-switch lang-switch--in-menu" aria-label="Selector de idioma">
-      <a href="stretching.html" aria-current="true">ES</a><span>/</span>
+      <a href="strength.html" aria-current="true">ES</a><span>/</span>
       <a href="../../../ca/index.html">CA</a><span>/</span>
       <a href="../../../en/index.html">EN</a>
     </nav>
@@ -172,69 +167,40 @@
 
 <main id="main">
 
-  <!-- ==========================================================================
-       MAPA DE RUTAS INTERNAS — única fuente de los destinos de esta página.
-       Página construida en FASE 5, reutilizando literalmente la estructura de
-       physiotherapy.html (única página individual de servicio existente):
-       mismo layout, componentes, ritmo, márgenes, animaciones, navegación y
-       sistema responsive, solo con el contenido adaptado a Stretching.
-
-       clave        href en el prototipo              ruta prevista
-       servicios    ../servicios.html                 /es/servicios/
-       tarifas      ../tarifas.html#areas             /es/tarifas/#areas
-       whatsapp     https://wa.me/34644678344         (real, ya en uso)
-       reserva      docfav.com/portal/...              (real, ya en uso)
-
-       "wellness", "strength", "pilates" y "fisioterapia-a-domicilio" todavía
-       no tienen archivo propio: mismo estado que en physiotherapy.html, no
-       se inventa ninguna ruta nueva.
-
-       SIN TARIFA PROPIA (Fase 4 de tarifas.html): PRECIOS 2026 no define
-       ninguna tarifa para Stretching todavía. Por eso esta página no
-       muestra ningún precio ni duración de sesión: enlaza a Tarifas, donde
-       la tarjeta de Stretching ya usa un CTA de "Consultar tarifas" por
-       WhatsApp en vez de una cifra. No se inventa ningún dato aquí tampoco.
-
-       SIN "Cómo es el proceso" ni "A domicilio": a diferencia de
-       Fisioterapia, no hay todavía un proceso de sesión confirmado para
-       Stretching que documentar, y Tarifas ya establece que Stretching no
-       está disponible a domicilio — así que ninguna de las dos secciones
-       se reutiliza aquí, para no inventar contenido.
-       ========================================================================== -->
-
-  <!-- ============ Service Hero System (Stretching) ============
+  <!-- ============ Service Hero System (Fuerza) ============
        FASE 2 (familia de páginas de servicio): sustituye el antiguo hero
        .page-hero.page-hero--split por la misma arquitectura .service-hero
        de physiotherapy.html (ver styles.css), sin marca de agua de
        disciplina, igual que en Fisioterapia. Se conservan literalmente el
-       titular, el lead, los CTA y la fotografía real de Stretching que ya
-       tenía esta página (mismo archivo stretching-*.webp, mismo alt): no
-       se reescribe contenido, solo se traslada a la nueva estructura.
+       titular, el lead, los CTA y la fotografía que ya tenía esta página
+       (mismo archivo area-strength-*.webp, mismo alt): no se reescribe
+       contenido, solo se traslada a la nueva estructura de hero.
 
-       La nota "Misma tarifa que Fisioterapia, Bienestar, Fuerza y Pilates"
-       que antes iba bajo los CTA no se pierde: la sección "Tarifas de
-       Stretching" (.home-care-note) más abajo ya explica la situación de
-       precio de esta página con más detalle, así que no se duplica aquí en
-       la franja meta del hero. -->
-  <section class="service-hero service-hero--stretching" id="hero">
+       La nota de precio "Misma tarifa que Fisioterapia, Bienestar, Pilates
+       y Stretching" que antes iba bajo los CTA no se pierde: ya está
+       desarrollada más abajo, en la sección "Tarifas de Fuerza"
+       (.home-care-note), así que no se duplica aquí en la franja meta del
+       hero (que sigue el mismo patrón informativo breve que Fisioterapia,
+       no una nota de precios). -->
+  <section class="service-hero service-hero--strength" id="hero">
     <div class="service-hero__container">
       <nav class="breadcrumb service-hero__breadcrumb" aria-label="Ruta de navegación">
         <ol>
           <li><a href="../../../index.html">Inicio</a></li>
           <li><a href="../servicios.html">Servicios</a></li>
-          <li aria-current="page">Stretching</li>
+          <li aria-current="page">Fuerza</li>
         </ol>
       </nav>
 
       <div class="service-hero__grid">
         <div class="service-hero__content">
-          <p class="service-hero__descriptor">05 — STRETCHING</p>
-          <h1 class="service-hero__headline">Muévete mejor. Siéntete mejor.</h1>
-          <p class="service-hero__lead">Sesiones diseñadas para mejorar tu movilidad, ganar flexibilidad y liberar las tensiones que limitan tu movimiento.</p>
+          <p class="service-hero__descriptor">03 — FUERZA</p>
+          <h1 class="service-hero__headline">Construye una base sólida y eficiente.</h1>
+          <p class="service-hero__lead">Desarrollo de fuerza, acondicionamiento y readaptación física con un plan individualizado adaptado a tu punto de partida y tus objetivos.</p>
 
           <div class="service-hero__actions">
             <a class="btn btn--primary service-hero__cta-primary" href="https://www.docfav.com/portal/physio-wellness-by-marshall" target="_blank" rel="noopener">
-              <span>Reservar sesión</span>
+              <span>Reservar valoración</span>
               <svg class="service-hero__cta-arrow" width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
                 <path d="M1 7h11M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
               </svg>
@@ -251,10 +217,10 @@
         <div class="service-hero__media-col">
           <figure class="service-hero__figure">
             <img
-              src="../../assets/img/stock/stretching-1440.webp"
-              srcset="../../assets/img/stock/stretching-720.webp 720w, ../../assets/img/stock/stretching-1440.webp 1440w"
+              src="../../assets/img/stock/area-strength-1440.webp"
+              srcset="../../assets/img/stock/area-strength-720.webp 720w, ../../assets/img/stock/area-strength-1440.webp 1440w"
               sizes="(min-width: 1200px) 54vw, (min-width: 860px) 52vw, 100vw"
-              alt="Profesional ayudando a una paciente a estirar la pierna elevada sobre una camilla, en un espacio cálido y natural."
+              alt="Sesión de entrenamiento de fuerza guiado en sala de Physio Wellness."
               width="1440"
               height="1799"
               loading="eager"
@@ -263,7 +229,7 @@
             <div class="service-hero__media-gradient" aria-hidden="true"></div>
             <span class="service-hero__tag" aria-hidden="true">
               <span class="service-hero__tag-line"></span>
-              Stretching
+              Fuerza
             </span>
           </figure>
         </div>
@@ -273,7 +239,7 @@
         <div class="service-hero__meta-items">
           <div class="service-hero__meta-item">
             <span class="service-hero__meta-index">01</span>
-            <span class="service-hero__meta-text">SESIÓN GUIADA</span>
+            <span class="service-hero__meta-text">VALORACIÓN INICIAL</span>
           </div>
           <div class="service-hero__meta-sep" aria-hidden="true">/</div>
           <div class="service-hero__meta-item">
@@ -287,7 +253,7 @@
           </div>
         </div>
 
-        <a href="#que-es-el-stretching" class="service-hero__scroll-cue" aria-label="Desplazarse a la siguiente sección">
+        <a href="#que-es-fuerza" class="service-hero__scroll-cue" aria-label="Desplazarse a la siguiente sección">
           <span>DESCUBRIR</span>
           <span class="service-hero__scroll-arrow" aria-hidden="true">↓</span>
         </a>
@@ -295,127 +261,106 @@
     </div>
   </section>
 
-  <!-- ============ Qué es el Stretching ============
-       Mismo bloque editorial a dos columnas que "Cuándo empezar por
-       Fisioterapia" (.service-context), reutilizando la misma fotografía
-       real que el hero (mismo archivo, distinto recorte por
-       object-position) en vez de sumar un segundo archivo de stock sin
-       necesidad real. Incluye la idea conceptual de enfoque pedida para
-       esta fase ("no forzar, sino recuperar espacio para moverse"). -->
-  <section class="service-context" id="que-es-el-stretching">
+  <!-- ============ Qué es Fuerza en Physio Wellness ============ -->
+  <section class="service-context" id="que-es-fuerza">
     <div class="container service-context__grid">
       <div class="service-context__text" data-reveal>
-        <p class="eyebrow section-eyebrow">Qué es el Stretching</p>
-        <h2 class="section-heading">Un espacio guiado para moverte con más libertad</h2>
+        <p class="eyebrow section-eyebrow">Entrenamiento con criterio clínico</p>
+        <h2 class="section-heading">Fuerza para moverte mejor, rendir más y proteger tu cuerpo</h2>
         <div class="area-block__text">
-          <p>El Stretching es un trabajo guiado de movilidad y flexibilidad, adaptado a cómo te mueves y cómo lo sientes en cada sesión. No es una tabla de estiramientos igual para todos: se ajusta a tu cuerpo, tu ritmo y el objetivo del día.</p>
-          <p>No se trata de forzar el cuerpo, sino de recuperar espacio para moverse.</p>
+          <p>El área de Fuerza está pensada para personas que quieren construir una estructura física más capaz, recuperar niveles óptimos de movilidad y fuerza tras una lesión, o preparar su cuerpo para las exigencias de su deporte.</p>
+          <p>No trabajamos con rutinas genéricas. Cada ejercicio tiene un propósito técnico y una progresión clara medida en cada sesión.</p>
         </div>
       </div>
       <figure class="service-photo" data-reveal style="--i:1" aria-hidden="true">
-        <img src="../../assets/img/stock/stretching-1440.webp" srcset="../../assets/img/stock/stretching-720.webp 720w, ../../assets/img/stock/stretching-1440.webp 1440w" sizes="(min-width:860px) 42vw, 100vw" alt="" loading="lazy" width="1440" height="1799">
+        <img src="../../assets/img/local/local-gym-1440.webp" srcset="../../assets/img/local/local-gym-720.webp 720w, ../../assets/img/local/local-gym-1440.webp 1440w" sizes="(min-width:860px) 42vw, 100vw" alt="Sala de fuerza y acondicionamiento activo en Physio Wellness." loading="lazy" width="1440" height="1080">
       </figure>
     </div>
   </section>
 
-  <!-- ============ Para quién puede ser interesante ============
-       Reutiliza .problem-ticker (cinta continua) tal cual, con una lista
-       de perfiles en vez de patologías: ninguno de estos conceptos es
-       nuevo, son los mismos "para quién" pedidos para esta fase. -->
-  <section class="problem-ticker" aria-label="Para quién puede ser interesante el Stretching">
-    <div class="container problem-ticker__head" data-reveal>
-      <h2 class="section-heading">¿Para quién puede ser interesante?</h2>
-    </div>
-    <div class="problem-ticker__viewport">
-      <div class="problem-ticker__rail">
-        <ul class="problem-ticker__list">
-          <li class="problem-ticker__item">Sensación de rigidez</li>
-          <li class="problem-ticker__item">Muchas horas sentado/a</li>
-          <li class="problem-ticker__item">Personas activas o deportistas</li>
-          <li class="problem-ticker__item">Quieres mejorar tu movilidad</li>
-          <li class="problem-ticker__item">Complementar otros tratamientos o entrenamientos</li>
-        </ul>
-        <ul class="problem-ticker__list" aria-hidden="true">
-          <li class="problem-ticker__item">Sensación de rigidez</li>
-          <li class="problem-ticker__item">Muchas horas sentado/a</li>
-          <li class="problem-ticker__item">Personas activas o deportistas</li>
-          <li class="problem-ticker__item">Quieres mejorar tu movilidad</li>
-          <li class="problem-ticker__item">Complementar otros tratamientos o entrenamientos</li>
-        </ul>
+  <!-- ============ SECCIÓN PROGRAMA DE TEMPORADA: SNOW PERFORMANCE ============ -->
+  <section class="strength-seasonal" id="snow-performance" aria-label="Programa de temporada Snow Performance by Marshall">
+    <div class="container strength-seasonal__inner">
+      <div class="strength-seasonal__content" data-reveal>
+        <p class="strength-seasonal__eyebrow">Programa de temporada</p>
+        <h2 class="strength-seasonal__headline">Lleva tu preparación a la montaña.</h2>
+        <p class="strength-seasonal__title">Snow Performance by Marshall</p>
+        <div class="strength-seasonal__text">
+          <p>Snow Performance by Marshall es un programa de preparación física para personas que practican esquí o snowboard.</p>
+          <p>Partimos de una valoración individual y trabajamos las capacidades que más vas a necesitar en la nieve: fuerza, equilibrio, control, movilidad, potencia y resistencia.</p>
+        </div>
+
+        <div class="flow-steps" aria-label="Metodología del programa de temporada">
+          <span class="flow-step">Valorar <span class="flow-step__arrow" aria-hidden="true">→</span></span>
+          <span class="flow-step">Entrenar <span class="flow-step__arrow" aria-hidden="true">→</span></span>
+          <span class="flow-step">Medir <span class="flow-step__arrow" aria-hidden="true">→</span></span>
+          <span class="flow-step">Reevaluar</span>
+        </div>
+
+        <div class="strength-seasonal__actions">
+          <a class="strength-seasonal__cta" href="/snow-performance">
+            Conocer Snow Performance <span aria-hidden="true">→</span>
+          </a>
+        </div>
       </div>
+
+      <figure class="strength-seasonal__media" data-reveal style="--i:1">
+        <img class="strength-seasonal__img" src="../../assets/img/stock/snow-board-1440.webp" srcset="../../assets/img/stock/snow-board-720.webp 720w, ../../assets/img/stock/snow-board-1440.webp 1440w" sizes="(min-width: 860px) 40vw, 100vw" alt="Snowboarder trazando una curva fluida sobre pendiente nevada al atardecer." loading="lazy" width="1440" height="1075">
+      </figure>
     </div>
   </section>
 
-  <!-- ============ Qué se trabaja en cada sesión ============
-       Reutiliza .specialty-list (lista editorial numerada, sin cuadrícula
-       de tarjetas) con los cinco puntos de contenido pedidos para esta
-       fase, sin afirmaciones médicas absolutas ni promesas de curación. -->
+  <!-- ============ Especialidades / Capacidades ============ -->
   <section class="specialty-list" id="que-trabajamos">
     <div class="container">
       <div class="specialty-list__head" data-reveal>
-        <p class="eyebrow section-eyebrow">Qué trabajamos</p>
-        <h2 class="section-heading">Qué se trabaja en cada sesión de Stretching</h2>
-        <p class="section-lead">Cada sesión combina varios de estos objetivos, según cómo llegues ese día.</p>
+        <p class="eyebrow section-eyebrow">Capacidades físicas</p>
+        <h2 class="section-heading">Qué trabajamos en las sesiones de Fuerza</h2>
+        <p class="section-lead">Un trabajo equilibrado enfocado en el control motor y la capacidad neuromuscular.</p>
       </div>
 
       <ul class="specialty-list__items" data-reveal style="--i:1">
         <li class="specialty-item">
           <span class="specialty-item__num">01</span>
-          <h3 class="specialty-item__title">Movilidad</h3>
-          <p class="specialty-item__desc">Amplía el rango de movimiento de tus articulaciones para que cueste menos moverte cada día.</p>
+          <h3 class="specialty-item__title">Fuerza estructural</h3>
+          <p class="specialty-item__desc">Fortalecimiento de los grandes grupos musculares y de la cadena posterior para soportar cargas funcionales.</p>
         </li>
         <li class="specialty-item">
           <span class="specialty-item__num">02</span>
-          <h3 class="specialty-item__title">Flexibilidad</h3>
-          <p class="specialty-item__desc">Gana elasticidad muscular de forma progresiva y adaptada a tu punto de partida.</p>
+          <h3 class="specialty-item__title">Estabilidad & Core</h3>
+          <p class="specialty-item__desc">Control del tronco y estabilización lumbo-pélvica para transmitir fuerza de forma eficiente y segura.</p>
         </li>
         <li class="specialty-item">
           <span class="specialty-item__num">03</span>
-          <h3 class="specialty-item__title">Amplitud de movimiento</h3>
-          <p class="specialty-item__desc">Trabaja el recorrido completo de cada gesto, sin forzar más allá de lo que tu cuerpo permite.</p>
+          <h3 class="specialty-item__title">Potencia & Dinamismo</h3>
+          <p class="specialty-item__desc">Capacidad para acelerar, frenar y responder a estímulos rápidos con control sobre el movimiento.</p>
         </li>
         <li class="specialty-item">
           <span class="specialty-item__num">04</span>
-          <h3 class="specialty-item__title">Tensión muscular</h3>
-          <p class="specialty-item__desc">Libera la tensión acumulada por el día a día, el deporte o las posturas mantenidas.</p>
-        </li>
-        <li class="specialty-item">
-          <span class="specialty-item__num">05</span>
-          <h3 class="specialty-item__title">Recuperación corporal</h3>
-          <p class="specialty-item__desc">Acompaña la recuperación entre sesiones de fuerza, Pilates u otras actividades físicas.</p>
+          <h3 class="specialty-item__title">Readaptación física</h3>
+          <p class="specialty-item__desc">Puente de conexión tras un proceso de fisioterapia para recuperar la tolerancia y volver a la actividad con garantías.</p>
         </li>
       </ul>
     </div>
   </section>
 
-  <!-- ============ Relación entre las áreas ============
-       Mismo componente y mismo tono condicional que physiotherapy.html
-       (.area-relation): no es una promesa clínica ni un recorrido
-       obligatorio, solo explica que Stretching puede combinarse con otras
-       áreas. Único enlace, a Servicios, ruta real ya existente. -->
+  <!-- ============ Relación entre las áreas ============ -->
   <section class="area-relation" aria-label="Relación entre las áreas de Physio Wellness">
     <div class="container area-relation__inner" data-reveal>
       <p class="eyebrow section-eyebrow">Relación entre áreas</p>
-      <p class="area-relation__text">El Stretching puede combinarse con fisioterapia, fuerza o Pilates Reformer, como complemento para mantener la movilidad ganada o dar continuidad a tu proceso.</p>
+      <p class="area-relation__text">La Fuerza se integra de forma natural con Fisioterapia para consolidar recuperaciones, con Pilates Reformer para el control postural, y con Stretching para mantener la amplitud y elasticidad articular.</p>
       <a class="area-relation__cta" href="../servicios.html">Ver todas las áreas →</a>
     </div>
   </section>
 
-  <!-- ============ Tarifas de Stretching ============
-       Reutiliza .home-care-note (mismo fondo y ritmo que el bloque
-       equivalente de Fisioterapia). Stretching comparte la misma tarifa en
-       clínica que Fisioterapia, Bienestar, Fuerza y Pilates (decisión de
-       negocio confirmada por el cliente el 2026-09-03; pendiente de
-       reflejarse en el PDF oficial "PRECIOS 2026" cuando se actualice — ver
-       src/content/tarifas.md). No se repiten aquí las cifras: se enlaza
-       directamente a la tarifa en clínica de Tarifas (#en-la-clinica). -->
+  <!-- ============ Tarifas de Fuerza ============ -->
   <section class="home-care-note">
     <div class="container">
       <div class="home-care-note__body" data-reveal>
         <div class="home-care-note__text">
-          <p class="eyebrow home-care-note__label">Tarifas de Stretching</p>
+          <p class="eyebrow home-care-note__label">Tarifas de Fuerza</p>
           <h2 class="home-care-note__title">¿Cuánto cuesta una sesión?</h2>
-          <p class="home-care-note__desc">Stretching comparte la misma tarifa en clínica que Fisioterapia, Bienestar, Fuerza y Pilates: misma valoración inicial y mismos precios por sesión.</p>
+          <p class="home-care-note__desc">Fuerza comparte la misma tarifa en clínica que Fisioterapia, Bienestar, Pilates y Stretching: misma valoración inicial y mismos precios por sesión o bono.</p>
         </div>
         <div class="home-care-note__actions">
           <a class="home-care-note__link" href="../tarifas.html#en-la-clinica">Ver tarifa en clínica <span class="home-care-note__arrow" aria-hidden="true">→</span></a>
@@ -424,17 +369,12 @@
     </div>
   </section>
 
-  <!-- ============ Reseñas de Google ============
-       Mismas seis reseñas reales y verificadas ya usadas en index.html y
-       physiotherapy.html (ver comentario original en esa página): mismo
-       texto íntegro, misma autoría con iniciales, mismo mecanismo de cinta
-       continua (googleReviewsMarquee en main.js), reutilizado tal cual
-       para no fabricar reseñas específicas de Stretching que no existen. -->
+  <!-- ============ Reseñas de Google ============ -->
   <section class="google-reviews" aria-label="Reseñas de Google de pacientes">
     <div class="container">
       <div class="google-reviews__head">
         <p class="eyebrow section-eyebrow">Reseñas de Google</p>
-        <h2 class="section-heading"><span class="google-reviews__highlight">Experiencias reales</span> de quienes han confiado en Physio Wellness</h2>
+        <h2 class="section-heading"><span class="google-reviews__highlight">Experiencias reales</span> de quienes entrenan en Physio Wellness</h2>
       </div>
     </div>
 
@@ -442,7 +382,7 @@
       <div class="google-reviews__rail" data-reviews-rail>
         <ul class="google-reviews__list" data-reviews-track>
           <li class="google-review-card">
-            <span class="google-review-card__tag">Experiencia en la clínica</span>
+            <span class="google-review-card__tag">Preparación física</span>
             <p class="google-review-card__rating">
               <span class="google-review-card__stars" aria-hidden="true">★★★★★</span>
               <span class="sr-only">Valoración: 5 de 5 estrellas</span>
@@ -458,13 +398,13 @@
           </li>
 
           <li class="google-review-card">
-            <span class="google-review-card__tag">Fisioterapia</span>
+            <span class="google-review-card__tag">Acompañamiento</span>
             <p class="google-review-card__rating">
               <span class="google-review-card__stars" aria-hidden="true">★★★★★</span>
               <span class="sr-only">Valoración: 5 de 5 estrellas</span>
             </p>
             <blockquote class="google-review-card__quote">
-              <p>Recomiendo totalmente a este fisioterapeuta a cualquiera que necesite una atención de calidad. Tiene un conocimiento muy amplio, es atento y está realmente comprometido con la recuperación de sus pacientes. Desde la primera sesión se tomó el tiempo de entender la raíz del problema, no solo los síntomas, y creó un plan de tratamiento personalizado que marcó una diferencia real.</p>
+              <p>Recomiendo totalmente a este profesional a cualquiera que necesite una atención de calidad. Tiene un conocimiento muy amplio, es atento y está realmente comprometido con el progreso de cada persona.</p>
               <p>¡Gracias!</p>
             </blockquote>
             <footer class="google-review-card__meta">
@@ -474,63 +414,16 @@
           </li>
 
           <li class="google-review-card">
-            <span class="google-review-card__tag">Profesionalidad</span>
+            <span class="google-review-card__tag">Instalaciones y equipo</span>
             <p class="google-review-card__rating">
               <span class="google-review-card__stars" aria-hidden="true">★★★★★</span>
               <span class="sr-only">Valoración: 5 de 5 estrellas</span>
             </p>
             <blockquote class="google-review-card__quote">
-              <p>Marçal es muy profesional, resolutivo y transmite confianza. Soy paciente oncológica y su tratamiento está dando muy buen resultado. También me ha dado unos ejercicios que puedo hacer en mi casa . Estoy muy conforme.</p>
-            </blockquote>
-            <footer class="google-review-card__meta">
-              <span class="google-review-card__author">C. C. G.</span>
-              <span class="google-review-card__source">Reseña de Google</span>
-            </footer>
-          </li>
-
-          <li class="google-review-card">
-            <span class="google-review-card__tag">Atención personalizada</span>
-            <p class="google-review-card__rating">
-              <span class="google-review-card__stars" aria-hidden="true">★★★★★</span>
-              <span class="sr-only">Valoración: 5 de 5 estrellas</span>
-            </p>
-            <blockquote class="google-review-card__quote">
-              <p>Muy buenas manos, técnica y conocimiento profundo, con un trato muy atento y personalizado. Disponen de todo tipo de maquinaria cuando hace falta. Estoy tratando una lesión de rodilla y ya noté mejoría desde la primera sesión.</p>
-              <p>Totalmente recomendable, Marçal y su equipo son de lo mejor.</p>
+              <p>Muy buenas manos, técnica y conocimiento profundo, con un trato muy atento y personalizado. Disponen de todo tipo de maquinaria cuando hace falta.</p>
             </blockquote>
             <footer class="google-review-card__meta">
               <span class="google-review-card__author">I. G.</span>
-              <span class="google-review-card__source">Reseña de Google</span>
-            </footer>
-          </li>
-
-          <li class="google-review-card">
-            <span class="google-review-card__tag">Trato y acompañamiento</span>
-            <p class="google-review-card__rating">
-              <span class="google-review-card__stars" aria-hidden="true">★★★★★</span>
-              <span class="sr-only">Valoración: 5 de 5 estrellas</span>
-            </p>
-            <blockquote class="google-review-card__quote">
-              <p>He tenido una muy buena experiencia en esta clínica de fisioterapia. El tratamiento me ayudó de verdad a quitarme el dolor de espalda, y noté una mejoría importante después de las sesiones. Abril, la administradora, es muy amable, atenta y organizada, lo que hace que cada visita sea cómoda y sin complicaciones.</p>
-              <p>Un agradecimiento especial a Marshall, un fisioterapeuta muy cualificado, profesional, atento y que realmente sabe lo que hace. Me sentí seguro y bien cuidado durante todo el proceso. Recomiendo totalmente este centro a cualquiera que tenga dolor de espalda o busque fisioterapia de calidad.</p>
-            </blockquote>
-            <footer class="google-review-card__meta">
-              <span class="google-review-card__author">A.</span>
-              <span class="google-review-card__source">Reseña de Google</span>
-            </footer>
-          </li>
-
-          <li class="google-review-card">
-            <span class="google-review-card__tag">Recuperación</span>
-            <p class="google-review-card__rating">
-              <span class="google-review-card__stars" aria-hidden="true">★★★★★</span>
-              <span class="sr-only">Valoración: 5 de 5 estrellas</span>
-            </p>
-            <blockquote class="google-review-card__quote">
-              <p>Encontré este centro y me han gustado mucho las sesiones que he tenido. Tiene un buen conocimiento del cuerpo y sabe cómo hacer que el paciente se sienta mejor tanto de forma inmediata como a largo plazo.</p>
-            </blockquote>
-            <footer class="google-review-card__meta">
-              <span class="google-review-card__author">T. M.</span>
               <span class="google-review-card__source">Reseña de Google</span>
             </footer>
           </li>
@@ -539,15 +432,13 @@
     </div>
   </section>
 
-  <!-- ============ CTA final ============
-       Mismo bloque de conversión que el resto de páginas de servicio,
-       con el titular y el texto del CTA propuestos para esta fase. -->
+  <!-- ============ CTA final ============ -->
   <section class="cta-final">
     <div class="container cta-final__inner" data-reveal>
-      <h2 class="cta-final__title">Dale más espacio a tu movimiento.</h2>
-      <p class="cta-final__lead">Sesiones enfocadas en mejorar tu movilidad, flexibilidad y recuperación.</p>
+      <h2 class="cta-final__title">Construye tu capacidad física con propósito.</h2>
+      <p class="cta-final__lead">Sesiones individualizadas de fuerza adaptadas a tu nivel, disciplina y punto de partida.</p>
       <div class="cta-final__actions">
-        <a class="btn btn--primary" href="https://www.docfav.com/portal/physio-wellness-by-marshall" target="_blank" rel="noopener">Reservar sesión de Stretching</a>
+        <a class="btn btn--primary" href="https://www.docfav.com/portal/physio-wellness-by-marshall" target="_blank" rel="noopener">Reservar valoración de Fuerza</a>
         <a class="btn btn--outline" href="https://wa.me/34644678344" target="_blank" rel="noopener">Hablar por WhatsApp</a>
       </div>
     </div>

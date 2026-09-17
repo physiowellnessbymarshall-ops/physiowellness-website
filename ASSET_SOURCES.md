@@ -248,17 +248,26 @@ Home, ambiente del centro y no un retrato de la autora de la reseña
 ("A."): mismo criterio ético de no asociar una cara o escena real a una
 persona concreta que no ha sido fotografiada.
 
-## Instalaciones / Espacio de la Home (`#instalaciones`, 2026-09-10)
+## Instalaciones / Espacio de la Home (`#instalaciones`, 2026-09-17)
 
-Renovación editorial de la galería de instalaciones del centro en `index.html`. Se sustituye la fotografía secundaria de bicicletas/cardio (`local-strength.jpg`) y se incorpora la fotografía propia del espacio de fisioterapia con protagonismo absoluto, desplegando un Bento editorial de 5 piezas:
+Renovación editorial de la galería de instalaciones del centro en `index.html`. Se evoluciona desde la cuadrícula previa a una composición editorial asimétrica de 8 fotografías reales de las dos sedes físicas (`fotos local 1` y `fotos local 2`), organizadas en dos bloques complementarios que diferencian claramente el espacio de Fisioterapia y el de Strength & Pilates:
 
+### Espacio 01: Fisioterapia (Local 1, Camí dels Capellans, 79)
 | Posición | Archivo servido | Origen / Licencia | Descripción de la escena |
 | :--- | :--- | :--- | :--- |
-| **Hero 2x2** | `src/assets/img/local/local-fisio-720.webp` / `-1440.webp` | Fotografía profesional propia (sesión Sandra, #07) | Cabina principal de fisioterapia con camilla hidràulica articulada, espaldera de madera blanca, gran espejo retroiluminado LED, PowerPlate, columna anatómica y suelo de roble. |
-| **1x1** | `src/assets/img/local/local-pilates-720.webp` / `-1440.webp` | Fotografía profesional propia (sesión Sandra, Local 2 #05) | Estudio de Pilates Reformer con torre Pilatu de madera noble y espejo de arco. |
-| **1x1** | `src/assets/img/local/local-gym-720.webp` / `-1440.webp` | Fotografía profesional propia (sesión Sandra, Local 2 #03) | Sala de fuerza y readaptación con rack multipower Force USA, banco regulable y pesas Titanium Strength. |
-| **1x1** | `src/assets/img/local/local-fisio-natural-720.webp` / `-1440.webp` | Fotografía profesional propia (sesión Sandra, #26) | Consulta de fisioterapia con gran ventanal a la calle ("Here Begins Your Wellness"), luz natural exterior, camilla y taburete ergonómico. |
-| **1x1** | `src/assets/img/local/local-lounge-720.webp` / `-1440.webp` | Fotografía profesional propia (sesión Sandra, Local 2 #09) | Zona de bienvenida y espera con sillones de terciopelo verde oliva, mesa cónica dorada y pared de mármol. |
+| **Hero 2x2** | `src/assets/img/local/local-fisio-720.webp` / `-1440.webp` | Fotografía profesional propia (`fotos local 1/11-Physio Wellness.jpg`) | Cabina principal de fisioterapia con camilla hidráulica Swop, espaldera, espejo retroiluminado LED cálido y parquet de roble. |
+| **1x1 Superior** | `src/assets/img/local/local-recepcion-720.webp` / `-1440.webp` | Fotografía profesional propia (`fotos local 1/12-Physio Wellness.jpg`) | Mostrador de recepción con frontal de hormigón, pared de mármol retroiluminada, lámparas de diseño suspendidas e iMac. |
+| **1x1 Superior** | `src/assets/img/local/local-fisio-natural-720.webp` / `-1440.webp` | Fotografía profesional propia (sesión Sandra, #26) | Consulta de valoración con amplio ventanal a la calle ("Here Begins Your Wellness") y luz natural exterior. |
+| **Panorámica 2x1** | `src/assets/img/local/local-fisio-recuperacion-720.webp` / `-1440.webp` | Fotografía profesional propia (`fotos local 1/01-Physio Wellness.jpg`) | Sala activa con espaldera blanca, rack Corength, bandas elásticas, PowerPlate y sofá en rincón para readaptación. |
+
+### Espacio 02: Strength & Pilates (Local 2, Sant Honorat, 26)
+| Posición | Archivo servido | Origen / Licencia | Descripción de la escena |
+| :--- | :--- | :--- | :--- |
+| **Vertical 1x2** | `src/assets/img/local/local-lounge-720.webp` / `-1440.webp` | Fotografía profesional propia (`fotos local 2/09-Physio Wellness by Marshall Local 2.jpg`) | Sillones de terciopelo verde oliva acanalado, mesa cónica de latón y pared de mármol retroiluminada (encuadre vertical 2:3). |
+| **1x1 Central** | `src/assets/img/local/local-gym-720.webp` / `-1440.webp` | Fotografía profesional propia (`fotos local 2/03-Physio Wellness by Marshall Local 2.jpg`) | Sala de fuerza con rack multipower Force USA, banco regulable, bumper plates y suelo técnico de impacto. |
+| **1x1 Central** | `src/assets/img/local/local-cardio-720.webp` / `-1440.webp` | Fotografía profesional propia (`fotos local 2/02-Physio Wellness by Marshall Local 2.jpg`) | Zona de cardio y fuerza con bicicleta, elíptica, cinta de correr y rack multipower Force USA. |
+| **Hero 2x2** | `src/assets/img/local/local-pilates-estudio-720.webp` / `-1440.webp` | Fotografía profesional propia (`fotos local 2/06-Physio Wellness by Marshall Local 2.jpg`) | Vista frontal amplia del estudio de Pilates Reformer con máquina Pilatu de madera, torre, arco retroiluminado y luces perimetrales. |
+
 
 ## El centro — Dos espacios. Un mismo proceso. (`src/pages/conocenos/el-centro.html`, 2026-09-16)
 
@@ -313,8 +322,82 @@ Documentación de los activos visuales utilizados en la nueva página "Primera v
 | **Puerta Conócenos: Equipo** | `src/assets/img/stock/team/hero-equipo-720.webp` | Fotografía de equipo (stock provisional del universo Conócenos) | Conexión con la página de Equipo (`equipo.html`). |
 | **Puerta Conócenos: El centro** | `src/assets/img/local/local-fisio-natural-720.webp` | Fotografía profesional propia del centro (sesión Sandra, #26) | Conexión con la página de El centro (`el-centro.html`). |
 
+## Snow Performance by Marshall — Programa de Temporada (2026-09-17)
 
+Documentación de los activos visuales generados e incorporados para el programa de temporada "Snow Performance by Marshall" (Home, página de Fuerza y landing `/snow-performance`). Se han producido imágenes fotográficas de alta resolución con dirección de arte editorial, tonos naturales, atmósfera alpina y lenguaje técnico y sobrio coherente con la identidad de Physio Wellness, exportadas a WebP (1440w y 720w):
 
+| Sección / Uso | Archivo servido | Tipo / Origen | Descripción de la escena |
+| :--- | :--- | :--- | :--- |
+| **Hero / Gran Formato Montaña** | `src/assets/img/stock/snow-mountain-1440.webp` / `-720.webp` | Fotografía editorial alpina generada para Physio Wellness | Panorámica de cumbres alpinas nevadas con crestas afiladas, nieve virgen y luz matinal invernal filtrada con sutil matiz aguamarina. |
+| **Acción Esquí / Potencia y Control** | `src/assets/img/stock/snow-ski-1440.webp` / `-720.webp` | Fotografía deportiva editorial generada para Physio Wellness | Esquiador atlético en giro técnico de máxima precisión y control en nieve polvo profunda sobre ladera alpina. |
+| **Acción Snowboard / Movimiento Fluido** | `src/assets/img/stock/snow-board-1440.webp` / `-720.webp` | Fotografía deportiva editorial generada para Physio Wellness | Snowboarder en viraje fluido y postura controlada sobre pendiente nevada al atardecer con macizos montañosos al fondo. |
+| **Seasonal Takeover Home / Gran Impacto** | `src/assets/img/stock/snow-takeover-1440.webp` / `-720.webp` | Fotografía deportiva editorial generada para Physio Wellness | Esquiador técnico en viraje potente con estela de nieve polvo, chaqueta verde oscuro alpina corporativa y cumbres nevadas al fondo. Diseñado para el Seasonal Takeover (80-100vh) de la Home. |
 
+### Vídeo de fondo del Seasonal Takeover (escritorio, 2026-09-17)
 
+La sección `#programa-temporada` (`.seasonal-takeover`) sustituye la foto
+fija anterior por un vídeo POV de esquí en bucle como fondo, con la misma
+capa de overlay/gradiente verde oscuro y el mismo tratamiento de legibilidad
+ya documentados en `styles.css`. El vídeo se buscó y seleccionó siguiendo
+petición explícita del cliente ("buscamelo tú"), presentando varios
+candidatos de Pexels antes de la elección final.
 
+| Campo | Detalle |
+| ----- | ------- |
+| Archivos servidos | `src/assets/video/snow-performance-desktop.mp4` (H.264) y `-desktop.webm` (VP9), sin audio |
+| Plataforma | Pexels |
+| Autor | Alex Moliski |
+| URL del vídeo | `https://www.pexels.com/video/exciting-ski-adventure-in-snowy-forest-36276484/` (título: "Exciting Ski Adventure in Snowy Forest") |
+| Licencia | Pexels License, libre uso comercial, sin atribución obligatoria |
+| Fecha de selección y descarga | 2026-09-17 |
+| Motivo de la elección | POV de esquí fluido y controlado (no caótico), sendero forestal soleado con las puntas de los esquís visibles en cuadro, otro esquiador precediendo la trayectoria y tonos azulados naturales de nieve — coherente con el brief de "premium, inmersivo, elegante" pedido para esta sección, frente a otros candidatos descartados (snowboard, variante vertical para móvil aún no aprobada). |
+| Transcodificación | Original descargado a Full HD (1920×1080, 50fps, H.264, ~27.8 Mbps, 15.26 s) y recodificado localmente con `ffmpeg` a 1280×720, 24fps, sin audio: `libx264` perfil High, CRF 33, preset `slower`, `movflags +faststart` (mp4, ~4.98 MB); `libvpx-vp9` con tasa acotada `-b:v 1800k -minrate 900k -maxrate 2600k` (webm, ~3.68 MB, evita el sobrecoste de tamaño del modo CRF puro en contenido con mucho ruido/movimiento como nieve cayendo). Calidad verificada por comparación de fotogramas extraídos frente al original. |
+| Integración en la página | `<source data-src>` con carga diferida (`snowTakeoverVideoInit()` en `main.js`, disparada por `IntersectionObserver` sobre `.seasonal-takeover`), selección de fuente según breakpoint (`matchMedia('(max-width:767px)')`), `poster` de imagen como estado de carga y filtro CSS existente (`brightness/contrast/saturate/blur`) aplicado sin cambios sobre el vídeo. |
+| Pendiente | Variante móvil (9:16) aún no aprobada por el cliente: los `<source data-breakpoint="mobile">` siguen apuntando a `snow-performance-mobile.mp4/.webm`, ficheros que todavía no existen en el repositorio. |
+
+## Página de Contacto — Rediseño Editorial (`src/pages/contacto.html`, 2026-09-17)
+
+Documentación de los activos visuales del centro integrados en la página de Contacto tras el rediseño editorial:
+
+| Sección / Uso | Archivo servido | Tipo / Origen | Descripción de la escena |
+| :--- | :--- | :--- | :--- |
+| **Hero Contacto (Derecha)** | `src/assets/img/local/local-recepcion-1440.webp` / `-720.webp` | Fotografía profesional propia (sesión Sandra, Local 1 `#12-Physio Wellness.jpg`) | Mostrador de recepción y bienvenida en Local 1 (Avinguda Camí dels Capellans, 79), con iMac, lámparas suspendidas de diseño, pared con revestimiento de mármol e iluminación cálida LED indirecta. Sustituye a la fotografía de sillones/espera (`local-lounge`). |
+| **Dos Espacios: Fisioterapia** | `src/assets/img/local/local-fisio-1440.webp` / `-720.webp` | Fotografía profesional propia (sesión Sandra, #07) | Cabina privada de tratamiento de fisioterapia con camilla hidráulica articulada. |
+| **Dos Espacios: Strength & Pilates** | `src/assets/img/local/local-pilates-1440.webp` / `-720.webp` | Fotografía profesional propia (sesión Sandra, Local 2 #05) | Estudio de Pilates Reformer con torre de madera noble Pilatu. |
+
+## Familia de páginas de servicio — Bienestar y Pilates Reformer (2026-09-17)
+
+FASE 2: creación de `src/pages/servicios/wellness.html` y
+`src/pages/servicios/pilates.html` (páginas nuevas, no existían antes) y
+adaptación del hero de `strength.html` y `stretching.html` al sistema
+`.service-hero` ya usado en `physiotherapy.html`. `fisioterapia-a-domicilio.html`
+(también nueva) reutiliza fotografía ya documentada en este archivo
+(`stock/domicilio-visita`, ver ficha de Fisioterapia a domicilio más abajo
+si existe, o la sección correspondiente) y no incorpora imágenes nuevas.
+
+Las dos imágenes de Bienestar son fotografía real de disciplina aportada
+por el cliente, ya presente en el repositorio (`src/assets/img/disciplines/wellness/`)
+pero usada por primera vez en una página propia en esta fase. La imagen de
+Pilates usada en `pilates.html` reutiliza un archivo ya documentado (sección
+"El centro", más arriba, como "En Movimiento (Pilates)") para el hero, y
+añade un segundo archivo nuevo para el bloque de contexto.
+
+| Página | Uso | Archivo servido | Origen | Descripción de la escena |
+| :--- | :--- | :--- | :--- | :--- |
+| `wellness.html` | Hero (`.service-hero__figure`) | `src/assets/img/disciplines/wellness/50eefdba-207e-4222-989f-99ab900a5f42-1440.webp` / `-720.webp` | Fotografía real de disciplina aportada por el cliente | Sesión de bienestar/recuperación guiada, escena ya usada como referencia de área en el sitio. |
+| `wellness.html` | Contexto (`.service-photo`) | `src/assets/img/disciplines/wellness/455dab1c-ca3e-4edf-9958-6e5dcb796470-1440.webp` / `-720.webp` | Fotografía real de disciplina aportada por el cliente | Segunda escena del mismo universo visual de Bienestar, usada junto al texto "qué es". |
+| `pilates.html` | Hero (`.service-hero__figure`) | `src/assets/img/disciplines/pilates/230151d6-6497-438c-b67b-863393bb572f-1440.webp` / `-720.webp` | Fotografía real de disciplina aportada por el cliente | Sesión de Pilates Reformer con instructora acompañando el movimiento (ya documentada como "En Movimiento (Pilates)" en la página "El centro"; en esta fase pasa a usarse también como fotografía de hero a tamaño completo). |
+| `pilates.html` | Contexto (`.service-photo`) | `src/assets/img/disciplines/pilates/3d3800cd-cb1f-45b2-88bc-0fa15cbb436f-1440.webp` / `-720.webp` | Fotografía real de disciplina aportada por el cliente | Segunda escena del mismo shooting de Pilates Reformer, usada junto al texto "qué es". |
+
+| Campo | Detalle |
+| ----- | ------- |
+| Origen | Aportadas por el cliente (mismo criterio que el resto de fotografía de `disciplines/`) |
+| Licencia | No aplica (fotografía propia del cliente, sin banco de stock) |
+| Fecha de incorporación a una página propia | 2026-09-17 |
+| Transformaciones aplicadas | Ninguna nueva: se reutilizan los archivos `-720`/`-1440` ya optimizados en WebP presentes en el repositorio; no se ha generado ni procesado ninguna imagen nueva en esta fase. |
+
+`strength.html` y `stretching.html` no incorporan fotografía nueva: se
+mantiene exactamente el mismo archivo de hero que ya tenían
+(`stock/area-strength-1440.webp`/`-720.webp` y `stock/stretching-1440.webp`/`-720.webp`
+respectivamente), solo cambia el marcado HTML que lo envuelve (de
+`.page-hero.page-hero--split` a `.service-hero`).

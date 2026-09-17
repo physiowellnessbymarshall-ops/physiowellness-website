@@ -517,6 +517,11 @@ a:focus-visible,button:focus-visible,input:focus-visible{
 .section-eyebrow{margin-bottom:var(--sp-4);}
 .section-heading{font-size:var(--fs-h2);max-width:20ch;}
 .section-lead{font-size:var(--fs-lead);color:var(--pw-ink-70);max-width:42ch;}
+/* FASE 2 (pulido): título y párrafo son h2/p con margin:0 (§1), así que sin
+   esta regla quedan pegados en TODAS las páginas que usan este patrón
+   (Fisioterapia, Stretching, Tarifas, Servicios, Método, Home). Un solo
+   punto de corrección para toda la jerarquía "eyebrow → título → lead". */
+.section-heading + .section-lead{margin-top:var(--sp-4);}
 
 /* ---------- 8. Franja de confianza ----------
    Tira editorial de datos de confianza, no barra de "features": sin cards,
@@ -3754,12 +3759,15 @@ a:focus-visible,button:focus-visible,input:focus-visible{
 /* ----- Subespecialidades: lista editorial, no cuadrícula de tarjetas -----
    Líneas separadas por borde, numeración tipográfica en vez de iconos;
    en pantallas grandes se reparten en dos columnas manteniendo el orden
-   de lectura por filas. FASE 1: sin borde superior (continúa la misma
-   --pw-mist de .problem-ticker justo encima, sin línea entre ambas) y con
-   menos padding inferior que superior (la franja "Relación entre áreas"
-   comparte esta misma --pw-mist justo después y debe leerse como el cierre
-   de esta sección, no como un bloque nuevo). */
-.specialty-list{padding-block:var(--sp-12);background:var(--pw-mist);}
+   de lectura por filas.
+   FASE 3 (pulido, 2026): el padding-block reducido (sp-12) venía de
+   cuando esta sección compartía la misma franja --pw-mist con
+   .problem-ticker y .area-relation, ambas ya eliminadas de esta página
+   (FASE 10). Sin esas franjas vecinas, sp-12 quedaba corto para el
+   contenido actual (banner con foto + mapa de 6 filas) frente a sus
+   vecinas reales (.process, 96px): se iguala a sp-24 para mantener el
+   mismo ritmo vertical. */
+.specialty-list{padding-block:var(--sp-24);background:var(--pw-mist);}
 .specialty-list__head{max-width:60ch;}
 .specialty-list__items{
   list-style:none;margin:var(--sp-12) 0 0;padding:0;
@@ -4014,7 +4022,12 @@ a:focus-visible,button:focus-visible,input:focus-visible{
    característica/modalidad puntual (a diferencia de un bloque "cuándo
    empezar" con foto de referencia grande) la lectura natural es entender
    primero de qué se trata y solo después ver la foto de apoyo. */
-.service-feature--with-photo{background:var(--pw-white);border-block:none;}
+/* FASE 2 (pulido): antes sin borde, tocando directamente otras dos
+   secciones también en blanco (Servicios y modalidades, Reseñas reales) sin
+   ninguna línea de separación entre las tres — mismo criterio de línea fina
+   que ya usa .service-menu justo encima, para marcar el cambio de sección
+   sin romper el fondo blanco compartido. */
+.service-feature--with-photo{background:var(--pw-white);border-block:none;border-top:1px solid var(--pw-line);}
 .service-feature--with-photo .service-feature__grid{
   display:grid;
   grid-template-areas:"text" "photo" "actions";
@@ -4039,7 +4052,11 @@ a:focus-visible,button:focus-visible,input:focus-visible{
   .service-feature--with-photo .service-feature__grid{
     grid-template-columns:1.1fr .9fr;
     grid-template-areas:"text photo" "actions photo";
-    gap:var(--sp-4) var(--sp-16);
+    /* FASE 3 (pulido): antes sp-4 (16px) de separación vertical entre el
+       texto y los enlaces de acción — quedaban casi pegados. sp-8 (32px)
+       da el aire "generoso" que pide la jerarquía antes de un CTA, sin
+       tocar el gap horizontal con la fotografía (sp-16). */
+    gap:var(--sp-8) var(--sp-16);
     align-items:center;
   }
   .service-feature__photo{aspect-ratio:3/4;}
@@ -4176,6 +4193,14 @@ a:not(.booking-panel__help):focus-visible,
   transform:translateY(-2px);
 }
 
+/* El header transparent (text blanc, pensat per a fotos fosques com
+   el .hero de la home) queda il·legible sobre el fons blanc d'aquest
+   Hero. Es força sòlid des de l'inici, només en aquesta pàgina. */
+.page-metodo .site-header{
+  background:var(--pw-primary-900);
+  box-shadow:0 12px 32px -18px rgba(0,0,0,.5);
+}
+
 /* ---------- 3. Hero Cinematogràfic (Fase 2) ---------- */
 .method-hero{
   background:var(--pw-white);
@@ -4255,7 +4280,7 @@ a:not(.booking-panel__help):focus-visible,
   line-height:1.65;
   color:var(--pw-ink-70);
   max-width:54ch;
-  margin:0;
+  margin:0 0 var(--sp-8);
 }
 .method-hero__actions{
   display:flex;
@@ -4395,7 +4420,7 @@ a:not(.booking-panel__help):focus-visible,
   font-size:var(--fs-lead);
   line-height:1.7;
   color:rgba(255,255,255,.76);
-  max-width:68ch;
+  max-width:62ch;
   margin:0 auto var(--sp-10);
 }
 .method-bridge__stations{
@@ -4445,7 +4470,8 @@ a:not(.booking-panel__help):focus-visible,
 .method-system__tag{
   font-size:.75rem;
   font-weight:600;
-  letter-spacing:.12em;
+  letter-spacing:.1em;
+  text-transform:uppercase;
   color:var(--pw-primary);
   background:rgba(35,115,105,.08);
   padding:.25rem .6rem;
@@ -4453,6 +4479,7 @@ a:not(.booking-panel__help):focus-visible,
 }
 .method-system__title{
   margin-bottom:var(--sp-4);
+  text-wrap:balance;
 }
 .method-system__lead{
   color:var(--pw-ink-70);
@@ -4469,7 +4496,14 @@ a:not(.booking-panel__help):focus-visible,
   backdrop-filter:blur(12px);
   -webkit-backdrop-filter:blur(12px);
   border-block:1px solid var(--pw-line);
-  transition:transform var(--dur-fast) var(--ease-out);
+  transition:transform var(--dur-fast) var(--ease-out), top var(--dur-fast) var(--ease-out);
+}
+/* El header se oculta (translateY) al bajar; sin este ajuste el riel
+   sticky sigue reservando el hueco de 4.5rem donde estaba el header,
+   dejando un espacio en blanco encima. Cuando el header está oculto,
+   el riel sube hasta el borde superior. */
+.site-header.is-hidden ~ main .method-system__sticky-nav{
+  top:0;
 }
 .method-system__sticky-container{
   padding-block:.65rem;
@@ -4493,10 +4527,10 @@ a:not(.booking-panel__help):focus-visible,
   display:inline-flex;
   align-items:center;
   gap:.45rem;
-  padding:.45rem .85rem;
+  padding:.5rem .9rem;
   border-radius:2px;
   text-decoration:none;
-  font-size:.8rem;
+  font-size:.875rem;
   letter-spacing:.06em;
   text-transform:uppercase;
   color:var(--pw-ink-70);
@@ -4505,10 +4539,10 @@ a:not(.booking-panel__help):focus-visible,
 .method-system__nav-num{
   font-weight:600;
   color:var(--pw-primary);
-  font-size:.75rem;
+  font-size:.8rem;
 }
 .method-system__nav-name{
-  font-weight:500;
+  font-weight:600;
 }
 .method-system__nav-item.is-active .method-system__nav-link{
   background:var(--pw-primary);
@@ -4586,6 +4620,7 @@ a:not(.booking-panel__help):focus-visible,
 }
 .method-scene__eyebrow{
   color:var(--pw-primary);
+  font-size:.85rem;
   font-weight:600;
   letter-spacing:.12em;
   margin:0;
@@ -4609,7 +4644,7 @@ a:not(.booking-panel__help):focus-visible,
   display:inline-flex;
   align-items:center;
   gap:.5rem;
-  font-size:.75rem;
+  font-size:.8rem;
   font-weight:600;
   letter-spacing:.08em;
   text-transform:uppercase;
@@ -4648,7 +4683,7 @@ a:not(.booking-panel__help):focus-visible,
   gap:var(--sp-4);
   padding-block:.55rem;
   border-top:1px solid var(--pw-line);
-  font-size:.9rem;
+  font-size:.95rem;
 }
 .method-scene__meta-item:first-child{border-top:none;}
 .method-scene__meta-label{
@@ -4704,14 +4739,14 @@ a:not(.booking-panel__help):focus-visible,
   gap:.15rem;
 }
 .method-scene__caption-title{
-  font-size:.78rem;
+  font-size:.82rem;
   font-weight:600;
   letter-spacing:.08em;
   text-transform:uppercase;
   color:#8fd9c9;
 }
 .method-scene__caption-desc{
-  font-size:.85rem;
+  font-size:.9rem;
   color:rgba(255,255,255,.9);
 }
 
@@ -4744,7 +4779,7 @@ a:not(.booking-panel__help):focus-visible,
   backdrop-filter:blur(8px);
   -webkit-backdrop-filter:blur(8px);
   color:#ffffff;
-  font-size:.7rem;
+  font-size:.75rem;
   font-weight:600;
   letter-spacing:.08em;
   text-transform:uppercase;
@@ -4832,13 +4867,12 @@ a:not(.booking-panel__help):focus-visible,
   padding-block:0;
   background:transparent!important;
   display:flex;
-  align-items:flex-start;
+  align-items:center;
   overflow:hidden;
 }
 .method-system.is-pin-active .method-scene__container{
   width:100%;
   max-height:100%;
-  padding-block:clamp(1.5rem,4vh,3rem) 0;
 }
 .method-system.is-pin-active .method-scene__num,
 .method-system.is-pin-active .method-scene__handoff{
@@ -4868,6 +4902,9 @@ a:not(.booking-panel__help):focus-visible,
 .method-movement__head{
   max-width:760px;
   margin-bottom:clamp(3rem,6vh,5rem);
+}
+.method-movement__head .section-heading{
+  text-wrap:balance;
 }
 /* Tres pilares editoriales: MOVILIDAD / CONTROL / CAPACIDAD */
 .method-movement__intro{
@@ -4968,6 +5005,10 @@ a:not(.booking-panel__help):focus-visible,
 .method-practice__head{
   max-width:800px;
   margin-bottom:clamp(2.5rem,5vh,4.5rem);
+}
+.method-practice__head .section-heading{
+  text-wrap:balance;
+  margin-bottom:var(--sp-4);
 }
 .method-practice__lead{
   color:var(--pw-ink-70);
@@ -5107,6 +5148,39 @@ a:not(.booking-panel__help):focus-visible,
   padding-left:var(--sp-3);
   border-left:2px solid var(--pw-primary);
   max-width:52ch;
+}
+
+/* CTA intermedio tras "Primera sesión" (Fase 2, UX/conversión): enlace de
+   jerarquía secundaria, mismo lenguaje visual que .method-hero__anchor
+   (texto + flecha, sin fondo ni card), separado del contenido superior
+   solo con un filete fino — igual patrón que .method-practice__therapist
+   más arriba, para que se lea como cierre natural de la sección, no como
+   un bloque comercial nuevo. */
+.method-practice__cta{
+  margin-top:clamp(2.5rem,5vh,3.5rem);
+  padding-top:var(--sp-6);
+  border-top:1px solid var(--pw-line);
+}
+.method-practice__cta-link{
+  display:inline-flex;
+  align-items:center;
+  gap:.6rem;
+  font-size:.8rem;
+  font-weight:600;
+  letter-spacing:.08em;
+  text-transform:uppercase;
+  color:var(--pw-primary);
+  text-decoration:none;
+  transition:color var(--dur-fast) var(--ease-out);
+}
+.method-practice__cta-link svg{
+  transition:transform var(--dur-fast) var(--ease-out);
+}
+.method-practice__cta-link:hover{
+  color:var(--pw-primary-600);
+}
+.method-practice__cta-link:hover svg{
+  transform:translateX(4px);
 }
 
 /* ---------- 9. Ressenya editorial humana (.method-quote) ---------- */
@@ -5271,32 +5345,50 @@ a:not(.booking-panel__help):focus-visible,
    del contenedor, alineada con el resto de la página). */
 @media (min-width:860px){
   .page-physio .page-hero__grid{
-    grid-template-columns:minmax(0,.86fr) minmax(0,1.14fr);
+    grid-template-columns:minmax(0,1fr) minmax(0,1fr);
   }
   .page-physio .page-hero__photo{
     margin-right:calc(-1 * (max(0px, (100vw - var(--container)) / 2) + clamp(1.5rem,4vw,2.75rem)));
     border-radius:var(--radius-tile,20px) 0 0 var(--radius-tile,20px);
   }
 }
+/* FASE hero (lectura): el titular es una frase de 9 palabras, no un
+   nombre corto — a --fs-display (5.75rem) con solo 15ch de ancho
+   envolvía en 5-6 líneas de 2-3 palabras. Se baja un escalón (clamp más
+   contenido) y se amplía el ancho de línea; columnas 1fr/1fr (antes
+   .86fr/1.14fr) le devuelven aire al texto sin quitarle presencia a la
+   foto, que además sigue sangrando fuera de su columna (regla de arriba). */
 .page-physio .page-hero__title{
-  font-size:var(--fs-display);
-  max-width:15ch;
+  font-size:clamp(2.3rem,3.6vw,4.25rem);
+  max-width:21ch;
 }
+/* Con el titular ahora en 3 líneas (antes 5-6), el espaciado heredado de
+   .page-physio .page-hero__text (§"Hero de Fisioterapia", sp-6/sp-8)
+   quedaba corto para separar un bloque de texto de 3 líneas del párrafo:
+   se amplía un escalón (sp-8/sp-10) solo aquí. */
+.page-physio .page-hero__text{margin-block:var(--sp-8) var(--sp-10);}
 
-/* ----- Hero: máscara de entrada de la fotografía + indicador de scroll -----
-   Reutiliza el [data-reveal]/.is-visible genérico (§7) ya disparado por
-   revealOnScroll() en main.js: no hace falta JS nuevo. Aquí solo se
-   sobrescribe, con un selector más específico, CÓMO entra la fotografía
-   del hero (clip-path en vez de opacity/translateY) y se añade el
-   indicador de scroll como una entrada [data-reveal] más de la lista.
-   Bajo prefers-reduced-motion la transición pasa a .01ms por la regla
-   global (§2), así que el resultado final es el mismo sin animación. */
+/* ----- Hero: entrada del bloque completo, sin desfase escalonado -----
+   El hero es contenido above-the-fold: el stagger genérico de §7
+   (transition-delay:i*90ms + --dur-slow de .9s) tiene sentido para
+   secciones a las que se llega haciendo scroll, pero aquí hacía que la
+   foto (clip-path, delay 180ms, .9s de barrido) terminara de revelarse
+   más de 1s después de pintada la página, muy por detrás del texto.
+   Se neutraliza el delay y se acorta la duración SOLO dentro del grid
+   del hero de Fisioterapia/Stretching: título, texto, CTA y foto quedan
+   disparados por el mismo IntersectionObserver (revealOnScroll(), sin
+   JS nuevo) pero terminan de aparecer casi a la vez, con una transición
+   breve en vez de desaparecer la coreografía por completo. */
+.page-physio .page-hero__grid [data-reveal]{
+  transition-delay:0ms;
+  transition-duration:.4s;
+}
 .page-physio .page-hero__photo[data-reveal]{
   opacity:1;
   transform:none;
   clip-path:inset(0 0 100% 0);
-  transition:clip-path var(--dur-slow) var(--ease-emphatic);
-  transition-delay:calc(var(--i,0) * 90ms);
+  transition:clip-path .4s var(--ease-emphatic);
+  transition-delay:0ms;
 }
 .page-physio .page-hero__photo[data-reveal].is-visible{clip-path:inset(0 0 0% 0);}
 
@@ -5384,43 +5476,129 @@ a:not(.booking-panel__help):focus-visible,
   .photo-break__media{aspect-ratio:21/9;}
 }
 
-/* ----- Ámbitos: cabecera fija + fotografía contextual con crossfade -----
-   Reutiliza serviceProcessTimeline (main.js): esta lista también lleva
-   [data-sp-steps]/[data-sp-step], así que entra en el mismo bucle que
-   "Cómo es el proceso" y recibe la misma clase de estado
-   (.is-process-active en la section, .is-active/.is-done en cada item).
-   Por debajo de 860px no hay sticky ni fotografía (mismo criterio que el
-   resto de la página): el atenuado por índice activo tampoco se aplica
-   ahí, para no dejar ámbitos "apagados" sin la foto que lo justifique. */
-.specialty-list__layout{display:block;}
-.specialty-list__visual{display:none;}
-@media (min-width:860px){
-  .specialty-list__layout{
-    display:grid;
-    grid-template-columns:.95fr 1.05fr;
-    gap:var(--sp-24);
-    align-items:start;
-  }
-  .specialty-list__intro{
-    position:sticky;
-    top:var(--sp-sticky-top,6rem);
-    align-self:start;
-    display:grid;
-    gap:var(--sp-8);
-  }
-  .specialty-list__visual{display:block;max-width:22rem;}
-  .specialty-list__items{grid-template-columns:1fr;}
+/* ----- "¿En qué podemos ayudarte?": explorador de síntomas↔ámbitos -----
+   FASE 2 (progressive disclosure, 2026): sustituye el banner con foto +
+   .symptom-map (dos columnas con todo el texto visible desde el
+   principio) por .symptom-explorer. Mismos seis pares síntoma↔ámbito de
+   siempre, ahora con revelado real: cada fila es un
+   <button aria-expanded aria-controls> (mismo lenguaje visual que
+   .faq__q: color en :hover, icono +/− que gira) junto a un panel
+   [hidden], controlado por main.js (symptomExplorer). Solo los títulos
+   son visibles al entrar; al abrir una fila aparece su explicación y se
+   resalta (línea de acento a la izquierda) la fila emparejada de la otra
+   columna, sin abrir su texto. En escritorio, tres zonas en grid:
+   síntomas | fotografía | ámbitos, con la fotografía estirada a la altura
+   de las columnas. En móvil la columna de ámbitos se oculta y el ámbito
+   relacionado se muestra dentro de la propia fila de síntoma abierta
+   (.symptom-explorer__inline-ambito, oculto en escritorio). */
+.symptom-explorer{margin-top:var(--sp-16);}
 
-  .specialty-list.is-process-active .specialty-item{
-    opacity:.4;
-    transition:opacity var(--dur-slow) var(--ease-out);
-  }
-  .specialty-list.is-process-active .specialty-item.is-active,
-  .specialty-list.is-process-active .specialty-item.is-done{opacity:1;}
-  .specialty-list.is-process-active .specialty-item.is-done{opacity:.75;}
+.symptom-explorer__photo{
+  margin:0 0 var(--sp-8);
+  border-radius:var(--radius-tile,20px);
+  overflow:hidden;
+  aspect-ratio:4/3;
+}
+.symptom-explorer__photo img{
+  width:100%;height:100%;
+  object-fit:cover;object-position:center 25%;
 }
 
-/* ----- Fotografía con crossfade (compartida: Ámbitos + Cómo es el proceso) -----
+.symptom-explorer__list{list-style:none;margin:0;padding:0;}
+.symptom-explorer__list--ambitos{margin-top:var(--sp-10);}
+.symptom-explorer__list li:last-child{border-bottom:1px solid var(--pw-line);}
+.symptom-explorer__heading{margin:0;font:inherit;}
+
+.symptom-explorer__row{
+  border-top:1px solid var(--pw-line);
+  border-left:2px solid transparent;
+  padding-left:var(--sp-4);
+  margin-left:calc(-1 * var(--sp-4));
+  transition:border-color var(--dur-slow) var(--ease-emphatic);
+}
+.symptom-explorer__row.is-open,
+.symptom-explorer__row.is-paired{
+  border-left-color:var(--pw-primary);
+}
+
+.symptom-explorer__title{
+  display:flex;align-items:flex-start;justify-content:space-between;gap:var(--sp-6);
+  width:100%;
+  padding-block:var(--sp-5);
+  font:inherit;font-size:1.05rem;font-weight:600;text-align:left;
+  color:var(--pw-ink);
+  transition:color var(--dur-fast) var(--ease-out);
+}
+.symptom-explorer__title:hover{color:var(--pw-primary);}
+.symptom-explorer__title:focus-visible{outline:2px solid var(--pw-accent);outline-offset:3px;}
+.symptom-explorer__num{
+  flex:none;
+  font-size:var(--fs-label);
+  color:var(--pw-ink-50);
+  padding-top:.25em;
+}
+.symptom-explorer__title-text{flex:1;}
+.symptom-explorer__icon{
+  flex:none;
+  width:11px;height:11px;margin-top:.42em;
+  background:
+    linear-gradient(var(--pw-primary),var(--pw-primary)) center/100% 1px no-repeat,
+    linear-gradient(var(--pw-primary),var(--pw-primary)) center/1px 100% no-repeat;
+  transition:transform var(--dur-fast) var(--ease-out);
+}
+.symptom-explorer__title[aria-expanded="true"] .symptom-explorer__icon{
+  transform:rotate(90deg);background-size:100% 1px,0 0;
+}
+
+/* Cuando hay una fila abierta, el resto de títulos (de las dos columnas)
+   pasan a un segundo plano; la fila abierta y su pareja emparejada
+   recuperan el color de texto completo. */
+.symptom-explorer.has-active .symptom-explorer__title{color:var(--pw-ink-50);}
+.symptom-explorer.has-active .symptom-explorer__row.is-open .symptom-explorer__title,
+.symptom-explorer.has-active .symptom-explorer__row.is-paired .symptom-explorer__title{
+  color:var(--pw-ink);
+}
+
+.symptom-explorer__panel{padding-bottom:var(--sp-6);}
+.symptom-explorer__desc{color:var(--pw-ink-70);max-width:52ch;}
+.symptom-explorer__inline-ambito{
+  margin-top:var(--sp-4);
+  padding-top:var(--sp-4);
+  border-top:1px dashed var(--pw-line);
+}
+.symptom-explorer__inline-label{
+  margin:0 0 var(--sp-1);
+  font-size:.75rem;font-weight:600;letter-spacing:.04em;text-transform:uppercase;
+  color:var(--pw-primary);
+}
+.symptom-explorer__inline-ambito p{color:var(--pw-ink-70);max-width:52ch;}
+.symptom-explorer__inline-ambito strong{color:var(--pw-ink);}
+
+@media (max-width:859.98px){
+  .symptom-explorer__list--ambitos{display:none;}
+}
+@media (min-width:860px){
+  .symptom-explorer{
+    display:grid;
+    grid-template-columns:1fr minmax(200px,280px) 1fr;
+    column-gap:var(--sp-16);
+    align-items:stretch;
+    margin-top:var(--sp-10);
+  }
+  .symptom-explorer__list--symptoms{order:1;}
+  .symptom-explorer__photo{
+    order:2;
+    margin:0;
+    width:100%;
+    height:100%;
+    min-height:380px;
+    aspect-ratio:auto;
+  }
+  .symptom-explorer__list--ambitos{order:3;margin-top:0;}
+  .symptom-explorer__inline-ambito{display:none;}
+}
+
+/* ----- Fotografía con crossfade (Cómo es el proceso) -----
    Componente pequeño y reutilizable (punto 13/14 del brief): cualquier
    futura sección con [data-sp-steps] puede añadir [data-crossfade] +
    [data-crossfade-img] + data-crossfade-src por paso sin CSS nuevo.
@@ -5442,7 +5620,16 @@ a:not(.booking-panel__help):focus-visible,
 }
 [data-crossfade] img.is-fading{opacity:0;}
 
-/* ----- Servicios y modalidades: lista editorial de formatos de sesión ----- */
+/* ----- Servicios y modalidades: lista editorial de formatos de sesión -----
+   FASE 10: cada fila expone 4 campos (servicio · duración · modalidad ·
+   acción) en vez de una etiqueta + una sola línea de meta combinada, para
+   escanear en columnas SERVICIO → DURACIÓN → MODALIDAD → ACCIÓN en vez de
+   tener que leer una frase completa por fila.
+   .service-menu__details agrupa duración+modalidad: en móvil se queda
+   como una única línea (mismo aspecto que la antigua .service-menu__meta,
+   con un punto separador via ::before en .service-menu__modality) y en
+   escritorio (≥640px) pasa a display:contents para que sus dos hijos se
+   coloquen como columnas propias del grid, sin envoltorio visible. */
 .service-menu{padding-block:var(--sp-16);background:var(--pw-white);border-top:1px solid var(--pw-line);}
 .service-menu__head{max-width:60ch;margin-bottom:var(--sp-10);}
 .service-menu__list{list-style:none;margin:0;padding:0;display:grid;}
@@ -5456,7 +5643,8 @@ a:not(.booking-panel__help):focus-visible,
 }
 .service-menu__list li:last-child{border-bottom:1px solid var(--pw-line);}
 .service-menu__label{grid-column:1;font-weight:600;color:var(--pw-ink);}
-.service-menu__meta{grid-column:1;font-size:.85rem;color:var(--pw-ink-70);}
+.service-menu__details{grid-column:1;display:flex;gap:.4em;font-size:.85rem;color:var(--pw-ink-70);}
+.service-menu__modality::before{content:"· ";}
 .service-menu__link{
   grid-column:2;grid-row:1 / 3;
   display:inline-flex;align-items:center;gap:.4rem;
@@ -5471,10 +5659,13 @@ a:not(.booking-panel__help):focus-visible,
 .service-menu__link:focus-visible .service-menu__arrow{transform:translateX(4px);}
 .service-menu__note{margin-top:var(--sp-8);font-size:.9rem;color:var(--pw-ink-70);max-width:60ch;}
 @media (min-width:640px){
-  .service-menu__item{grid-template-columns:1fr auto auto;column-gap:var(--sp-8);}
+  .service-menu__item{grid-template-columns:1.4fr .7fr 1fr auto;column-gap:var(--sp-8);}
   .service-menu__label{grid-column:1;}
-  .service-menu__meta{grid-column:2;}
-  .service-menu__link{grid-column:3;grid-row:auto;}
+  .service-menu__details{display:contents;}
+  .service-menu__duration{grid-column:2;color:var(--pw-ink-70);font-size:.9rem;}
+  .service-menu__modality{grid-column:3;color:var(--pw-ink-70);font-size:.9rem;}
+  .service-menu__modality::before{content:"";}
+  .service-menu__link{grid-column:4;grid-row:auto;}
 }
 
 /* ----- Cómo es el proceso: nota + enlace a Primera visita + foto + progreso -----
@@ -5550,7 +5741,9 @@ a:not(.booking-panel__help):focus-visible,
 .pull-quote--compact p{font-size:var(--fs-lead);}
 
 /* ----- Testimonio protagonista (sustituye la cinta de 6 en esta página) ----- */
-.testimonial-feature{padding-block:var(--sp-24);background:var(--pw-white);}
+/* FASE 2 (pulido): misma razón que en .service-feature--with-photo — línea
+   fina para separar de la sección blanca anterior sin cambiar de fondo. */
+.testimonial-feature{padding-block:var(--sp-24);background:var(--pw-white);border-top:1px solid var(--pw-line);}
 .testimonial-feature__grid{display:grid;gap:var(--sp-10);align-items:center;}
 .testimonial-feature__photo{
   margin:0;
@@ -5617,5 +5810,92 @@ a:not(.booking-panel__help):focus-visible,
 .cta-final--photo.cta-final{padding-block:0;background:none;}
 .cta-final--photo .cta-final__inner{padding-block:var(--sp-32);}
 .cta-final--photo .cta-final__lead{color:rgba(255,255,255,.84);}
+
+/* FASE 3 (pulido, Fisioterapia): .photo-banner__inner/.cta-final__inner
+   reparten título, texto y CTA con el mismo gap:sp-6 del flex en las dos
+   franjas finales de esta página (Método Marshall y CTA final) — título
+   y CTA quedaban a la misma distancia que título y subtítulo, sin salto
+   claro antes del botón. Se sustituye por márgenes explícitos por
+   relación: título→texto un salto claro, texto→CTA uno más generoso.
+   Solo en esta página: en Método/Tarifas/Servicios/Stretching estos
+   mismos componentes ya tienen su propio ajuste (p.ej. method-closing) y
+   quedan fuera de esta revisión para no tocar nada ya resuelto. */
+.page-physio .photo-banner__inner{gap:0;}
+.page-physio .photo-banner__title + .photo-banner__lead,
+.page-physio .cta-final__title + .cta-final__lead{margin-top:var(--sp-5);}
+.page-physio .photo-banner__lead + .btn,
+.page-physio .cta-final__lead + .cta-final__actions{margin-top:var(--sp-8);}
+
+/* ----- "legal": cuerpo de texto legal (aviso legal, privacidad, cookies) -----
+   Pensado para lectura larga, no para conversión: contenedor de ancho de
+   línea reducido (~68ch), jerarquía H2/H3 discreta, listas y tablas de
+   cookies adaptadas a móvil. Reutiliza tokens existentes, no introduce
+   paleta ni tipografía nueva. */
+.legal{padding-block:var(--sp-24);}
+.legal__container{display:flex;justify-content:center;}
+.legal__body{width:100%;max-width:68ch;overflow-wrap:break-word;}
+.legal__body > .legal__section + .legal__section{margin-top:var(--sp-16);}
+.legal__body h2{
+  font-size:var(--fs-h3);
+  font-weight:500;
+  color:var(--pw-primary-900);
+  margin-bottom:var(--sp-5);
+}
+.legal__body h3{
+  font-size:1.05rem;
+  font-weight:600;
+  color:var(--pw-primary);
+  margin-top:var(--sp-8);
+  margin-bottom:var(--sp-3);
+}
+.legal__body p{color:var(--pw-ink-70);line-height:1.75;}
+.legal__body p + p{margin-top:var(--sp-4);}
+.legal__body h2 + p,
+.legal__body h3 + p{margin-top:0;}
+.legal__body ul{display:grid;gap:var(--sp-3);margin-top:var(--sp-4);}
+.legal__body li{
+  position:relative;
+  padding-left:var(--sp-6);
+  color:var(--pw-ink-70);
+  line-height:1.6;
+}
+.legal__body li::before{
+  content:'';
+  position:absolute;left:0;top:.65em;
+  width:.4rem;height:.4rem;
+  background:var(--pw-accent);
+}
+.legal__body a{color:var(--pw-primary);text-decoration:underline;text-underline-offset:.15em;overflow-wrap:anywhere;}
+.legal__body a:hover{color:var(--pw-primary-600);}
+
+.legal__facts{margin-top:var(--sp-4);display:grid;gap:var(--sp-2);}
+.legal__facts li{padding-left:0;}
+.legal__facts li::before{content:none;}
+.legal__facts strong{color:var(--pw-ink);font-weight:600;}
+
+.legal__table-wrap{margin-top:var(--sp-4);overflow-x:auto;-webkit-overflow-scrolling:touch;}
+.legal__table{width:100%;border-collapse:collapse;font-size:var(--fs-small);min-width:32rem;}
+.legal__table caption{text-align:left;font-size:var(--fs-small);color:var(--pw-ink-50);margin-bottom:var(--sp-2);}
+.legal__table th,
+.legal__table td{
+  text-align:left;
+  padding:var(--sp-3) var(--sp-4);
+  border-bottom:1px solid var(--pw-line);
+  color:var(--pw-ink-70);
+  vertical-align:top;
+}
+.legal__table th{color:var(--pw-ink);font-weight:600;white-space:nowrap;}
+
+.legal__meta{
+  margin-top:var(--sp-16);
+  padding-top:var(--sp-6);
+  border-top:1px solid var(--pw-line);
+  font-size:var(--fs-small);
+  color:var(--pw-ink-50);
+}
+
+@media (max-width:639px){
+  .legal__body h2{font-size:1.4rem;}
+}
 
 

@@ -38,7 +38,7 @@ physiowellness-web/
 - [ ] **El Método** (`src/pages/metodo.html`)
 - [ ] **Servicios** (`src/pages/servicios.html`)
 - [x] **Tarifas** (`src/pages/tarifas.html`) — prototipo funcional
-- [ ] **Contacto** (`src/pages/contacto.html`)
+- [x] **Contacto** (`src/pages/contacto.html`)
 
 ## 🎨 Sistema de diseño
 

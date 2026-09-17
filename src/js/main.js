@@ -2359,3 +2359,527 @@ var prefersReducedMotion = window.matchMedia && window.matchMedia('(prefers-redu
   }catch(e){ console.warn('metodoFasesSystem', e); }
 })();
 
+/* ---------- equipo: explorador interactivo del equipo profesional (Conócenos) ----------
+   Módulo específico para la página src/pages/conocenos/equipo.html.
+   Gestiona la navegación accesible por pestañas (tablist/tab/tabpanel), transiciones
+   suaves de entrada/salida y navegación por teclado (flechas, Home, End). */
+(function teamExplorerSystem(){
+  try{
+    var explorer = document.getElementById('equipo-explorador');
+    if(!explorer) return;
+
+    var tabs = Array.prototype.slice.call(explorer.querySelectorAll('.team-explorer__tab'));
+    var panels = Array.prototype.slice.call(explorer.querySelectorAll('.team-explorer__panel'));
+    if(!tabs.length || !panels.length) return;
+
+    var activateMember = function(targetMember, focusTab){
+      var selectedTab = null;
+
+      tabs.forEach(function(tab){
+        var isTarget = tab.getAttribute('data-member') === targetMember;
+        tab.classList.toggle('is-active', isTarget);
+        tab.setAttribute('aria-selected', isTarget ? 'true' : 'false');
+        if(isTarget) selectedTab = tab;
+      });
+
+      panels.forEach(function(panel){
+        var isTarget = panel.getAttribute('data-member') === targetMember;
+        if(isTarget){
+          panel.removeAttribute('hidden');
+          panel.classList.add('is-active');
+        }else{
+          panel.classList.remove('is-active');
+          panel.setAttribute('hidden', '');
+        }
+      });
+
+      if(focusTab && selectedTab){
+        selectedTab.focus();
+      }
+    };
+
+    tabs.forEach(function(tab, index){
+      tab.addEventListener('click', function(e){
+        e.preventDefault();
+        var member = tab.getAttribute('data-member');
+        if(!member || tab.classList.contains('is-active')) return;
+        activateMember(member, false);
+      });
+
+      tab.addEventListener('keydown', function(e){
+        var nextIndex = -1;
+        if(e.key === 'ArrowRight' || e.key === 'ArrowDown'){
+          nextIndex = (index + 1) % tabs.length;
+        }else if(e.key === 'ArrowLeft' || e.key === 'ArrowUp'){
+          nextIndex = (index - 1 + tabs.length) % tabs.length;
+        }else if(e.key === 'Home'){
+          nextIndex = 0;
+        }else if(e.key === 'End'){
+          nextIndex = tabs.length - 1;
+        }
+
+        if(nextIndex !== -1){
+          e.preventDefault();
+          var targetTab = tabs[nextIndex];
+          var member = targetTab.getAttribute('data-member');
+          if(member){
+            activateMember(member, true);
+          }
+        }
+      });
+    });
+
+  }catch(e){ console.warn('teamExplorerSystem', e); }
+})();
+
+/* ---------- equipo: principios interactivos y acordeón móvil (Conócenos) ----------
+   Módulo específico para la sección de filosofía en src/pages/conocenos/equipo.html.
+   Gestiona la navegación accesible por pestañas (tablist/tab/tabpanel) en desktop
+   y la apertura coordinada tipo acordeón en dispositivos móviles. */
+(function teamValuesSystem(){
+  try{
+    var valuesSection = document.getElementById('forma-de-trabajar');
+    if(!valuesSection) return;
+
+    var tabs = Array.prototype.slice.call(valuesSection.querySelectorAll('.team-value-tab'));
+    var panels = Array.prototype.slice.call(valuesSection.querySelectorAll('.team-value-panel'));
+    if(!tabs.length) return;
+
+    var activateValue = function(targetValue, focusTab){
+      var selectedTab = null;
+
+      tabs.forEach(function(tab){
+        var isTarget = tab.getAttribute('data-value') === targetValue;
+        tab.classList.toggle('is-active', isTarget);
+        tab.setAttribute('aria-selected', isTarget ? 'true' : 'false');
+        if(isTarget) selectedTab = tab;
+      });
+
+      panels.forEach(function(panel){
+        var isTarget = panel.getAttribute('data-value') === targetValue;
+        if(isTarget){
+          panel.removeAttribute('hidden');
+          panel.classList.add('is-active');
+        }else{
+          panel.classList.remove('is-active');
+          panel.setAttribute('hidden', '');
+        }
+      });
+
+      if(focusTab && selectedTab){
+        selectedTab.focus();
+      }
+    };
+
+    tabs.forEach(function(tab, index){
+      tab.addEventListener('click', function(e){
+        e.preventDefault();
+        var val = tab.getAttribute('data-value');
+        if(!val) return;
+        activateValue(val, false);
+      });
+
+      tab.addEventListener('keydown', function(e){
+        var nextIndex = -1;
+        if(e.key === 'ArrowRight' || e.key === 'ArrowDown'){
+          nextIndex = (index + 1) % tabs.length;
+        }else if(e.key === 'ArrowLeft' || e.key === 'ArrowUp'){
+          nextIndex = (index - 1 + tabs.length) % tabs.length;
+        }else if(e.key === 'Home'){
+          nextIndex = 0;
+        }else if(e.key === 'End'){
+          nextIndex = tabs.length - 1;
+        }
+
+        if(nextIndex !== -1){
+          e.preventDefault();
+          var targetTab = tabs[nextIndex];
+          var val = targetTab.getAttribute('data-value');
+          if(val){
+            activateValue(val, true);
+          }
+        }
+      });
+    });
+
+  }catch(e){ console.warn('teamValuesSystem', e); }
+})();
+
+/* ---------- el-centro: explorador interactiu dels dos espais i continuïtat (Conócenos) ----------
+   Mòdul específic per a la pàgina src/pages/conocenos/el-centro.html.
+   Gestiona l'alternança entre Fisioteràpia i Strength & Pilates, els botons de
+   scroll directe de l'Hero, la navegació per teclat accessible i la microinteracció
+   dels passos del procés continu. */
+(function centerExplorerSystem(){
+  try{
+    var explorer = document.querySelector('.center-explorer');
+    if(!explorer) return;
+
+    var tabs = Array.prototype.slice.call(explorer.querySelectorAll('[data-explorer-tab]'));
+    var panels = Array.prototype.slice.call(explorer.querySelectorAll('[data-explorer-panel]'));
+    if(!tabs.length || !panels.length) return;
+
+    var activateSpace = function(targetSpace, focusTab){
+      var selectedTab = null;
+
+      tabs.forEach(function(tab){
+        var isTarget = tab.getAttribute('data-explorer-tab') === targetSpace;
+        tab.classList.toggle('is-active', isTarget);
+        tab.setAttribute('aria-selected', isTarget ? 'true' : 'false');
+        if(isTarget) selectedTab = tab;
+      });
+
+      panels.forEach(function(panel){
+        var isTarget = panel.getAttribute('data-explorer-panel') === targetSpace;
+        if(isTarget){
+          panel.removeAttribute('hidden');
+          panel.hidden = false;
+          /* Forçar reflow perquè la transició CSS s'executi sempre de forma neta */
+          void panel.offsetWidth;
+          panel.classList.add('is-active');
+        }else{
+          panel.classList.remove('is-active');
+          panel.setAttribute('hidden', '');
+          panel.hidden = true;
+        }
+      });
+
+      if(focusTab && selectedTab){
+        selectedTab.focus();
+      }
+    };
+
+    tabs.forEach(function(tab, index){
+      tab.addEventListener('click', function(e){
+        e.preventDefault();
+        var space = tab.getAttribute('data-explorer-tab');
+        if(!space || tab.classList.contains('is-active')) return;
+        activateSpace(space, false);
+      });
+
+      tab.addEventListener('keydown', function(e){
+        var nextIndex = -1;
+        if(e.key === 'ArrowRight' || e.key === 'ArrowDown'){
+          nextIndex = (index + 1) % tabs.length;
+        }else if(e.key === 'ArrowLeft' || e.key === 'ArrowUp'){
+          nextIndex = (index - 1 + tabs.length) % tabs.length;
+        }else if(e.key === 'Home'){
+          nextIndex = 0;
+        }else if(e.key === 'End'){
+          nextIndex = tabs.length - 1;
+        }
+
+        if(nextIndex !== -1){
+          e.preventDefault();
+          var targetTab = tabs[nextIndex];
+          var space = targetTab.getAttribute('data-explorer-tab');
+          if(space){
+            activateSpace(space, true);
+          }
+        }
+      });
+    });
+
+    /* Botons de navegació directa de l'Hero */
+    var heroPills = Array.prototype.slice.call(document.querySelectorAll('[data-center-goto]'));
+    heroPills.forEach(function(pill){
+      pill.addEventListener('click', function(e){
+        var targetSpace = pill.getAttribute('data-center-goto');
+        if(!targetSpace) return;
+        e.preventDefault();
+        activateSpace(targetSpace, false);
+        var targetEl = document.getElementById('explorar');
+        if(targetEl){
+          var top = targetEl.getBoundingClientRect().top + window.scrollY - 80;
+          window.scrollTo({
+            top: Math.max(0, top),
+            behavior: prefersReducedMotion ? 'auto' : 'smooth'
+          });
+        }
+      });
+    });
+
+    /* Clics als panells de l'Hero per portar a l'explorador */
+    var heroPanels = Array.prototype.slice.call(document.querySelectorAll('[data-panel-space]'));
+    heroPanels.forEach(function(panel){
+      panel.addEventListener('click', function(){
+        var space = panel.getAttribute('data-panel-space');
+        if(!space) return;
+        activateSpace(space, false);
+        var targetEl = document.getElementById('explorar');
+        if(targetEl){
+          var top = targetEl.getBoundingClientRect().top + window.scrollY - 80;
+          window.scrollTo({
+            top: Math.max(0, top),
+            behavior: prefersReducedMotion ? 'auto' : 'smooth'
+          });
+        }
+      });
+    });
+
+    /* Microinteracció i selecció activa en els passos del procés continu */
+    var continuitySteps = Array.prototype.slice.call(document.querySelectorAll('.center-continuity__step'));
+    continuitySteps.forEach(function(step){
+      var toggleStep = function(){
+        var wasSelected = step.classList.contains('is-selected');
+        continuitySteps.forEach(function(s){ s.classList.remove('is-selected'); });
+        if(!wasSelected){
+          step.classList.add('is-selected');
+        }
+      };
+
+      step.addEventListener('click', toggleStep);
+      step.addEventListener('keydown', function(e){
+        if(e.key === 'Enter' || e.key === ' '){
+          e.preventDefault();
+          toggleStep();
+        }
+      });
+    });
+
+  }catch(e){ console.warn('centerExplorerSystem', e); }
+})();
+
+/* ---------- Primera visita: Recorrido interactivo paso a paso ----------
+   Sistema accesible de tablist/tabpanels con sincronización de scroll
+   (IntersectionObserver) y soporte completo de teclado y clics. */
+(function visitJourneySystem(){
+  try{
+    var root = document.querySelector('.visit-journey');
+    if(!root) return;
+
+    var tabs = Array.prototype.slice.call(root.querySelectorAll('.visit-journey__btn'));
+    var stepItems = Array.prototype.slice.call(root.querySelectorAll('.visit-journey__step'));
+    var panels = Array.prototype.slice.call(root.querySelectorAll('.journey-card'));
+    if(!tabs.length || !panels.length) return;
+
+    var activeIndex = 0;
+    var isUserClicking = false;
+    var clickTimeout;
+
+    function activateStep(targetIndex, focusButton){
+      if(targetIndex < 0 || targetIndex >= tabs.length) return;
+      activeIndex = targetIndex;
+
+      stepItems.forEach(function(item, i){
+        item.classList.toggle('is-active', i === activeIndex);
+        item.classList.toggle('is-done', i < activeIndex);
+      });
+
+      tabs.forEach(function(tab, i){
+        tab.setAttribute('aria-selected', i === activeIndex ? 'true' : 'false');
+      });
+
+      panels.forEach(function(panel, i){
+        var isTarget = i === activeIndex;
+        if(isTarget){
+          panel.hidden = false;
+          window.requestAnimationFrame(function(){
+            panel.classList.add('is-active');
+          });
+        }else{
+          panel.classList.remove('is-active');
+          panel.hidden = true;
+        }
+      });
+
+      if(focusButton && tabs[activeIndex]){
+        tabs[activeIndex].focus();
+      }
+    }
+
+    tabs.forEach(function(tab, index){
+      tab.addEventListener('click', function(e){
+        e.preventDefault();
+        isUserClicking = true;
+        clearTimeout(clickTimeout);
+        activateStep(index, false);
+        clickTimeout = setTimeout(function(){
+          isUserClicking = false;
+        }, 600);
+      });
+
+      tab.addEventListener('keydown', function(e){
+        var nextIndex = -1;
+        if(e.key === 'ArrowDown' || e.key === 'ArrowRight'){
+          nextIndex = (index + 1) % tabs.length;
+        }else if(e.key === 'ArrowUp' || e.key === 'ArrowLeft'){
+          nextIndex = (index - 1 + tabs.length) % tabs.length;
+        }else if(e.key === 'Home'){
+          nextIndex = 0;
+        }else if(e.key === 'End'){
+          nextIndex = tabs.length - 1;
+        }
+
+        if(nextIndex !== -1){
+          e.preventDefault();
+          activateStep(nextIndex, true);
+        }
+      });
+    });
+
+    /* Sincronización pasiva con scroll en pantallas de escritorio */
+    if(('IntersectionObserver' in window) && !prefersReducedMotion){
+      var io = new IntersectionObserver(function(entries){
+        if(isUserClicking) return;
+        entries.forEach(function(entry){
+          if(!entry.isIntersecting) return;
+          var idx = stepItems.indexOf(entry.target);
+          if(idx !== -1 && idx !== activeIndex){
+            activateStep(idx, false);
+          }
+        });
+      }, {root: null, rootMargin: '-25% 0px -45% 0px', threshold: 0.1});
+
+      stepItems.forEach(function(item){ io.observe(item); });
+    }
+
+  }catch(e){ console.warn('visitJourneySystem', e); }
+})();
+
+/* ---------- Formulario de contacto: validación accesible y aviso transparente ----------
+   Gestiona la validación en tiempo real y al enviar del formulario de contacto.
+   Dado que no existe aún backend de envío de correos en el proyecto estático,
+   informa honestamente al usuario sin fingir un envío inexistente, ofreciendo
+   acciones inmediatas para abrir su correo o WhatsApp con el contenido ya redactado. */
+(function contactFormHandler(){
+  try{
+    var form = document.getElementById('contact-form');
+    if(!form) return;
+
+    var nameInput = document.getElementById('contact-name');
+    var emailInput = document.getElementById('contact-email');
+    var phoneInput = document.getElementById('contact-phone');
+    var messageInput = document.getElementById('contact-message');
+    var noticeEl = document.getElementById('contact-form-notice');
+    var emailActionBtn = document.getElementById('form-action-email');
+    var waActionBtn = document.getElementById('form-action-wa');
+
+    var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    function setFieldError(input, errorId, errorMsg){
+      if(!input) return;
+      var group = input.closest('.form-group');
+      var errorEl = document.getElementById(errorId);
+      if(errorMsg){
+        input.setAttribute('aria-invalid', 'true');
+        if(group) group.classList.add('has-error');
+        if(errorEl){
+          errorEl.textContent = errorMsg;
+          errorEl.style.display = 'block';
+        }
+      }else{
+        input.removeAttribute('aria-invalid');
+        if(group) group.classList.remove('has-error');
+        if(errorEl){
+          errorEl.textContent = '';
+          errorEl.style.display = 'none';
+        }
+      }
+    }
+
+    function validateName(){
+      if(!nameInput) return true;
+      var val = nameInput.value.trim();
+      if(!val){
+        setFieldError(nameInput, 'error-name', 'Por favor, introduce tu nombre.');
+        return false;
+      }
+      setFieldError(nameInput, 'error-name', '');
+      return true;
+    }
+
+    function validateEmail(){
+      if(!emailInput) return true;
+      var val = emailInput.value.trim();
+      if(!val){
+        setFieldError(emailInput, 'error-email', 'Por favor, introduce tu correo electrónico.');
+        return false;
+      }
+      if(!emailRegex.test(val)){
+        setFieldError(emailInput, 'error-email', 'Por favor, introduce un correo electrónico válido.');
+        return false;
+      }
+      setFieldError(emailInput, 'error-email', '');
+      return true;
+    }
+
+    function validateMessage(){
+      if(!messageInput) return true;
+      var val = messageInput.value.trim();
+      if(!val){
+        setFieldError(messageInput, 'error-message', 'Por favor, escribe tu mensaje o consulta.');
+        return false;
+      }
+      if(val.length < 5){
+        setFieldError(messageInput, 'error-message', 'El mensaje es demasiado corto (mínimo 5 caracteres).');
+        return false;
+      }
+      setFieldError(messageInput, 'error-message', '');
+      return true;
+    }
+
+    if(nameInput){
+      nameInput.addEventListener('blur', validateName);
+      nameInput.addEventListener('input', function(){
+        if(nameInput.getAttribute('aria-invalid') === 'true') validateName();
+      });
+    }
+
+    if(emailInput){
+      emailInput.addEventListener('blur', validateEmail);
+      emailInput.addEventListener('input', function(){
+        if(emailInput.getAttribute('aria-invalid') === 'true') validateEmail();
+      });
+    }
+
+    if(messageInput){
+      messageInput.addEventListener('blur', validateMessage);
+      messageInput.addEventListener('input', function(){
+        if(messageInput.getAttribute('aria-invalid') === 'true') validateMessage();
+      });
+    }
+
+    form.addEventListener('submit', function(e){
+      e.preventDefault();
+      var isNameValid = validateName();
+      var isEmailValid = validateEmail();
+      var isMsgValid = validateMessage();
+
+      if(!isNameValid || !isEmailValid || !isMsgValid){
+        if(!isNameValid && nameInput) nameInput.focus();
+        else if(!isEmailValid && emailInput) emailInput.focus();
+        else if(!isMsgValid && messageInput) messageInput.focus();
+        return;
+      }
+
+      var nameVal = nameInput ? nameInput.value.trim() : '';
+      var emailVal = emailInput ? emailInput.value.trim() : '';
+      var phoneVal = phoneInput ? phoneInput.value.trim() : '';
+      var msgVal = messageInput ? messageInput.value.trim() : '';
+
+      /* Preparar enlaces dinámicos para correo y WhatsApp */
+      var subject = 'Consulta web: ' + nameVal;
+      var emailBody = 'Nombre: ' + nameVal + '\nEmail: ' + emailVal + (phoneVal ? '\nTeléfono: ' + phoneVal : '') + '\n\nMensaje:\n' + msgVal;
+      var waBody = 'Hola Physio Wellness, soy ' + nameVal + '.' + (phoneVal ? ' (Tel: ' + phoneVal + ')' : '') + ' Consulta: ' + msgVal;
+
+      if(emailActionBtn){
+        emailActionBtn.href = 'mailto:hola@physiowellness.es?subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(emailBody);
+      }
+      if(waActionBtn){
+        waActionBtn.href = 'https://wa.me/34644678344?text=' + encodeURIComponent(waBody);
+      }
+
+      if(noticeEl){
+        noticeEl.hidden = false;
+        noticeEl.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      }
+    });
+
+  }catch(e){ console.warn('contactFormHandler', e); }
+})();
+
+
+
+
+

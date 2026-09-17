@@ -260,5 +260,61 @@ Renovación editorial de la galería de instalaciones del centro en `index.html`
 | **1x1** | `src/assets/img/local/local-fisio-natural-720.webp` / `-1440.webp` | Fotografía profesional propia (sesión Sandra, #26) | Consulta de fisioterapia con gran ventanal a la calle ("Here Begins Your Wellness"), luz natural exterior, camilla y taburete ergonómico. |
 | **1x1** | `src/assets/img/local/local-lounge-720.webp` / `-1440.webp` | Fotografía profesional propia (sesión Sandra, Local 2 #09) | Zona de bienvenida y espera con sillones de terciopelo verde oliva, mesa cónica dorada y pared de mármol. |
 
+## El centro — Dos espacios. Un mismo proceso. (`src/pages/conocenos/el-centro.html`, 2026-09-16)
+
+Documentación de los activos visuales utilizados en la nueva página "El centro". Siguiendo las directrices del proyecto, se ha priorizado el uso exclusivo de **fotografía real del centro** (sesión Sandra, Sitges) y **fotografía real de sesiones aportada por el cliente** (`disciplines/`), sin recurrir a bancos de stock genéricos ni caras ficticias.
+
+| Sección | Archivo servido | Origen / Licencia | Descripción de la escena |
+| :--- | :--- | :--- | :--- |
+| **Hero Split (Fisioterapia)** | `src/assets/img/local/local-fisio-720.webp` / `-1440.webp` | Fotografía profesional propia (sesión Sandra, #07) | Cabina principal con camilla hidráulica articulada e iluminación cálida. |
+| **Hero Split (Strength & Pilates)** | `src/assets/img/local/local-pilates-720.webp` / `-1440.webp` | Fotografía profesional propia (sesión Sandra, Local 2 #05) | Estudio de Pilates Reformer con torre de madera noble y espejo de arco. |
+| **Explorador: Fisio Principal** | `src/assets/img/local/local-fisio-1440.webp` | Fotografía profesional propia (sesión Sandra, #07) | Cabina principal de tratamiento clínico. |
+| **Explorador: Fisio Detalle 1** | `src/assets/img/local/local-fisio-natural-720.webp` / `-1440.webp` | Fotografía profesional propia (sesión Sandra, #26) | Consulta con ventanal a la calle y luz natural exterior. |
+| **Explorador: Fisio Detalle 2** | `src/assets/img/disciplines/fisio/3618ab1e-11e0-412a-9ad7-bea6708c17f4-720.webp` | Fotografía aportada por el cliente | Detalle de manos en terapia manual y movilización articular. |
+| **Explorador: S&P Principal** | `src/assets/img/local/local-pilates-1440.webp` | Fotografía profesional propia (sesión Sandra, Local 2 #05) | Estudio de Pilates Reformer. |
+| **Explorador: S&P Detalle 1** | `src/assets/img/local/local-gym-720.webp` / `-1440.webp` | Fotografía profesional propia (sesión Sandra, Local 2 #03) | Sala de fuerza y readaptación con rack multipower Force USA. |
+| **Explorador: S&P Detalle 2** | `src/assets/img/local/local-lounge-720.webp` / `-1440.webp` | Fotografía profesional propia (sesión Sandra, Local 2 #09) | Zona de bienvenida y descanso con sillones de terciopelo verde oliva. |
+| **En Movimiento (Fisio)** | `src/assets/img/disciplines/fisio/5af02bda-9e2c-442f-af09-c3c4f8285313-1440.webp` | Fotografía aportada por el cliente | Valoración de movilidad articular hombro-brazo con fisioterapeuta. |
+| **En Movimiento (Fuerza)** | `src/assets/img/disciplines/strength/b6f0d767-34ad-4aeb-be9f-7b617316246e-1440.webp` | Fotografía aportada por el cliente | Ejercicio de fuerza y estabilidad supervisado con mancuernas. |
+| **En Movimiento (Pilates)** | `src/assets/img/disciplines/pilates/230151d6-6497-438c-b67b-863393bb572f-1440.webp` | Fotografía aportada por el cliente | Sesión de Pilates Reformer con instructora acompañando el movimiento. |
+| **Detalle 01 (Tratamiento)** | `src/assets/img/local/local-fisio-720.webp` | Fotografía profesional propia (sesión Sandra, #07) | Cabina privada y camilla articulada. |
+| **Detalle 02 (Zona activa)** | `src/assets/img/local/local-gym-720.webp` | Fotografía profesional propia (sesión Sandra, Local 2 #03) | Sala de fuerza y multipower. |
+| **Detalle 03 (Reformer)** | `src/assets/img/local/local-pilates-720.webp` | Fotografía profesional propia (sesión Sandra, Local 2 #05) | Estudio de Reformer de madera noble. |
+| **Detalle 04 (Bienvenida)** | `src/assets/img/local/local-lounge-720.webp` | Fotografía profesional propia (sesión Sandra, Local 2 #09) | Zona de recepción y espera serena. |
+
+## Equipo — Personas que acompañan procesos (`src/pages/conocenos/equipo.html`, 2026-09-16)
+
+Documentación de los activos visuales utilizados en la página "Equipo". Siguiendo las directrices del proyecto y del cliente, se han utilizado **fotografías reales ya presentes en el proyecto** para los perfiles principales de los miembros del equipo (`src/assets/img/team/`), y se han incorporado **fotografías de stock temporales en alta resolución** en `src/assets/img/stock/team/` como solución provisional para el Hero, el bloque intermedio de acompañamiento y como variante alternativa para los perfiles, preparadas para su sustitución futura directa cuando se realice el reportaje fotográfico definitivo del equipo.
+
+| Sección | Archivo servido | Tipo / Origen | Descripción de la escena |
+| :--- | :--- | :--- | :--- |
+| **Hero de Equipo** | `src/assets/img/stock/team/hero-equipo.webp` / `-720.webp` | Stock provisional generado para Physio Wellness | Conversación cercana entre profesionales de salud en sala diáfana y luminosa con vistas al entorno mediterráneo de Sitges, madera y plantas. |
+| **Perfil 01: Marçal (Real)** | `src/assets/img/team/marcal-ramirez.jpg` | Fotografía real del centro (Home) | Retrato real de Marçal Ramirez Roig con camiseta corporativa de Physio Wellness. |
+| **Perfil 01: Marçal (Stock alternativo)** | `src/assets/img/stock/team/stock-marcal.webp` / `-720.webp` | Stock provisional alternativo | Retrato editorial cálido de fisioterapeuta masculino en entorno clínico con madera y vegetación. |
+| **Perfil 02: Abril (Real)** | `src/assets/img/team/abril-rodriguez.jpg` | Fotografía real del centro (Home) | Retrato real de Abril Rodríguez, recepción y coordinación en Physio Wellness. |
+| **Perfil 02: Abril (Stock alternativo)** | `src/assets/img/stock/team/stock-abril.webp` / `-720.webp` | Stock provisional alternativo | Retrato editorial cálido y acogedor de coordinadora/recepcionista en espacio de bienvenida sereno. |
+| **Bloque Intermedio Humano** | `src/assets/img/stock/team/intermedio-equipo.webp` / `-720.webp` | Stock provisional generado para Physio Wellness | Valoración y acompañamiento de movimiento guiado con fisioterapeuta y paciente, luz cálida y materiales nobles. |
+| **Puerta: El centro** | `src/assets/img/local/local-fisio-natural-720.webp` | Fotografía profesional propia (sesión Sandra, #26) | Cabina de fisioterapia con luz natural exterior. |
+| **Puerta: Primera visita** | `src/assets/img/local/local-lounge-720.webp` | Fotografía profesional propia (sesión Sandra, Local 2 #09) | Zona de bienvenida y lounge de recepción del centro. |
+
+## Primera visita — Convertir la incertidumbre en claridad (`src/pages/conocenos/primera-visita.html`, 2026-09-16)
+
+Documentación de los activos visuales utilizados en la nueva página "Primera visita / Primera sesión". Siguiendo las directrices del proyecto y las instrucciones del usuario, se ha priorizado el uso exclusivo de **fotografía real del centro** (sesión Sandra, Sitges) y **fotografía real de sesiones aportada por el cliente** (`disciplines/`), sin recurrir a bancos de stock genéricos ni caras ficticias. Cada imagen ha sido seleccionada para reforzar la empatía, la escucha activa y la reducción de la incertidumbre:
+
+| Sección | Archivo servido | Tipo / Origen | Descripción de la escena |
+| :--- | :--- | :--- | :--- |
+| **Hero de Primera Visita** | `src/assets/img/disciplines/fisio/3618ab1e-11e0-412a-9ad7-bea6708c17f4-1440.webp` / `-720.webp` | Fotografía real de disciplina aportada por el cliente | Conversación clínica cercana y escucha activa sentados en consulta luminosa. Transmite "Primero me van a escuchar". |
+| **Recorrido: Fase 01 (Nos conocemos)** | `src/assets/img/disciplines/fisio/3618ab1e-11e0-412a-9ad7-bea6708c17f4-1440.webp` / `-720.webp` | Fotografía real de disciplina aportada por el cliente | Escucha activa, anamnesis y diálogo clínico sin prisas. |
+| **Recorrido: Fase 02 (Valoración física)** | `src/assets/img/disciplines/fisio/ae26bb46-82b0-4914-8159-5d01e68f3f81-1440.webp` / `-720.webp` | Fotografía real de disciplina aportada por el cliente | Exploración biomecánica articular y test ortopédicos precisos. |
+| **Recorrido: Fase 03 (Movimiento activo)** | `src/assets/img/disciplines/fisio/5af02bda-9e2c-442f-af09-c3c4f8285313-1440.webp` / `-720.webp` | Fotografía real de disciplina aportada por el cliente | Observación de patrones funcionales, control motor y compensaciones en movimiento. |
+| **Recorrido: Fase 04 (Primera intervención)** | `src/assets/img/local/local-fisio-1440.webp` / `-720.webp` | Fotografía profesional propia del centro (sesión Sandra, #07) | Cabina de fisioterapia con camilla articulada y luz natural para terapia manual. |
+| **Recorrido: Fase 05 (Punto de partida)** | `src/assets/img/local/local-lounge-1440.webp` / `-720.webp` | Fotografía profesional propia del centro (sesión Sandra, Local 2 #09) | Espacio sereno de recepción para explicar el plan y pautas con tranquilidad. |
+| **En la práctica (Qué pasa realmente)** | `src/assets/img/disciplines/fisio/0df88b9f-0f58-4dbf-b5cc-001eb67eb239-1440.webp` / `-720.webp` | Fotografía real de disciplina aportada por el cliente | Movilización suave y terapia manual adaptada a la sensibilidad del paciente. |
+| **Puerta Conócenos: Equipo** | `src/assets/img/stock/team/hero-equipo-720.webp` | Fotografía de equipo (stock provisional del universo Conócenos) | Conexión con la página de Equipo (`equipo.html`). |
+| **Puerta Conócenos: El centro** | `src/assets/img/local/local-fisio-natural-720.webp` | Fotografía profesional propia del centro (sesión Sandra, #26) | Conexión con la página de El centro (`el-centro.html`). |
+
+
+
+
 
 

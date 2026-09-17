@@ -1581,6 +1581,69 @@ var prefersReducedMotion = window.matchMedia && window.matchMedia('(prefers-redu
   }catch(e){ console.warn('realButtonAccordions', e); }
 })();
 
+/* ---------- Explorador de síntomas↔ámbitos (Fisioterapia) ----------
+   .symptom-explorer tiene dos listas independientes (síntomas / ámbitos)
+   con el mismo patrón <button aria-expanded aria-controls> + panel
+   [hidden] que realButtonAccordions, más dos comportamientos propios:
+   1) dentro de cada lista solo una fila permanece abierta a la vez
+      (abrir una cierra la que estuviera abierta en esa misma lista);
+   2) al abrir una fila se resalta (.is-paired) la fila del mismo índice
+      en la otra lista, sin abrir su panel — la relación ya está fijada
+      por data-index (mismos seis pares validados, ningún dato nuevo). */
+(function symptomExplorer(){
+  try{
+    var root = document.querySelector('.symptom-explorer');
+    if(!root) return;
+    var buttons = root.querySelectorAll('.symptom-explorer__title');
+    if(!buttons.length) return;
+
+    function closeRow(btn){
+      btn.setAttribute('aria-expanded','false');
+      var panel = document.getElementById(btn.getAttribute('aria-controls'));
+      if(panel) panel.hidden = true;
+      var row = btn.closest('.symptom-explorer__row');
+      if(row) row.classList.remove('is-open');
+    }
+
+    function updateHasActive(){
+      var anyOpen = root.querySelector('.symptom-explorer__title[aria-expanded="true"]');
+      root.classList.toggle('has-active', !!anyOpen);
+    }
+
+    buttons.forEach(function(btn){
+      btn.addEventListener('click', function(){
+        var row = btn.closest('.symptom-explorer__row');
+        var list = btn.closest('.symptom-explorer__list');
+        var panel = document.getElementById(btn.getAttribute('aria-controls'));
+        var wasOpen = btn.getAttribute('aria-expanded') === 'true';
+
+        list.querySelectorAll('.symptom-explorer__title[aria-expanded="true"]').forEach(function(openBtn){
+          if(openBtn !== btn) closeRow(openBtn);
+        });
+
+        root.querySelectorAll('.symptom-explorer__row.is-paired').forEach(function(r){
+          r.classList.remove('is-paired');
+        });
+
+        if(wasOpen){
+          closeRow(btn);
+        }else{
+          btn.setAttribute('aria-expanded','true');
+          if(panel) panel.hidden = false;
+          if(row) row.classList.add('is-open');
+          if(row && row.dataset.index != null){
+            var otherListSelector = list.classList.contains('symptom-explorer__list--symptoms')
+              ? '.symptom-explorer__list--ambitos' : '.symptom-explorer__list--symptoms';
+            var otherRow = root.querySelector(otherListSelector + ' [data-index="' + row.dataset.index + '"]');
+            if(otherRow) otherRow.classList.add('is-paired');
+          }
+        }
+        updateHasActive();
+      });
+    });
+  }catch(e){ console.warn('symptomExplorer', e); }
+})();
+
 /* ---------- Carrusel de áreas (Servicios) ----------
    .area-carousel__card ya trae su composición (tamaño, desplazamiento,
    opacidad, orden) resuelta por CSS a partir de data-position (ver
@@ -2145,11 +2208,11 @@ var prefersReducedMotion = window.matchMedia && window.matchMedia('(prefers-redu
     var currentIndex = -1;
 
     /* Recorrido de scroll por transición de fase, en fracción de la altura
-       visible del escenario. Deliberadamente más corto que umbralSequence:
-       un panel con texto + foto real ya comunica progresión por sí mismo y
-       no necesita tanto "aire" como la escena abstracta de luz de El
-       umbral. */
-    var getStepFraction = function(){ return .62; };
+       visible del escenario. Alineado con el valor de escritorio ya
+       calibrado y auditado en umbralSequence (Home, §6 auditoría) en vez
+       de un valor propio más corto: cada fase necesita tiempo de lectura
+       real (texto + foto), no solo de progresión visual. */
+    var getStepFraction = function(){ return .58; };
 
     var isReducedMotion = function(){
       return (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) || prefersReducedMotion;
@@ -2185,8 +2248,10 @@ var prefersReducedMotion = window.matchMedia && window.matchMedia('(prefers-redu
         var absDist = Math.abs(dist);
         var op = 0;
         var yShift = 0;
-        if(absDist < 0.85){
-          op = Math.max(0, Math.cos((absDist / 0.85) * Math.PI * 0.5));
+        if(absDist < 0.75){
+          /* Misma ventana de fundido (0.75) que umbralSequence: fundido
+             más gradual, evita el efecto de "corte" entre fases. */
+          op = Math.max(0, Math.cos((absDist / 0.75) * Math.PI * 0.5));
           yShift = dist * 22;
         }
         var isVis = op > 0.01;
@@ -2288,7 +2353,13 @@ var prefersReducedMotion = window.matchMedia && window.matchMedia('(prefers-redu
 
       detachFallbackObserver();
       headerOffset = header.offsetHeight + stickyNav.offsetHeight;
-      var innerHeight = Math.max(window.innerHeight - headerOffset, 1);
+      /* Se limita a 780px: altura suficiente para el contenido más alto de
+         las 5 fases (~parece), pero evita que en monitores altos el
+         escenario fijado (y el scroll final de "desenganche" tras 05
+         Evolucionar, que equivale a su propia altura) crezca más de lo
+         que el contenido real necesita — la causa del hueco vacío al
+         cerrar la quinta fase (Fase 1, punto 5). */
+      var innerHeight = Math.min(Math.max(window.innerHeight - headerOffset, 1), 780);
       var stepDistance = innerHeight * getStepFraction();
       maxScroll = stepDistance * (scenes.length - 1);
 

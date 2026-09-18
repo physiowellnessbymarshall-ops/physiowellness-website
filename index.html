@@ -3,159 +3,1105 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Fisioterapia, fuerza y Pilates en Sitges | Physio Wellness</title>
-<meta name="description" content="Fisioterapia, recuperación, entrenamiento de fuerza y Pilates Reformer en Sitges con un plan individual adaptado a tu punto de partida.">
+<title>Fisioterapia, fuerza, Pilates y stretching en Sitges | Physio Wellness</title>
+<meta name="description" content="Fisioterapia, bienestar, entrenamiento de fuerza, Pilates Reformer y stretching en Sitges con un plan individual adaptado a tu punto de partida.">
 <link rel="canonical" href="https://physiowellness.es/es/">
+<link rel="alternate" hreflang="es" href="https://physiowellness.es/es/">
+<link rel="alternate" hreflang="ca" href="https://physiowellness.es/ca/">
+<link rel="alternate" hreflang="en" href="https://physiowellness.es/en/">
+<link rel="icon" href="src/assets/img/logo-icon-black.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Jost:wght@400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="src/css/styles.css?v=2">
 </head>
-<body>
+<body class="page-home">
+
 <a class="skip-link" href="#main">Saltar al contenido</a>
+
 <header class="site-header" id="site-header">
   <div class="container site-header__bar">
     <a class="brand" href="index.html" aria-label="Physio Wellness - Inicio">
-      <img src="logo.png" alt="Physio Wellness" width="100" height="100">
+      <img src="src/assets/img/logo-icon-white.png" alt="" width="248" height="286">
     </a>
+
     <nav class="main-nav" aria-label="Navegación principal">
-      <a href="#servicios">Servicios</a>
-      <a href="#metodo">El método</a>
-      <a href="#equipo">Equipo</a>
-      <a href="#contacto">Contacto</a>
+      <div class="nav-item" data-disclosure-group="nav">
+        <button class="nav-item__btn" type="button" data-disclosure-toggle aria-expanded="false" aria-controls="nav-servicios">
+          Servicios
+          <svg class="nav-item__chevron" width="9" height="6" viewBox="0 0 9 6" fill="none" aria-hidden="true"><path d="M1 1l3.5 3.5L8 1" stroke="currentColor" stroke-width="1.3" stroke-linecap="square"/></svg>
+        </button>
+        <div class="nav-dropdown" id="nav-servicios" hidden>
+          <a href="src/pages/servicios/physiotherapy.html">Fisioterapia</a>
+          <a href="src/pages/servicios/wellness.html">Bienestar</a>
+          <a href="src/pages/servicios/strength.html">Fuerza</a>
+          <a href="src/pages/servicios/pilates.html">Pilates</a>
+          <a href="src/pages/servicios/stretching.html">Stretching</a>
+          <a href="src/pages/servicios/fisioterapia-a-domicilio.html">Fisioterapia a domicilio</a>
+          <a class="nav-dropdown__all" href="src/pages/servicios.html">Ver todos los servicios</a>
+        </div>
+      </div>
+
+      <a href="src/pages/metodo.html">El Método</a>
+
+      <div class="nav-item" data-disclosure-group="nav">
+        <button class="nav-item__btn" type="button" data-disclosure-toggle aria-expanded="false" aria-controls="nav-conocenos">
+          Conócenos
+          <svg class="nav-item__chevron" width="9" height="6" viewBox="0 0 9 6" fill="none" aria-hidden="true"><path d="M1 1l3.5 3.5L8 1" stroke="currentColor" stroke-width="1.3" stroke-linecap="square"/></svg>
+        </button>
+        <div class="nav-dropdown" id="nav-conocenos" hidden>
+          <a href="src/pages/conocenos/equipo.html">Equipo</a>
+          <a href="src/pages/conocenos/el-centro.html">El centro</a>
+          <a href="src/pages/conocenos/primera-visita.html">Primera visita</a>
+        </div>
+      </div>
+
+      <a href="src/pages/tarifas.html">Tarifas</a>
+      <a href="src/pages/contacto.html">Contacto</a>
     </nav>
+
     <div class="header-actions">
-      <button class="btn btn--primary" type="button">Reservar cita</button>
+      <nav class="lang-switch" aria-label="Selector de idioma">
+        <a href="index.html" aria-current="true">ES</a><span>/</span>
+        <a href="ca/index.html">CA</a><span>/</span>
+        <a href="en/index.html">EN</a>
+      </nav>
+
+      <div class="booking">
+        <button class="btn btn--primary btn--sm booking__btn" type="button" data-disclosure-toggle aria-expanded="false" aria-controls="booking-panel">
+          Reservar cita
+          <svg class="nav-item__chevron" width="9" height="6" viewBox="0 0 9 6" fill="none" aria-hidden="true"><path d="M1 1l3.5 3.5L8 1" stroke="currentColor" stroke-width="1.3" stroke-linecap="square"/></svg>
+        </button>
+
+        <div class="booking-panel" id="booking-panel" aria-labelledby="booking-panel-title" hidden>
+          <div class="booking-panel__head">
+            <p class="booking-panel__title" id="booking-panel-title">Reservar cita</p>
+            <button class="booking-panel__close" type="button" data-disclosure-close aria-label="Cerrar el panel de reserva">
+              <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M1 1l12 12M13 1L1 13" stroke="currentColor" stroke-width="1.5"/></svg>
+            </button>
+          </div>
+
+          <div class="booking-panel__list">
+            <a href="https://www.docfav.com/portal/physio-wellness-by-marshall" target="_blank" rel="noopener">Primera consulta presencial</a>
+            <a href="https://www.docfav.com/portal/physio-wellness-by-marshall" target="_blank" rel="noopener">Primera consulta a domicilio</a>
+            <a href="https://www.docfav.com/portal/physio-wellness-by-marshall" target="_blank" rel="noopener">Seguimiento de 30 minutos</a>
+            <a href="https://www.docfav.com/portal/physio-wellness-by-marshall" target="_blank" rel="noopener">Seguimiento de 50 minutos</a>
+            <a href="https://www.docfav.com/portal/physio-wellness-by-marshall" target="_blank" rel="noopener">Seguimiento a domicilio de 50 minutos</a>
+          </div>
+
+          <a class="booking-panel__help" href="https://wa.me/34644678344" target="_blank" rel="noopener">
+            ¿No sabes qué reservar? Escríbenos por WhatsApp
+          </a>
+        </div>
+      </div>
+
+      <button class="menu-toggle" id="menu-toggle" type="button" aria-expanded="false" aria-controls="mobile-menu" aria-label="Abrir menú">
+        <svg width="22" height="16" viewBox="0 0 22 16" fill="none" aria-hidden="true"><path d="M0 1h22M0 8h22M0 15h22" stroke="currentColor" stroke-width="1.5"/></svg>
+      </button>
     </div>
   </div>
 </header>
 
+<div class="mobile-menu" id="mobile-menu">
+  <div class="mobile-menu__top">
+    <a class="brand" href="index.html" aria-label="Physio Wellness - Inicio">
+      <img src="src/assets/img/logo-icon-white.png" alt="" width="248" height="286">
+    </a>
+    <button class="mobile-menu__close" id="menu-close" type="button" aria-label="Cerrar menú">
+      <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true"><path d="M1 1l16 16M17 1L1 17" stroke="currentColor" stroke-width="1.5"/></svg>
+    </button>
+  </div>
+
+  <nav class="mobile-nav" aria-label="Navegación móvil">
+    <div class="m-acc" data-disclosure-group="mobile">
+      <button class="m-acc__btn" type="button" data-disclosure-toggle aria-expanded="false" aria-controls="m-servicios">
+        Servicios
+        <svg class="m-acc__chevron" width="14" height="9" viewBox="0 0 14 9" fill="none" aria-hidden="true"><path d="M1 1l6 6 6-6" stroke="currentColor" stroke-width="1.4" stroke-linecap="square"/></svg>
+      </button>
+      <div class="m-acc__panel" id="m-servicios" hidden>
+        <a href="src/pages/servicios/physiotherapy.html">Fisioterapia</a>
+        <a href="src/pages/servicios/wellness.html">Bienestar</a>
+        <a href="src/pages/servicios/strength.html">Fuerza</a>
+        <a href="src/pages/servicios/pilates.html">Pilates</a>
+        <a href="src/pages/servicios/stretching.html">Stretching</a>
+        <a href="src/pages/servicios/fisioterapia-a-domicilio.html">Fisioterapia a domicilio</a>
+        <a class="m-acc__all" href="src/pages/servicios.html">Ver todos los servicios</a>
+      </div>
+    </div>
+
+    <a class="mobile-nav__link" href="src/pages/metodo.html">El Método</a>
+
+    <div class="m-acc" data-disclosure-group="mobile">
+      <button class="m-acc__btn" type="button" data-disclosure-toggle aria-expanded="false" aria-controls="m-conocenos">
+        Conócenos
+        <svg class="m-acc__chevron" width="14" height="9" viewBox="0 0 14 9" fill="none" aria-hidden="true"><path d="M1 1l6 6 6-6" stroke="currentColor" stroke-width="1.4" stroke-linecap="square"/></svg>
+      </button>
+      <div class="m-acc__panel" id="m-conocenos" hidden>
+        <a href="src/pages/conocenos/equipo.html">Equipo</a>
+        <a href="src/pages/conocenos/el-centro.html">El centro</a>
+        <a href="src/pages/conocenos/primera-visita.html">Primera visita</a>
+      </div>
+    </div>
+
+    <a class="mobile-nav__link" href="src/pages/tarifas.html">Tarifas</a>
+    <a class="mobile-nav__link" href="src/pages/contacto.html">Contacto</a>
+  </nav>
+
+  <div class="mobile-menu__bottom">
+    <nav class="lang-switch lang-switch--in-menu" aria-label="Selector de idioma">
+      <a href="index.html" aria-current="true">ES</a><span>/</span>
+      <a href="ca/index.html">CA</a><span>/</span>
+      <a href="en/index.html">EN</a>
+    </nav>
+  </div>
+</div>
+
+<div class="book-bar">
+  <button class="btn btn--primary book-bar__btn" type="button" data-disclosure-toggle aria-expanded="false" aria-controls="booking-panel">
+    Reservar cita
+  </button>
+</div>
+
 <main id="main">
+
   <section class="hero" id="hero">
-    <div class="hero__content">
-      <h1 class="hero__title">
-        <span class="reveal-line"><span>Recupera mejor.</span></span>
-        <span class="reveal-line"><span>Muévete mejor.</span></span>
-        <span class="reveal-line"><span>Rinde mejor.</span></span>
+    <div class="hero__media">
+      <img src="src/assets/img/hero-clinic.webp" alt="Sala de tratamiento de Physio Wellness by Marshall, en Sitges, con camilla y luz natural.">
+    </div>
+    <div class="hero__scrim" aria-hidden="true"></div>
+
+    <div class="container hero__content">
+      <p class="hero__eyebrow eyebrow eyebrow--on-dark">Fisioterapia, recuperación y movimiento en Sitges.</p>
+
+      <h1 class="hero__title display">
+        <span class="reveal-line" style="--i:0"><span>Recupera mejor</span></span>
+        <span class="reveal-line" style="--i:1"><span>Muévete mejor</span></span>
+        <span class="reveal-line" style="--i:2"><span>Rinde mejor</span></span>
       </h1>
-      <p class="hero__lead">Fisioterapia, recuperación, fuerza y Pilates conectados bajo un método que evoluciona contigo.</p>
+
+      <p class="hero__lead">Fisioterapia, recuperación, fuerza, Pilates y stretching conectados bajo un método que evoluciona contigo.</p>
+
       <div class="hero__actions">
-        <a class="btn btn--primary" href="#">Reservar primera consulta</a>
-        <a class="btn btn--outline" href="#servicios">Descubrir qué necesito</a>
+        <a class="btn btn--primary" href="https://www.docfav.com/portal/physio-wellness-by-marshall" target="_blank" rel="noopener">Reservar primera visita</a>
+        <a class="btn btn--outline" href="#orientacion">Descubrir qué necesito</a>
       </div>
     </div>
   </section>
 
-  <section class="trust" id="presentacion">
+  <!-- ============ Franja de confianza ============ -->
+  <section class="trust" id="presentacion" aria-label="Datos del centro">
     <ul class="container trust__list" data-reveal>
-      <li class="trust__item">Más de 10 años de experiencia</li>
-      <li class="trust__item">Más de 1.500 pacientes acompañados</li>
-      <li class="trust__item">Atención individual</li>
-      <li class="trust__item">Centro en Sitges</li>
+      <li class="trust__item">
+        <span class="trust__value" data-count-to="10" data-count-suffix="+" aria-hidden="true">0</span>
+        <span class="sr-only">Más de 10 años de experiencia</span>
+        <span class="trust__label" aria-hidden="true">años de experiencia</span>
+      </li>
+      <li class="trust__item">
+        <span class="trust__value" data-count-to="1500" data-count-suffix="+" aria-hidden="true">0</span>
+        <span class="sr-only">Más de 1.500 pacientes acompañados</span>
+        <span class="trust__label" aria-hidden="true">pacientes acompañados</span>
+      </li>
+      <li class="trust__item">
+        <span class="trust__value">Atención</span>
+        <span class="trust__label">individual</span>
+      </li>
+      <li class="trust__item">
+        <span class="trust__value">Sitges</span>
+        <span class="trust__label">centro físico</span>
+      </li>
     </ul>
   </section>
 
-  <section class="orient" id="servicios">
+  <!-- ============ Orientación: "¿qué necesitas?" ============ -->
+  <section class="orient" id="orientacion">
     <div class="container">
       <div class="orient__head" data-reveal>
-        <h2 class="section-heading">No siempre es fácil saber por dónde empezar.</h2>
-        <p class="section-lead">Puedes llegar con dolor, con cansancio, con ganas de recuperar fuerza o simplemente con la sensación de que tu cuerpo necesita moverse mejor.</p>
+        <h2 class="section-heading">No siempre es fácil saber por dónde empezar</h2>
+        <p class="section-lead orient__lead">Puedes llegar con dolor, con cansancio, con ganas de recuperar fuerza o simplemente con la sensación de que tu cuerpo necesita moverse mejor. Empecemos por lo que necesitas hoy.</p>
       </div>
+
       <div class="orient__list" data-reveal>
-        <a class="orient__item" href="#">
+        <a class="orient__item" href="src/pages/servicios/physiotherapy.html">
           <span class="orient__item-text">Tengo dolor, una lesión o necesito recuperar una función.</span>
-          <span class="orient__item-cta">Fisioterapia →</span>
+          <span class="orient__item-cta">Fisioterapia <svg width="14" height="10" viewBox="0 0 14 10" fill="none" aria-hidden="true"><path d="M1 5h12M8 1l4 4-4 4" stroke="currentColor" stroke-width="1.4"/></svg></span>
         </a>
-        <a class="orient__item" href="#">
+        <a class="orient__item" href="src/pages/servicios/wellness.html">
           <span class="orient__item-text">Quiero cuidar el cuerpo, recuperarme del esfuerzo o reducir la fatiga.</span>
-          <span class="orient__item-cta">Bienestar →</span>
+          <span class="orient__item-cta">Bienestar <svg width="14" height="10" viewBox="0 0 14 10" fill="none" aria-hidden="true"><path d="M1 5h12M8 1l4 4-4 4" stroke="currentColor" stroke-width="1.4"/></svg></span>
         </a>
-        <a class="orient__item" href="#">
+        <a class="orient__item" href="src/pages/servicios/strength.html">
           <span class="orient__item-text">Quiero ganar fuerza, mejorar mi capacidad o rendir mejor.</span>
-          <span class="orient__item-cta">Fuerza →</span>
+          <span class="orient__item-cta">Fuerza <svg width="14" height="10" viewBox="0 0 14 10" fill="none" aria-hidden="true"><path d="M1 5h12M8 1l4 4-4 4" stroke="currentColor" stroke-width="1.4"/></svg></span>
         </a>
-        <a class="orient__item" href="#">
+        <a class="orient__item" href="src/pages/servicios/pilates.html">
           <span class="orient__item-text">Quiero moverme con más control, movilidad y estabilidad.</span>
-          <span class="orient__item-cta">Pilates →</span>
+          <span class="orient__item-cta">Pilates <svg width="14" height="10" viewBox="0 0 14 10" fill="none" aria-hidden="true"><path d="M1 5h12M8 1l4 4-4 4" stroke="currentColor" stroke-width="1.4"/></svg></span>
+        </a>
+        <a class="orient__item" href="src/pages/servicios/stretching.html">
+          <span class="orient__item-text">Quiero ganar flexibilidad, soltar tensión y moverme con más amplitud.</span>
+          <span class="orient__item-cta">Stretching <svg width="14" height="10" viewBox="0 0 14 10" fill="none" aria-hidden="true"><path d="M1 5h12M8 1l4 4-4 4" stroke="currentColor" stroke-width="1.4"/></svg></span>
         </a>
       </div>
+
+      <p class="orient__note" data-reveal>¿No sabes cuál encaja contigo? Te orientamos en la primera visita.</p>
     </div>
   </section>
 
-  <section class="method" id="metodo">
+  <!-- ============ Servicios ============
+       El escenario se fija en pantallas de escritorio (≥1100px) mientras el
+       scroll vertical mueve el riel horizontalmente (ver servicesPinScroll()
+       en main.js). .services__pin-wrap es el espaciador cuya altura fija la
+       duración del efecto; .services__pin-inner es lo que se queda pegado
+       (position:sticky, gestionado en CSS). Sin JavaScript, o por debajo de
+       1100px, o con motion reducido, no pasa nada de esto: el riel sigue
+       siendo scroll horizontal nativo (mismo patrón que
+       .google-reviews__viewport), así que la sección funciona completa
+       sin JS. -->
+  <section class="services" id="areas">
+    <div class="services__pin-wrap" data-services-pin>
+      <div class="services__pin-inner">
+        <div class="services__head-row container" data-reveal>
+          <div class="services__head">
+            <p class="eyebrow section-eyebrow eyebrow--on-dark">Servicios</p>
+            <h2 class="section-heading">Cinco formas de cuidarte</h2>
+          </div>
+
+          <!-- Indicador de progreso y flechas: el indicador se actualiza con
+               el avance del scroll fijado y las flechas desplazan la página
+               al servicio anterior/siguiente (ver servicesPinScroll() en
+               main.js). Son controles reales: navegables por teclado y con
+               estado disabled sincronizado con el extremo del recorrido. -->
+          <div class="services__nav">
+            <p class="services__progress" data-services-progress><span class="services__progress-current">01</span> / <span class="services__progress-total">05</span></p>
+            <div class="services__arrows" data-services-arrows>
+              <button class="services__arrow services__arrow--prev" type="button" aria-label="Servicio anterior" data-services-prev disabled>
+                <svg width="16" height="12" viewBox="0 0 16 12" fill="none" aria-hidden="true"><path d="M15 6H1M1 6l5-5M1 6l5 5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </button>
+              <button class="services__arrow services__arrow--next" type="button" aria-label="Servicio siguiente" data-services-next>
+                <svg width="16" height="12" viewBox="0 0 16 12" fill="none" aria-hidden="true"><path d="M1 6h14M10 1l5 5-5 5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div class="services__stage">
+          <!-- Viewport del carrusel con las cinco formas principales de cuidarte -->
+          <div class="services__viewport" data-services-viewport>
+            <div class="services__grid" data-services-track>
+              <article class="service-panel" id="physiotherapy" data-reveal style="--i:0">
+                <div class="service-panel__media">
+                  <img class="service-panel__img service-panel__img--physio" src="src/assets/img/stock/area-physio-1440.webp" srcset="src/assets/img/stock/area-physio-720.webp 720w, src/assets/img/stock/area-physio-1440.webp 1440w" sizes="(min-width: 1100px) 25vw, (min-width: 720px) 50vw, 100vw" alt="" loading="lazy" width="1440" height="960">
+                </div>
+                <div class="service-panel__body">
+                  <span class="service-panel__num">01</span>
+                  <h3 class="service-panel__title">Fisioterapia</h3>
+                  <p class="service-panel__hook">Recupera movimiento y reduce el dolor</p>
+                  <ul class="service-panel__benefits">
+                    <li>Tratar el dolor o una lesión</li>
+                    <li>Recuperar una función</li>
+                    <li>Volver a moverte mejor</li>
+                  </ul>
+                  <a class="service-panel__cta" href="src/pages/servicios/physiotherapy.html">Descubrir Fisioterapia <svg width="14" height="10" viewBox="0 0 14 10" fill="none" aria-hidden="true"><path d="M1 5h12M8 1l4 4-4 4" stroke="currentColor" stroke-width="1.4"/></svg></a>
+                </div>
+              </article>
+
+              <article class="service-panel" id="wellness" data-reveal style="--i:1">
+                <div class="service-panel__media">
+                  <img class="service-panel__img service-panel__img--wellness" src="src/assets/img/stock/area-wellness-1440.webp" srcset="src/assets/img/stock/area-wellness-720.webp 720w, src/assets/img/stock/area-wellness-1440.webp 1440w" sizes="(min-width: 1100px) 25vw, (min-width: 720px) 50vw, 100vw" alt="" loading="lazy" width="1440" height="960">
+                </div>
+                <div class="service-panel__body">
+                  <span class="service-panel__num">02</span>
+                  <h3 class="service-panel__title">Bienestar</h3>
+                  <p class="service-panel__hook">Libera tensión y recupera el equilibrio</p>
+                  <ul class="service-panel__benefits">
+                    <li>Cuidar el cuerpo</li>
+                    <li>Recuperarte del esfuerzo</li>
+                    <li>Reducir la fatiga</li>
+                  </ul>
+                  <a class="service-panel__cta" href="src/pages/servicios/wellness.html">Descubrir Bienestar <svg width="14" height="10" viewBox="0 0 14 10" fill="none" aria-hidden="true"><path d="M1 5h12M8 1l4 4-4 4" stroke="currentColor" stroke-width="1.4"/></svg></a>
+                </div>
+              </article>
+
+              <article class="service-panel" id="strength" data-reveal style="--i:2">
+                <div class="service-panel__media">
+                  <img class="service-panel__img service-panel__img--strength" src="src/assets/img/stock/area-strength-1440.webp" srcset="src/assets/img/stock/area-strength-720.webp 720w, src/assets/img/stock/area-strength-1440.webp 1440w" sizes="(min-width: 1100px) 25vw, (min-width: 720px) 50vw, 100vw" alt="" loading="lazy" width="1440" height="810">
+                </div>
+                <div class="service-panel__body">
+                  <span class="service-panel__num">03</span>
+                  <h3 class="service-panel__title">Fuerza</h3>
+                  <p class="service-panel__hook">Gana capacidad, confianza y autonomía</p>
+                  <ul class="service-panel__benefits">
+                    <li>Desarrollar capacidad física</li>
+                    <li>Ganar confianza</li>
+                    <li>Mejorar el rendimiento</li>
+                  </ul>
+                  <a class="service-panel__cta" href="src/pages/servicios/strength.html">Descubrir Fuerza <svg width="14" height="10" viewBox="0 0 14 10" fill="none" aria-hidden="true"><path d="M1 5h12M8 1l4 4-4 4" stroke="currentColor" stroke-width="1.4"/></svg></a>
+                </div>
+              </article>
+
+              <article class="service-panel" id="pilates" data-reveal style="--i:3">
+                <div class="service-panel__media">
+                  <img class="service-panel__img service-panel__img--pilates" src="src/assets/img/stock/area-pilates-1440.webp" srcset="src/assets/img/stock/area-pilates-720.webp 720w, src/assets/img/stock/area-pilates-1440.webp 1440w" sizes="(min-width: 1100px) 25vw, (min-width: 720px) 50vw, 100vw" alt="" loading="lazy" width="1440" height="756">
+                </div>
+                <div class="service-panel__body">
+                  <span class="service-panel__num">04</span>
+                  <h3 class="service-panel__title">Pilates Reformer</h3>
+                  <p class="service-panel__hook">Mejora el control, la movilidad y la fuerza</p>
+                  <ul class="service-panel__benefits">
+                    <li>Control corporal</li>
+                    <li>Movilidad y estabilidad</li>
+                    <li>Alineación postural</li>
+                  </ul>
+                  <a class="service-panel__cta" href="src/pages/servicios/pilates.html">Descubrir Pilates Reformer <svg width="14" height="10" viewBox="0 0 14 10" fill="none" aria-hidden="true"><path d="M1 5h12M8 1l4 4-4 4" stroke="currentColor" stroke-width="1.4"/></svg></a>
+                </div>
+              </article>
+
+              <article class="service-panel" id="stretching" data-reveal style="--i:4">
+                <div class="service-panel__media">
+                  <img class="service-panel__img service-panel__img--stretching" src="src/assets/img/stock/stretching-1440.webp" srcset="src/assets/img/stock/stretching-720.webp 720w, src/assets/img/stock/stretching-1440.webp 1440w" sizes="(min-width: 1100px) 25vw, (min-width: 720px) 50vw, 100vw" alt="" loading="lazy" width="1440" height="1799">
+                </div>
+                <div class="service-panel__body">
+                  <span class="service-panel__num">05</span>
+                  <h3 class="service-panel__title">Stretching</h3>
+                  <p class="service-panel__hook">Gana flexibilidad y amplitud de movimiento</p>
+                  <ul class="service-panel__benefits">
+                    <li>Ganar flexibilidad</li>
+                    <li>Soltar tensión muscular</li>
+                    <li>Mejorar la amplitud de movimiento</li>
+                  </ul>
+                  <a class="service-panel__cta" href="src/pages/servicios/stretching.html">Descubrir Stretching <svg width="14" height="10" viewBox="0 0 14 10" fill="none" aria-hidden="true"><path d="M1 5h12M8 1l4 4-4 4" stroke="currentColor" stroke-width="1.4"/></svg></a>
+                </div>
+              </article>
+            </div>
+          </div>
+
+          <!-- Bloque lateral complementario: Fisioterapia a domicilio.
+               Estructurado como aside complementario asociado a la sección,
+               con identidad editorial propia, sin numeración y en el mismo universo visual. -->
+          <aside class="services__aside" aria-label="Servicio complementario: Fisioterapia a domicilio" data-reveal>
+            <article class="service-complementary" id="domicilio">
+              <div class="service-complementary__media">
+                <img class="service-complementary__img" src="src/assets/img/stock/domicilio-visita-1122.webp" srcset="src/assets/img/stock/domicilio-visita-720.webp 720w, src/assets/img/stock/domicilio-visita-1122.webp 1122w" sizes="(min-width: 1100px) 22vw, (min-width: 720px) 50vw, 100vw" alt="Fisioterapia a domicilio" loading="lazy" width="1122" height="1402">
+              </div>
+              <div class="service-complementary__body">
+                <div class="service-complementary__tag">
+                  <span class="service-complementary__badge">Servicio complementario</span>
+                </div>
+                <h3 class="service-complementary__title">Fisioterapia a domicilio</h3>
+                <p class="service-complementary__hook">Llevamos el tratamiento a tu casa para que puedas continuar tu recuperación con la misma atención y seguimiento del centro.</p>
+                <ul class="service-complementary__benefits">
+                  <li>Atención personalizada en casa</li>
+                  <li>Tratamiento y seguimiento</li>
+                  <li>Comodidad y continuidad</li>
+                </ul>
+                <a class="service-complementary__cta" href="src/pages/servicios/fisioterapia-a-domicilio.html">Descubrir Fisioterapia a domicilio <svg width="14" height="10" viewBox="0 0 14 10" fill="none" aria-hidden="true"><path d="M1 5h12M8 1l4 4-4 4" stroke="currentColor" stroke-width="1.4"/></svg></a>
+              </div>
+            </article>
+          </aside>
+        </div>
+      </div>
+    </div>
+
+  </section>
+
+  <!-- ============ Programa de temporada: Snow Performance by Marshall (Seasonal Takeover) ============
+       Gran momento cinematográfico de temporada (80-100vh). Ubicado tras Servicios como
+       campaña estacional de máxima visibilidad antes de profundizar en el Método Marshall.
+       Desacoplado y controlable vía .seasonal-program--hidden. -->
+  <section class="seasonal-program seasonal-takeover" id="programa-temporada" aria-label="Programa de temporada: Snow Performance by Marshall">
+    <!-- Marca de agua tipográfica gigante de fondo -->
+    <div class="seasonal-program__watermark" aria-hidden="true">
+      <span class="seasonal-program__watermark-text">SNOW PERFORMANCE</span>
+    </div>
+
+    <!-- Vídeo cinematográfico full-bleed (POV esquí/snowboard) con parallax sutil.
+         autoplay/muted/loop/playsinline; carga diferida (sin `src` hasta que
+         snowTakeoverVideoInit(), en main.js, lo activa al entrar en viewport)
+         y se pausa fuera de pantalla por rendimiento. Con
+         prefers-reduced-motion no se carga vídeo en absoluto: se queda el
+         poster (misma fotografía que se usaba antes de incorporar vídeo),
+         sin ninguna pérdida de información. Fuentes de vídeo reales
+         pendientes de incorporar por el usuario — ver aviso en el chat;
+         hasta entonces el poster cubre el fondo sin regresión visual. -->
+    <div class="seasonal-program__bg" data-snow-bg aria-hidden="true">
+      <video
+        class="seasonal-program__bg-media"
+        data-snow-video
+        muted
+        loop
+        playsinline
+        preload="none"
+        poster="src/assets/img/stock/snow-takeover-1440.webp"
+      >
+        <source data-src="src/assets/video/snow-performance-desktop.webm" data-breakpoint="desktop" type="video/webm">
+        <source data-src="src/assets/video/snow-performance-desktop.mp4" data-breakpoint="desktop" type="video/mp4">
+        <source data-src="src/assets/video/snow-performance-mobile.webm" data-breakpoint="mobile" type="video/webm">
+        <source data-src="src/assets/video/snow-performance-mobile.mp4" data-breakpoint="mobile" type="video/mp4">
+        <picture>
+          <source srcset="src/assets/img/stock/snow-takeover-720.webp 720w, src/assets/img/stock/snow-takeover-1440.webp 1440w" sizes="100vw" type="image/webp">
+          <img src="src/assets/img/stock/snow-takeover-1440.webp" alt="" loading="lazy" width="1440" height="803" class="seasonal-program__bg-img">
+        </picture>
+      </video>
+    </div>
+
+    <!-- Veladuras de profundidad y viñeta ambiental alpina -->
+    <div class="seasonal-program__overlay" aria-hidden="true"></div>
+    <div class="seasonal-program__glow" aria-hidden="true"></div>
+
+    <!-- Transición superior desde Servicios -->
+    <div class="seasonal-program__fade-top" aria-hidden="true"></div>
+
+    <div class="container seasonal-program__inner">
+      <div class="seasonal-program__content">
+        <!-- Eyebrow de temporada -->
+        <div class="seasonal-program__eyebrow-row" data-reveal style="--i:0">
+          <span class="seasonal-program__badge">Programa de temporada</span>
+          <span class="seasonal-program__season">Esquí + Snowboard · Invierno 26/27</span>
+        </div>
+
+        <!-- Frase de posicionamiento de Snow Performance -->
+        <p class="seasonal-program__bridge-narrative" data-reveal style="--i:1">
+          Llevamos nuestro criterio de fuerza, control y rendimiento a la nieve.
+        </p>
+
+        <!-- Titular colosal editorial -->
+        <h2 class="seasonal-program__headline" data-reveal style="--i:2">
+          <span>¿PREPARADO</span>
+          <span>PARA LA</span>
+          <span>MONTAÑA?</span>
+        </h2>
+
+        <!-- Identificador de marca / programa -->
+        <div class="seasonal-program__brand-row" data-reveal style="--i:3">
+          <span class="seasonal-program__brand-title">Snow Performance</span>
+          <span class="seasonal-program__brand-by">by Marshall</span>
+        </div>
+
+        <!-- Conceptos esenciales (visualmente destacados) -->
+        <div class="seasonal-program__pillars" data-reveal style="--i:4" aria-label="Ejes de rendimiento de Snow Performance">
+          <div class="seasonal-program__pillar">
+            <span class="seasonal-program__pillar-tag">01</span>
+            <span class="seasonal-program__pillar-name">Preparación</span>
+          </div>
+          <span class="seasonal-program__pillar-sep" aria-hidden="true">/</span>
+          <div class="seasonal-program__pillar">
+            <span class="seasonal-program__pillar-tag">02</span>
+            <span class="seasonal-program__pillar-name">Prevención</span>
+          </div>
+          <span class="seasonal-program__pillar-sep" aria-hidden="true">/</span>
+          <div class="seasonal-program__pillar">
+            <span class="seasonal-program__pillar-tag">03</span>
+            <span class="seasonal-program__pillar-name">Rendimiento</span>
+          </div>
+          <span class="seasonal-program__pillar-sep" aria-hidden="true">/</span>
+          <div class="seasonal-program__pillar">
+            <span class="seasonal-program__pillar-tag">04</span>
+            <span class="seasonal-program__pillar-name">Recuperación</span>
+          </div>
+        </div>
+
+        <!-- CTA protagonista con presencia editorial -->
+        <div class="seasonal-program__actions" data-reveal style="--i:5">
+          <a class="seasonal-program__cta" href="/snow-performance">
+            <span class="seasonal-program__cta-text">Descubrir Snow Performance</span>
+            <span class="seasonal-program__cta-icon" aria-hidden="true">
+              <svg width="18" height="14" viewBox="0 0 18 14" fill="none">
+                <path d="M1 7h16M11 1l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </span>
+          </a>
+          <span class="seasonal-program__meta-note">4 semanas · 8 sesiones · Esquí + Snowboard</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Transición lumínica inferior hacia Método Marshall -->
+    <div class="seasonal-program__fade-bottom" aria-hidden="true"></div>
+  </section>
+
+  <!-- Transición editorial: puente conector hacia Método Marshall -->
+  <div class="metodo-bridge" data-reveal>
     <div class="container">
-      <div class="method__head" data-reveal>
-        <h2 class="section-heading">The Marshall Method</h2>
-        <p class="section-lead">Un método que evoluciona contigo.</p>
+      <p class="metodo-bridge__text">Tanto en la montaña como en el centro, todo responde a un mismo criterio: Método Marshall.</p>
+    </div>
+  </div>
+
+
+  <!-- ============ Método Marshall — "El umbral" ============
+       Escena única y continua ligada al scroll (umbralSequence() en
+       main.js): cinco fases que son momentos de la misma composición
+       (veladuras, núcleo de luz, numeral editorial, encuadre), nunca
+       cinco diseños ni cinco fundidos independientes. Ver comentario
+       largo en el CSS (§11) y en main.js para el detalle de capas. -->
+  <section class="umbral" id="metodo">
+    <div class="container">
+      <div class="umbral__head" data-reveal>
+        <p class="eyebrow section-eyebrow eyebrow--on-dark">Método Marshall</p>
+        <h2 class="section-heading">Un mismo recorrido, cinco momentos de luz</h2>
+        <p class="section-lead umbral__lead">El Método Marshall conecta distintas herramientas dentro de un proceso individualizado. No todas las personas pasan por todas las fases ni lo hacen en el mismo orden.</p>
       </div>
-      <div class="method__steps">
-        <div class="method-step" data-reveal>
-          <span class="method-step__num">01</span>
-          <span class="method-step__en">Valorar</span>
-          <span class="method-step__es">Entender tu punto de partida.</span>
+    </div>
+
+    <div class="umbral__pin-wrap" data-umbral-pin>
+      <div class="umbral__stage" data-umbral-stage>
+
+        <div class="umbral__stage-glow" aria-hidden="true"></div>
+        <div class="umbral__texture" aria-hidden="true"></div>
+        <div class="umbral__core" aria-hidden="true"></div>
+        <div class="umbral__core-warm" aria-hidden="true"></div>
+
+        <div class="umbral__num" aria-hidden="true" data-umbral-num>
+          <span class="umbral__num-digit" data-num-digit="0">01</span>
+          <span class="umbral__num-digit" data-num-digit="1">02</span>
+          <span class="umbral__num-digit" data-num-digit="2">03</span>
+          <span class="umbral__num-digit" data-num-digit="3">04</span>
+          <span class="umbral__num-digit" data-num-digit="4">05</span>
         </div>
-        <div class="method-step" data-reveal>
-          <span class="method-step__num">02</span>
-          <span class="method-step__en">Tratar</span>
-          <span class="method-step__es">Intervenir sobre el problema identificado.</span>
+
+        <div class="umbral__veil umbral__veil--a" aria-hidden="true"></div>
+        <div class="umbral__veil umbral__veil--b" aria-hidden="true"></div>
+        <div class="umbral__frame umbral__frame--dark" aria-hidden="true"></div>
+        <div class="umbral__frame umbral__frame--light" aria-hidden="true"></div>
+
+        <div class="umbral__content">
+          <div class="umbral__phases" data-umbral-phases>
+            <div class="umbral__phase" data-reveal style="--i:0">
+              <span class="umbral__phase-eyebrow">01</span>
+              <h3 class="umbral__phase-title">Escuchar</h3>
+              <p class="umbral__phase-text">Empezamos por escuchar tu historia, tu dolor y tus objetivos, sin prisa.</p>
+            </div>
+            <div class="umbral__phase" data-reveal style="--i:1">
+              <span class="umbral__phase-eyebrow">02</span>
+              <h3 class="umbral__phase-title">Valorar</h3>
+              <p class="umbral__phase-text">Una valoración clínica precisa para entender tu punto de partida real.</p>
+            </div>
+            <div class="umbral__phase" data-reveal style="--i:2">
+              <span class="umbral__phase-eyebrow">03</span>
+              <h3 class="umbral__phase-title">Tratar</h3>
+              <p class="umbral__phase-text">Intervenimos con las herramientas adecuadas para tu caso concreto.</p>
+            </div>
+            <div class="umbral__phase" data-reveal style="--i:3">
+              <span class="umbral__phase-eyebrow">04</span>
+              <h3 class="umbral__phase-title">Acompañar</h3>
+              <p class="umbral__phase-text">Te acompañamos mientras recuperas movilidad, fuerza y confianza.</p>
+            </div>
+            <div class="umbral__phase" data-reveal style="--i:4">
+              <span class="umbral__phase-eyebrow">05</span>
+              <h3 class="umbral__phase-title">Evolucionar</h3>
+              <p class="umbral__phase-text">Seguimos desarrollando lo conseguido, a tu ritmo y en el tiempo.</p>
+            </div>
+          </div>
+
+          <ol class="umbral__progress" data-umbral-progress aria-hidden="true">
+            <li class="umbral__progress-item" data-progress-index="0">01</li>
+            <li class="umbral__progress-seg" data-progress-seg-index="0"></li>
+            <li class="umbral__progress-item" data-progress-index="1">02</li>
+            <li class="umbral__progress-seg" data-progress-seg-index="1"></li>
+            <li class="umbral__progress-item" data-progress-index="2">03</li>
+            <li class="umbral__progress-seg" data-progress-seg-index="2"></li>
+            <li class="umbral__progress-item" data-progress-index="3">04</li>
+            <li class="umbral__progress-seg" data-progress-seg-index="3"></li>
+            <li class="umbral__progress-item" data-progress-index="4">05</li>
+          </ol>
         </div>
-        <div class="method-step" data-reveal>
-          <span class="method-step__num">03</span>
-          <span class="method-step__en">Restaurar</span>
-          <span class="method-step__es">Recuperar movilidad, fuerza, control y confianza.</span>
+
+      </div>
+    </div>
+
+    <div class="container">
+      <a class="btn btn--outline umbral__cta" href="src/pages/metodo.html">Conocer el Método Marshall</a>
+    </div>
+
+    <div class="umbral__exit" aria-hidden="true"></div>
+  </section>
+
+
+  <!-- ============ Primera visita ============ -->
+  <section class="first-visit" id="primera-visita">
+    <div class="container first-visit__grid">
+      <div class="first-visit__intro" data-reveal>
+        <div class="first-visit__badge-row">
+          <p class="eyebrow section-eyebrow">Primera visita</p>
+          <span class="first-visit__duration"><span class="first-visit__duration-dot" aria-hidden="true"></span>60 min · Sesión individual</span>
+        </div>
+        <h2 class="section-heading">La primera visita empieza por entenderte</h2>
+        <p class="section-lead first-visit__lead">Una sesión individual de 60 minutos para entender tu caso, valorar tu punto de partida y definir cómo empezar.</p>
+
+        <div class="first-visit__media" data-reveal style="--i:1">
+          <picture>
+            <source srcset="src/assets/img/local/local-recepcion-720.webp 720w, src/assets/img/local/local-recepcion-1440.webp 1440w" sizes="(max-width: 859px) 92vw, 440px" type="image/webp">
+            <img src="src/assets/img/local/local-recepcion.jpg" alt="Recepción y espacio de atención al paciente en Physio Wellness Sitges" width="720" height="480" loading="lazy" class="first-visit__img">
+          </picture>
+          <div class="first-visit__media-caption">
+            <span class="first-visit__media-dot" aria-hidden="true"></span>
+            <span>Espacio de recepción · Physio Wellness</span>
+          </div>
+        </div>
+
+        <div class="first-visit__actions">
+          <a class="btn btn--primary" href="https://www.docfav.com/portal/physio-wellness-by-marshall" target="_blank" rel="noopener">Reservar primera visita</a>
+          <a class="btn btn--outline" href="https://wa.me/34644678344" target="_blank" rel="noopener">Te ayudamos por WhatsApp</a>
+        </div>
+      </div>
+
+      <div class="first-visit__timeline">
+        <ol class="first-visit__steps" data-fv-steps data-reveal style="--i:1">
+          <li class="first-visit__step" data-fv-step>
+            <span class="first-visit__marker" aria-hidden="true"><span class="first-visit__dot"></span></span>
+            <div class="first-visit__step-body">
+              <span class="first-visit__step-num" aria-hidden="true">01</span>
+              <div class="first-visit__step-content">
+                <h3 class="first-visit__step-title">Hablamos de tu caso</h3>
+                <p class="first-visit__step-desc">Sin prisas. Escuchamos tu historia, tu dolor, tus sensaciones y lo que necesitas recuperar.</p>
+              </div>
+            </div>
+          </li>
+          <li class="first-visit__step" data-fv-step>
+            <span class="first-visit__marker" aria-hidden="true"><span class="first-visit__dot"></span></span>
+            <div class="first-visit__step-body">
+              <span class="first-visit__step-num" aria-hidden="true">02</span>
+              <div class="first-visit__step-content">
+                <h3 class="first-visit__step-title">Valoramos tu punto de partida</h3>
+                <p class="first-visit__step-desc">Exploración clínica y biomecánica precisa para identificar el origen real de la molestia.</p>
+              </div>
+            </div>
+          </li>
+          <li class="first-visit__step" data-fv-step>
+            <span class="first-visit__marker" aria-hidden="true"><span class="first-visit__dot"></span></span>
+            <div class="first-visit__step-body">
+              <span class="first-visit__step-num" aria-hidden="true">03</span>
+              <div class="first-visit__step-content">
+                <h3 class="first-visit__step-title">Definimos objetivos claros</h3>
+                <p class="first-visit__step-desc">Te explicamos qué ocurre y trazamos un plan de trabajo transparente y adaptado a ti.</p>
+              </div>
+            </div>
+          </li>
+          <li class="first-visit__step" data-fv-step>
+            <span class="first-visit__marker" aria-hidden="true"><span class="first-visit__dot"></span></span>
+            <div class="first-visit__step-body">
+              <span class="first-visit__step-num" aria-hidden="true">04</span>
+              <div class="first-visit__step-content">
+                <h3 class="first-visit__step-title">Realizamos una primera intervención</h3>
+                <p class="first-visit__step-desc">Empezamos a actuar desde la primera sesión con terapia manual o las técnicas adecuadas.</p>
+              </div>
+            </div>
+          </li>
+          <li class="first-visit__step" data-fv-step>
+            <span class="first-visit__marker" aria-hidden="true"><span class="first-visit__dot"></span></span>
+            <div class="first-visit__step-body">
+              <span class="first-visit__step-num" aria-hidden="true">05</span>
+              <div class="first-visit__step-content">
+                <h3 class="first-visit__step-title">Recomendaciones y siguientes pasos</h3>
+                <p class="first-visit__step-desc">Te vas con pautas claras para tu día a día y total certeza sobre el proceso.</p>
+              </div>
+            </div>
+          </li>
+        </ol>
+
+        <div class="first-visit__mobile-actions">
+          <a class="btn btn--primary" href="https://www.docfav.com/portal/physio-wellness-by-marshall" target="_blank" rel="noopener">Reservar primera visita</a>
+          <a class="btn btn--outline" href="https://wa.me/34644678344" target="_blank" rel="noopener">Te ayudamos por WhatsApp</a>
         </div>
       </div>
     </div>
   </section>
 
+  <!-- ============ Equipo profesional ============ -->
   <section class="team" id="equipo">
     <div class="container">
       <div class="team__head" data-reveal>
-        <h2 class="section-heading">Equipo profesional</h2>
-        <p class="section-lead">Un equipo cercano para una atención personal y coordinada.</p>
+        <p class="eyebrow section-eyebrow">Equipo</p>
+        <h2 class="section-heading">Un equipo cercano para una atención personal y coordinada</h2>
       </div>
+
       <div class="team__grid">
-        <article class="team-card" data-reveal>
-          <h3 class="team-card__name">Marçal Ramirez Roig</h3>
-          <p class="team-card__role">Fisioterapeuta y responsable del centro.</p>
-          <ul class="team-card__facts">
-            <li>Más de 10 años de experiencia</li>
-            <li>Más de 1.500 pacientes acompañados</li>
-          </ul>
+        <article class="team-card" data-reveal style="--i:0">
+          <div class="team-card__media">
+            <img src="src/assets/img/team/marcal-ramirez.jpg" alt="Retrato de Marçal Ramirez Roig, fisioterapeuta de Physio Wellness by Marshall." width="1363" height="2048">
+          </div>
+          <div class="team-card__body">
+            <h3 class="team-card__name">Marçal Ramirez Roig</h3>
+            <p class="team-card__role">Fisioterapeuta y responsable de Fisioterapia, Bienestar, Fuerza, Pilates y Stretching.</p>
+            <ul class="team-card__facts">
+              <li>Colegiado número 14.599</li>
+              <li>Más de 10 años de experiencia</li>
+              <li>Más de 1.500 pacientes acompañados</li>
+            </ul>
+          </div>
+        </article>
+        <article class="team-card" data-reveal style="--i:1">
+          <div class="team-card__media">
+            <img src="src/assets/img/team/abril-rodriguez.jpg" alt="Abril Rodríguez, recepción, atención y coordinación en Physio Wellness." width="1400" height="1400">
+          </div>
+          <div class="team-card__body">
+            <h3 class="team-card__name">Abril Rodríguez</h3>
+            <p class="team-card__role">Recepción, atención y coordinación.</p>
+            <p class="team-card__bio">Abril coordina la agenda y la atención del centro, resuelve dudas prácticas y te ayuda a encontrar o gestionar la reserva adecuada.</p>
+          </div>
         </article>
       </div>
     </div>
   </section>
 
-  <section class="contact" id="contacto">
+  <!-- ============ Instalaciones / espacio ============ -->
+  <section class="facility" id="instalaciones">
     <div class="container">
-      <div class="contact__head" data-reveal>
-        <h2 class="section-heading">Te esperamos en Sitges.</h2>
+      <div class="facility__head" data-reveal>
+        <p class="eyebrow section-eyebrow">El centro</p>
+        <h2 class="section-heading">Un espacio pensado para tratar, recuperar y moverte</h2>
+        <p class="section-lead facility__lead">En nuestro centro de fisioterapia y movimiento en Sitges conviven las consultas de fisioterapia, la zona de fuerza, el espacio de Pilates Reformer y los recursos de bienestar.</p>
       </div>
-      <div class="contact__details">
-        <div class="contact__detail">
-          <strong>Dirección</strong>
-          <span>Avinguda Camí dels Capellans, 79, local 3, Sitges</span>
+
+      <!-- Bloque 01: Fisioterapia -->
+      <div class="facility__space facility__space--fisio" data-reveal>
+        <div class="facility__space-header">
+          <span class="facility__space-tag">Espacio 01</span>
+          <h3 class="facility__space-title">Fisioterapia</h3>
+          <span class="facility__space-desc">Tratamiento clínico, valoración y recuperación activa</span>
         </div>
-        <div class="contact__detail">
-          <strong>Teléfono</strong>
-          <a href="tel:+34644678344">+34 644 67 83 44</a>
+
+        <div class="facility__grid facility__grid--fisio">
+          <button type="button" class="facility__item facility__item--hero" aria-haspopup="dialog" aria-label="Ampliar fotografía: Fisioterapia · Cabina principal" data-full-src="src/assets/img/local/local-fisio-1440.webp" data-caption="Fisioterapia · Cabina principal">
+            <picture>
+              <source type="image/webp" srcset="src/assets/img/local/local-fisio-720.webp 720w, src/assets/img/local/local-fisio-1440.webp 1440w" sizes="(min-width: 860px) 50vw, 100vw">
+              <img src="src/assets/img/local/local-fisio.jpg" alt="Cabina principal de fisioterapia de Physio Wellness by Marshall en Sitges, con camilla articulada hidráulica, espaldera y espejo retroiluminado." width="1440" height="958" loading="lazy" decoding="async">
+            </picture>
+            <span class="facility__badge">
+              <span class="facility__badge-space">Fisioterapia</span>
+              <span class="facility__badge-sep">·</span>
+              <span class="facility__badge-room">Cabina principal</span>
+            </span>
+          </button>
+
+          <button type="button" class="facility__item facility__item--recepcion" aria-haspopup="dialog" aria-label="Ampliar fotografía: Fisioterapia · Recepción" data-full-src="src/assets/img/local/local-recepcion-1440.webp" data-caption="Fisioterapia · Recepción">
+            <picture>
+              <source type="image/webp" srcset="src/assets/img/local/local-recepcion-720.webp 720w, src/assets/img/local/local-recepcion-1440.webp 1440w" sizes="(min-width: 860px) 25vw, 50vw">
+              <img src="src/assets/img/local/local-recepcion.jpg" alt="Mostrador de recepción y bienvenida en Local 1 de Physio Wellness by Marshall, con pared de mármol retroiluminada y lámparas de diseño." width="1440" height="958" loading="lazy" decoding="async">
+            </picture>
+            <span class="facility__badge">
+              <span class="facility__badge-space">Fisioterapia</span>
+              <span class="facility__badge-sep">·</span>
+              <span class="facility__badge-room">Recepción</span>
+            </span>
+          </button>
+
+          <button type="button" class="facility__item facility__item--natural" aria-haspopup="dialog" aria-label="Ampliar fotografía: Fisioterapia · Luz natural" data-full-src="src/assets/img/local/local-fisio-natural-1440.webp" data-caption="Fisioterapia · Luz natural">
+            <picture>
+              <source type="image/webp" srcset="src/assets/img/local/local-fisio-natural-720.webp 720w, src/assets/img/local/local-fisio-natural-1440.webp 1440w" sizes="(min-width: 860px) 25vw, 50vw">
+              <img src="src/assets/img/local/local-fisio-natural.jpg" alt="Consulta de fisioterapia con amplio ventanal a la calle y luz natural exterior en Physio Wellness by Marshall." width="1440" height="958" loading="lazy" decoding="async">
+            </picture>
+            <span class="facility__badge">
+              <span class="facility__badge-space">Fisioterapia</span>
+              <span class="facility__badge-sep">·</span>
+              <span class="facility__badge-room">Luz natural</span>
+            </span>
+          </button>
+
+          <button type="button" class="facility__item facility__item--active" aria-haspopup="dialog" aria-label="Ampliar fotografía: Fisioterapia · Ejercicio terapéutico" data-full-src="src/assets/img/local/local-fisio-recuperacion-1440.webp" data-caption="Fisioterapia · Ejercicio terapéutico">
+            <picture>
+              <source type="image/webp" srcset="src/assets/img/local/local-fisio-recuperacion-720.webp 720w, src/assets/img/local/local-fisio-recuperacion-1440.webp 1440w" sizes="(min-width: 860px) 50vw, 100vw">
+              <img src="src/assets/img/local/local-fisio-recuperacion.jpg" alt="Sala de readaptación activa y ejercicio terapéutico de fisioterapia, con espaldera, rack y PowerPlate en Physio Wellness by Marshall." width="1440" height="958" loading="lazy" decoding="async">
+            </picture>
+            <span class="facility__badge">
+              <span class="facility__badge-space">Fisioterapia</span>
+              <span class="facility__badge-sep">·</span>
+              <span class="facility__badge-room">Ejercicio terapéutico</span>
+            </span>
+          </button>
         </div>
-        <div class="contact__detail">
-          <strong>Email</strong>
-          <a href="mailto:hola@physiowellness.es">hola@physiowellness.es</a>
+      </div>
+
+      <!-- Bloque 02: Strength & Pilates -->
+      <div class="facility__space facility__space--strength" data-reveal>
+        <div class="facility__space-header">
+          <span class="facility__space-tag">Espacio 02</span>
+          <h3 class="facility__space-title">Strength &amp; Pilates</h3>
+          <span class="facility__space-desc">Movimiento guiado, fuerza funcional y Pilates Reformer</span>
+        </div>
+
+        <div class="facility__grid facility__grid--strength">
+          <button type="button" class="facility__item facility__item--lounge" aria-haspopup="dialog" aria-label="Ampliar fotografía: Strength & Pilates · Lounge de espera" data-full-src="src/assets/img/local/local-lounge-1440.webp" data-caption="Strength & Pilates · Lounge de espera">
+            <picture>
+              <source type="image/webp" srcset="src/assets/img/local/local-lounge-720.webp 720w, src/assets/img/local/local-lounge-1440.webp 1440w" sizes="(min-width: 860px) 25vw, 50vw">
+              <img src="src/assets/img/local/local-lounge.jpg" alt="Zona de espera y lounge de bienvenida en Local 2 de Physio Wellness by Marshall con sillones de terciopelo verde oliva y mesa dorada." width="1440" height="2160" loading="lazy" decoding="async">
+            </picture>
+            <span class="facility__badge">
+              <span class="facility__badge-space">Strength &amp; Pilates</span>
+              <span class="facility__badge-sep">·</span>
+              <span class="facility__badge-room">Lounge de espera</span>
+            </span>
+          </button>
+
+          <button type="button" class="facility__item facility__item--gym" aria-haspopup="dialog" aria-label="Ampliar fotografía: Strength & Pilates · Zona de fuerza" data-full-src="src/assets/img/local/local-gym-1440.webp" data-caption="Strength & Pilates · Zona de fuerza">
+            <picture>
+              <source type="image/webp" srcset="src/assets/img/local/local-gym-720.webp 720w, src/assets/img/local/local-gym-1440.webp 1440w" sizes="(min-width: 860px) 25vw, 50vw">
+              <img src="src/assets/img/local/local-gym.jpg" alt="Sala de fuerza y entrenamiento funcional de Physio Wellness by Marshall, con rack multipower Force USA y pesas de carga." width="1440" height="960" loading="lazy" decoding="async">
+            </picture>
+            <span class="facility__badge">
+              <span class="facility__badge-space">Strength &amp; Pilates</span>
+              <span class="facility__badge-sep">·</span>
+              <span class="facility__badge-room">Zona de fuerza</span>
+            </span>
+          </button>
+
+          <button type="button" class="facility__item facility__item--cardio" aria-haspopup="dialog" aria-label="Ampliar fotografía: Strength & Pilates · Cardio & Movimiento" data-full-src="src/assets/img/local/local-cardio-1440.webp" data-caption="Strength & Pilates · Cardio & Movimiento">
+            <picture>
+              <source type="image/webp" srcset="src/assets/img/local/local-cardio-720.webp 720w, src/assets/img/local/local-cardio-1440.webp 1440w" sizes="(min-width: 860px) 25vw, 50vw">
+              <img src="src/assets/img/local/local-cardio.jpg" alt="Zona de cardio y fuerza de Physio Wellness by Marshall con bicicleta estática, elíptica, cinta de correr y rack multipower Force USA." width="1440" height="960" loading="lazy" decoding="async">
+            </picture>
+            <span class="facility__badge">
+              <span class="facility__badge-space">Strength &amp; Pilates</span>
+              <span class="facility__badge-sep">·</span>
+              <span class="facility__badge-room">Cardio &amp; Movimiento</span>
+            </span>
+          </button>
+
+          <button type="button" class="facility__item facility__item--reformer" aria-haspopup="dialog" aria-label="Ampliar fotografía: Strength & Pilates · Estudio Reformer" data-full-src="src/assets/img/local/local-pilates-estudio-1440.webp" data-caption="Strength & Pilates · Estudio Reformer">
+            <picture>
+              <source type="image/webp" srcset="src/assets/img/local/local-pilates-estudio-720.webp 720w, src/assets/img/local/local-pilates-estudio-1440.webp 1440w" sizes="(min-width: 860px) 50vw, 100vw">
+              <img src="src/assets/img/local/local-pilates-estudio.jpg" alt="Estudio de Pilates Reformer con máquina de madera Pilatu, torre y espejo de arco en Physio Wellness by Marshall." width="1440" height="960" loading="lazy" decoding="async">
+            </picture>
+            <span class="facility__badge">
+              <span class="facility__badge-space">Strength &amp; Pilates</span>
+              <span class="facility__badge-sep">·</span>
+              <span class="facility__badge-room">Estudio Reformer</span>
+            </span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Modal Lightbox nativo y accesible para fotografías de las instalaciones -->
+      <dialog id="facility-lightbox" class="facility-lightbox" aria-label="Visualizador ampliado de instalaciones">
+        <div class="facility-lightbox__backdrop" data-close-lightbox></div>
+        <div class="facility-lightbox__stage">
+          <button type="button" class="facility-lightbox__close" data-close-lightbox aria-label="Cerrar vista ampliada">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+          </button>
+          <button type="button" class="facility-lightbox__nav facility-lightbox__nav--prev" id="lightbox-prev" aria-label="Fotografía anterior">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="15 18 9 12 15 6"></polyline></svg>
+          </button>
+          <div class="facility-lightbox__figure">
+            <img class="facility-lightbox__img" id="lightbox-img" src="" alt="" loading="lazy">
+            <div class="facility-lightbox__caption" id="lightbox-caption"></div>
+          </div>
+          <button type="button" class="facility-lightbox__nav facility-lightbox__nav--next" id="lightbox-next" aria-label="Siguiente fotografía">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="9 18 15 12 9 6"></polyline></svg>
+          </button>
+        </div>
+      </dialog>
+    </div>
+  </section>
+
+  <!-- ============ Reseñas editoriales / Experiencias en Physio Wellness ============ -->
+  <section class="testimonials" id="resenas" aria-label="Experiencias reales de pacientes">
+    <!-- Escenario sticky interactivo (hidratado dinámicamente por JS a partir del flujo semántico) -->
+    <div class="testimonials__track" id="testimonials-track" hidden aria-hidden="true">
+      <div class="testimonials__sticky" id="testimonials-sticky">
+        <div class="container testimonials__container">
+          <div class="testimonials__layout">
+
+            <!-- Columna 1: Escenario de fotografías contextuales superpuestas -->
+            <div class="testimonials__media">
+              <div class="testimonials__stage" id="testimonials-stage" aria-hidden="true"></div>
+            </div>
+
+            <!-- Columna 2: Historias editoriales sincronizadas con el scroll -->
+            <div class="testimonials__content">
+              <div class="testimonials__header">
+                <p class="eyebrow testimonials__eyebrow">Experiencias reales</p>
+                <div class="testimonials__stars" aria-label="5 de 5 estrellas" aria-hidden="true">★★★★★</div>
+              </div>
+
+              <div class="testimonials__text-stage" id="testimonials-text-stage"></div>
+
+              <div class="testimonials__footer">
+                <div class="testimonials__google">
+                  <span class="testimonials__google-rating">Puntuación Google: 5,0 de 5</span>
+                  <span class="testimonials__google-verified">Reseñas reales publicadas en Google</span>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Fuente semántica única de verdad (accesible directamente sin JS y con prefers-reduced-motion) -->
+    <div class="container testimonials__flow" id="testimonials-flow">
+      <div class="testimonials__header testimonials__header--flow">
+        <p class="eyebrow testimonials__eyebrow">Experiencias reales</p>
+        <div class="testimonials__stars" aria-label="5 de 5 estrellas" aria-hidden="true">★★★★★</div>
+      </div>
+
+      <!-- Testimonio 1 -->
+      <article class="testimonials__item">
+        <div class="testimonials__item-media">
+          <img src="seat-news-appointment-new-design-director-diez.jpg.avif"
+               sizes="(min-width: 860px) 46vw, 92vw"
+               alt="Jorge Díaz, paciente de Physio Wellness compartiendo su experiencia con el tratamiento recibido"
+               width="720" height="900" loading="lazy"
+               style="object-position: 55% 20%;">
+        </div>
+        <div class="testimonials__item-text">
+          <blockquote class="testimonials__quote-wrap">
+            <p class="testimonials__quote">Recomiendo encarecidamente a este fisioterapeuta a cualquier persona que necesite una atención de alta calidad. Es un profesional con muchos conocimientos, atento y realmente comprometido con la recuperación de sus pacientes. Desde la primera sesión, se tomó el tiempo necesario para entender el origen del problema, y no solo los síntomas, y creó un plan de tratamiento personalizado que marcó una gran diferencia. ¡Muchas gracias!</p>
+          </blockquote>
+          <div class="testimonials__meta">
+            <span class="testimonials__author">Jorge Díaz</span>
+            <span class="testimonials__sep" aria-hidden="true">·</span>
+            <span class="testimonials__treatment">Reseña en Google</span>
+          </div>
+        </div>
+      </article>
+
+      <!-- Testimonio 2 -->
+      <article class="testimonials__item">
+        <div class="testimonials__item-media">
+          <img src="src/assets/img/reviews/david-johnson-720.webp"
+               srcset="src/assets/img/reviews/david-johnson-720.webp 720w, src/assets/img/reviews/david-johnson-1200.webp 1200w"
+               sizes="(min-width: 860px) 46vw, 92vw"
+               alt="David Johnson, paciente de Physio Wellness compartiendo su experiencia con el tratamiento recibido"
+               width="720" height="900" loading="lazy"
+               style="object-position: center 20%;">
+        </div>
+        <div class="testimonials__item-text">
+          <blockquote class="testimonials__quote-wrap">
+            <p class="testimonials__quote">¡El mejor fisioterapeuta con el que he trabajado nunca! Marçal lleva más de un año tratando mis problemas derivados de la edad y me ha ayudado a evitar otros nuevos. Tiene un trato muy humano y cercano, y una excelente formación. Habla inglés, castellano y catalán. Se lo he recomendado a todas las personas que conozco con molestias. Además, siempre responde con rapidez y es muy puntual. ¡Un diez!</p>
+          </blockquote>
+          <div class="testimonials__meta">
+            <span class="testimonials__author">David Johnson</span>
+            <span class="testimonials__sep" aria-hidden="true">·</span>
+            <span class="testimonials__treatment">Reseña en Google</span>
+          </div>
+        </div>
+      </article>
+
+      <!-- Testimonio 3 -->
+      <article class="testimonials__item">
+        <div class="testimonials__item-media">
+          <img src="src/assets/img/local/local-lounge-1440.webp"
+               srcset="src/assets/img/local/local-lounge-720.webp 720w, src/assets/img/local/local-lounge-1440.webp 1440w"
+               sizes="(min-width: 860px) 46vw, 92vw"
+               alt="Zona de recepción y bienvenida de Physio Wellness en Sitges"
+               width="720" height="900" loading="lazy"
+               style="object-position: center 35%;">
+        </div>
+        <div class="testimonials__item-text">
+          <blockquote class="testimonials__quote-wrap">
+            <p class="testimonials__quote">Solo he tenido unas pocas sesiones con Marçal hasta ahora, pero ya puedo notar una mejora clara en mis problemas de espalda baja. He probado distintos tratamientos en el pasado y ninguno ha sido tan efectivo como el que he recibido con él. Marçal es muy profesional, tiene grandes conocimientos y trata a sus pacientes con mucho cuidado y atención. Además, se toma el tiempo de explicar el tratamiento y de educarte para prevenir futuras molestias, algo que valoro mucho. Lo recomiendo totalmente.</p>
+          </blockquote>
+          <div class="testimonials__meta">
+            <span class="testimonials__author">Paciente de Physio Wellness</span>
+            <span class="testimonials__sep" aria-hidden="true">·</span>
+            <span class="testimonials__treatment">Reseña en Google</span>
+          </div>
+        </div>
+      </article>
+
+      <div class="testimonials__footer">
+        <div class="testimonials__google">
+          <span class="testimonials__google-rating">Puntuación Google: 5,0 de 5</span>
+          <span class="testimonials__google-verified">Reseñas reales publicadas en Google</span>
         </div>
       </div>
     </div>
   </section>
+
+  <!-- ============ Ubicación y contacto ============ -->
+  <section class="contact" id="contacto">
+    <div class="container contact__grid">
+      <div data-reveal>
+        <div class="contact__head">
+          <p class="eyebrow section-eyebrow">Ubicación y contacto</p>
+          <h2 class="section-heading">Te esperamos en Sitges</h2>
+        </div>
+
+        <div class="contact__details">
+          <div class="contact__detail">
+            <strong>Dirección</strong>
+            <span>Avinguda Camí dels Capellans, 79, local 3, Sitges</span>
+          </div>
+          <div class="contact__detail">
+            <strong>Horario</strong>
+            <span>Lunes a viernes, de 09:00 a 13:00 y de 15:00 a 19:00. Fuera de este horario, con cita previa.</span>
+          </div>
+          <div class="contact__detail">
+            <strong>Teléfono</strong>
+            <a href="tel:+34644678344">+34 644 67 83 44</a>
+          </div>
+          <div class="contact__detail">
+            <strong>Correo</strong>
+            <a href="mailto:hola@physiowellness.es">hola@physiowellness.es</a>
+          </div>
+          <div class="contact__detail">
+            <strong>Cómo llegar</strong>
+            <a href="https://www.google.com/maps/dir/?api=1&amp;destination=Avinguda+Cam%C3%AD+dels+Capellans+79+Sitges" target="_blank" rel="noopener">Abrir la ruta en Google Maps</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="contact__map" data-reveal style="--i:1">
+        <iframe src="https://www.google.com/maps?q=Avinguda+Cam%C3%AD+dels+Capellans+79+Sitges&amp;output=embed" title="Mapa de ubicación de Physio Wellness by Marshall en Sitges" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ CTA final ============ -->
+  <section class="cta-final">
+    <div class="container cta-final__inner" data-reveal>
+      <h2 class="cta-final__title">Tu siguiente paso no tiene que ser perfecto. Solo tiene que tener sentido para ti</h2>
+      <p class="cta-final__lead">Si es tu primera vez, empieza por la primera visita. Si ya nos conoces, reserva tu seguimiento. Y si no sabes qué opción elegir, pregúntanos.</p>
+      <div class="cta-final__actions">
+        <a class="btn btn--primary" href="https://www.docfav.com/portal/physio-wellness-by-marshall" target="_blank" rel="noopener">Reservar cita online</a>
+        <a class="btn btn--outline" href="https://wa.me/34644678344" target="_blank" rel="noopener">Hablar por WhatsApp</a>
+      </div>
+    </div>
+  </section>
+
 </main>
 
 <footer class="site-footer">
   <div class="container">
-    <p>© 2026 Physio Wellness by Marshall. Todos los derechos reservados.</p>
+    <div class="site-footer__top">
+      <div>
+        <a class="site-footer__brand" href="#main">
+          <img src="src/assets/img/logo-mark-white.png" alt="Physio Wellness by Marshall">
+        </a>
+      </div>
+
+      <nav aria-label="Enlaces del sitio">
+        <p class="site-footer__heading">Navegación</p>
+        <div class="site-footer__list">
+          <a href="#metodo">El Método</a>
+          <a href="#areas">Servicios</a>
+          <a href="#equipo">Equipo</a>
+          <a href="#resenas">Reseñas</a>
+          <a href="src/pages/tarifas.html">Tarifas</a>
+        </div>
+      </nav>
+
+      <div>
+        <p class="site-footer__heading">Contacto</p>
+        <div class="site-footer__list">
+          <a href="tel:+34644678344">+34 644 67 83 44</a>
+          <a href="mailto:hola@physiowellness.es">hola@physiowellness.es</a>
+          <span>Avinguda Camí dels Capellans, 79, local 3, Sitges</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="site-footer__bottom">
+      <span>© 2026 Physio Wellness by Marshall.</span>
+      <nav class="site-footer__legal" aria-label="Enlaces legales">
+        <a href="src/pages/aviso-legal.html">Aviso legal</a>
+        <a href="src/pages/privacidad.html">Privacidad</a>
+        <a href="src/pages/cookies.html">Cookies</a>
+      </nav>
+    </div>
   </div>
 </footer>
 
-<script src="main.js"></script>
+<script src="src/js/main.js"></script>
 </body>
 </html>

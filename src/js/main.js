@@ -3069,13 +3069,33 @@ var prefersReducedMotion = window.matchMedia && window.matchMedia('(prefers-redu
     };
     window.setTimeout(reveal, 2500);
 
+    var rampPlaybackRate = function(){
+      try{
+        if(!('playbackRate' in video)) return;
+        var start = null;
+        var duration = 1000;
+        function step(ts){
+          if(!start) start = ts;
+          var p = Math.min((ts - start) / duration, 1);
+          video.playbackRate = 0.75 + (0.25 * p);
+          if(p < 1) requestAnimationFrame(step);
+        }
+        requestAnimationFrame(step);
+      }catch(e){ /* si falla, no pasa nada */ }
+    };
+
     var started = false;
     var startVideo = function(){
       if(started) return;
       started = true;
       toLoad.forEach(function(s){ s.setAttribute('src', s.getAttribute('data-src')); });
       video.load();
-      video.play().catch(function(){ /* autoplay bloqueado: se queda el poster */ });
+      try{
+        if('playbackRate' in video) video.playbackRate = 0.75;
+      }catch(e){}
+      video.play().then(function(){
+        rampPlaybackRate();
+      }).catch(function(){ /* autoplay bloqueado: se queda el poster */ });
     };
 
     if('IntersectionObserver' in window){

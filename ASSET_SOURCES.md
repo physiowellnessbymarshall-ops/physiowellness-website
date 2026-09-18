@@ -401,3 +401,29 @@ mantiene exactamente el mismo archivo de hero que ya tenían
 (`stock/area-strength-1440.webp`/`-720.webp` y `stock/stretching-1440.webp`/`-720.webp`
 respectivamente), solo cambia el marcado HTML que lo envuelve (de
 `.page-hero.page-hero--split` a `.service-hero`).
+
+## Bienestar: dirección de contenido, FASE 3 (2026-09-17)
+
+Reescritura completa del cuerpo de `wellness.html` (hero + secciones)
+manteniendo la arquitectura visual de `physiotherapy.html` pero con
+contenido propio de Bienestar (calma, cuidado, recuperación, sin lenguaje
+clínico). Se mantienen sin cambios el hero (`50eefdba-...`) y la foto de
+contexto (`455dab1c-...`) ya documentados en la sección anterior, y se
+incorporan a una página propia por primera vez las dos imágenes restantes
+del directorio `src/assets/img/disciplines/wellness/`, ya presentes en el
+repositorio pero sin usar hasta ahora.
+
+| Archivo (`-720`/`-1440`) | Escena | Uso en la página |
+| ----- | ------ | ----------------- |
+| `499c436d-bc10-4436-8d97-b503a84b5e24` | Persona liberando tensión de la espalda con un rodillo de madera apoyado en la pared. | `.service-feature--with-photo` ("El cuidado del cuerpo también se entrena") y foto inicial + dos primeros pasos (01-02) del crossfade de `.service-process` ("Tu primera sesión, paso a paso"). |
+| `4df29dab-6a0e-4ec6-be5e-b2b8cbea0489` | Postura restaurativa en el suelo, piernas elevadas, ojos cerrados. | `.cta-final--photo` (cierre de la página) — exclusiva de esta sección, no se repite en ningún otro punto de `wellness.html`, mismo criterio que `local-gym` en `physiotherapy.html`. |
+
+| Campo | Detalle |
+| ----- | ------- |
+| Origen | Aportadas por el cliente (mismo shooting que `50eefdba-...` y `455dab1c-...`, ya documentado) |
+| Licencia | No aplica (fotografía propia del cliente, sin banco de stock) |
+| Fecha de incorporación a una página propia | 2026-09-17 |
+| Transformaciones aplicadas | Ninguna nueva: se reutilizan los archivos `-720`/`-1440` ya optimizados en WebP presentes en el repositorio (1122×1402 / 720×899, verificado con `sips`); no se ha generado ni procesado ninguna imagen nueva en esta fase. |
+
+No se ha modificado ninguna otra página en esta fase (Fuerza, Pilates,
+Stretching, Fisioterapia a domicilio y Fisioterapia quedan intactas).

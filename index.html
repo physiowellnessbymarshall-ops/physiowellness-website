@@ -454,31 +454,38 @@
     <div class="container seasonal-program__inner">
       <div class="seasonal-program__content">
         <!-- Eyebrow de temporada -->
-        <div class="seasonal-program__eyebrow-row" data-reveal style="--i:0">
+        <div class="seasonal-program__eyebrow-row" data-reveal style="--i:3.3">
           <span class="seasonal-program__badge">Programa de temporada</span>
           <span class="seasonal-program__season">Esquí + Snowboard · Invierno 26/27</span>
         </div>
 
         <!-- Frase de posicionamiento de Snow Performance -->
-        <p class="seasonal-program__bridge-narrative" data-reveal style="--i:1">
+        <p class="seasonal-program__bridge-narrative" data-reveal style="--i:4.4">
           Llevamos nuestro criterio de fuerza, control y rendimiento a la nieve.
         </p>
 
-        <!-- Titular colosal editorial -->
-        <h2 class="seasonal-program__headline" data-reveal style="--i:2">
-          <span>¿PREPARADO</span>
-          <span>PARA LA</span>
-          <span>MONTAÑA?</span>
+        <!-- Titular colosal editorial: revelado línea a línea (mismo patrón de
+             máscara que .hero__title .reveal-line, ver styles.css), en vez del
+             fade genérico de [data-reveal] — entrada más coreografiada. -->
+        <h2 class="seasonal-program__headline" data-reveal>
+          <span class="reveal-line" style="--i:5.6"><span>¿PREPARADO</span></span>
+          <span class="reveal-line" style="--i:7.2"><span>PARA LA</span></span>
+          <span class="reveal-line" style="--i:8.9"><span>MONTAÑA?</span></span>
         </h2>
 
         <!-- Identificador de marca / programa -->
-        <div class="seasonal-program__brand-row" data-reveal style="--i:3">
+        <div class="seasonal-program__brand-row" data-reveal style="--i:10.6">
           <span class="seasonal-program__brand-title">Snow Performance</span>
           <span class="seasonal-program__brand-by">by Marshall</span>
         </div>
 
-        <!-- Conceptos esenciales (visualmente destacados) -->
-        <div class="seasonal-program__pillars" data-reveal style="--i:4" aria-label="Ejes de rendimiento de Snow Performance">
+        <!-- Conceptos esenciales, presentados como una trayectoria de descenso:
+             línea SVG muy fina que conecta las cuatro fases, se dibuja una sola
+             vez (stroke-dashoffset) al entrar en viewport y queda estática. -->
+        <div class="seasonal-program__pillars" data-reveal style="--i:12.8" aria-label="Ejes de rendimiento de Snow Performance">
+          <svg class="seasonal-program__trajectory" viewBox="0 0 400 32" preserveAspectRatio="none" aria-hidden="true" focusable="false">
+            <path d="M2,7 C110,2 190,29 398,19"></path>
+          </svg>
           <div class="seasonal-program__pillar">
             <span class="seasonal-program__pillar-tag">01</span>
             <span class="seasonal-program__pillar-name">Preparación</span>
@@ -501,7 +508,7 @@
         </div>
 
         <!-- CTA protagonista con presencia editorial -->
-        <div class="seasonal-program__actions" data-reveal style="--i:5">
+        <div class="seasonal-program__actions" data-reveal style="--i:15">
           <a class="seasonal-program__cta" href="/snow-performance">
             <span class="seasonal-program__cta-text">Descubrir Snow Performance</span>
             <span class="seasonal-program__cta-icon" aria-hidden="true">

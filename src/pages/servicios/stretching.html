@@ -934,114 +934,134 @@
     </div>
   </section>
 
-  <!-- ============ 11. Reseñas de Google ============
-       Cinta continua de opiniones reales verificadas en Physio Wellness,
-       priorizando testimonios vinculados a movilidad, recuperación y acompañamiento. -->
-  <section class="google-reviews" aria-label="Reseñas de Google de pacientes">
+  <!-- ============ 11. Reseñas editoriales / Experiencias en Physio Wellness ============ -->
+  <section class="editorial-reviews" id="resenas" aria-label="Experiencias reales de pacientes">
     <div class="container">
-      <div class="google-reviews__head">
-        <p class="eyebrow section-eyebrow">Reseñas de Google</p>
-        <h2 class="section-heading"><span class="google-reviews__highlight">Experiencias reales</span> de quienes han confiado en Physio Wellness</h2>
-      </div>
-    </div>
+      <div class="editorial-reviews__layout">
 
-    <div class="google-reviews__viewport" data-reviews-viewport>
-      <div class="google-reviews__rail" data-reviews-rail>
-        <ul class="google-reviews__list" data-reviews-track>
-          <li class="google-review-card">
-            <span class="google-review-card__tag">Experiencia en la clínica</span>
-            <p class="google-review-card__rating">
-              <span class="google-review-card__stars" aria-hidden="true">★★★★★</span>
-              <span class="sr-only">Valoración: 5 de 5 estrellas</span>
-            </p>
-            <blockquote class="google-review-card__quote">
-              <p>Marçal es un excelente profesional, en dos sesiones la mejoría es total.</p>
-              <p>Las instalaciones impecables, y también destacar la eficiencia y amabilidad de Abril.</p>
-            </blockquote>
-            <footer class="google-review-card__meta">
-              <span class="google-review-card__author">M. A. B. F.</span>
-              <span class="google-review-card__source">Reseña de Google</span>
-            </footer>
-          </li>
+        <!-- Columna editorial izquierda: contexto, titular y controles -->
+        <div class="editorial-reviews__col-intro" data-reveal>
+          <div class="editorial-reviews__head">
+            <p class="eyebrow section-eyebrow">Experiencias reales</p>
+            <h2 class="section-heading">Lo que dicen de nosotros</h2>
+          </div>
 
-          <li class="google-review-card">
-            <span class="google-review-card__tag">Movilidad & Recuperación</span>
-            <p class="google-review-card__rating">
-              <span class="google-review-card__stars" aria-hidden="true">★★★★★</span>
-              <span class="sr-only">Valoración: 5 de 5 estrellas</span>
-            </p>
-            <blockquote class="google-review-card__quote">
-              <p>Recomiendo totalmente a este profesional a cualquiera que necesite una atención de calidad. Tiene un conocimiento muy amplio, es atento y está realmente comprometido con la recuperación de sus pacientes. Desde la primera sesión se tomó el tiempo de entender la raíz del problema, no solo los síntomas, y creó un plan de tratamiento personalizado que marcó una diferencia real.</p>
-              <p>¡Gracias!</p>
-            </blockquote>
-            <footer class="google-review-card__meta">
-              <span class="google-review-card__author">J. D.</span>
-              <span class="google-review-card__source">Reseña de Google</span>
-            </footer>
-          </li>
+          <div class="editorial-reviews__google">
+            <span class="editorial-reviews__google-stars" aria-hidden="true">★★★★★</span>
+            <span class="editorial-reviews__google-score">5,0</span>
+            <span class="editorial-reviews__google-sep" aria-hidden="true">·</span>
+            <span class="editorial-reviews__google-label">Reseñas en Google</span>
+          </div>
 
-          <li class="google-review-card">
-            <span class="google-review-card__tag">Profesionalidad</span>
-            <p class="google-review-card__rating">
-              <span class="google-review-card__stars" aria-hidden="true">★★★★★</span>
-              <span class="sr-only">Valoración: 5 de 5 estrellas</span>
-            </p>
-            <blockquote class="google-review-card__quote">
-              <p>Marçal es muy profesional, resolutivo y transmite confianza. Soy paciente oncológica y su tratamiento está dando muy buen resultado. También me ha dado unos ejercicios que puedo hacer en mi casa . Estoy muy conforme.</p>
-            </blockquote>
-            <footer class="google-review-card__meta">
-              <span class="google-review-card__author">C. C. G.</span>
-              <span class="google-review-card__source">Reseña de Google</span>
-            </footer>
-          </li>
+          <div class="editorial-reviews__nav" aria-label="Navegación de testimonios">
+            <div class="editorial-reviews__buttons">
+              <button type="button" class="editorial-reviews__btn editorial-reviews__btn--prev" data-reviews-prev aria-label="Ver testimonio anterior">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <polyline points="15 18 9 12 15 6"></polyline>
+                </svg>
+              </button>
+              <span class="editorial-reviews__counter" data-reviews-counter aria-live="polite">01 / 06</span>
+              <button type="button" class="editorial-reviews__btn editorial-reviews__btn--next" data-reviews-next aria-label="Ver siguiente testimonio">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <polyline points="9 18 15 12 9 6"></polyline>
+                </svg>
+              </button>
+            </div>
+            <div class="editorial-reviews__progress-track" aria-hidden="true">
+              <div class="editorial-reviews__progress-bar" data-reviews-progress></div>
+            </div>
+          </div>
+        </div>
 
-          <li class="google-review-card">
-            <span class="google-review-card__tag">Atención personalizada</span>
-            <p class="google-review-card__rating">
-              <span class="google-review-card__stars" aria-hidden="true">★★★★★</span>
-              <span class="sr-only">Valoración: 5 de 5 estrellas</span>
-            </p>
-            <blockquote class="google-review-card__quote">
-              <p>Muy buenas manos, técnica y conocimiento profundo, con un trato muy atento y personalizado. Disponen de todo tipo de maquinaria cuando hace falta. Estoy tratando una lesión de rodilla y ya noté mejoría desde la primera sesión.</p>
-              <p>Totalmente recomendable, Marçal y su equipo son de lo mejor.</p>
-            </blockquote>
-            <footer class="google-review-card__meta">
-              <span class="google-review-card__author">I. G.</span>
-              <span class="google-review-card__source">Reseña de Google</span>
-            </footer>
-          </li>
+        <!-- Columna derecha: escenario de la reseña protagonista -->
+        <div class="editorial-reviews__col-stage">
+          <div class="editorial-reviews__stage" data-reviews-stage>
 
-          <li class="google-review-card">
-            <span class="google-review-card__tag">Trato y acompañamiento</span>
-            <p class="google-review-card__rating">
-              <span class="google-review-card__stars" aria-hidden="true">★★★★★</span>
-              <span class="sr-only">Valoración: 5 de 5 estrellas</span>
-            </p>
-            <blockquote class="google-review-card__quote">
-              <p>He tenido una muy buena experiencia en esta clínica. El tratamiento me ayudó de verdad a quitarme el dolor de espalda, y noté una mejoría importante después de las sesiones. Abril, la administradora, es muy amable, atenta y organizada, lo que hace que cada visita sea cómoda y sin complicaciones.</p>
-              <p>Un agradecimiento especial a Marshall, muy cualificado, profesional, atento y que realmente sabe lo que hace. Me sentí seguro y bien cuidado durante todo el proceso.</p>
-            </blockquote>
-            <footer class="google-review-card__meta">
-              <span class="google-review-card__author">A.</span>
-              <span class="google-review-card__source">Reseña de Google</span>
-            </footer>
-          </li>
+            <!-- Testimonio 1: M. A. B. F. -->
+            <article class="editorial-reviews__item is-active" data-reviews-item>
+              <div class="editorial-reviews__mark" aria-hidden="true">“</div>
+              <blockquote class="editorial-reviews__quote">
+                <p>Marçal es un excelente profesional, en dos sesiones la mejoría es total.</p>
+                <p>Las instalaciones impecables, y también destacar la eficiencia y amabilidad de Abril.</p>
+              </blockquote>
+              <footer class="editorial-reviews__meta">
+                <cite class="editorial-reviews__author">M. A. B. F.</cite>
+                <span class="editorial-reviews__sep" aria-hidden="true">·</span>
+                <span class="editorial-reviews__source">Paciente en Physio Wellness</span>
+              </footer>
+            </article>
 
-          <li class="google-review-card">
-            <span class="google-review-card__tag">Sensación corporal</span>
-            <p class="google-review-card__rating">
-              <span class="google-review-card__stars" aria-hidden="true">★★★★★</span>
-              <span class="sr-only">Valoración: 5 de 5 estrellas</span>
-            </p>
-            <blockquote class="google-review-card__quote">
-              <p>Encontré este centro y me han gustado mucho las sesiones que he tenido. Tiene un buen conocimiento del cuerpo y sabe cómo hacer que el paciente se sienta mejor tanto de forma inmediata como a largo plazo.</p>
-            </blockquote>
-            <footer class="google-review-card__meta">
-              <span class="google-review-card__author">T. M.</span>
-              <span class="google-review-card__source">Reseña de Google</span>
-            </footer>
-          </li>
-        </ul>
+            <!-- Testimonio 2: J. D. -->
+            <article class="editorial-reviews__item" data-reviews-item>
+              <div class="editorial-reviews__mark" aria-hidden="true">“</div>
+              <blockquote class="editorial-reviews__quote">
+                <p>Recomiendo totalmente a este profesional a cualquiera que necesite una atención de calidad. Tiene un conocimiento muy amplio, es atento y está realmente comprometido con la recuperación de sus pacientes. Desde la primera sesión se tomó el tiempo de entender la raíz del problema, no solo los síntomas, y creó un plan de tratamiento personalizado que marcó una diferencia real.</p>
+                <p>¡Gracias!</p>
+              </blockquote>
+              <footer class="editorial-reviews__meta">
+                <cite class="editorial-reviews__author">J. D.</cite>
+                <span class="editorial-reviews__sep" aria-hidden="true">·</span>
+                <span class="editorial-reviews__source">Paciente en Physio Wellness</span>
+              </footer>
+            </article>
+
+            <!-- Testimonio 3: C. C. G. -->
+            <article class="editorial-reviews__item" data-reviews-item>
+              <div class="editorial-reviews__mark" aria-hidden="true">“</div>
+              <blockquote class="editorial-reviews__quote">
+                <p>Marçal es muy profesional, resolutivo y transmite confianza. Soy paciente oncológica y su tratamiento está dando muy buen resultado. También me ha dado unos ejercicios que puedo hacer en mi casa. Estoy muy conforme.</p>
+              </blockquote>
+              <footer class="editorial-reviews__meta">
+                <cite class="editorial-reviews__author">C. C. G.</cite>
+                <span class="editorial-reviews__sep" aria-hidden="true">·</span>
+                <span class="editorial-reviews__source">Paciente en Physio Wellness</span>
+              </footer>
+            </article>
+
+            <!-- Testimonio 4: I. G. -->
+            <article class="editorial-reviews__item" data-reviews-item>
+              <div class="editorial-reviews__mark" aria-hidden="true">“</div>
+              <blockquote class="editorial-reviews__quote">
+                <p>Muy buenas manos, técnica y conocimiento profundo, con un trato muy atento y personalizado. Disponen de todo tipo de maquinaria cuando hace falta. Estoy tratando una lesión de rodilla y ya noté mejoría desde la primera sesión.</p>
+                <p>Totalmente recomendable, Marçal y su equipo son de lo mejor.</p>
+              </blockquote>
+              <footer class="editorial-reviews__meta">
+                <cite class="editorial-reviews__author">I. G.</cite>
+                <span class="editorial-reviews__sep" aria-hidden="true">·</span>
+                <span class="editorial-reviews__source">Paciente en Physio Wellness</span>
+              </footer>
+            </article>
+
+            <!-- Testimonio 5: A. -->
+            <article class="editorial-reviews__item" data-reviews-item>
+              <div class="editorial-reviews__mark" aria-hidden="true">“</div>
+              <blockquote class="editorial-reviews__quote">
+                <p>He tenido una muy buena experiencia en esta clínica. El tratamiento me ayudó de verdad a quitarme el dolor de espalda, y noté una mejoría importante después de las sesiones. Abril, la administradora, es muy amable, atenta y organizada, lo que hace que cada visita sea cómoda y sin complicaciones.</p>
+                <p>Un agradecimiento especial a Marshall, muy cualificado, profesional, atento y que realmente sabe lo que hace. Me sentí seguro y bien cuidado durante todo el proceso.</p>
+              </blockquote>
+              <footer class="editorial-reviews__meta">
+                <cite class="editorial-reviews__author">A.</cite>
+                <span class="editorial-reviews__sep" aria-hidden="true">·</span>
+                <span class="editorial-reviews__source">Paciente en Physio Wellness</span>
+              </footer>
+            </article>
+
+            <!-- Testimonio 6: T. M. -->
+            <article class="editorial-reviews__item" data-reviews-item>
+              <div class="editorial-reviews__mark" aria-hidden="true">“</div>
+              <blockquote class="editorial-reviews__quote">
+                <p>Encontré este centro y me han gustado mucho las sesiones que he tenido. Tiene un buen conocimiento del cuerpo y sabe cómo hacer que el paciente se sienta mejor tanto de forma inmediata como a largo plazo.</p>
+              </blockquote>
+              <footer class="editorial-reviews__meta">
+                <cite class="editorial-reviews__author">T. M.</cite>
+                <span class="editorial-reviews__sep" aria-hidden="true">·</span>
+                <span class="editorial-reviews__source">Paciente en Physio Wellness</span>
+              </footer>
+            </article>
+
+          </div>
+        </div>
+
       </div>
     </div>
   </section>

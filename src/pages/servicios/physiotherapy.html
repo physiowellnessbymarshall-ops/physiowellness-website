@@ -776,155 +776,246 @@
     </div>
   </section>
 
-  <!-- ============ Reseñas reales ============
-       FASE 10: sustituye el testimonio anterior (foto ambiental de
-       local-lounge + reseña de "A." + cita suelta de "T. M." como cierre)
-       por una única sección con dos niveles, sin inventar ni reformular
-       ninguna reseña:
+  <!-- ============ Tecnología y Equipamiento Clínico ============ -->
+  <section class="equipment-showcase" id="tecnologia" aria-label="Tecnología al servicio de tu recuperación">
+    <div class="container">
+      <div class="equipment-showcase__head" data-reveal>
+        <p class="eyebrow section-eyebrow">Equipamiento clínico</p>
+        <h2 class="section-heading">Tecnología al servicio de tu recuperación</h2>
+        <p class="section-lead">Herramientas clínicas de precisión que complementan la terapia manual y el movimiento activo para optimizar cada fase de tu tratamiento.</p>
+      </div>
 
-       1) Testimonio protagonista real: David Johnson, con su fotografía
-          real (ya usada como testimonio 2 en index.html#resenas) y el
-          texto íntegro y sin recortar de su reseña de Google, tal cual
-          aparece en esa misma página. ★★★★★ con el mismo criterio ya
-          usado antes en esta sección para "A.": el LocalBusiness JSON-LD
-          de esta página declara aggregateRating 5/5, así que no es una
-          valoración numérica inventada para este testimonio.
+      <div class="equipment-showcase__stage" data-equipment-showcase data-reveal style="--i:1">
+        <!-- Columna Protagonista (Display interactivo) -->
+        <article class="equipment-showcase__featured">
+          <div class="equipment-showcase__media">
+            <img class="equipment-showcase__img" data-equipment-hero-img src="../../assets/img/machinery/magnetolith.webp" alt="Equipo Magnetolith para terapia de magnetotransducción extracorpórea" width="246" height="276" loading="lazy">
+          </div>
+          <div class="equipment-showcase__info">
+            <span class="equipment-showcase__badge" data-equipment-badge>Regeneración tisular</span>
+            <h3 class="equipment-showcase__name" data-equipment-name>Magnetolith</h3>
+            <p class="equipment-showcase__role" data-equipment-role>Tecnología de alta intensidad (EMTT)</p>
+            <p class="equipment-showcase__desc" data-equipment-desc>Estimula los procesos naturales de recuperación muscular y articular mediante impulsos magnéticos de alta frecuencia, acelerando la recuperación funcional y aliviando molestias persistentes.</p>
+          </div>
+        </article>
 
-       2) Debajo, la cinta de 6 reseñas de Google (.google-reviews,
-          googleReviewsMarquee en main.js) copiada tal cual de
-          stretching.html — mismo componente, mismas 6 reseñas reales
-          (M. A. B. F., J. D., C. C. G., I. G., A., T. M.), sin tocar su
-          CSS/JS. Incluye íntegras las reseñas de "A." e "I. G." que antes
-          vivían recortadas o sueltas en otras partes de esta página, así
-          que no se pierden, solo dejan de estar duplicadas.
+        <!-- Columna Selector / Rail de exploración -->
+        <div class="equipment-showcase__nav">
+          <div class="equipment-showcase__nav-head">
+            <span class="equipment-showcase__nav-label">Equipamiento disponible</span>
+            <div class="equipment-showcase__controls">
+              <button type="button" class="equipment-showcase__btn equipment-showcase__btn--prev" data-equipment-prev aria-label="Ver equipo anterior">
+                <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M9 2L4 7l5 5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </button>
+              <span class="equipment-showcase__counter" data-equipment-counter aria-live="polite">01 / 04</span>
+              <button type="button" class="equipment-showcase__btn equipment-showcase__btn--next" data-equipment-next aria-label="Ver siguiente equipo">
+                <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M5 2l5 5-5 5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </button>
+            </div>
+          </div>
 
-       No se añade un enlace "Ver todas las reseñas en Google": no existe
-       todavía una URL real del perfil de Google Maps del negocio en
-       ningún archivo del proyecto, y no se debe inventar. Añadir ese
-       enlace es una tarea pendiente para cuando se disponga de la URL
-       real. -->
-  <section class="testimonial-feature" id="resenas-reales" aria-label="Reseña de un paciente">
-    <div class="container testimonial-feature__grid">
-      <figure class="testimonial-feature__photo" data-reveal>
-        <img src="../../assets/img/reviews/david-johnson-1200.webp" srcset="../../assets/img/reviews/david-johnson-720.webp 720w, ../../assets/img/reviews/david-johnson-1200.webp 1200w" sizes="(min-width:860px) 38vw, 100vw" alt="David Johnson, paciente de Physio Wellness" loading="lazy" width="1200" height="1714" style="object-position:center 20%;">
-      </figure>
-      <div class="testimonial-feature__body" data-reveal style="--i:1">
-        <p class="eyebrow section-eyebrow">Reseñas reales</p>
-        <p class="testimonial-feature__stars" aria-hidden="true">★★★★★</p>
-        <span class="sr-only">Valoración: 5 de 5 estrellas</span>
-        <blockquote class="testimonial-feature__quote">
-          <p>“¡El mejor fisioterapeuta con el que he trabajado nunca! Marçal lleva más de un año tratando mis problemas derivados de la edad y me ha ayudado a evitar otros nuevos. Tiene un trato muy humano y cercano, y una excelente formación. Habla inglés, castellano y catalán. Se lo he recomendado a todas las personas que conozco con molestias. Además, siempre responde con rapidez y es muy puntual. ¡Un diez!”</p>
-        </blockquote>
-        <cite class="testimonial-feature__cite">David Johnson · Reseña de Google</cite>
+          <div class="equipment-showcase__track" role="tablist" aria-label="Equipos de fisioterapia">
+            <button type="button" role="tab" class="equipment-showcase__item-btn is-active" aria-selected="true" data-equipment-item
+              data-img-src="../../assets/img/machinery/magnetolith.webp"
+              data-img-alt="Equipo Magnetolith para terapia de magnetotransducción extracorpórea"
+              data-badge="Regeneración tisular"
+              data-name="Magnetolith"
+              data-role="Tecnología de alta intensidad (EMTT)"
+              data-desc="Estimula los procesos naturales de recuperación muscular y articular mediante impulsos magnéticos de alta frecuencia, acelerando la recuperación funcional y aliviando molestias persistentes.">
+              <span class="equipment-showcase__item-num">01</span>
+              <div>
+                <h4 class="equipment-showcase__item-name">Magnetolith</h4>
+                <span class="equipment-showcase__item-tag">EMTT · Alta intensidad</span>
+              </div>
+              <div class="equipment-showcase__item-thumb">
+                <img src="../../assets/img/machinery/magnetolith.webp" alt="" width="246" height="276" loading="lazy">
+              </div>
+            </button>
+
+            <button type="button" role="tab" class="equipment-showcase__item-btn" aria-selected="false" data-equipment-item
+              data-img-src="../../assets/img/machinery/intradermik.webp"
+              data-img-alt="Dispositivo Intradermik TECARpro para radiofrecuencia y diatermia profunda"
+              data-badge="Diatermia profunda"
+              data-name="Intradermik · TECARpro"
+              data-role="Transferencia eléctrica capacitiva y resistiva"
+              data-desc="Aumenta de forma controlada la temperatura en los tejidos profundos para estimular la vascularización, calmar el dolor y facilitar la regeneración celular en combinación con la terapia manual.">
+              <span class="equipment-showcase__item-num">02</span>
+              <div>
+                <h4 class="equipment-showcase__item-name">Intradermik</h4>
+                <span class="equipment-showcase__item-tag">TECAR · Radiofrecuencia</span>
+              </div>
+              <div class="equipment-showcase__item-thumb">
+                <img src="../../assets/img/machinery/intradermik.webp" alt="" width="227" height="267" loading="lazy">
+              </div>
+            </button>
+
+            <button type="button" role="tab" class="equipment-showcase__item-btn" aria-selected="false" data-equipment-item
+              data-img-src="../../assets/img/machinery/physio.webp"
+              data-img-alt="Dispositivo Chattanooga PHYSIO para electroterapia y neuromodulación"
+              data-badge="Electroestimulación clínica"
+              data-name="PHYSIO"
+              data-role="Estimulador de cuatro canales (TENS &amp; NMES)"
+              data-desc="Dispositivo versátil para el control del dolor y la reactivación neuromuscular progresiva, adaptando parámetros específicos a las necesidades de cada patología.">
+              <span class="equipment-showcase__item-num">03</span>
+              <div>
+                <h4 class="equipment-showcase__item-name">PHYSIO</h4>
+                <span class="equipment-showcase__item-tag">TENS &amp; NMES · 4 canales</span>
+              </div>
+              <div class="equipment-showcase__item-thumb">
+                <img src="../../assets/img/machinery/physio.webp" alt="" width="246" height="258" loading="lazy">
+              </div>
+            </button>
+
+            <button type="button" role="tab" class="equipment-showcase__item-btn" aria-selected="false" data-equipment-item
+              data-img-src="../../assets/img/machinery/theragun-pro.webp"
+              data-img-alt="Theragun PRO para terapia de percusión muscular profunda"
+              data-badge="Terapia percusiva"
+              data-name="Theragun PRO"
+              data-role="Percusión muscular profunda EQ-150"
+              data-desc="Tratamiento muscular focalizado que libera tensiones y adherencias miofasciales, modulando la percepción del dolor y preparando el tejido antes y después de la intervención.">
+              <span class="equipment-showcase__item-num">04</span>
+              <div>
+                <h4 class="equipment-showcase__item-name">Theragun PRO</h4>
+                <span class="equipment-showcase__item-tag">Percusión · Miofascial</span>
+              </div>
+              <div class="equipment-showcase__item-thumb">
+                <img src="../../assets/img/machinery/theragun-pro.webp" alt="" width="242" height="217" loading="lazy">
+              </div>
+            </button>
+          </div>
+        </div>
       </div>
     </div>
   </section>
 
-  <section class="google-reviews" aria-label="Más reseñas de Google de pacientes">
+  <!-- ============ Reseñas editoriales / Experiencias en Physio Wellness ============ -->
+  <section class="editorial-reviews" id="resenas" aria-label="Experiencias reales de pacientes">
     <div class="container">
-      <div class="google-reviews__head">
-        <p class="eyebrow section-eyebrow">Reseñas de Google</p>
-        <h2 class="section-heading"><span class="google-reviews__highlight">Experiencias reales</span> de quienes han confiado en Physio Wellness</h2>
-      </div>
-    </div>
+      <div class="editorial-reviews__layout">
 
-    <div class="google-reviews__viewport" data-reviews-viewport>
-      <div class="google-reviews__rail" data-reviews-rail>
-        <ul class="google-reviews__list" data-reviews-track>
-          <li class="google-review-card">
-            <span class="google-review-card__tag">Experiencia en la clínica</span>
-            <p class="google-review-card__rating">
-              <span class="google-review-card__stars" aria-hidden="true">★★★★★</span>
-              <span class="sr-only">Valoración: 5 de 5 estrellas</span>
-            </p>
-            <blockquote class="google-review-card__quote">
-              <p>Marçal es un excelente profesional, en dos sesiones la mejoría es total.</p>
-              <p>Las instalaciones impecables, y también destacar la eficiencia y amabilidad de Abril.</p>
-            </blockquote>
-            <footer class="google-review-card__meta">
-              <span class="google-review-card__author">M. A. B. F.</span>
-              <span class="google-review-card__source">Reseña de Google</span>
-            </footer>
-          </li>
+        <!-- Columna editorial izquierda: contexto, titular y controles -->
+        <div class="editorial-reviews__col-intro" data-reveal>
+          <div class="editorial-reviews__head">
+            <p class="eyebrow section-eyebrow">Experiencias reales</p>
+            <h2 class="section-heading">Lo que dicen quienes confían en nosotros</h2>
+          </div>
 
-          <li class="google-review-card">
-            <span class="google-review-card__tag">Fisioterapia</span>
-            <p class="google-review-card__rating">
-              <span class="google-review-card__stars" aria-hidden="true">★★★★★</span>
-              <span class="sr-only">Valoración: 5 de 5 estrellas</span>
-            </p>
-            <blockquote class="google-review-card__quote">
-              <p>Recomiendo totalmente a este fisioterapeuta a cualquiera que necesite una atención de calidad. Tiene un conocimiento muy amplio, es atento y está realmente comprometido con la recuperación de sus pacientes. Desde la primera sesión se tomó el tiempo de entender la raíz del problema, no solo los síntomas, y creó un plan de tratamiento personalizado que marcó una diferencia real.</p>
-              <p>¡Gracias!</p>
-            </blockquote>
-            <footer class="google-review-card__meta">
-              <span class="google-review-card__author">J. D.</span>
-              <span class="google-review-card__source">Reseña de Google</span>
-            </footer>
-          </li>
+          <div class="editorial-reviews__google">
+            <span class="editorial-reviews__google-stars" aria-hidden="true">★★★★★</span>
+            <span class="editorial-reviews__google-score">5,0</span>
+            <span class="editorial-reviews__google-sep" aria-hidden="true">·</span>
+            <span class="editorial-reviews__google-label">Reseñas en Google</span>
+          </div>
 
-          <li class="google-review-card">
-            <span class="google-review-card__tag">Profesionalidad</span>
-            <p class="google-review-card__rating">
-              <span class="google-review-card__stars" aria-hidden="true">★★★★★</span>
-              <span class="sr-only">Valoración: 5 de 5 estrellas</span>
-            </p>
-            <blockquote class="google-review-card__quote">
-              <p>Marçal es muy profesional, resolutivo y transmite confianza. Soy paciente oncológica y su tratamiento está dando muy buen resultado. También me ha dado unos ejercicios que puedo hacer en mi casa . Estoy muy conforme.</p>
-            </blockquote>
-            <footer class="google-review-card__meta">
-              <span class="google-review-card__author">C. C. G.</span>
-              <span class="google-review-card__source">Reseña de Google</span>
-            </footer>
-          </li>
+          <div class="editorial-reviews__nav" aria-label="Navegación de testimonios">
+            <div class="editorial-reviews__buttons">
+              <button type="button" class="editorial-reviews__btn editorial-reviews__btn--prev" data-reviews-prev aria-label="Ver testimonio anterior">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <polyline points="15 18 9 12 15 6"></polyline>
+                </svg>
+              </button>
+              <span class="editorial-reviews__counter" data-reviews-counter aria-live="polite">01 / 06</span>
+              <button type="button" class="editorial-reviews__btn editorial-reviews__btn--next" data-reviews-next aria-label="Ver siguiente testimonio">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <polyline points="9 18 15 12 9 6"></polyline>
+                </svg>
+              </button>
+            </div>
+            <div class="editorial-reviews__progress-track" aria-hidden="true">
+              <div class="editorial-reviews__progress-bar" data-reviews-progress></div>
+            </div>
+          </div>
+        </div>
 
-          <li class="google-review-card">
-            <span class="google-review-card__tag">Atención personalizada</span>
-            <p class="google-review-card__rating">
-              <span class="google-review-card__stars" aria-hidden="true">★★★★★</span>
-              <span class="sr-only">Valoración: 5 de 5 estrellas</span>
-            </p>
-            <blockquote class="google-review-card__quote">
-              <p>Muy buenas manos, técnica y conocimiento profundo, con un trato muy atento y personalizado. Disponen de todo tipo de maquinaria cuando hace falta. Estoy tratando una lesión de rodilla y ya noté mejoría desde la primera sesión.</p>
-              <p>Totalmente recomendable, Marçal y su equipo son de lo mejor.</p>
-            </blockquote>
-            <footer class="google-review-card__meta">
-              <span class="google-review-card__author">I. G.</span>
-              <span class="google-review-card__source">Reseña de Google</span>
-            </footer>
-          </li>
+        <!-- Columna derecha: escenario de la reseña protagonista -->
+        <div class="editorial-reviews__col-stage">
+          <div class="editorial-reviews__stage" data-reviews-stage>
 
-          <li class="google-review-card">
-            <span class="google-review-card__tag">Trato y acompañamiento</span>
-            <p class="google-review-card__rating">
-              <span class="google-review-card__stars" aria-hidden="true">★★★★★</span>
-              <span class="sr-only">Valoración: 5 de 5 estrellas</span>
-            </p>
-            <blockquote class="google-review-card__quote">
-              <p>He tenido una muy buena experiencia en esta clínica de fisioterapia. El tratamiento me ayudó de verdad a quitarme el dolor de espalda, y noté una mejoría importante después de las sesiones. Abril, la administradora, es muy amable, atenta y organizada, lo que hace que cada visita sea cómoda y sin complicaciones.</p>
-              <p>Un agradecimiento especial a Marshall, un fisioterapeuta muy cualificado, profesional, atento y que realmente sabe lo que hace. Me sentí seguro y bien cuidado durante todo el proceso. Recomiendo totalmente este centro a cualquiera que tenga dolor de espalda o busque fisioterapia de calidad.</p>
-            </blockquote>
-            <footer class="google-review-card__meta">
-              <span class="google-review-card__author">A.</span>
-              <span class="google-review-card__source">Reseña de Google</span>
-            </footer>
-          </li>
+            <!-- Testimonio 1: David Johnson -->
+            <article class="editorial-reviews__item is-active" data-reviews-item>
+              <div class="editorial-reviews__mark" aria-hidden="true">“</div>
+              <blockquote class="editorial-reviews__quote">
+                <p>¡El mejor fisioterapeuta con el que he trabajado nunca! Marçal lleva más de un año tratando mis problemas derivados de la edad y me ha ayudado a evitar otros nuevos. Tiene un trato muy humano y cercano, y una excelente formación. Habla inglés, castellano y catalán. Se lo he recomendado a todas las personas que conozco con molestias. Además, siempre responde con rapidez y es muy puntual. ¡Un diez!</p>
+              </blockquote>
+              <footer class="editorial-reviews__meta">
+                <cite class="editorial-reviews__author">David Johnson</cite>
+                <span class="editorial-reviews__sep" aria-hidden="true">·</span>
+                <span class="editorial-reviews__source">Paciente en Physio Wellness</span>
+              </footer>
+            </article>
 
-          <li class="google-review-card">
-            <span class="google-review-card__tag">Recuperación</span>
-            <p class="google-review-card__rating">
-              <span class="google-review-card__stars" aria-hidden="true">★★★★★</span>
-              <span class="sr-only">Valoración: 5 de 5 estrellas</span>
-            </p>
-            <blockquote class="google-review-card__quote">
-              <p>Encontré este centro y me han gustado mucho las sesiones que he tenido. Tiene un buen conocimiento del cuerpo y sabe cómo hacer que el paciente se sienta mejor tanto de forma inmediata como a largo plazo.</p>
-            </blockquote>
-            <footer class="google-review-card__meta">
-              <span class="google-review-card__author">T. M.</span>
-              <span class="google-review-card__source">Reseña de Google</span>
-            </footer>
-          </li>
-        </ul>
+            <!-- Testimonio 2: M. A. B. F. -->
+            <article class="editorial-reviews__item" data-reviews-item>
+              <div class="editorial-reviews__mark" aria-hidden="true">“</div>
+              <blockquote class="editorial-reviews__quote">
+                <p>Marçal es un excelente profesional, en dos sesiones la mejoría es total.</p>
+                <p>Las instalaciones impecables, y también destacar la eficiencia y amabilidad de Abril.</p>
+              </blockquote>
+              <footer class="editorial-reviews__meta">
+                <cite class="editorial-reviews__author">M. A. B. F.</cite>
+                <span class="editorial-reviews__sep" aria-hidden="true">·</span>
+                <span class="editorial-reviews__source">Paciente en Physio Wellness</span>
+              </footer>
+            </article>
+
+            <!-- Testimonio 3: J. D. -->
+            <article class="editorial-reviews__item" data-reviews-item>
+              <div class="editorial-reviews__mark" aria-hidden="true">“</div>
+              <blockquote class="editorial-reviews__quote">
+                <p>Recomiendo totalmente a este fisioterapeuta a cualquiera que necesite una atención de calidad. Tiene un conocimiento muy amplio, es atento y está realmente comprometido con la recuperación de sus pacientes. Desde la primera sesión se tomó el tiempo de entender la raíz del problema, no solo los síntomas, y creó un plan de tratamiento personalizado que marcó una diferencia real.</p>
+                <p>¡Gracias!</p>
+              </blockquote>
+              <footer class="editorial-reviews__meta">
+                <cite class="editorial-reviews__author">J. D.</cite>
+                <span class="editorial-reviews__sep" aria-hidden="true">·</span>
+                <span class="editorial-reviews__source">Paciente en Physio Wellness</span>
+              </footer>
+            </article>
+
+            <!-- Testimonio 4: C. C. G. -->
+            <article class="editorial-reviews__item" data-reviews-item>
+              <div class="editorial-reviews__mark" aria-hidden="true">“</div>
+              <blockquote class="editorial-reviews__quote">
+                <p>Marçal es muy profesional, resolutivo y transmite confianza. Soy paciente oncológica y su tratamiento está dando muy buen resultado. También me ha dado unos ejercicios que puedo hacer en mi casa. Estoy muy conforme.</p>
+              </blockquote>
+              <footer class="editorial-reviews__meta">
+                <cite class="editorial-reviews__author">C. C. G.</cite>
+                <span class="editorial-reviews__sep" aria-hidden="true">·</span>
+                <span class="editorial-reviews__source">Paciente en Physio Wellness</span>
+              </footer>
+            </article>
+
+            <!-- Testimonio 5: I. G. -->
+            <article class="editorial-reviews__item" data-reviews-item>
+              <div class="editorial-reviews__mark" aria-hidden="true">“</div>
+              <blockquote class="editorial-reviews__quote">
+                <p>Muy buenas manos, técnica y conocimiento profundo, con un trato muy atento y personalizado. Disponen de todo tipo de maquinaria cuando hace falta. Estoy tratando una lesión de rodilla y ya noté mejoría desde la primera sesión.</p>
+                <p>Totalmente recomendable, Marçal y su equipo son de lo mejor.</p>
+              </blockquote>
+              <footer class="editorial-reviews__meta">
+                <cite class="editorial-reviews__author">I. G.</cite>
+                <span class="editorial-reviews__sep" aria-hidden="true">·</span>
+                <span class="editorial-reviews__source">Paciente en Physio Wellness</span>
+              </footer>
+            </article>
+
+            <!-- Testimonio 6: A. -->
+            <article class="editorial-reviews__item" data-reviews-item>
+              <div class="editorial-reviews__mark" aria-hidden="true">“</div>
+              <blockquote class="editorial-reviews__quote">
+                <p>He tenido una muy buena experiencia en esta clínica de fisioterapia. El tratamiento me ayudó de verdad a quitarme el dolor de espalda, y noté una mejoría importante después de las sesiones. Abril, la administradora, es muy amable, atenta y organizada, lo que hace que cada visita sea cómoda y sin complicaciones.</p>
+                <p>Un agradecimiento especial a Marshall, un fisioterapeuta muy cualificado, profesional, atento y que realmente sabe lo que hace. Me sentí seguro y bien cuidado durante todo el proceso. Recomiendo totalmente este centro.</p>
+              </blockquote>
+              <footer class="editorial-reviews__meta">
+                <cite class="editorial-reviews__author">A.</cite>
+                <span class="editorial-reviews__sep" aria-hidden="true">·</span>
+                <span class="editorial-reviews__source">Paciente en Physio Wellness</span>
+              </footer>
+            </article>
+
+          </div>
+        </div>
+
       </div>
     </div>
   </section>

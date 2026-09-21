@@ -468,6 +468,9 @@ Incorporación de equipamiento tecnológico real del centro (referenciado desde 
 | **Force USA C10** | `src/assets/img/machinery/force-c10.webp` | Activo oficial Force USA / Fitshop, procesado con fondo transparente | Sistema todo en uno de poleas multidireccionales y rack guiado para sobrecarga progresiva y patrones angulares. |
 | **BlazePod Trainer Kit** | `src/assets/img/machinery/blazepod-kit.webp` | Activo oficial BlazePod, procesado con fondo transparente | Sistema de pods lumínicos reactivos para agilidad, visión periférica y respuesta neuromuscular refleja. |
 | **SAGA BFR Cuffs** | `src/assets/img/machinery/bfr-cuffs.webp` | Activo oficial SAGA Fitness, procesado con fondo transparente | Dispositivo inalámbrico de restricción del flujo sanguíneo con calibración digital para hipertrofia y readaptación tisular. |
+| **Mito Light Expert 3.0** | `src/assets/img/machinery/mito-light.webp` | Activo oficial Mito Light (1024×1024), con panel iluminado y fondo transparente | Panel de fotobiomodulación y terapia de luz roja/infrarroja con panel LED frontal activo. |
+| **Theragun PRO** | `src/assets/img/machinery/theragun-pro.webp` | Activo oficial Therabody (1200×900), con fondo transparente real (sin recuadro beige) | Dispositivo de terapia de percusión muscular profunda para liberación miofascial. |
+| **RÖS'S Intradermik** | `src/assets/img/machinery/intradermik.webp` | Activo oficial RÖS'S International (1600×1030), con fondo transparente real | Sistema dual de diatermia/TECAR compuesto por unidad de sobremesa con pantalla inclinada e inscripción frontal «INTRADERMIK» y maletín complementario oficial. |
 
 ### Espacio de entrenamiento: Galería editorial Strength & Pilates (2026-09-21)
 

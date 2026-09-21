@@ -1836,13 +1836,15 @@ var prefersReducedMotion = window.matchMedia && window.matchMedia('(prefers-redu
    focuseables dentro, así que no hace falta tocar tabindex tarjeta a
    tarjeta). Con prefers-reduced-motion, o si algo falla, no se crea
    ningún duplicado ni arranca ningún bucle: [data-reviews-viewport] se
-   queda con su overflow-x:auto de base (CSS) y las 6 reseñas reales
+   queda con su overflow-x:auto de base (CSS) y las 6 reseñas reales */
+
 /* ---------- 15b. Editorial Reviews Slider ----------
-   Gestor del componente editorial de reseñas y testimonios.
-   - Navegación asimétrica en 2 columnas: Columna editorial fija + Escenario de cita.
-   - Transiciones suaves de fade y micro-desplazamiento vertical.
-   - Autoplay pausado al interactuar (hover, focus, touch swipe, fuera de viewport).
-   - Accesible (roles, aria-live, teclado ArrowLeft/ArrowRight, prefers-reduced-motion). */
+   Gestor del component editorial de ressenyes i testimonis.
+   - Navegació asimètrica en 2 columnes: Context compacte + Ressenya protagonista.
+   - Transicions suaus de fade i micro-desplaçament vertical (6px).
+   - Indicador de progrés de carrusel proporcional a la diapositiva activa.
+   - Autoplay lent (8s) amb pausa en hover, focus, swipe, visibilitat i fora de viewport.
+   - Suport de teclat (ArrowLeft/ArrowRight), swipe tàctil i prefers-reduced-motion. */
 (function editorialReviewsSlider(){
   try{
     var sections = document.querySelectorAll('.editorial-reviews');
@@ -1860,12 +1862,9 @@ var prefersReducedMotion = window.matchMedia && window.matchMedia('(prefers-redu
 
       var currentIndex = 0;
       var total = items.length;
-      var INTERVAL = 7500; /* ms: tiempo suficiente para lectura tranquila */
+      var INTERVAL = 8000; /* ms: lectura editorial tranquil·la */
       var timerId = null;
-      var progressStart = null;
-      var elapsedBeforePause = 0;
       var isPaused = false;
-      var rafId = null;
 
       function padZero(num){
         return num < 10 ? '0' + num : '' + num;
@@ -1874,6 +1873,13 @@ var prefersReducedMotion = window.matchMedia && window.matchMedia('(prefers-redu
       function updateCounter(){
         if(counterEl){
           counterEl.textContent = padZero(currentIndex + 1) + ' / ' + padZero(total);
+        }
+      }
+
+      function updateProgress(){
+        if(progressBar){
+          var pct = ((currentIndex + 1) / total) * 100;
+          progressBar.style.width = pct + '%';
         }
       }
 
@@ -1893,6 +1899,7 @@ var prefersReducedMotion = window.matchMedia && window.matchMedia('(prefers-redu
 
         currentIndex = newIndex;
         updateCounter();
+        updateProgress();
         resetTimer();
       }
 
@@ -1904,44 +1911,21 @@ var prefersReducedMotion = window.matchMedia && window.matchMedia('(prefers-redu
         goTo((currentIndex - 1 + total) % total);
       }
 
-      function stepProgress(timestamp){
-        if(!progressStart) progressStart = timestamp - elapsedBeforePause;
-        var currentElapsed = timestamp - progressStart;
-
-        if(progressBar){
-          var pct = Math.min(100, (currentElapsed / INTERVAL) * 100);
-          progressBar.style.width = pct + '%';
-        }
-
-        if(currentElapsed >= INTERVAL){
-          next();
-        } else if(!isPaused && !prefersReducedMotion){
-          rafId = requestAnimationFrame(stepProgress);
-        }
-      }
-
       function startTimer(){
         if(prefersReducedMotion || total <= 1 || isPaused) return;
-        cancelAnimationFrame(rafId);
-        rafId = requestAnimationFrame(stepProgress);
+        clearTimeout(timerId);
+        timerId = setTimeout(function(){
+          next();
+        }, INTERVAL);
       }
 
       function pauseTimer(){
-        if(rafId){
-          cancelAnimationFrame(rafId);
-          rafId = null;
-        }
-        if(progressStart){
-          elapsedBeforePause = performance.now() - progressStart;
-        }
+        clearTimeout(timerId);
+        timerId = null;
       }
 
       function resetTimer(){
-        cancelAnimationFrame(rafId);
-        rafId = null;
-        progressStart = null;
-        elapsedBeforePause = 0;
-        if(progressBar) progressBar.style.width = '0%';
+        pauseTimer();
         if(!isPaused && !prefersReducedMotion && total > 1){
           startTimer();
         }
@@ -1957,7 +1941,12 @@ var prefersReducedMotion = window.matchMedia && window.matchMedia('(prefers-redu
         }
       }
 
-      /* Controles manuales */
+      /* Inicialitzar estat */
+      updateCounter();
+      updateProgress();
+      startTimer();
+
+      /* Controles manuals */
       if(prevBtn){
         prevBtn.addEventListener('click', function(){
           prev();
@@ -1973,7 +1962,7 @@ var prefersReducedMotion = window.matchMedia && window.matchMedia('(prefers-redu
       section.addEventListener('mouseenter', function(){ setPause(true); });
       section.addEventListener('mouseleave', function(){ setPause(false); });
 
-      /* Pausa en foco de teclado */
+      /* Pausa en focus de teclat */
       section.addEventListener('focusin', function(){ setPause(true); });
       section.addEventListener('focusout', function(){
         setTimeout(function(){
@@ -1981,13 +1970,13 @@ var prefersReducedMotion = window.matchMedia && window.matchMedia('(prefers-redu
         }, 50);
       });
 
-      /* Pausa cuando la pestaña no es visible */
+      /* Pausa quan la pestanya no és visible */
       document.addEventListener('visibilitychange', function(){
         if(document.hidden) setPause(true);
         else if(!section.matches(':hover')) setPause(false);
       });
 
-      /* Pausa fuera de vista (IntersectionObserver) */
+      /* Pausa fora de vista (IntersectionObserver) */
       if('IntersectionObserver' in window){
         var io = new IntersectionObserver(function(entries){
           entries.forEach(function(entry){
@@ -1998,7 +1987,7 @@ var prefersReducedMotion = window.matchMedia && window.matchMedia('(prefers-redu
         io.observe(section);
       }
 
-      /* Soporte de teclado (Flechas izquierda/derecha cuando el foco está dentro de la sección) */
+      /* Suport de teclat (Flechas esquerra/dreta quan el focus és dins de la secció) */
       section.addEventListener('keydown', function(e){
         if(e.key === 'ArrowLeft'){
           prev();
@@ -2009,7 +1998,7 @@ var prefersReducedMotion = window.matchMedia && window.matchMedia('(prefers-redu
         }
       });
 
-      /* Gestos táctiles (Swipe suave para móviles) */
+      /* Gestos tàctils (Swipe suau per a mòbils) */
       if(stage){
         var touchStartX = 0;
         var touchStartY = 0;
@@ -2029,7 +2018,6 @@ var prefersReducedMotion = window.matchMedia && window.matchMedia('(prefers-redu
           if(!isSwiping || !e.touches || e.touches.length > 1) return;
           touchDiffX = e.touches[0].clientX - touchStartX;
           var diffY = e.touches[0].clientY - touchStartY;
-          /* Si el usuario está scrolleando verticalmente más que horizontalmente, no intervenir */
           if(Math.abs(diffY) > Math.abs(touchDiffX)) {
             isSwiping = false;
           }
@@ -2964,11 +2952,12 @@ var prefersReducedMotion = window.matchMedia && window.matchMedia('(prefers-redu
       });
     });
 
-    /* Compatibilidad offline para enlaces /snow-performance si se abre vía file:// */
-    if(window.location.protocol === 'file:'){
+    /* Compatibilidad para enlaces /snow-performance en file:// o subrutas de GitHub Pages */
+    if(window.location.protocol === 'file:' || window.location.pathname.indexOf('/physiowellness-website') !== -1){
       var snowLinks = document.querySelectorAll('a[href="/snow-performance"]');
+      var isServices = window.location.pathname.indexOf('/src/pages/servicios/') !== -1;
       var isInsideSubdir = window.location.pathname.indexOf('/src/pages/') !== -1;
-      var targetPath = isInsideSubdir ? '../../snow-performance/index.html' : 'snow-performance/index.html';
+      var targetPath = isServices ? '../../../snow-performance/index.html' : (isInsideSubdir ? '../../snow-performance/index.html' : (window.location.pathname.indexOf('/physiowellness-website') !== -1 ? '/physiowellness-website/snow-performance/' : 'snow-performance/index.html'));
       snowLinks.forEach(function(link){
         link.setAttribute('href', targetPath);
       });

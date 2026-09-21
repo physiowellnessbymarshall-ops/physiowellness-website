@@ -835,7 +835,7 @@
         <!-- Columna Protagonista (Display interactivo) -->
         <article class="equipment-showcase__featured">
           <div class="equipment-showcase__media">
-            <img class="equipment-showcase__img" data-equipment-hero-img src="../../assets/img/machinery/mito-light.webp" alt="Panel Mito Light para terapia de fotobiomodulación y luz roja" width="246" height="282" loading="lazy">
+            <img class="equipment-showcase__img" data-equipment-hero-img src="../../assets/img/machinery/mito-light.webp" alt="Panel Mito Light para terapia de fotobiomodulación y luz roja" width="569" height="911" loading="lazy">
           </div>
           <div class="equipment-showcase__info">
             <span class="equipment-showcase__badge" data-equipment-badge>Fotobiomodulación</span>
@@ -874,7 +874,7 @@
                 <span class="equipment-showcase__item-tag">Luz roja · Regeneración</span>
               </div>
               <div class="equipment-showcase__item-thumb">
-                <img src="../../assets/img/machinery/mito-light.webp" alt="" width="246" height="282" loading="lazy">
+                <img src="../../assets/img/machinery/mito-light.webp" alt="" width="569" height="911" loading="lazy">
               </div>
             </button>
 
@@ -891,7 +891,7 @@
                 <span class="equipment-showcase__item-tag">Presoterapia · Drenaje</span>
               </div>
               <div class="equipment-showcase__item-thumb">
-                <img src="../../assets/img/machinery/reboots.webp" alt="" width="340" height="184" loading="lazy">
+                <img src="../../assets/img/machinery/reboots.webp" alt="" width="1006" height="816" loading="lazy">
               </div>
             </button>
 
@@ -908,7 +908,7 @@
                 <span class="equipment-showcase__item-tag">LED facial · Descanso</span>
               </div>
               <div class="equipment-showcase__item-thumb">
-                <img src="../../assets/img/machinery/theraface-mask.webp" alt="" width="246" height="246" loading="lazy">
+                <img src="../../assets/img/machinery/theraface-mask.webp" alt="" width="1400" height="1201" loading="lazy">
               </div>
             </button>
 
@@ -925,7 +925,7 @@
                 <span class="equipment-showcase__item-tag">Vibración &amp; Calor · Sienes</span>
               </div>
               <div class="equipment-showcase__item-thumb">
-                <img src="../../assets/img/machinery/smartgoggles.webp" alt="" width="279" height="189" loading="lazy">
+                <img src="../../assets/img/machinery/smartgoggles.webp" alt="" width="1500" height="686" loading="lazy">
               </div>
             </button>
 
@@ -942,7 +942,7 @@
                 <span class="equipment-showcase__item-tag">Tono muscular · Pasivo</span>
               </div>
               <div class="equipment-showcase__item-thumb">
-                <img src="../../assets/img/machinery/emsculpt.webp" alt="" width="246" height="267" loading="lazy">
+                <img src="../../assets/img/machinery/emsculpt.webp" alt="" width="539" height="727" loading="lazy">
               </div>
             </button>
 
@@ -973,37 +973,18 @@
     <div class="container">
       <div class="editorial-reviews__layout">
 
-        <!-- Columna editorial izquierda: contexto, titular y controles -->
+        <!-- Columna de contexto: Eyebrow + Titular + Google rating -->
         <div class="editorial-reviews__col-intro" data-reveal>
           <div class="editorial-reviews__head">
             <p class="eyebrow section-eyebrow">Experiencias reales</p>
-            <h2 class="section-heading">Lo que dicen quienes cuidan su cuerpo con nosotros</h2>
+            <h2 class="section-heading editorial-reviews__title">Lo que dicen quienes confían en nosotros</h2>
           </div>
 
           <div class="editorial-reviews__google">
             <span class="editorial-reviews__google-stars" aria-hidden="true">★★★★★</span>
             <span class="editorial-reviews__google-score">5,0</span>
             <span class="editorial-reviews__google-sep" aria-hidden="true">·</span>
-            <span class="editorial-reviews__google-label">Reseñas en Google</span>
-          </div>
-
-          <div class="editorial-reviews__nav" aria-label="Navegación de testimonios">
-            <div class="editorial-reviews__buttons">
-              <button type="button" class="editorial-reviews__btn editorial-reviews__btn--prev" data-reviews-prev aria-label="Ver testimonio anterior">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                  <polyline points="15 18 9 12 15 6"></polyline>
-                </svg>
-              </button>
-              <span class="editorial-reviews__counter" data-reviews-counter aria-live="polite">01 / 06</span>
-              <button type="button" class="editorial-reviews__btn editorial-reviews__btn--next" data-reviews-next aria-label="Ver siguiente testimonio">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                  <polyline points="9 18 15 12 9 6"></polyline>
-                </svg>
-              </button>
-            </div>
-            <div class="editorial-reviews__progress-track" aria-hidden="true">
-              <div class="editorial-reviews__progress-bar" data-reviews-progress></div>
-            </div>
+            <span class="editorial-reviews__google-label">Reseñas verificadas en Google</span>
           </div>
         </div>
 
@@ -1093,6 +1074,26 @@
               </footer>
             </article>
 
+          </div>
+
+          <!-- Navegación editorial situada en la columna de la reseña -->
+          <div class="editorial-reviews__nav" aria-label="Navegación de testimonios">
+            <div class="editorial-reviews__controls">
+              <button type="button" class="editorial-reviews__btn editorial-reviews__btn--prev" data-reviews-prev aria-label="Ver testimonio anterior">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <polyline points="15 18 9 12 15 6"></polyline>
+                </svg>
+              </button>
+              <span class="editorial-reviews__counter" data-reviews-counter aria-live="polite">01 / 06</span>
+              <button type="button" class="editorial-reviews__btn editorial-reviews__btn--next" data-reviews-next aria-label="Ver siguiente testimonio">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <polyline points="9 18 15 12 9 6"></polyline>
+                </svg>
+              </button>
+            </div>
+            <div class="editorial-reviews__progress-track" aria-hidden="true">
+              <div class="editorial-reviews__progress-bar" data-reviews-progress style="width: 16.66%;"></div>
+            </div>
           </div>
         </div>
 

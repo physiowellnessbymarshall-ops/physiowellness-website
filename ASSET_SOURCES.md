@@ -463,8 +463,22 @@ Incorporación de equipamiento tecnológico real del centro (referenciado desde 
 | :--- | :--- | :--- | :--- |
 | **Power Plate my5 (Silver / Gris)** | `src/assets/img/machinery/power-plate-my5-silver.webp` | Activo oficial Power Plate, procesado con fondo transparente | Plataforma de aceleración vibratoria tridimensional (30-40 Hz) para respuesta neuromuscular refleja y estabilidad articular. |
 | **Technogym Skillrow** | `src/assets/img/machinery/skillrow-technogym.webp` | Activo oficial Technogym Contentful CDN, procesado con fondo transparente | Ergómetro de resistencia magnética y de aire para potencia metabólica y cadena posterior. |
-| **BlazePod Trainer Kit** | `src/assets/img/machinery/blazepod-kit.webp` | Activo oficial BlazePod, procesado con fondo transparente | Sistema de pods lumínicos reactivos para entrenamiento del tiempo de reacción y agilidad visual propioceptiva. |
-| **Force USA C10** | `src/assets/img/machinery/force-c10.webp` | Activo oficial Force USA / Fitshop, procesado con fondo transparente | Sistema todo en uno de poleas multidireccionales y rack guiado para transferencia de fuerza angular funcional. |
+| **Technogym Myrun** | `src/assets/img/machinery/myrun-technogym.webp` | Activo oficial Technogym CDN, procesado con fondo transparente | Cinta de correr con amortiguación adaptativa y biofeedback en tiempo real sobre cadencia, oscilación y eficiencia. |
+| **Technogym Bike** | `src/assets/img/machinery/bike-technogym.webp` | Activo oficial Technogym CDN, procesado con fondo transparente | Bicicleta estacionaria con resistencia magnética de alta precisión y control de vatios para potencia sin impacto articular. |
+| **Force USA C10** | `src/assets/img/machinery/force-c10.webp` | Activo oficial Force USA / Fitshop, procesado con fondo transparente | Sistema todo en uno de poleas multidireccionales y rack guiado para sobrecarga progresiva y patrones angulares. |
+| **BlazePod Trainer Kit** | `src/assets/img/machinery/blazepod-kit.webp` | Activo oficial BlazePod, procesado con fondo transparente | Sistema de pods lumínicos reactivos para agilidad, visión periférica y respuesta neuromuscular refleja. |
+| **SAGA BFR Cuffs** | `src/assets/img/machinery/bfr-cuffs.webp` | Activo oficial SAGA Fitness, procesado con fondo transparente | Dispositivo inalámbrico de restricción del flujo sanguíneo con calibración digital para hipertrofia y readaptación tisular. |
+
+### Espacio de entrenamiento: Galería editorial Strength & Pilates (2026-09-21)
+
+Actualización de la sección «El espacio de entrenamiento» (`#espacio-entrenamiento`) en `src/pages/servicios/strength.html` con una galería equilibrada de 3 fotografías reales del Local 2 (Sant Honorat, 26):
+
+| Posición | Archivo servido | Origen / Licencia | Descripción de la escena |
+| :--- | :--- | :--- | :--- |
+| **Hero 16:9 Panorámico** | `src/assets/img/local/local-cardio-1440.webp` / `-720.webp` | Fotografía profesional propia (`fotos local 2/02-Physio Wellness by Marshall Local 2.jpg`) | Perspectiva general y amplitud de la sala de Fuerza & Cardio: cinta Myrun, elíptica, bicicleta Technogym y rack Force C10. |
+| **Detalle 1 (4:3)** | `src/assets/img/local/local-gym-1440.webp` / `-720.webp` | Fotografía profesional propia (`fotos local 2/03-Physio Wellness by Marshall Local 2.jpg`) | Zona de fuerza estructural con rack Force USA C10, banco regulable, discos olímpicos y mancuernas. |
+| **Detalle 2 (4:3)** | `src/assets/img/local/local-strength-1440.webp` / `-720.webp` | Fotografía profesional propia (`fotos local 2/01-Physio Wellness by Marshall Local 2.jpg` / `local-strength.jpg`) | Zona cardiovascular Technogym (Bike y Elliptical), suelo técnico de impacto y mampara arquitectónica de cristal hacia lounge y Pilates. |
+
 
 
 

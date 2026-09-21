@@ -27,3 +27,4 @@ npm-debug.log*
 # Build output (si lo hay)
 dist/
 build/
+scratch/

@@ -411,44 +411,52 @@
         <li class="audience-item is-open">
           <button class="audience-item__trigger" type="button" aria-expanded="true">
             <span class="audience-item__num">01</span>
-            <h3 class="audience-item__title">Quiero empezar a entrenar</h3>
+            <span class="audience-item__title">Quiero empezar a entrenar</span>
             <span class="audience-item__icon" aria-hidden="true">+</span>
           </button>
           <div class="audience-item__body">
-            <p class="audience-item__desc">Construimos una base progresiva para que ganes fuerza y confianza sin sentirte perdido dentro de un gimnasio.</p>
+            <div class="audience-item__body-inner">
+              <p class="audience-item__desc">Construimos una base progresiva para que ganes fuerza y confianza sin sentirte perdido dentro de un gimnasio.</p>
+            </div>
           </div>
         </li>
 
         <li class="audience-item">
           <button class="audience-item__trigger" type="button" aria-expanded="false">
             <span class="audience-item__num">02</span>
-            <h3 class="audience-item__title">Quiero volver después de una lesión</h3>
+            <span class="audience-item__title">Quiero volver después de una lesión</span>
             <span class="audience-item__icon" aria-hidden="true">+</span>
           </button>
           <div class="audience-item__body">
-            <p class="audience-item__desc">Recuperamos capacidad, tolerancia y seguridad hasta volver progresivamente al movimiento o al deporte.</p>
+            <div class="audience-item__body-inner">
+              <p class="audience-item__desc">Recuperamos capacidad, tolerancia y seguridad hasta volver progresivamente al movimiento o al deporte.</p>
+            </div>
           </div>
         </li>
 
         <li class="audience-item">
           <button class="audience-item__trigger" type="button" aria-expanded="false">
             <span class="audience-item__num">03</span>
-            <h3 class="audience-item__title">Quiero mejorar mi rendimiento</h3>
+            <span class="audience-item__title">Quiero mejorar mi rendimiento</span>
             <span class="audience-item__icon" aria-hidden="true">+</span>
           </button>
           <div class="audience-item__body">
-            <p class="audience-item__desc">Trabajamos las capacidades físicas que tienen transferencia real hacia tu actividad o deporte habitual.</p>
+            <div class="audience-item__body-inner">
+              <p class="audience-item__desc">Trabajamos las capacidades físicas que tienen transferencia real hacia tu actividad o deporte habitual.</p>
+            </div>
           </div>
         </li>
 
         <li class="audience-item">
           <button class="audience-item__trigger" type="button" aria-expanded="false">
             <span class="audience-item__num">04</span>
-            <h3 class="audience-item__title">Quiero entrenar sin dolor ni miedo</h3>
+            <span class="audience-item__title">Quiero entrenar sin dolor ni miedo</span>
             <span class="audience-item__icon" aria-hidden="true">+</span>
           </button>
           <div class="audience-item__body">
-            <p class="audience-item__desc">Adaptamos cargas, ejercicios y progresiones para que vuelvas a moverte con absoluta confianza.</p>
+            <div class="audience-item__body-inner">
+              <p class="audience-item__desc">Adaptamos cargas, ejercicios y progresiones para que vuelvas a moverte con absoluta confianza.</p>
+            </div>
           </div>
         </li>
       </ul>
@@ -536,7 +544,7 @@
     </div>
 
     <!-- Subapartado: Ecosistema Tecnológico y Maquinaria Especializada -->
-    <div class="container strength-tech" data-reveal style="--i:2">
+    <div class="container strength-tech" data-strength-tech data-reveal style="--i:2">
       <div class="strength-tech__head">
         <p class="eyebrow section-eyebrow">Tecnología aplicada · Rendimiento sobre la nieve</p>
         <h3 class="strength-tech__title">Maquinaria y herramientas de evaluación</h3>
@@ -544,7 +552,7 @@
       </div>
 
       <div class="strength-tech__layout">
-        <!-- Hero Machine: Power Plate my5 en gris -->
+        <!-- Hero Machine: Power Plate my5 en gris (compacto y refinado) -->
         <article class="strength-tech__featured">
           <div class="strength-tech__featured-info">
             <span class="strength-tech__badge">TECNOLOGÍA DIFERENCIAL · POWER PLATE</span>
@@ -564,46 +572,102 @@
           </div>
         </article>
 
-        <!-- Grid de apoyo: Skillrow, BlazePod, Force C10 -->
-        <div class="strength-tech__grid">
-          <article class="strength-tech__card">
-            <div class="strength-tech__card-visual">
-              <img src="../../assets/img/machinery/skillrow-technogym.webp"
-                   alt="Technogym Skillrow para potencia metabólica y cadena posterior."
-                   width="1031" height="570" loading="lazy" class="strength-tech__img">
+        <!-- Rail de equipamiento complementario con navegación compacta -->
+        <div class="strength-tech__support">
+          <div class="strength-tech__support-head">
+            <div class="strength-tech__support-titles">
+              <span class="strength-tech__support-label">Equipamiento disponible en centro</span>
+              <p class="strength-tech__support-sub">Herramientas de valoración, fuerza estructural y acondicionamiento</p>
             </div>
-            <div class="strength-tech__card-info">
-              <span class="strength-tech__card-tag">Potencia &amp; Resistencia</span>
-              <h4 class="strength-tech__card-title">Skillrow</h4>
-              <p class="strength-tech__card-desc">Resistencia magnética y de aire para entrenar la capacidad cardiovascular y la cadena posterior requerida en descensos prolongados.</p>
+            <div class="strength-tech__nav" aria-label="Controles de navegación de maquinaria">
+              <button class="strength-tech__nav-btn strength-tech__nav-btn--prev" type="button" data-tech-prev aria-label="Maquinaria anterior">
+                <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M9 2L4 7l5 5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </button>
+              <button class="strength-tech__nav-btn strength-tech__nav-btn--next" type="button" data-tech-next aria-label="Maquinaria siguiente">
+                <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M5 2l5 5-5 5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </button>
             </div>
-          </article>
+          </div>
 
-          <article class="strength-tech__card">
-            <div class="strength-tech__card-visual">
-              <img src="../../assets/img/machinery/blazepod-kit.webp"
-                   alt="BlazePod Trainer Kit para agilidad, reflejos y tiempo de reacción."
-                   width="1500" height="1190" loading="lazy" class="strength-tech__img">
-            </div>
-            <div class="strength-tech__card-info">
-              <span class="strength-tech__card-tag">Reflejos &amp; Coordinación</span>
-              <h4 class="strength-tech__card-title">BlazePod</h4>
-              <p class="strength-tech__card-desc">Estímulos lumínicos reactivos para optimizar la toma de decisiones, la visión periférica y la coordinación motriz ante imprevistos.</p>
-            </div>
-          </article>
+          <div class="strength-tech__rail" data-tech-rail>
+            <article class="strength-tech__card">
+              <div class="strength-tech__card-visual">
+                <img src="../../assets/img/machinery/skillrow-technogym.webp"
+                     alt="Technogym Skillrow para potencia metabólica y cadena posterior."
+                     width="1031" height="570" loading="lazy" class="strength-tech__img">
+              </div>
+              <div class="strength-tech__card-info">
+                <span class="strength-tech__card-tag">Potencia &amp; Resistencia</span>
+                <h4 class="strength-tech__card-title">Skillrow</h4>
+                <p class="strength-tech__card-desc">Resistencia magnética y de aire para entrenar capacidad cardiovascular y cadena posterior en bajadas largas.</p>
+              </div>
+            </article>
 
-          <article class="strength-tech__card">
-            <div class="strength-tech__card-visual">
-              <img src="../../assets/img/machinery/force-c10.webp"
-                   alt="Force USA C10 para desarrollo de fuerza estructural y control excéntrico."
-                   width="1205" height="1387" loading="lazy" class="strength-tech__img">
-            </div>
-            <div class="strength-tech__card-info">
-              <span class="strength-tech__card-tag">Fuerza estructural</span>
-              <h4 class="strength-tech__card-title">Force C10</h4>
-              <p class="strength-tech__card-desc">Poleas multidireccionales y rack guiado para transferir fuerza funcional a los patrones angulares del esquí y snowboard.</p>
-            </div>
-          </article>
+            <article class="strength-tech__card">
+              <div class="strength-tech__card-visual">
+                <img src="../../assets/img/machinery/myrun-technogym.webp"
+                     alt="Technogym Myrun para monitorización biomecánica y carrera controlada."
+                     width="1688" height="1221" loading="lazy" class="strength-tech__img">
+              </div>
+              <div class="strength-tech__card-info">
+                <span class="strength-tech__card-tag">Carrera &amp; Biofeedback</span>
+                <h4 class="strength-tech__card-title">Technogym Myrun</h4>
+                <p class="strength-tech__card-desc">Amortiguación reactiva y análisis en vivo de cadencia, oscilación vertical y eficiencia de zancada.</p>
+              </div>
+            </article>
+
+            <article class="strength-tech__card">
+              <div class="strength-tech__card-visual">
+                <img src="../../assets/img/machinery/bike-technogym.webp"
+                     alt="Technogym Bike para acondicionamiento metabólico y fuerza de piernas."
+                     width="1363" height="1471" loading="lazy" class="strength-tech__img">
+              </div>
+              <div class="strength-tech__card-info">
+                <span class="strength-tech__card-tag">Capacidad &amp; Cadencia</span>
+                <h4 class="strength-tech__card-title">Technogym Bike</h4>
+                <p class="strength-tech__card-desc">Freno magnético de alta precisión y control de vatios para resistencia anaeróbica sin impacto articular.</p>
+              </div>
+            </article>
+
+            <article class="strength-tech__card">
+              <div class="strength-tech__card-visual">
+                <img src="../../assets/img/machinery/force-c10.webp"
+                     alt="Force USA C10 para desarrollo de fuerza estructural y control excéntrico."
+                     width="1205" height="1387" loading="lazy" class="strength-tech__img">
+              </div>
+              <div class="strength-tech__card-info">
+                <span class="strength-tech__card-tag">Fuerza estructural</span>
+                <h4 class="strength-tech__card-title">Force C10</h4>
+                <p class="strength-tech__card-desc">Poleas multidireccionales y rack guiado para sobrecarga progresiva y transferencia a patrones angulares.</p>
+              </div>
+            </article>
+
+            <article class="strength-tech__card">
+              <div class="strength-tech__card-visual">
+                <img src="../../assets/img/machinery/blazepod-kit.webp"
+                     alt="BlazePod Trainer Kit para agilidad, reflejos y tiempo de reacción."
+                     width="1500" height="1190" loading="lazy" class="strength-tech__img">
+              </div>
+              <div class="strength-tech__card-info">
+                <span class="strength-tech__card-tag">Reflejos &amp; Coordinación</span>
+                <h4 class="strength-tech__card-title">BlazePod</h4>
+                <p class="strength-tech__card-desc">Estímulos lumínicos reactivos para agilidad mental, visión periférica y respuesta refleja ante imprevistos.</p>
+              </div>
+            </article>
+
+            <article class="strength-tech__card">
+              <div class="strength-tech__card-visual">
+                <img src="../../assets/img/machinery/bfr-cuffs.webp"
+                     alt="SAGA BFR Cuffs inalámbricos para restricción del flujo sanguíneo en readaptación e hipertrofia."
+                     width="680" height="1402" loading="lazy" class="strength-tech__img">
+              </div>
+              <div class="strength-tech__card-info">
+                <span class="strength-tech__card-tag">Oclusión &amp; Hipertrofia</span>
+                <h4 class="strength-tech__card-title">SAGA BFR Cuffs</h4>
+                <p class="strength-tech__card-desc">Calibración digital de presión para estimular ganancia muscular protegiendo articulaciones lesionadas.</p>
+              </div>
+            </article>
+          </div>
         </div>
       </div>
     </div>
@@ -675,16 +739,63 @@
         <span class="strength-facility__feature-item">Seguimiento profesional</span>
       </div>
 
-      <figure class="strength-facility__media" data-reveal style="--i:2">
-        <img class="strength-facility__img"
-             src="../../assets/img/local/local-gym-1440.webp"
-             srcset="../../assets/img/local/local-gym-720.webp 720w, ../../assets/img/local/local-gym-1440.webp 1440w"
-             sizes="(min-width: 1200px) 1200px, 92vw"
-             alt="Sala de fuerza en Local Strength &amp; Pilates de Physio Wellness Sitges con rack multipower Force USA, banco regulable, discos olímpicos y suelo técnico."
-             loading="lazy"
-             width="1440"
-             height="1080">
-      </figure>
+      <!-- Galería editorial equilibrada: Amplitud, Equipamiento y Arquitectura -->
+      <div class="strength-facility__gallery" data-reveal style="--i:2">
+        <!-- Hero: Perspectiva amplia del espacio -->
+        <figure class="strength-facility__card strength-facility__card--hero">
+          <div class="strength-facility__media strength-facility__media--hero">
+            <img class="strength-facility__img"
+                 src="../../assets/img/local/local-cardio-1440.webp"
+                 srcset="../../assets/img/local/local-cardio-720.webp 720w, ../../assets/img/local/local-cardio-1440.webp 1440w"
+                 sizes="(min-width: 1200px) 1200px, 92vw"
+                 alt="Vista panorámica de la sala de fuerza y cardio en Local Strength &amp; Pilates de Physio Wellness: cinta Myrun, elíptica, bicicleta Technogym y rack Force C10."
+                 loading="lazy"
+                 width="1440"
+                 height="960">
+          </div>
+          <figcaption class="strength-facility__caption">
+            <span class="strength-facility__caption-badge">01 · PERSPECTIVA GENERAL</span>
+            <span class="strength-facility__caption-text">Amplitud y distribución integral de la sala de entrenamiento</span>
+          </figcaption>
+        </figure>
+
+        <!-- Subgrid de 2 columnas: Zona de cargas + Conexión arquitectónica -->
+        <div class="strength-facility__subgrid">
+          <figure class="strength-facility__card">
+            <div class="strength-facility__media">
+              <img class="strength-facility__img"
+                   src="../../assets/img/local/local-gym-1440.webp"
+                   srcset="../../assets/img/local/local-gym-720.webp 720w, ../../assets/img/local/local-gym-1440.webp 1440w"
+                   sizes="(min-width: 860px) 46vw, 92vw"
+                   alt="Zona de entrenamiento estructural en Local Strength &amp; Pilates con rack multipower Force USA, banco regulable y mancuernas."
+                   loading="lazy"
+                   width="1440"
+                   height="960">
+            </div>
+            <figcaption class="strength-facility__caption">
+              <span class="strength-facility__caption-badge">02 · FUERZA ESTRUCTURAL</span>
+              <span class="strength-facility__caption-text">Rack multifunción Force USA C10, banco regulable y peso libre</span>
+            </figcaption>
+          </figure>
+
+          <figure class="strength-facility__card">
+            <div class="strength-facility__media">
+              <img class="strength-facility__img"
+                   src="../../assets/img/local/local-strength-1440.webp"
+                   srcset="../../assets/img/local/local-strength-720.webp 720w, ../../assets/img/local/local-strength-1440.webp 1440w"
+                   sizes="(min-width: 860px) 46vw, 92vw"
+                   alt="Zona cardiovascular Technogym con bicicleta y elíptica, suelo técnico y mampara de cristal hacia la zona de descanso y Pilates."
+                   loading="lazy"
+                   width="1440"
+                   height="960">
+            </div>
+            <figcaption class="strength-facility__caption">
+              <span class="strength-facility__caption-badge">03 · ARQUITECTURA &amp; CARDIO</span>
+              <span class="strength-facility__caption-text">Equipamiento Technogym y conexión visual con lounge y Pilates</span>
+            </figcaption>
+          </figure>
+        </div>
+      </div>
     </div>
   </section>
 
@@ -800,110 +911,132 @@
     </div>
   </section>
 
-  <!-- ============ 11. Reseñas de Google ============ -->
-  <section class="google-reviews" id="resenas" aria-label="Reseñas de Google de pacientes">
+  <!-- ============ 11. Reseñas editoriales / Experiencias en Physio Wellness ============ -->
+  <section class="editorial-reviews" id="resenas" aria-label="Experiencias reales de pacientes">
     <div class="container">
-      <div class="google-reviews__head" data-reveal>
-        <p class="eyebrow section-eyebrow">Reseñas de Google</p>
-        <h2 class="section-heading"><span class="google-reviews__highlight">Experiencias reales</span> de quienes entrenan en Physio Wellness</h2>
-      </div>
-    </div>
+      <div class="editorial-reviews__layout">
 
-    <div class="google-reviews__viewport" data-reviews-viewport>
-      <div class="google-reviews__rail" data-reviews-rail>
-        <ul class="google-reviews__list" data-reviews-track>
-          <li class="google-review-card">
-            <span class="google-review-card__tag">Preparación física</span>
-            <p class="google-review-card__rating">
-              <span class="google-review-card__stars" aria-hidden="true">★★★★★</span>
-              <span class="sr-only">Valoración: 5 de 5 estrellas</span>
-            </p>
-            <blockquote class="google-review-card__quote">
-              <p>Marçal es un excelente profesional, en dos sesiones la mejoría es total.</p>
-              <p>Las instalaciones impecables, y también destacar la eficiencia y amabilidad de Abril.</p>
-            </blockquote>
-            <footer class="google-review-card__meta">
-              <span class="google-review-card__author">M. A. B. F.</span>
-              <span class="google-review-card__source">Reseña de Google</span>
-            </footer>
-          </li>
+        <!-- Columna editorial izquierda: contexto, titular y controles -->
+        <div class="editorial-reviews__col-intro" data-reveal>
+          <div class="editorial-reviews__head">
+            <p class="eyebrow section-eyebrow">Experiencias reales</p>
+            <h2 class="section-heading">Lo que dicen quienes entrenan con nosotros</h2>
+          </div>
 
-          <li class="google-review-card">
-            <span class="google-review-card__tag">Acompañamiento</span>
-            <p class="google-review-card__rating">
-              <span class="google-review-card__stars" aria-hidden="true">★★★★★</span>
-              <span class="sr-only">Valoración: 5 de 5 estrellas</span>
-            </p>
-            <blockquote class="google-review-card__quote">
-              <p>Recomiendo totalmente a este profesional a cualquiera que necesite una atención de calidad. Tiene un conocimiento muy amplio, es atento y está realmente comprometido con el progreso de cada persona.</p>
-              <p>¡Gracias!</p>
-            </blockquote>
-            <footer class="google-review-card__meta">
-              <span class="google-review-card__author">J. D.</span>
-              <span class="google-review-card__source">Reseña de Google</span>
-            </footer>
-          </li>
+          <div class="editorial-reviews__google">
+            <span class="editorial-reviews__google-stars" aria-hidden="true">★★★★★</span>
+            <span class="editorial-reviews__google-score">5,0</span>
+            <span class="editorial-reviews__google-sep" aria-hidden="true">·</span>
+            <span class="editorial-reviews__google-label">Reseñas en Google</span>
+          </div>
 
-          <li class="google-review-card">
-            <span class="google-review-card__tag">Instalaciones y equipo</span>
-            <p class="google-review-card__rating">
-              <span class="google-review-card__stars" aria-hidden="true">★★★★★</span>
-              <span class="sr-only">Valoración: 5 de 5 estrellas</span>
-            </p>
-            <blockquote class="google-review-card__quote">
-              <p>Muy buenas manos, técnica y conocimiento profundo, con un trato muy atento y personalizado. Disponen de todo tipo de maquinaria cuando hace falta.</p>
-            </blockquote>
-            <footer class="google-review-card__meta">
-              <span class="google-review-card__author">I. G.</span>
-              <span class="google-review-card__source">Reseña de Google</span>
-            </footer>
-          </li>
+          <div class="editorial-reviews__nav" aria-label="Navegación de testimonios">
+            <div class="editorial-reviews__buttons">
+              <button type="button" class="editorial-reviews__btn editorial-reviews__btn--prev" data-reviews-prev aria-label="Ver testimonio anterior">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <polyline points="15 18 9 12 15 6"></polyline>
+                </svg>
+              </button>
+              <span class="editorial-reviews__counter" data-reviews-counter aria-live="polite">01 / 06</span>
+              <button type="button" class="editorial-reviews__btn editorial-reviews__btn--next" data-reviews-next aria-label="Ver siguiente testimonio">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <polyline points="9 18 15 12 9 6"></polyline>
+                </svg>
+              </button>
+            </div>
+            <div class="editorial-reviews__progress-track" aria-hidden="true">
+              <div class="editorial-reviews__progress-bar" data-reviews-progress></div>
+            </div>
+          </div>
+        </div>
 
-          <li class="google-review-card">
-            <span class="google-review-card__tag">Ejercicio y readaptación</span>
-            <p class="google-review-card__rating">
-              <span class="google-review-card__stars" aria-hidden="true">★★★★★</span>
-              <span class="sr-only">Valoración: 5 de 5 estrellas</span>
-            </p>
-            <blockquote class="google-review-card__quote">
-              <p>Marçal es muy profesional, resolutivo y transmite confianza. Su tratamiento está dando muy buen resultado. También me ha dado unos ejercicios que puedo hacer en mi casa. Estoy muy conforme.</p>
-            </blockquote>
-            <footer class="google-review-card__meta">
-              <span class="google-review-card__author">C. C. G.</span>
-              <span class="google-review-card__source">Reseña de Google</span>
-            </footer>
-          </li>
+        <!-- Columna derecha: escenario de la reseña protagonista -->
+        <div class="editorial-reviews__col-stage">
+          <div class="editorial-reviews__stage" data-reviews-stage>
 
-          <li class="google-review-card">
-            <span class="google-review-card__tag">Acompañamiento activo</span>
-            <p class="google-review-card__rating">
-              <span class="google-review-card__stars" aria-hidden="true">★★★★★</span>
-              <span class="sr-only">Valoración: 5 de 5 estrellas</span>
-            </p>
-            <blockquote class="google-review-card__quote">
-              <p>Un agradecimiento especial a Marshall, un profesional muy cualificado, atento y que realmente sabe lo que hace. Me sentí seguro y bien cuidado durante todo el proceso. Recomiendo totalmente este centro.</p>
-            </blockquote>
-            <footer class="google-review-card__meta">
-              <span class="google-review-card__author">A.</span>
-              <span class="google-review-card__source">Reseña de Google</span>
-            </footer>
-          </li>
+            <!-- Testimonio 1: M. A. B. F. -->
+            <article class="editorial-reviews__item is-active" data-reviews-item>
+              <div class="editorial-reviews__mark" aria-hidden="true">“</div>
+              <blockquote class="editorial-reviews__quote">
+                <p>Marçal es un excelente profesional, en dos sesiones la mejoría es total.</p>
+                <p>Las instalaciones impecables, y también destacar la eficiencia y amabilidad de Abril.</p>
+              </blockquote>
+              <footer class="editorial-reviews__meta">
+                <cite class="editorial-reviews__author">M. A. B. F.</cite>
+                <span class="editorial-reviews__sep" aria-hidden="true">·</span>
+                <span class="editorial-reviews__source">Paciente en Physio Wellness</span>
+              </footer>
+            </article>
 
-          <li class="google-review-card">
-            <span class="google-review-card__tag">Recuperación y rendimiento</span>
-            <p class="google-review-card__rating">
-              <span class="google-review-card__stars" aria-hidden="true">★★★★★</span>
-              <span class="sr-only">Valoración: 5 de 5 estrellas</span>
-            </p>
-            <blockquote class="google-review-card__quote">
-              <p>Encontré este centro y me han gustado mucho las sesiones que he tenido. Tiene un buen conocimiento del cuerpo y sabe cómo hacer que el paciente se sienta mejor tanto de forma inmediata como a largo plazo.</p>
-            </blockquote>
-            <footer class="google-review-card__meta">
-              <span class="google-review-card__author">T. M.</span>
-              <span class="google-review-card__source">Reseña de Google</span>
-            </footer>
-          </li>
-        </ul>
+            <!-- Testimonio 2: J. D. -->
+            <article class="editorial-reviews__item" data-reviews-item>
+              <div class="editorial-reviews__mark" aria-hidden="true">“</div>
+              <blockquote class="editorial-reviews__quote">
+                <p>Recomiendo totalmente a este profesional a cualquiera que necesite una atención de calidad. Tiene un conocimiento muy amplio, es atento y está realmente comprometido con el progreso de cada persona.</p>
+                <p>¡Gracias!</p>
+              </blockquote>
+              <footer class="editorial-reviews__meta">
+                <cite class="editorial-reviews__author">J. D.</cite>
+                <span class="editorial-reviews__sep" aria-hidden="true">·</span>
+                <span class="editorial-reviews__source">Paciente en Physio Wellness</span>
+              </footer>
+            </article>
+
+            <!-- Testimonio 3: I. G. -->
+            <article class="editorial-reviews__item" data-reviews-item>
+              <div class="editorial-reviews__mark" aria-hidden="true">“</div>
+              <blockquote class="editorial-reviews__quote">
+                <p>Muy buenas manos, técnica y conocimiento profundo, con un trato muy atento y personalizado. Disponen de todo tipo de maquinaria cuando hace falta.</p>
+              </blockquote>
+              <footer class="editorial-reviews__meta">
+                <cite class="editorial-reviews__author">I. G.</cite>
+                <span class="editorial-reviews__sep" aria-hidden="true">·</span>
+                <span class="editorial-reviews__source">Paciente en Physio Wellness</span>
+              </footer>
+            </article>
+
+            <!-- Testimonio 4: C. C. G. -->
+            <article class="editorial-reviews__item" data-reviews-item>
+              <div class="editorial-reviews__mark" aria-hidden="true">“</div>
+              <blockquote class="editorial-reviews__quote">
+                <p>Marçal es muy profesional, resolutivo y transmite confianza. Su tratamiento está dando muy buen resultado. También me ha dado unos ejercicios que puedo hacer en mi casa. Estoy muy conforme.</p>
+              </blockquote>
+              <footer class="editorial-reviews__meta">
+                <cite class="editorial-reviews__author">C. C. G.</cite>
+                <span class="editorial-reviews__sep" aria-hidden="true">·</span>
+                <span class="editorial-reviews__source">Paciente en Physio Wellness</span>
+              </footer>
+            </article>
+
+            <!-- Testimonio 5: A. -->
+            <article class="editorial-reviews__item" data-reviews-item>
+              <div class="editorial-reviews__mark" aria-hidden="true">“</div>
+              <blockquote class="editorial-reviews__quote">
+                <p>Un agradecimiento especial a Marshall, un profesional muy cualificado, atento y que realmente sabe lo que hace. Me sentí seguro y bien cuidado durante todo el proceso. Recomiendo totalmente este centro.</p>
+              </blockquote>
+              <footer class="editorial-reviews__meta">
+                <cite class="editorial-reviews__author">A.</cite>
+                <span class="editorial-reviews__sep" aria-hidden="true">·</span>
+                <span class="editorial-reviews__source">Paciente en Physio Wellness</span>
+              </footer>
+            </article>
+
+            <!-- Testimonio 6: T. M. -->
+            <article class="editorial-reviews__item" data-reviews-item>
+              <div class="editorial-reviews__mark" aria-hidden="true">“</div>
+              <blockquote class="editorial-reviews__quote">
+                <p>Encontré este centro y me han gustado mucho las sesiones que he tenido. Tiene un buen conocimiento del cuerpo y sabe cómo hacer que el paciente se sienta mejor tanto de forma inmediata como a largo plazo.</p>
+              </blockquote>
+              <footer class="editorial-reviews__meta">
+                <cite class="editorial-reviews__author">T. M.</cite>
+                <span class="editorial-reviews__sep" aria-hidden="true">·</span>
+                <span class="editorial-reviews__source">Paciente en Physio Wellness</span>
+              </footer>
+            </article>
+
+          </div>
+        </div>
+
       </div>
     </div>
   </section>

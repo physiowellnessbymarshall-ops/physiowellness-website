@@ -1837,236 +1837,229 @@ var prefersReducedMotion = window.matchMedia && window.matchMedia('(prefers-redu
    tarjeta). Con prefers-reduced-motion, o si algo falla, no se crea
    ningún duplicado ni arranca ningún bucle: [data-reviews-viewport] se
    queda con su overflow-x:auto de base (CSS) y las 6 reseñas reales
-   siguen visibles y explorables a mano, igual que en la fase estática. */
-(function googleReviewsMarquee(){
+/* ---------- 15b. Editorial Reviews Slider ----------
+   Gestor del componente editorial de reseñas y testimonios.
+   - Navegación asimétrica en 2 columnas: Columna editorial fija + Escenario de cita.
+   - Transiciones suaves de fade y micro-desplazamiento vertical.
+   - Autoplay pausado al interactuar (hover, focus, touch swipe, fuera de viewport).
+   - Accesible (roles, aria-live, teclado ArrowLeft/ArrowRight, prefers-reduced-motion). */
+(function editorialReviewsSlider(){
   try{
-    var section = document.querySelector('.google-reviews');
-    if(!section || prefersReducedMotion) return;
-    var viewport = section.querySelector('[data-reviews-viewport]');
-    var rail = section.querySelector('[data-reviews-rail]');
-    var track = section.querySelector('[data-reviews-track]');
-    if(!viewport || !rail || !track) return;
+    var sections = document.querySelectorAll('.editorial-reviews');
+    if(!sections.length) return;
 
-    /* -- Móvil (<768px, igual que el breakpoint de tablet en CSS): sin
-       bucle automático. Con una sola tarjeta casi completa por pantalla
-       leer mientras la cinta se mueve sola es incómodo, así que ahí se
-       queda en el mismo estado que sin JS / reduced-motion: scroll
-       horizontal nativo, sin clon, sin transform, botón de pausa oculto
-       (nada que pausar). marqueeEnabled decide en qué modo está la
-       sección; se reevalúa en cada resize/orientationchange, no solo al
-       cargar, para que rotar el dispositivo o cambiar de ventana cruce
-       el umbral sin tener que recargar la página. -- */
-    var MOBILE_MAX = 767;
-    var mobileMq = window.matchMedia ? window.matchMedia('(max-width:' + MOBILE_MAX + 'px)') : null;
-    var marqueeEnabled = false;
-    var clone = null;
+    sections.forEach(function(section){
+      var prevBtn = section.querySelector('[data-reviews-prev]');
+      var nextBtn = section.querySelector('[data-reviews-next]');
+      var counterEl = section.querySelector('[data-reviews-counter]');
+      var progressBar = section.querySelector('[data-reviews-progress]');
+      var stage = section.querySelector('[data-reviews-stage]');
+      var items = section.querySelectorAll('[data-reviews-item]');
 
-    var SPEED = 32; /* px/s: lento y constante, no un carrusel de diapositivas */
-    var offset = 0;
-    var setWidth = 0;
+      if(!items.length) return;
 
-    /* -- No se mide con "clone.left - track.left": esa distancia es la de
-       la CAJA flex de track (su flex-basis, ligado al ancho del rail), no
-       la del CONTENIDO real de sus tarjetas. Desde que .google-review-card
-       usa flex-basis en % pensados para que sobresalgan más tarjetas de
-       las que caben en esa caja ("tres completas + un fragmento"), el
-       contenido de track se desborda mucho más allá de su propia caja, así
-       que esa resta se queda corta y el clon empieza a solaparse con
-       tarjetas reales que aún no han terminado de desfilar. Se mide en su
-       lugar el tramo real: del borde izquierdo de la primera tarjeta al
-       borde derecho de la última, más un gap para mantener la misma
-       separación en la costura entre track y su clon. -- */
-    function measure(){
-      if(!clone) return;
-      var cards = track.querySelectorAll('.google-review-card');
-      if(!cards.length) return;
-      var first = cards[0].getBoundingClientRect();
-      var last = cards[cards.length - 1].getBoundingClientRect();
-      var gap = parseFloat(getComputedStyle(track).columnGap) || 0;
-      var w = (last.right - first.left) + gap;
-      if(w > 0) setWidth = w;
-    }
+      var currentIndex = 0;
+      var total = items.length;
+      var INTERVAL = 7500; /* ms: tiempo suficiente para lectura tranquila */
+      var timerId = null;
+      var progressStart = null;
+      var elapsedBeforePause = 0;
+      var isPaused = false;
+      var rafId = null;
 
-    function wrap(){
-      if(setWidth <= 0) return;
-      offset = ((offset % setWidth) + setWidth) % setWidth;
-    }
-    function render(){
-      rail.style.transform = marqueeEnabled ? 'translateX(-' + offset + 'px)' : 'none';
-    }
+      function padZero(num){
+        return num < 10 ? '0' + num : '' + num;
+      }
 
-    /* -- Motivos de pausa: hover, foco, arrastre, pestaña oculta, fuera de
-       vista. Cualquiera activo detiene el bucle; solo cuando ninguno lo
-       está, sigue avanzando. Nunca "encaja" en una posición fija: al
-       reanudar continúa desde el offset donde se quedó. -- */
-    var pausedByHover = false;
-    var pausedByFocus = false;
-    var pausedByDrag = false;
-    var pausedByVisibility = document.hidden;
-    var pausedByIntersection = true; /* hasta que el observer confirme visibilidad */
+      function updateCounter(){
+        if(counterEl){
+          counterEl.textContent = padZero(currentIndex + 1) + ' / ' + padZero(total);
+        }
+      }
 
-    function shouldRun(){
-      return marqueeEnabled && !(pausedByHover || pausedByFocus || pausedByDrag ||
-        pausedByVisibility || pausedByIntersection);
-    }
+      function goTo(newIndex){
+        if(newIndex === currentIndex) return;
+        var prevItem = items[currentIndex];
+        var nextItem = items[newIndex];
 
-    var rafId = null;
-    var lastTime = null;
-    function frame(now){
-      if(lastTime == null) lastTime = now;
-      var dt = (now - lastTime) / 1000;
-      lastTime = now;
-      offset += SPEED * dt;
-      wrap();
-      render();
-      rafId = requestAnimationFrame(frame);
-    }
-    function start(){
-      if(rafId || !shouldRun()) return;
-      lastTime = null;
-      rafId = requestAnimationFrame(frame);
-    }
-    function stop(){
-      if(rafId){ cancelAnimationFrame(rafId); rafId = null; }
-    }
-    function sync(){
-      if(shouldRun()) start(); else stop();
-    }
+        prevItem.classList.remove('is-active');
+        prevItem.classList.add('is-exiting');
 
-    /* -- Crea/retira el clon inert+aria-hidden que hace el bucle sin
-       costuras. Solo existe mientras marqueeEnabled es true: en móvil no
-       tiene sentido duplicar 6 reseñas en el DOM si nunca se anima. -- */
-    function createClone(){
-      if(clone) return;
-      clone = track.cloneNode(true);
-      clone.removeAttribute('data-reviews-track');
-      clone.setAttribute('aria-hidden', 'true');
-      clone.setAttribute('inert', '');
-      rail.appendChild(clone);
-      measure();
-    }
-    function removeClone(){
-      if(!clone) return;
-      rail.removeChild(clone);
-      clone = null;
-      setWidth = 0;
-    }
+        nextItem.classList.add('is-active');
 
-    function enableMarquee(){
-      if(marqueeEnabled) return;
-      marqueeEnabled = true;
-      createClone();
-      offset = 0;
-      section.classList.add('has-marquee');
-      render();
-      sync();
-    }
-    function disableMarquee(){
-      if(!marqueeEnabled) return;
-      marqueeEnabled = false;
-      stop();
-      section.classList.remove('has-marquee');
-      removeClone();
-      offset = 0;
-      render();
-    }
-    function applyResponsiveMode(){
-      var isMobile = !!(mobileMq && mobileMq.matches);
-      if(isMobile) disableMarquee(); else enableMarquee();
-    }
+        setTimeout(function(){
+          prevItem.classList.remove('is-exiting');
+        }, 350);
 
-    /* -- Pasar el cursor por la cinta. -- */
-    viewport.addEventListener('pointerenter', function(){ pausedByHover = true; sync(); });
-    viewport.addEventListener('pointerleave', function(){ pausedByHover = false; sync(); });
+        currentIndex = newIndex;
+        updateCounter();
+        resetTimer();
+      }
 
-    /* -- Foco en la sección o en el botón de pausa (teclado). -- */
-    section.addEventListener('focusin', function(){ pausedByFocus = true; sync(); });
-    section.addEventListener('focusout', function(){
-      setTimeout(function(){
-        if(!section.contains(document.activeElement)){ pausedByFocus = false; sync(); }
-      }, 50);
-    });
+      function next(){
+        goTo((currentIndex + 1) % total);
+      }
 
-    /* -- Pestaña no visible: pausa por completo, no solo "se nota poco". -- */
-    document.addEventListener('visibilitychange', function(){
-      pausedByVisibility = document.hidden;
-      sync();
-    });
+      function prev(){
+        goTo((currentIndex - 1 + total) % total);
+      }
 
-    /* -- Fuera de vista: no consume ciclos si la sección no está en
-       pantalla (cancela el rAF, no solo lo salta en vacío). -- */
-    if('IntersectionObserver' in window){
-      var io = new IntersectionObserver(function(entries){
-        entries.forEach(function(entry){
-          pausedByIntersection = !entry.isIntersecting;
-          sync();
+      function stepProgress(timestamp){
+        if(!progressStart) progressStart = timestamp - elapsedBeforePause;
+        var currentElapsed = timestamp - progressStart;
+
+        if(progressBar){
+          var pct = Math.min(100, (currentElapsed / INTERVAL) * 100);
+          progressBar.style.width = pct + '%';
+        }
+
+        if(currentElapsed >= INTERVAL){
+          next();
+        } else if(!isPaused && !prefersReducedMotion){
+          rafId = requestAnimationFrame(stepProgress);
+        }
+      }
+
+      function startTimer(){
+        if(prefersReducedMotion || total <= 1 || isPaused) return;
+        cancelAnimationFrame(rafId);
+        rafId = requestAnimationFrame(stepProgress);
+      }
+
+      function pauseTimer(){
+        if(rafId){
+          cancelAnimationFrame(rafId);
+          rafId = null;
+        }
+        if(progressStart){
+          elapsedBeforePause = performance.now() - progressStart;
+        }
+      }
+
+      function resetTimer(){
+        cancelAnimationFrame(rafId);
+        rafId = null;
+        progressStart = null;
+        elapsedBeforePause = 0;
+        if(progressBar) progressBar.style.width = '0%';
+        if(!isPaused && !prefersReducedMotion && total > 1){
+          startTimer();
+        }
+      }
+
+      function setPause(val){
+        if(isPaused === val) return;
+        isPaused = val;
+        if(isPaused){
+          pauseTimer();
+        } else {
+          startTimer();
+        }
+      }
+
+      /* Controles manuales */
+      if(prevBtn){
+        prevBtn.addEventListener('click', function(){
+          prev();
         });
-      }, { threshold: .1 });
-      io.observe(section);
-    } else {
-      pausedByIntersection = false;
-    }
+      }
+      if(nextBtn){
+        nextBtn.addEventListener('click', function(){
+          next();
+        });
+      }
 
-    /* -- Arrastre manual (ratón o táctil, Pointer Events, igual que el
-       carrusel de áreas): pausa el avance automático y deja explorar la
-       cinta a mano. El offset es el mismo que usa el bucle automático, así
-       que al soltar continúa sin saltos desde donde quedó, sin encajar en
-       ninguna tarjeta fija. En móvil (marqueeEnabled=false) no se activa:
-       ahí el gesto horizontal lo resuelve el scroll nativo del viewport
-       (overflow-x:auto), que no bloquea el scroll vertical de la página. -- */
-    var isDragging = false;
-    var dragStartX = 0;
-    var dragStartOffset = 0;
+      /* Pausa en hover */
+      section.addEventListener('mouseenter', function(){ setPause(true); });
+      section.addEventListener('mouseleave', function(){ setPause(false); });
 
-    viewport.addEventListener('pointerdown', function(e){
-      if(!marqueeEnabled) return;
-      if(e.pointerType === 'mouse' && e.button !== 0) return;
-      isDragging = true;
-      pausedByDrag = true;
-      dragStartX = e.clientX;
-      dragStartOffset = offset;
-      viewport.classList.add('is-dragging');
-      sync();
-      try{ viewport.setPointerCapture(e.pointerId); }catch(err){}
+      /* Pausa en foco de teclado */
+      section.addEventListener('focusin', function(){ setPause(true); });
+      section.addEventListener('focusout', function(){
+        setTimeout(function(){
+          if(!section.contains(document.activeElement)) setPause(false);
+        }, 50);
+      });
+
+      /* Pausa cuando la pestaña no es visible */
+      document.addEventListener('visibilitychange', function(){
+        if(document.hidden) setPause(true);
+        else if(!section.matches(':hover')) setPause(false);
+      });
+
+      /* Pausa fuera de vista (IntersectionObserver) */
+      if('IntersectionObserver' in window){
+        var io = new IntersectionObserver(function(entries){
+          entries.forEach(function(entry){
+            if(!entry.isIntersecting) setPause(true);
+            else setPause(false);
+          });
+        }, { threshold: 0.15 });
+        io.observe(section);
+      }
+
+      /* Soporte de teclado (Flechas izquierda/derecha cuando el foco está dentro de la sección) */
+      section.addEventListener('keydown', function(e){
+        if(e.key === 'ArrowLeft'){
+          prev();
+          e.preventDefault();
+        } else if(e.key === 'ArrowRight'){
+          next();
+          e.preventDefault();
+        }
+      });
+
+      /* Gestos táctiles (Swipe suave para móviles) */
+      if(stage){
+        var touchStartX = 0;
+        var touchStartY = 0;
+        var touchDiffX = 0;
+        var isSwiping = false;
+
+        stage.addEventListener('touchstart', function(e){
+          if(!e.touches || e.touches.length > 1) return;
+          touchStartX = e.touches[0].clientX;
+          touchStartY = e.touches[0].clientY;
+          touchDiffX = 0;
+          isSwiping = true;
+          setPause(true);
+        }, { passive: true });
+
+        stage.addEventListener('touchmove', function(e){
+          if(!isSwiping || !e.touches || e.touches.length > 1) return;
+          touchDiffX = e.touches[0].clientX - touchStartX;
+          var diffY = e.touches[0].clientY - touchStartY;
+          /* Si el usuario está scrolleando verticalmente más que horizontalmente, no intervenir */
+          if(Math.abs(diffY) > Math.abs(touchDiffX)) {
+            isSwiping = false;
+          }
+        }, { passive: true });
+
+        stage.addEventListener('touchend', function(){
+          if(isSwiping){
+            if(touchDiffX < -45){
+              next();
+            } else if(touchDiffX > 45){
+              prev();
+            }
+          }
+          isSwiping = false;
+          setTimeout(function(){ setPause(false); }, 1200);
+        }, { passive: true });
+
+        stage.addEventListener('touchcancel', function(){
+          isSwiping = false;
+          setPause(false);
+        });
+      }
+
+      /* Inicialización */
+      updateCounter();
+      if(!prefersReducedMotion && total > 1){
+        startTimer();
+      }
     });
-    viewport.addEventListener('pointermove', function(e){
-      if(!isDragging) return;
-      offset = dragStartOffset - (e.clientX - dragStartX);
-      wrap();
-      render();
-    });
-    function endDrag(){
-      if(!isDragging) return;
-      isDragging = false;
-      viewport.classList.remove('is-dragging');
-      pausedByDrag = false;
-      sync();
-    }
-    viewport.addEventListener('pointerup', endDrag);
-    viewport.addEventListener('pointercancel', endDrag);
-
-    /* -- Recalcula el ancho de una vuelta si cambia el layout (resize,
-       cambio de breakpoint del ancho en % de las tarjetas) y, sobre todo,
-       revisa si el ancho cruzó el umbral móvil/tablet para activar o
-       desactivar el bucle en caliente (sin recargar). orientationchange
-       se escucha aparte porque en algunos navegadores dispara antes de
-       que matchMedia/innerWidth reflejen el nuevo tamaño; el timeout
-       compartido con resize le da margen a que el layout se asiente. -- */
-    var resizeTimer = null;
-    function scheduleResponsiveCheck(){
-      clearTimeout(resizeTimer);
-      resizeTimer = setTimeout(function(){
-        applyResponsiveMode();
-        measure();
-        wrap();
-        render();
-      }, 150);
-    }
-    window.addEventListener('resize', scheduleResponsiveCheck);
-    window.addEventListener('orientationchange', scheduleResponsiveCheck);
-
-    applyResponsiveMode();
-  }catch(e){ console.warn('googleReviewsMarquee', e); }
+  }catch(e){ console.warn('editorialReviewsSlider', e); }
 })();
 
 /* ---------- Método Marshall — Experiencia narrativa y cinética (Fase 2) ----------
@@ -3541,7 +3534,7 @@ var prefersReducedMotion = window.matchMedia && window.matchMedia('(prefers-redu
       });
     })();
 
-    /* 2. ¿Para quién es Fuerza? (.strength-audience) */
+    /* 2. ¿Para quién es Fuerza? (.strength-audience) — Clic exclusivo, sin apertura por hover */
     (function initStrengthAudience(){
       var container = document.querySelector('[data-strength-audience]');
       if(!container) return;
@@ -3554,36 +3547,63 @@ var prefersReducedMotion = window.matchMedia && window.matchMedia('(prefers-redu
         var body = item.querySelector('.audience-item__body');
         if(!trigger || !body) return;
 
-        trigger.addEventListener('click', function(){
+        trigger.addEventListener('click', function(e){
+          e.preventDefault();
           var isOpen = item.classList.contains('is-open');
+
           if(isOpen){
             item.classList.remove('is-open');
             trigger.setAttribute('aria-expanded', 'false');
           } else {
-            item.classList.add('is-open');
-            trigger.setAttribute('aria-expanded', 'true');
-          }
-        });
-
-        item.addEventListener('mouseenter', function(){
-          if(window.matchMedia && window.matchMedia('(hover: hover) and (pointer: fine)').matches){
-            item.classList.add('is-open');
-            trigger.setAttribute('aria-expanded', 'true');
-          }
-        });
-
-        item.addEventListener('mouseleave', function(){
-          if(window.matchMedia && window.matchMedia('(hover: hover) and (pointer: fine)').matches){
-            var anyOtherOpen = Array.prototype.slice.call(items).some(function(it){
-              return it !== item && it.classList.contains('is-open');
+            // Cerrar cualquier otro abierto para mantener la sección ordenada
+            items.forEach(function(other){
+              if(other !== item && other.classList.contains('is-open')){
+                other.classList.remove('is-open');
+                var otherTrigger = other.querySelector('.audience-item__trigger');
+                if(otherTrigger) otherTrigger.setAttribute('aria-expanded', 'false');
+              }
             });
-            if(anyOtherOpen || item !== items[0]){
-              item.classList.remove('is-open');
-              trigger.setAttribute('aria-expanded', 'false');
-            }
+            item.classList.add('is-open');
+            trigger.setAttribute('aria-expanded', 'true');
           }
         });
       });
+    })();
+
+    /* 3. Maquinaria de Fuerza — Rail de desplazamiento controlado (.strength-tech) */
+    (function initStrengthTechRail(){
+      var container = document.querySelector('[data-strength-tech]');
+      if(!container) return;
+
+      var rail = container.querySelector('[data-tech-rail]');
+      var prevBtn = container.querySelector('[data-tech-prev]');
+      var nextBtn = container.querySelector('[data-tech-next]');
+      if(!rail) return;
+
+      function updateNavState(){
+        if(!prevBtn || !nextBtn) return;
+        var maxScroll = rail.scrollWidth - rail.clientWidth - 4;
+        prevBtn.disabled = rail.scrollLeft <= 4;
+        nextBtn.disabled = rail.scrollLeft >= maxScroll;
+      }
+
+      if(prevBtn){
+        prevBtn.addEventListener('click', function(){
+          var step = Math.max(280, rail.clientWidth * 0.7);
+          rail.scrollBy({ left: -step, behavior: 'smooth' });
+        });
+      }
+
+      if(nextBtn){
+        nextBtn.addEventListener('click', function(){
+          var step = Math.max(280, rail.clientWidth * 0.7);
+          rail.scrollBy({ left: step, behavior: 'smooth' });
+        });
+      }
+
+      rail.addEventListener('scroll', updateNavState, { passive: true });
+      window.addEventListener('resize', updateNavState, { passive: true });
+      updateNavState();
     })();
 
   }catch(e){ console.warn('strengthEditorialInteractions', e); }
@@ -3899,6 +3919,179 @@ var prefersReducedMotion = window.matchMedia && window.matchMedia('(prefers-redu
 
   }catch(e){ console.warn('domicilioEditorialInteractions', e); }
 })();
+
+/* ---------- Equipment Showcase System (.equipment-showcase) ----------
+   Controlador interactivo para la sección de equipamiento y tecnología clínica.
+   Sincroniza el display protagonista con el rail selector/thumbnails.
+   Soporta navegación táctil (swipe), teclado accesible (flechas) y controles. */
+(function equipmentShowcaseSystem(){
+  try{
+    var showcases = document.querySelectorAll('[data-equipment-showcase]');
+    if(!showcases.length) return;
+
+    var prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    showcases.forEach(function(showcase){
+      var heroMedia = showcase.querySelector('.equipment-showcase__media');
+      var heroImg = showcase.querySelector('[data-equipment-hero-img]');
+      var heroInfo = showcase.querySelector('.equipment-showcase__info');
+      var badgeEl = showcase.querySelector('[data-equipment-badge]');
+      var nameEl = showcase.querySelector('[data-equipment-name]');
+      var roleEl = showcase.querySelector('[data-equipment-role]');
+      var descEl = showcase.querySelector('[data-equipment-desc]');
+      var counterEl = showcase.querySelector('[data-equipment-counter]');
+      var prevBtn = showcase.querySelector('[data-equipment-prev]');
+      var nextBtn = showcase.querySelector('[data-equipment-next]');
+      var items = Array.prototype.slice.call(showcase.querySelectorAll('[data-equipment-item]'));
+
+      if(!items.length) return;
+
+      var currentIndex = 0;
+      var total = items.length;
+
+      function updateDisplay(index, immediate){
+        if(index < 0) index = total - 1;
+        if(index >= total) index = 0;
+        currentIndex = index;
+
+        var targetItem = items[currentIndex];
+        if(!targetItem) return;
+
+        // Actualizar thumbnails
+        items.forEach(function(btn, idx){
+          var isActive = (idx === currentIndex);
+          btn.classList.toggle('is-active', isActive);
+          btn.setAttribute('aria-selected', isActive ? 'true' : 'false');
+          btn.tabIndex = isActive ? 0 : -1;
+        });
+
+        // Actualizar contador
+        if(counterEl){
+          var curStr = (currentIndex + 1) < 10 ? '0' + (currentIndex + 1) : (currentIndex + 1);
+          var totStr = total < 10 ? '0' + total : total;
+          counterEl.textContent = curStr + ' / ' + totStr;
+        }
+
+        var newSrc = targetItem.getAttribute('data-img-src');
+        var newAlt = targetItem.getAttribute('data-img-alt') || '';
+        var newBadge = targetItem.getAttribute('data-badge') || '';
+        var newName = targetItem.getAttribute('data-name') || '';
+        var newRole = targetItem.getAttribute('data-role') || '';
+        var newDesc = targetItem.getAttribute('data-desc') || '';
+
+        function applyData(){
+          if(heroImg){
+            heroImg.src = newSrc;
+            heroImg.alt = newAlt;
+          }
+          if(badgeEl) badgeEl.textContent = newBadge;
+          if(nameEl) nameEl.textContent = newName;
+          if(roleEl) roleEl.textContent = newRole;
+          if(descEl) descEl.textContent = newDesc;
+        }
+
+        if(immediate || prefersReducedMotion){
+          applyData();
+        } else {
+          if(heroMedia) heroMedia.classList.add('is-changing');
+          if(heroInfo) heroInfo.classList.add('is-changing');
+
+          window.setTimeout(function(){
+            applyData();
+            if(heroMedia) heroMedia.classList.remove('is-changing');
+            if(heroInfo) heroInfo.classList.remove('is-changing');
+          }, 150);
+        }
+      }
+
+      // Eventos en thumbnails
+      items.forEach(function(btn, idx){
+        btn.addEventListener('click', function(){
+          if(idx !== currentIndex){
+            updateDisplay(idx);
+          }
+        });
+
+        // Navegación con teclado en el tablist
+        btn.addEventListener('keydown', function(e){
+          var newIdx = -1;
+          if(e.key === 'ArrowDown' || e.key === 'ArrowRight'){
+            e.preventDefault();
+            newIdx = (currentIndex + 1) % total;
+          } else if(e.key === 'ArrowUp' || e.key === 'ArrowLeft'){
+            e.preventDefault();
+            newIdx = (currentIndex - 1 + total) % total;
+          } else if(e.key === 'Home'){
+            e.preventDefault();
+            newIdx = 0;
+          } else if(e.key === 'End'){
+            e.preventDefault();
+            newIdx = total - 1;
+          }
+
+          if(newIdx !== -1){
+            updateDisplay(newIdx);
+            items[newIdx].focus();
+          }
+        });
+      });
+
+      // Controles prev/next
+      if(prevBtn){
+        prevBtn.addEventListener('click', function(){
+          updateDisplay(currentIndex - 1);
+        });
+      }
+      if(nextBtn){
+        nextBtn.addEventListener('click', function(){
+          updateDisplay(currentIndex + 1);
+        });
+      }
+
+      // Gesto táctil Swipe en el stage (móvil)
+      var stageCard = showcase.querySelector('.equipment-showcase__featured');
+      if(stageCard){
+        var touchStartX = 0;
+        var touchStartY = 0;
+        var isSwiping = false;
+
+        stageCard.addEventListener('touchstart', function(e){
+          if(e.touches.length === 1){
+            touchStartX = e.touches[0].clientX;
+            touchStartY = e.touches[0].clientY;
+            isSwiping = true;
+          }
+        }, { passive: true });
+
+        stageCard.addEventListener('touchend', function(e){
+          if(!isSwiping) return;
+          var touchEndX = e.changedTouches[0].clientX;
+          var touchEndY = e.changedTouches[0].clientY;
+          var diffX = touchEndX - touchStartX;
+          var diffY = touchEndY - touchStartY;
+
+          // Solo si el deslizamiento es predominantemente horizontal
+          if(Math.abs(diffX) > 40 && Math.abs(diffX) > Math.abs(diffY)){
+            if(diffX < 0){
+              updateDisplay(currentIndex + 1);
+            } else {
+              updateDisplay(currentIndex - 1);
+            }
+          }
+          isSwiping = false;
+        }, { passive: true });
+
+        stageCard.addEventListener('touchcancel', function(){
+          isSwiping = false;
+        });
+      }
+
+      // Inicialización
+      updateDisplay(0, true);
+    });
+  }catch(e){ console.warn('equipmentShowcaseSystem', e); }
+})();
+
 
 
 

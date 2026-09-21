@@ -3219,3 +3219,687 @@ var prefersReducedMotion = window.matchMedia && window.matchMedia('(prefers-redu
   }catch(e){ console.warn('initFacilityLightbox', e); }
 })();
 
+/* ---------- Bienestar: ¿Qué necesitas hoy? (.wellness-needs) ----------
+   Interacción editorial para alternar entre los cuatro objetivos:
+   - Al hacer click o hover (en dispositivos puntero), activa el botón tab seleccionado,
+     desactiva los demás y actualiza los atributos ARIA (aria-selected).
+   - Sustituye suavemente la imagen grande y la etiqueta informativa en la columna visual.
+   - Envuelto en try/catch y respetando prefersReducedMotion. */
+(function wellnessNeedsInteractive(){
+  try{
+    var container = document.querySelector('[data-wellness-needs]');
+    if(!container) return;
+
+    var tabs = container.querySelectorAll('.wellness-need-item');
+    var visualImg = container.querySelector('[data-wellness-needs-img]');
+    var badgeIndex = container.querySelector('[data-wellness-needs-index]');
+    var badgeTitle = container.querySelector('[data-wellness-needs-title]');
+    var badgeFocus = container.querySelector('[data-wellness-needs-focus]');
+    if(!tabs.length || !visualImg) return;
+
+    var activeTab = container.querySelector('.wellness-need-item.is-active') || tabs[0];
+    var fadeTimeout = null;
+
+    function activateTab(tab){
+      if(!tab || tab === activeTab) return;
+
+      tabs.forEach(function(t){
+        t.classList.remove('is-active');
+        t.setAttribute('aria-selected', 'false');
+      });
+
+      tab.classList.add('is-active');
+      tab.setAttribute('aria-selected', 'true');
+      activeTab = tab;
+
+      var newSrc = tab.getAttribute('data-photo-src');
+      var newSrcset = tab.getAttribute('data-photo-srcset');
+      var newAlt = tab.getAttribute('data-photo-alt') || '';
+      var bIdx = tab.getAttribute('data-badge-index') || '';
+      var bTitle = tab.getAttribute('data-badge-title') || '';
+      var bFocus = tab.getAttribute('data-badge-focus') || '';
+
+      if(badgeIndex && bIdx) badgeIndex.textContent = bIdx;
+      if(badgeTitle && bTitle) badgeTitle.textContent = bTitle;
+      if(badgeFocus && bFocus) badgeFocus.textContent = bFocus;
+
+      if(newSrc && visualImg.getAttribute('src') !== newSrc){
+        if(fadeTimeout) clearTimeout(fadeTimeout);
+        visualImg.classList.add('is-fading');
+
+        fadeTimeout = setTimeout(function(){
+          visualImg.setAttribute('src', newSrc);
+          if(newSrcset) visualImg.setAttribute('srcset', newSrcset);
+          visualImg.setAttribute('alt', newAlt);
+          visualImg.classList.remove('is-fading');
+        }, prefersReducedMotion ? 0 : 180);
+      }
+    }
+
+    tabs.forEach(function(tab, index){
+      tab.addEventListener('click', function(){
+        activateTab(tab);
+      });
+
+      tab.addEventListener('mouseenter', function(){
+        if(window.matchMedia && window.matchMedia('(hover: hover) and (pointer: fine)').matches){
+          activateTab(tab);
+        }
+      });
+
+      tab.addEventListener('keydown', function(e){
+        var nextIndex = -1;
+        if(e.key === 'ArrowDown' || e.key === 'ArrowRight'){
+          nextIndex = (index + 1) % tabs.length;
+        }else if(e.key === 'ArrowUp' || e.key === 'ArrowLeft'){
+          nextIndex = (index - 1 + tabs.length) % tabs.length;
+        }
+        if(nextIndex >= 0){
+          e.preventDefault();
+          tabs[nextIndex].focus();
+          activateTab(tabs[nextIndex]);
+        }
+      });
+    });
+
+  }catch(e){ console.warn('wellnessNeedsInteractive', e); }
+})();
+
+/* ---------- Bienestar: Herramientas para cada objetivo (.wellness-tools) ---------- */
+(function wellnessToolsEnhancer(){
+  try{
+    var container = document.querySelector('[data-wellness-tools-container]');
+    if(!container) return;
+    var cards = container.querySelectorAll('.wellness-tool-card');
+    cards.forEach(function(card){
+      card.addEventListener('click', function(){
+        cards.forEach(function(c){ c.classList.remove('is-active'); });
+        card.classList.add('is-active');
+      });
+    });
+  }catch(e){ console.warn('wellnessToolsEnhancer', e); }
+})();
+
+/* ==========================================================================
+   PILATES REFORMER — INTERACCIONES EDITORIALES (.page-pilates)
+   ========================================================================== */
+(function pilatesEditorialInteractions(){
+  try{
+    if(!document.body.classList.contains('page-pilates')) return;
+
+    /* 1. Hotspots interactivos de la máquina Reformer (.reformer-adapt) */
+    (function initReformerHotspots(){
+      var container = document.querySelector('.reformer-adapt');
+      if(!container) return;
+
+      var pins = container.querySelectorAll('.reformer-pin');
+      var cards = container.querySelectorAll('.reformer-card');
+      if(!pins.length || !cards.length) return;
+
+      function setActiveHotspot(id){
+        pins.forEach(function(pin){
+          var isMatch = pin.getAttribute('data-target') === id;
+          pin.classList.toggle('is-active', isMatch);
+          pin.setAttribute('aria-expanded', isMatch ? 'true' : 'false');
+        });
+        cards.forEach(function(card){
+          var isMatch = card.getAttribute('data-id') === id;
+          card.classList.toggle('is-active', isMatch);
+          card.setAttribute('aria-selected', isMatch ? 'true' : 'false');
+        });
+      }
+
+      pins.forEach(function(pin){
+        var targetId = pin.getAttribute('data-target');
+        pin.addEventListener('click', function(e){
+          e.preventDefault();
+          setActiveHotspot(targetId);
+        });
+        pin.addEventListener('mouseenter', function(){
+          if(window.matchMedia && window.matchMedia('(hover: hover) and (pointer: fine)').matches){
+            setActiveHotspot(targetId);
+          }
+        });
+      });
+
+      cards.forEach(function(card){
+        var cardId = card.getAttribute('data-id');
+        card.addEventListener('click', function(){
+          setActiveHotspot(cardId);
+        });
+      });
+    })();
+
+    /* 2. Selector de Perfiles editorial (.pilates-profiles) */
+    (function initProfileTabs(){
+      var container = document.querySelector('.pilates-profiles');
+      if(!container) return;
+
+      var tabs = container.querySelectorAll('.pilates-profiles__tab');
+      var panels = container.querySelectorAll('.pilates-profiles__panel');
+      if(!tabs.length || !panels.length) return;
+
+      function switchTab(selectedTab){
+        var targetId = selectedTab.getAttribute('aria-controls');
+
+        tabs.forEach(function(tab){
+          var isSelected = tab === selectedTab;
+          tab.setAttribute('aria-selected', isSelected ? 'true' : 'false');
+          tab.setAttribute('tabindex', isSelected ? '0' : '-1');
+        });
+
+        panels.forEach(function(panel){
+          if(panel.id === targetId){
+            panel.hidden = false;
+          } else {
+            panel.hidden = true;
+          }
+        });
+      }
+
+      tabs.forEach(function(tab, index){
+        tab.addEventListener('click', function(){
+          switchTab(tab);
+        });
+
+        tab.addEventListener('keydown', function(e){
+          var nextIndex = -1;
+          if(e.key === 'ArrowRight'){
+            nextIndex = (index + 1) % tabs.length;
+          } else if(e.key === 'ArrowLeft'){
+            nextIndex = (index - 1 + tabs.length) % tabs.length;
+          }
+          if(nextIndex >= 0){
+            e.preventDefault();
+            tabs[nextIndex].focus();
+            switchTab(tabs[nextIndex]);
+          }
+        });
+      });
+    })();
+
+    /* 3. Timeline de progresión en la sesión (.pilates-journey) */
+    (function initSessionJourney(){
+      var container = document.querySelector('.pilates-journey');
+      if(!container) return;
+
+      var steps = container.querySelectorAll('.pilates-journey__step');
+      var progressLine = container.querySelector('.pilates-journey__line-progress');
+      if(!steps.length) return;
+
+      if('IntersectionObserver' in window && !prefersReducedMotion){
+        var observer = new IntersectionObserver(function(entries){
+          entries.forEach(function(entry){
+            if(entry.isIntersecting){
+              entry.target.classList.add('is-active');
+              updateProgress();
+            }
+          });
+        }, { rootMargin: '-15% 0px -25% 0px', threshold: 0.2 });
+
+        steps.forEach(function(step){
+          observer.observe(step);
+        });
+
+        function updateProgress(){
+          var activeCount = container.querySelectorAll('.pilates-journey__step.is-active').length;
+          if(progressLine){
+            var pct = Math.min(100, Math.round(((activeCount - 1) / (steps.length - 1)) * 100));
+            progressLine.style.height = (activeCount > 0 ? pct : 0) + '%';
+          }
+        }
+      } else {
+        steps.forEach(function(s){ s.classList.add('is-active'); });
+        if(progressLine) progressLine.style.height = '100%';
+      }
+    })();
+
+  }catch(e){ console.warn('pilatesEditorialInteractions', e); }
+})();
+
+/* ---------- Fuerza (Strength): Sistema interactivo editorial ---------- */
+(function strengthEditorialInteractions(){
+  try{
+    /* 1. Qué trabajamos interactivo (.specialty-list--interactive) */
+    (function initStrengthWork(){
+      var container = document.querySelector('[data-strength-work]');
+      if(!container) return;
+
+      var items = container.querySelectorAll('[data-strength-item]');
+      var visualImg = container.querySelector('[data-strength-work-img]');
+      var indexBadge = container.querySelector('[data-strength-work-index]');
+      var labelBadge = container.querySelector('[data-strength-work-label]');
+      if(!items.length || !visualImg) return;
+
+      var activeItem = container.querySelector('[data-strength-item].is-active') || items[0];
+      var fadeTimeout = null;
+
+      function activateItem(item){
+        if(!item || item === activeItem) return;
+
+        items.forEach(function(el){
+          el.classList.remove('is-active');
+          var btn = el.querySelector('.strength-work__btn');
+          if(btn) btn.setAttribute('aria-pressed', 'false');
+        });
+
+        item.classList.add('is-active');
+        var curBtn = item.querySelector('.strength-work__btn');
+        if(curBtn) curBtn.setAttribute('aria-pressed', 'true');
+        activeItem = item;
+
+        var newSrc = item.getAttribute('data-img-src');
+        var newSrcset = item.getAttribute('data-img-srcset');
+        var newAlt = item.getAttribute('data-img-alt') || '';
+        var idx = item.getAttribute('data-index') || '';
+        var label = item.getAttribute('data-label') || '';
+
+        if(indexBadge && idx) indexBadge.textContent = idx;
+        if(labelBadge && label) labelBadge.textContent = label;
+
+        if(newSrc && visualImg.getAttribute('src') !== newSrc){
+          if(fadeTimeout) clearTimeout(fadeTimeout);
+          visualImg.classList.add('is-fading');
+
+          fadeTimeout = setTimeout(function(){
+            visualImg.setAttribute('src', newSrc);
+            if(newSrcset) visualImg.setAttribute('srcset', newSrcset);
+            visualImg.setAttribute('alt', newAlt);
+            visualImg.classList.remove('is-fading');
+          }, prefersReducedMotion ? 0 : 180);
+        }
+      }
+
+      items.forEach(function(item, i){
+        var btn = item.querySelector('.strength-work__btn');
+        if(!btn) return;
+
+        btn.addEventListener('click', function(){
+          activateItem(item);
+        });
+
+        btn.addEventListener('mouseenter', function(){
+          if(window.matchMedia && window.matchMedia('(hover: hover) and (pointer: fine)').matches){
+            activateItem(item);
+          }
+        });
+
+        btn.addEventListener('keydown', function(e){
+          var nextIdx = -1;
+          if(e.key === 'ArrowDown' || e.key === 'ArrowRight'){
+            nextIdx = (i + 1) % items.length;
+          } else if(e.key === 'ArrowUp' || e.key === 'ArrowLeft'){
+            nextIdx = (i - 1 + items.length) % items.length;
+          }
+          if(nextIdx >= 0){
+            e.preventDefault();
+            var targetBtn = items[nextIdx].querySelector('.strength-work__btn');
+            if(targetBtn) targetBtn.focus();
+            activateItem(items[nextIdx]);
+          }
+        });
+      });
+    })();
+
+    /* 2. ¿Para quién es Fuerza? (.strength-audience) */
+    (function initStrengthAudience(){
+      var container = document.querySelector('[data-strength-audience]');
+      if(!container) return;
+
+      var items = container.querySelectorAll('.audience-item');
+      if(!items.length) return;
+
+      items.forEach(function(item){
+        var trigger = item.querySelector('.audience-item__trigger');
+        var body = item.querySelector('.audience-item__body');
+        if(!trigger || !body) return;
+
+        trigger.addEventListener('click', function(){
+          var isOpen = item.classList.contains('is-open');
+          if(isOpen){
+            item.classList.remove('is-open');
+            trigger.setAttribute('aria-expanded', 'false');
+          } else {
+            item.classList.add('is-open');
+            trigger.setAttribute('aria-expanded', 'true');
+          }
+        });
+
+        item.addEventListener('mouseenter', function(){
+          if(window.matchMedia && window.matchMedia('(hover: hover) and (pointer: fine)').matches){
+            item.classList.add('is-open');
+            trigger.setAttribute('aria-expanded', 'true');
+          }
+        });
+
+        item.addEventListener('mouseleave', function(){
+          if(window.matchMedia && window.matchMedia('(hover: hover) and (pointer: fine)').matches){
+            var anyOtherOpen = Array.prototype.slice.call(items).some(function(it){
+              return it !== item && it.classList.contains('is-open');
+            });
+            if(anyOtherOpen || item !== items[0]){
+              item.classList.remove('is-open');
+              trigger.setAttribute('aria-expanded', 'false');
+            }
+          }
+        });
+      });
+    })();
+
+  }catch(e){ console.warn('strengthEditorialInteractions', e); }
+})();
+
+/* ==========================================================================
+   STRETCHING — INTERACCIONES EDITORIALES (.page-stretching)
+   ========================================================================== */
+(function stretchingEditorialInteractions(){
+  try{
+    /* 1. ¿Encaja contigo? (.stretching-fit) */
+    (function initStretchingFit(){
+      var container = document.querySelector('[data-stretching-fit]');
+      if(!container) return;
+
+      var tabs = container.querySelectorAll('.stretching-fit-item');
+      var visualImg = container.querySelector('[data-stretching-fit-img]');
+      var badgeIndex = container.querySelector('[data-stretching-fit-index]');
+      var badgeTitle = container.querySelector('[data-stretching-fit-title]');
+      var badgeFocus = container.querySelector('[data-stretching-fit-focus]');
+      if(!tabs.length || !visualImg) return;
+
+      var activeTab = container.querySelector('.stretching-fit-item.is-active') || tabs[0];
+      var fadeTimeout = null;
+
+      function activateTab(tab){
+        if(!tab || tab === activeTab) return;
+
+        tabs.forEach(function(t){
+          t.classList.remove('is-active');
+          t.setAttribute('aria-selected', 'false');
+        });
+
+        tab.classList.add('is-active');
+        tab.setAttribute('aria-selected', 'true');
+        activeTab = tab;
+
+        var newSrc = tab.getAttribute('data-photo-src');
+        var newSrcset = tab.getAttribute('data-photo-srcset');
+        var newAlt = tab.getAttribute('data-photo-alt') || '';
+        var bIdx = tab.getAttribute('data-badge-index') || '';
+        var bTitle = tab.getAttribute('data-badge-title') || '';
+        var bFocus = tab.getAttribute('data-badge-focus') || '';
+
+        if(badgeIndex && bIdx) badgeIndex.textContent = bIdx;
+        if(badgeTitle && bTitle) badgeTitle.textContent = bTitle;
+        if(badgeFocus && bFocus) badgeFocus.textContent = bFocus;
+
+        if(newSrc && visualImg.getAttribute('src') !== newSrc){
+          if(fadeTimeout) clearTimeout(fadeTimeout);
+          visualImg.classList.add('is-fading');
+
+          fadeTimeout = setTimeout(function(){
+            visualImg.setAttribute('src', newSrc);
+            if(newSrcset) visualImg.setAttribute('srcset', newSrcset);
+            visualImg.setAttribute('alt', newAlt);
+            visualImg.classList.remove('is-fading');
+          }, prefersReducedMotion ? 0 : 180);
+        }
+      }
+
+      tabs.forEach(function(tab, index){
+        tab.addEventListener('click', function(){
+          activateTab(tab);
+        });
+
+        tab.addEventListener('mouseenter', function(){
+          if(window.matchMedia && window.matchMedia('(hover: hover) and (pointer: fine)').matches){
+            activateTab(tab);
+          }
+        });
+
+        tab.addEventListener('keydown', function(e){
+          var nextIndex = -1;
+          if(e.key === 'ArrowDown' || e.key === 'ArrowRight'){
+            nextIndex = (index + 1) % tabs.length;
+          }else if(e.key === 'ArrowUp' || e.key === 'ArrowLeft'){
+            nextIndex = (index - 1 + tabs.length) % tabs.length;
+          }
+          if(nextIndex >= 0){
+            e.preventDefault();
+            tabs[nextIndex].focus();
+            activateTab(tabs[nextIndex]);
+          }
+        });
+      });
+    })();
+
+    /* 2. Qué se trabaja en cada sesión (.stretching-work) */
+    (function initStretchingWork(){
+      var container = document.querySelector('[data-stretching-work]');
+      if(!container) return;
+
+      var items = container.querySelectorAll('.stretching-work-item');
+      if(!items.length) return;
+
+      function setActiveWork(item){
+        items.forEach(function(it){
+          var isActive = (it === item);
+          it.classList.toggle('is-active', isActive);
+          it.setAttribute('aria-expanded', isActive ? 'true' : 'false');
+        });
+      }
+
+      items.forEach(function(item){
+        item.addEventListener('click', function(){
+          setActiveWork(item);
+        });
+
+        item.addEventListener('mouseenter', function(){
+          if(window.matchMedia && window.matchMedia('(hover: hover) and (pointer: fine)').matches){
+            setActiveWork(item);
+          }
+        });
+
+        item.addEventListener('keydown', function(e){
+          if(e.key === 'Enter' || e.key === ' '){
+            e.preventDefault();
+            setActiveWork(item);
+          }
+        });
+      });
+    })();
+
+    /* 3. Cómo es una sesión (.stretching-session) - Progresión con scroll */
+    (function initStretchingSession(){
+      var sessionSection = document.querySelector('[data-stretching-session]');
+      if(!sessionSection) return;
+
+      var steps = sessionSection.querySelectorAll('.stretching-step');
+      var progressBar = sessionSection.querySelector('[data-session-progress]');
+      if(!steps.length) return;
+
+      function updateProgress(stepNumber){
+        steps.forEach(function(s, idx){
+          s.classList.toggle('is-active', (idx + 1) <= stepNumber);
+        });
+        if(progressBar){
+          var percent = (stepNumber / steps.length) * 100;
+          progressBar.style.width = percent + '%';
+        }
+      }
+
+      steps.forEach(function(step, idx){
+        step.addEventListener('mouseenter', function(){
+          updateProgress(idx + 1);
+        });
+        step.addEventListener('click', function(){
+          updateProgress(idx + 1);
+        });
+      });
+
+      if('IntersectionObserver' in window && !prefersReducedMotion){
+        var observer = new IntersectionObserver(function(entries){
+          entries.forEach(function(entry){
+            if(entry.isIntersecting){
+              var ratio = entry.intersectionRatio;
+              if(ratio > 0.6){
+                updateProgress(3);
+              } else if(ratio > 0.35){
+                updateProgress(2);
+              } else {
+                updateProgress(1);
+              }
+            }
+          });
+        }, { threshold: [0.2, 0.4, 0.7] });
+
+        observer.observe(sessionSection);
+      }
+    })();
+
+    /* 4. Ecosistema de áreas (.stretching-ecosystem) */
+    (function initStretchingEcosystem(){
+      var ecosystem = document.querySelector('[data-stretching-ecosystem]');
+      if(!ecosystem) return;
+
+      var tabs = ecosystem.querySelectorAll('.stretching-eco-tab');
+      var panels = ecosystem.querySelectorAll('.stretching-eco-panel');
+      if(!tabs.length || !panels.length) return;
+
+      function activateEco(targetId){
+        tabs.forEach(function(tab){
+          var isMatch = tab.getAttribute('data-eco-target') === targetId;
+          tab.classList.toggle('is-active', isMatch);
+          tab.setAttribute('aria-selected', isMatch ? 'true' : 'false');
+        });
+
+        panels.forEach(function(panel){
+          var panelId = 'eco-panel-' + targetId;
+          var isMatch = panel.id === panelId;
+          panel.classList.toggle('is-active', isMatch);
+          panel.hidden = !isMatch;
+        });
+      }
+
+      tabs.forEach(function(tab){
+        var target = tab.getAttribute('data-eco-target');
+        tab.addEventListener('click', function(){
+          activateEco(target);
+        });
+
+        tab.addEventListener('mouseenter', function(){
+          if(window.matchMedia && window.matchMedia('(hover: hover) and (pointer: fine)').matches){
+            activateEco(target);
+          }
+        });
+      });
+    })();
+
+  }catch(e){ console.warn('stretchingEditorialInteractions', e); }
+})();
+
+/* ---------- Fisioterapia a Domicilio: Interacciones editoriales ---------- */
+(function domicilioEditorialInteractions(){
+  try{
+    if(!document.body.classList.contains('page-domicilio')) return;
+
+    /* 1. Lista interactiva "¿Cuándo tiene sentido?" (.domicilio-when) */
+    (function initDomicilioWhen(){
+      var container = document.querySelector('.domicilio-when');
+      if(!container) return;
+
+      var items = container.querySelectorAll('.domicilio-when__item');
+      var visualImg = container.querySelector('.domicilio-when__img');
+      var captionText = container.querySelector('.domicilio-when__caption');
+      if(!items.length) return;
+
+      function activateItem(item){
+        items.forEach(function(it){
+          var btn = it.querySelector('.domicilio-when__btn');
+          var panel = it.querySelector('.domicilio-when__panel');
+          var isActive = (it === item);
+
+          it.classList.toggle('is-active', isActive);
+          if(btn) btn.setAttribute('aria-expanded', isActive ? 'true' : 'false');
+          if(panel) panel.hidden = !isActive;
+        });
+
+        if(visualImg && item.hasAttribute('data-img')){
+          var newSrc = item.getAttribute('data-img');
+          var newCaption = item.getAttribute('data-caption') || '';
+          if(visualImg.getAttribute('src') !== newSrc){
+            visualImg.classList.add('is-fading');
+            window.setTimeout(function(){
+              visualImg.setAttribute('src', newSrc);
+              if(captionText) captionText.textContent = newCaption;
+              visualImg.classList.remove('is-fading');
+            }, 180);
+          }
+        }
+      }
+
+      items.forEach(function(item){
+        var btn = item.querySelector('.domicilio-when__btn');
+        if(!btn) return;
+
+        btn.addEventListener('click', function(e){
+          e.preventDefault();
+          var isExpanded = btn.getAttribute('aria-expanded') === 'true';
+          if(isExpanded && window.innerWidth < 960){
+            item.classList.remove('is-active');
+            btn.setAttribute('aria-expanded', 'false');
+            var panel = item.querySelector('.domicilio-when__panel');
+            if(panel) panel.hidden = true;
+          } else {
+            activateItem(item);
+          }
+        });
+
+        item.addEventListener('mouseenter', function(){
+          if(window.matchMedia && window.matchMedia('(hover: hover) and (pointer: fine)').matches){
+            activateItem(item);
+          }
+        });
+      });
+
+      if(window.innerWidth >= 960 && items.length > 0){
+        activateItem(items[0]);
+      }
+    })();
+
+    /* 2. Revelado secuencial en "La clínica se desplaza contigo" (.domicilio-shift) */
+    (function initShiftScroll(){
+      var shiftSection = document.querySelector('.domicilio-shift');
+      if(!shiftSection || !('IntersectionObserver' in window) || prefersReducedMotion) return;
+
+      var cards = shiftSection.querySelectorAll('.domicilio-shift__card');
+      if(!cards.length) return;
+
+      cards.forEach(function(card){
+        card.style.opacity = '0.35';
+        card.style.transform = 'translateY(14px)';
+        card.style.transition = 'opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1), transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.2s ease, background-color 0.2s ease';
+      });
+
+      var observer = new IntersectionObserver(function(entries){
+        entries.forEach(function(entry){
+          if(entry.isIntersecting){
+            cards.forEach(function(card, idx){
+              window.setTimeout(function(){
+                card.style.opacity = '1';
+                card.style.transform = 'none';
+              }, idx * 120);
+            });
+            observer.unobserve(shiftSection);
+          }
+        });
+      }, { threshold: 0.25 });
+
+      observer.observe(shiftSection);
+    })();
+
+  }catch(e){ console.warn('domicilioEditorialInteractions', e); }
+})();
+
+
+
+

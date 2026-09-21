@@ -427,3 +427,44 @@ repositorio pero sin usar hasta ahora.
 
 No se ha modificado ninguna otra página en esta fase (Fuerza, Pilates,
 Stretching, Fisioterapia a domicilio y Fisioterapia quedan intactas).
+
+## Pilates Reformer: ampliación editorial (2026-09-18)
+
+Ampliación de `src/pages/servicios/pilates.html` a una narrativa completa de servicio (hero + 8 secciones). Siguiendo las directrices del proyecto y la petición del usuario, se reutiliza exclusivamente **fotografía ya existente en el repositorio** (fotografía de disciplina aportada por el cliente y fotografía real del estudio de Sitges), sin incorporar imágenes externas ni de stock genérico.
+
+| Sección | Archivo servido | Origen | Descripción de la escena |
+| :--- | :--- | :--- | :--- |
+| **Hero** | `src/assets/img/disciplines/pilates/230151d6-6497-438c-b67b-863393bb572f-1440.webp` / `-720.webp` | Fotografía real de disciplina aportada por el cliente | Sesión de Pilates Reformer con instructora acompañando el movimiento (mantenida de fase anterior). |
+| **02. Un trabajo guiado** | `src/assets/img/disciplines/pilates/3d3800cd-cb1f-45b2-88bc-0fa15cbb436f-1440.webp` / `-720.webp` | Fotografía real de disciplina aportada por el cliente | Ejercicio guiado en máquina de Pilates Reformer con agarre y tracción. |
+| **03. Qué trabajamos** | `src/assets/img/disciplines/pilates/8928754e-bf56-47fb-a5bd-c52d3fd25a89-1440.webp` / `-720.webp` | Fotografía real de disciplina aportada por el cliente | Hombre de rodillas sobre el carro del Reformer realizando tracción de correas con control postural y estabilidad. |
+| **04. El Reformer se adapta a ti** | `src/assets/img/local/local-pilates-1440.webp` / `-720.webp` | Fotografía profesional propia (sesión Sandra, Local 2 #05) | Estudio privado de Pilates Reformer en Sitges (Sant Honorat, 26) con máquina Pilatu en madera noble, carro, muelles y espejo de arco. Base para los 4 hotspots interactivos. |
+| **06. Así es una sesión** | `src/assets/img/disciplines/pilates/ddb4278a-27fd-4908-995a-38c497090852-1440.webp` / `-720.webp` | Fotografía real de disciplina aportada por el cliente | Mujer en extensión fluida lateral (mermaid) sobre el carro del Reformer, apoyando una mano en la barra de pies. |
+
+## Fuerza / Strength: ampliación editorial y narrativa (2026-09-18)
+
+Ampliación de `src/pages/servicios/strength.html` a una narrativa completa de servicio (hero + 11 secciones estructuradas). Siguiendo las directrices del proyecto y la petición explícita del usuario, se reutiliza exclusivamente **fotografía real ya existente en el repositorio** (fotografía de disciplina aportada por el cliente `src/assets/img/disciplines/strength/` y fotografía profesional del centro en Local 2 `src/assets/img/local/local-gym-*`), sin incorporar stock genérico nuevo ni alterar la identidad visual.
+
+| Sección | Archivo servido | Origen | Descripción de la escena |
+| :--- | :--- | :--- | :--- |
+| **Hero (01)** | `src/assets/img/stock/area-strength-1440.webp` / `-720.webp` | Fotografía de disciplina aprobada del centro | Sesión de fuerza y acondicionamiento (conservada intacta de la fase anterior). |
+| **02. Qué es Fuerza** | `src/assets/img/disciplines/strength/b6f0d767-34ad-4aeb-be9f-7b617316246e-1440.webp` / `-720.webp` | Fotografía real de disciplina aportada por el cliente | Ejercicio de fuerza y estabilidad supervisado con mancuernas. |
+| **04. Qué trabajamos (01 Fuerza estructural)** | `src/assets/img/disciplines/strength/49024e6c-951d-44c1-8a1e-41e361d88711-1440.webp` / `-720.webp` | Fotografía real de disciplina aportada por el cliente | Trabajo guiado de fuerza estructural con técnica y alineación motriz. |
+| **04. Qué trabajamos (02 Estabilidad & Core)** | `src/assets/img/disciplines/strength/b6f0d767-34ad-4aeb-be9f-7b617316246e-1440.webp` / `-720.webp` | Fotografía real de disciplina aportada por el cliente | Control postural, core y equilibrio motriz. |
+| **04. Qué trabajamos (03 Potencia & Dinamismo)** | `src/assets/img/disciplines/strength/eacfcb61-8e11-46df-afe7-ebab3322c656-1440.webp` / `-720.webp` | Fotografía real de disciplina aportada por el cliente | Desarrollo de potencia y control cinético dinámico. |
+| **04. Qué trabajamos (04 Readaptación física)** | `src/assets/img/disciplines/strength/bcf6ff72-1a1d-430b-831f-ca6fa90a8671-1440.webp` / `-720.webp` | Fotografía real de disciplina aportada por el cliente | Readaptación física tras lesión para recuperar tolerancia tisular. |
+| **07. Snow Performance** | `src/assets/img/stock/snow-board-1440.webp` / `-720.webp` | Fotografía editorial deportiva aprobada | Snowboarder trazando una curva fluida sobre pendiente nevada al atardecer. |
+| **09. El espacio de entrenamiento** | `src/assets/img/local/local-gym-1440.webp` / `-720.webp` | Fotografía profesional propia (Local Strength & Pilates) | Sala de fuerza con rack multipower Force USA, banco regulable, bumper plates y suelo técnico de impacto. |
+
+### Maquinaria y Tecnología aplicada en Fuerza / Ski & Snow (2026-09-21)
+
+Incorporación de equipamiento tecnológico real del centro (referenciado desde https://physiowellness.es/qui-som/ y especificado por el cliente) con fondos aislados transparentes y exportación en WebP de alta fidelidad:
+
+| Maquinaria / Herramienta | Archivo servido | Origen | Descripción del equipamiento |
+| :--- | :--- | :--- | :--- |
+| **Power Plate my5 (Silver / Gris)** | `src/assets/img/machinery/power-plate-my5-silver.webp` | Activo oficial Power Plate, procesado con fondo transparente | Plataforma de aceleración vibratoria tridimensional (30-40 Hz) para respuesta neuromuscular refleja y estabilidad articular. |
+| **Technogym Skillrow** | `src/assets/img/machinery/skillrow-technogym.webp` | Activo oficial Technogym Contentful CDN, procesado con fondo transparente | Ergómetro de resistencia magnética y de aire para potencia metabólica y cadena posterior. |
+| **BlazePod Trainer Kit** | `src/assets/img/machinery/blazepod-kit.webp` | Activo oficial BlazePod, procesado con fondo transparente | Sistema de pods lumínicos reactivos para entrenamiento del tiempo de reacción y agilidad visual propioceptiva. |
+| **Force USA C10** | `src/assets/img/machinery/force-c10.webp` | Activo oficial Force USA / Fitshop, procesado con fondo transparente | Sistema todo en uno de poleas multidireccionales y rack guiado para transferencia de fuerza angular funcional. |
+
+
+

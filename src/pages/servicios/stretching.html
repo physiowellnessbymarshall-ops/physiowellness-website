@@ -21,6 +21,8 @@
      página reutiliza el mismo mecanismo de revelado. -->
 <noscript><style>
   [data-reveal]{opacity:1!important;transform:none!important;}
+  .stretching-fit__mobile-img{display:block!important;}
+  .stretching-eco-panel{display:block!important;}
 </style></noscript>
 </head>
 <body class="page-servicios page-stretching">
@@ -41,11 +43,10 @@
         </button>
         <div class="nav-dropdown" id="nav-servicios" hidden>
           <a href="physiotherapy.html">Fisioterapia</a>
-          <a href="wellness.html">Bienestar</a>
           <a href="strength.html">Fuerza</a>
           <a href="pilates.html">Pilates</a>
+          <a href="wellness.html">Bienestar</a>
           <a href="stretching.html" aria-current="page">Stretching</a>
-          <a href="fisioterapia-a-domicilio.html">Fisioterapia a domicilio</a>
           <a class="nav-dropdown__all" href="../servicios.html">Ver todos los servicios</a>
         </div>
       </div>
@@ -128,11 +129,10 @@
       </button>
       <div class="m-acc__panel" id="m-servicios" hidden>
         <a href="physiotherapy.html">Fisioterapia</a>
-        <a href="wellness.html">Bienestar</a>
         <a href="strength.html">Fuerza</a>
         <a href="pilates.html">Pilates</a>
+        <a href="wellness.html">Bienestar</a>
         <a href="stretching.html" aria-current="page">Stretching</a>
-        <a href="fisioterapia-a-domicilio.html">Fisioterapia a domicilio</a>
         <a class="m-acc__all" href="../servicios.html">Ver todos los servicios</a>
       </div>
     </div>
@@ -318,10 +318,8 @@
     </div>
   </section>
 
-  <!-- ============ Para quién puede ser interesante ============
-       Reutiliza .problem-ticker (cinta continua) tal cual, con una lista
-       de perfiles en vez de patologías: ninguno de estos conceptos es
-       nuevo, son los mismos "para quién" pedidos para esta fase. -->
+  <!-- ============ 3. Para quién puede ser interesante (Ticker) ============
+       Funciona como introducción natural hacia la nueva sección "¿Encaja contigo?". -->
   <section class="problem-ticker" aria-label="Para quién puede ser interesante el Stretching">
     <div class="container problem-ticker__head" data-reveal>
       <h2 class="section-heading">¿Para quién puede ser interesante?</h2>
@@ -346,90 +344,599 @@
     </div>
   </section>
 
-  <!-- ============ Qué se trabaja en cada sesión ============
-       Reutiliza .specialty-list (lista editorial numerada, sin cuadrícula
-       de tarjetas) con los cinco puntos de contenido pedidos para esta
-       fase, sin afirmaciones médicas absolutas ni promesas de curación. -->
-  <section class="specialty-list" id="que-trabajamos">
+  <!-- ============ 4. NUEVA SECCIÓN — ¿Encaja contigo? ============
+       Composición editorial a dos columnas: lista interactiva a la izquierda
+       y fotografía grande sticky a la derecha con transición suave. -->
+  <section class="stretching-fit" id="encaja-contigo" aria-label="¿Encaja contigo el Stretching?">
     <div class="container">
-      <div class="specialty-list__head" data-reveal>
-        <p class="eyebrow section-eyebrow">Qué trabajamos</p>
-        <h2 class="section-heading">Qué se trabaja en cada sesión de Stretching</h2>
-        <p class="section-lead">Cada sesión combina varios de estos objetivos, según cómo llegues ese día.</p>
+      <div class="stretching-fit__head" data-reveal>
+        <p class="eyebrow section-eyebrow">Para quién es</p>
+        <h2 class="section-heading">¿Encaja contigo?</h2>
+        <p class="section-lead">Cuatro situaciones habituales en las que ganar movilidad y liberar tensión muscular marca una diferencia real en tu día a día.</p>
       </div>
 
-      <ul class="specialty-list__items" data-reveal style="--i:1">
-        <li class="specialty-item">
-          <span class="specialty-item__num">01</span>
-          <h3 class="specialty-item__title">Movilidad</h3>
-          <p class="specialty-item__desc">Amplía el rango de movimiento de tus articulaciones para que cueste menos moverte cada día.</p>
-        </li>
-        <li class="specialty-item">
-          <span class="specialty-item__num">02</span>
-          <h3 class="specialty-item__title">Flexibilidad</h3>
-          <p class="specialty-item__desc">Gana elasticidad muscular de forma progresiva y adaptada a tu punto de partida.</p>
-        </li>
-        <li class="specialty-item">
-          <span class="specialty-item__num">03</span>
-          <h3 class="specialty-item__title">Amplitud de movimiento</h3>
-          <p class="specialty-item__desc">Trabaja el recorrido completo de cada gesto, sin forzar más allá de lo que tu cuerpo permite.</p>
-        </li>
-        <li class="specialty-item">
-          <span class="specialty-item__num">04</span>
-          <h3 class="specialty-item__title">Tensión muscular</h3>
-          <p class="specialty-item__desc">Libera la tensión acumulada por el día a día, el deporte o las posturas mantenidas.</p>
-        </li>
-        <li class="specialty-item">
-          <span class="specialty-item__num">05</span>
-          <h3 class="specialty-item__title">Recuperación corporal</h3>
-          <p class="specialty-item__desc">Acompaña la recuperación entre sesiones de fuerza, Pilates u otras actividades físicas.</p>
-        </li>
-      </ul>
-    </div>
-  </section>
+      <div class="stretching-fit__layout" data-stretching-fit data-reveal style="--i:1">
+        <div class="stretching-fit__list" role="tablist" aria-label="Situaciones habituales de Stretching">
+          
+          <button
+            type="button"
+            class="stretching-fit-item is-active"
+            role="tab"
+            aria-selected="true"
+            aria-controls="stretching-fit-panel"
+            id="fit-tab-0"
+            data-fit-index="0"
+            data-photo-src="../../assets/img/disciplines/stretching/4e7326e6-66cb-453a-919d-54974ee51d1f-1440.webp"
+            data-photo-srcset="../../assets/img/disciplines/stretching/4e7326e6-66cb-453a-919d-54974ee51d1f-720.webp 720w, ../../assets/img/disciplines/stretching/4e7326e6-66cb-453a-919d-54974ee51d1f-1440.webp 1448w"
+            data-photo-alt="Sesión de movilidad y liberación de rigidez articular en Physio Wellness Sitges"
+            data-badge-index="01"
+            data-badge-title="Sensación de rigidez"
+            data-badge-focus="Movilidad articular y soltura del movimiento"
+          >
+            <div class="stretching-fit-item__top">
+              <span class="stretching-fit-item__num">01</span>
+              <span class="stretching-fit-item__tag">Día a día</span>
+            </div>
+            <h3 class="stretching-fit-item__title">Te notas rígido/a en el día a día</h3>
+            <p class="stretching-fit-item__desc">Cuando determinados movimientos o posturas te cuestan más de lo que te gustaría.</p>
+            <div class="stretching-fit-item__footer">
+              <span class="stretching-fit-item__focus">Enfoque: Recuperar soltura y rango natural</span>
+              <span class="stretching-fit-item__arrow" aria-hidden="true">→</span>
+            </div>
+            <div class="stretching-fit__mobile-img" aria-hidden="true">
+              <img src="../../assets/img/disciplines/stretching/4e7326e6-66cb-453a-919d-54974ee51d1f-720.webp" alt="" loading="lazy">
+            </div>
+          </button>
 
-  <!-- ============ Relación entre las áreas ============
-       Mismo componente y mismo tono condicional que physiotherapy.html
-       (.area-relation): no es una promesa clínica ni un recorrido
-       obligatorio, solo explica que Stretching puede combinarse con otras
-       áreas. Único enlace, a Servicios, ruta real ya existente. -->
-  <section class="area-relation" aria-label="Relación entre las áreas de Physio Wellness">
-    <div class="container area-relation__inner" data-reveal>
-      <p class="eyebrow section-eyebrow">Relación entre áreas</p>
-      <p class="area-relation__text">El Stretching puede combinarse con fisioterapia, fuerza o Pilates Reformer, como complemento para mantener la movilidad ganada o dar continuidad a tu proceso.</p>
-      <a class="area-relation__cta" href="../servicios.html">Ver todas las áreas →</a>
-    </div>
-  </section>
+          <button
+            type="button"
+            class="stretching-fit-item"
+            role="tab"
+            aria-selected="false"
+            aria-controls="stretching-fit-panel"
+            id="fit-tab-1"
+            data-fit-index="1"
+            data-photo-src="../../assets/img/disciplines/stretching/7ec630f7-8b50-4285-909c-d86c918fe696-1440.webp"
+            data-photo-srcset="../../assets/img/disciplines/stretching/7ec630f7-8b50-4285-909c-d86c918fe696-720.webp 720w, ../../assets/img/disciplines/stretching/7ec630f7-8b50-4285-909c-d86c918fe696-1440.webp 1448w"
+            data-photo-alt="Estiramiento asistido compensando posturas sedentarias prolongadas en Physio Wellness"
+            data-badge-index="02"
+            data-badge-title="Postura mantenida"
+            data-badge-focus="Compensación postural y descompresión de columna"
+          >
+            <div class="stretching-fit-item__top">
+              <span class="stretching-fit-item__num">02</span>
+              <span class="stretching-fit-item__tag">Hábitos & Trabajo</span>
+            </div>
+            <h3 class="stretching-fit-item__title">Pasas muchas horas sentado/a</h3>
+            <p class="stretching-fit-item__desc">Trabajar movilidad y movimiento puede ayudar a compensar periodos prolongados en una misma posición.</p>
+            <div class="stretching-fit-item__footer">
+              <span class="stretching-fit-item__focus">Enfoque: Descongestión de cadera y espalda</span>
+              <span class="stretching-fit-item__arrow" aria-hidden="true">→</span>
+            </div>
+            <div class="stretching-fit__mobile-img" aria-hidden="true">
+              <img src="../../assets/img/disciplines/stretching/7ec630f7-8b50-4285-909c-d86c918fe696-720.webp" alt="" loading="lazy">
+            </div>
+          </button>
 
-  <!-- ============ Tarifas de Stretching ============
-       Reutiliza .home-care-note (mismo fondo y ritmo que el bloque
-       equivalente de Fisioterapia). Stretching comparte la misma tarifa en
-       clínica que Fisioterapia, Bienestar, Fuerza y Pilates (decisión de
-       negocio confirmada por el cliente el 2026-09-03; pendiente de
-       reflejarse en el PDF oficial "PRECIOS 2026" cuando se actualice — ver
-       src/content/tarifas.md). No se repiten aquí las cifras: se enlaza
-       directamente a la tarifa en clínica de Tarifas (#en-la-clinica). -->
-  <section class="home-care-note">
-    <div class="container">
-      <div class="home-care-note__body" data-reveal>
-        <div class="home-care-note__text">
-          <p class="eyebrow home-care-note__label">Tarifas de Stretching</p>
-          <h2 class="home-care-note__title">¿Cuánto cuesta una sesión?</h2>
-          <p class="home-care-note__desc">Stretching comparte la misma tarifa en clínica que Fisioterapia, Bienestar, Fuerza y Pilates: misma valoración inicial y mismos precios por sesión.</p>
+          <button
+            type="button"
+            class="stretching-fit-item"
+            role="tab"
+            aria-selected="false"
+            aria-controls="stretching-fit-panel"
+            id="fit-tab-2"
+            data-fit-index="2"
+            data-photo-src="../../assets/img/disciplines/stretching/b7cd24ed-634d-4d39-a533-a77c5cab80fd-1440.webp"
+            data-photo-srcset="../../assets/img/disciplines/stretching/b7cd24ed-634d-4d39-a533-a77c5cab80fd-720.webp 720w, ../../assets/img/disciplines/stretching/b7cd24ed-634d-4d39-a533-a77c5cab80fd-1440.webp 1448w"
+            data-photo-alt="Movilidad complementaria para deportistas y practicantes de Pilates o Fuerza"
+            data-badge-index="03"
+            data-badge-title="Entrenamiento"
+            data-badge-focus="Complemento a Fuerza, Pilates y deporte regular"
+          >
+            <div class="stretching-fit-item__top">
+              <span class="stretching-fit-item__num">03</span>
+              <span class="stretching-fit-item__tag">Rendimiento</span>
+            </div>
+            <h3 class="stretching-fit-item__title">Entrenas de forma habitual</h3>
+            <p class="stretching-fit-item__desc">Puede funcionar como complemento al trabajo de fuerza, Pilates u otras actividades deportivas.</p>
+            <div class="stretching-fit-item__footer">
+              <span class="stretching-fit-item__focus">Enfoque: Amplitud de rangos y prevención de sobrecargas</span>
+              <span class="stretching-fit-item__arrow" aria-hidden="true">→</span>
+            </div>
+            <div class="stretching-fit__mobile-img" aria-hidden="true">
+              <img src="../../assets/img/disciplines/stretching/b7cd24ed-634d-4d39-a533-a77c5cab80fd-720.webp" alt="" loading="lazy">
+            </div>
+          </button>
+
+          <button
+            type="button"
+            class="stretching-fit-item"
+            role="tab"
+            aria-selected="false"
+            aria-controls="stretching-fit-panel"
+            id="fit-tab-3"
+            data-fit-index="3"
+            data-photo-src="../../assets/img/disciplines/stretching/da114e80-b0a6-4b9a-bf2a-19f99f17dfab-1440.webp"
+            data-photo-srcset="../../assets/img/disciplines/stretching/da114e80-b0a6-4b9a-bf2a-19f99f17dfab-720.webp 720w, ../../assets/img/disciplines/stretching/da114e80-b0a6-4b9a-bf2a-19f99f17dfab-1440.webp 1448w"
+            data-photo-alt="Recuperación guiada de movilidad en Physio Wellness Sitges"
+            data-badge-index="04"
+            data-badge-title="Recuperar movilidad"
+            data-badge-focus="Continuidad tras procesos clínicos y mantenimiento"
+          >
+            <div class="stretching-fit-item__top">
+              <span class="stretching-fit-item__num">04</span>
+              <span class="stretching-fit-item__tag">Continuidad</span>
+            </div>
+            <h3 class="stretching-fit-item__title">Buscas recuperar movilidad</h3>
+            <p class="stretching-fit-item__desc">Para seguir trabajando el movimiento después de otros procesos o simplemente cuidarlo.</p>
+            <div class="stretching-fit-item__footer">
+              <span class="stretching-fit-item__focus">Enfoque: Cuidado consciente y progresión segura</span>
+              <span class="stretching-fit-item__arrow" aria-hidden="true">→</span>
+            </div>
+            <div class="stretching-fit__mobile-img" aria-hidden="true">
+              <img src="../../assets/img/disciplines/stretching/da114e80-b0a6-4b9a-bf2a-19f99f17dfab-720.webp" alt="" loading="lazy">
+            </div>
+          </button>
+
         </div>
-        <div class="home-care-note__actions">
-          <a class="home-care-note__link" href="../tarifas.html#en-la-clinica">Ver tarifa en clínica <span class="home-care-note__arrow" aria-hidden="true">→</span></a>
+
+        <div class="stretching-fit__visual" id="stretching-fit-panel" role="tabpanel" aria-labelledby="fit-tab-0">
+          <figure class="stretching-fit__figure">
+            <img
+              class="stretching-fit__img"
+              data-stretching-fit-img
+              src="../../assets/img/disciplines/stretching/4e7326e6-66cb-453a-919d-54974ee51d1f-1440.webp"
+              srcset="../../assets/img/disciplines/stretching/4e7326e6-66cb-453a-919d-54974ee51d1f-720.webp 720w, ../../assets/img/disciplines/stretching/4e7326e6-66cb-453a-919d-54974ee51d1f-1440.webp 1448w"
+              sizes="(min-width: 900px) 46vw, 100vw"
+              alt="Sesión de movilidad y liberación de rigidez articular en Physio Wellness Sitges"
+              loading="lazy"
+              width="1448"
+              height="1086"
+            >
+            <div class="stretching-fit__overlay" aria-hidden="true"></div>
+            <figcaption class="stretching-fit__badge">
+              <div class="stretching-fit__badge-header">
+                <span class="stretching-fit__badge-index" data-stretching-fit-index>01</span>
+                <span class="stretching-fit__badge-title" data-stretching-fit-title>Sensación de rigidez</span>
+              </div>
+              <span class="stretching-fit__badge-focus" data-stretching-fit-focus>Movilidad articular y soltura del movimiento</span>
+            </figcaption>
+          </figure>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- ============ Reseñas de Google ============
-       Mismas seis reseñas reales y verificadas ya usadas en index.html y
-       physiotherapy.html (ver comentario original en esa página): mismo
-       texto íntegro, misma autoría con iniciales, mismo mecanismo de cinta
-       continua (googleReviewsMarquee en main.js), reutilizado tal cual
-       para no fabricar reseñas específicas de Stretching que no existen. -->
+  <!-- ============ 5. NUEVA SECCIÓN CONCEPTUAL — Manifiesto ============
+       Fondo verde oscuro profundo (--pw-primary-900), tipografía monumental,
+       recorrido de observación y contraposición editorial sin cajas de marketing. -->
+  <section class="stretching-concept" id="filosofia-movimiento" aria-label="Filosofía de movimiento en Stretching">
+    <div class="container">
+      <div class="stretching-concept__inner" data-reveal>
+        <p class="eyebrow stretching-concept__eyebrow">Filosofía Physio Wellness</p>
+        <h2 class="stretching-concept__headline">
+          <span class="stretching-concept__headline-muted">No se trata de estirar más.</span>
+          <span class="stretching-concept__headline-main">Se trata de moverte mejor.</span>
+        </h2>
+
+        <p class="stretching-concept__intro">
+          En Physio Wellness entendemos que el cuerpo no responde al exceso de tensión. El Stretching no es una rutina estandarizada ni una serie de posiciones forzadas: es un proceso guiado que parte de observar exactamente cómo responde tu estructura en cada sesión.
+        </p>
+
+        <div class="stretching-concept__trajectory" aria-label="Proceso de observación en 4 fases">
+          <div class="stretching-trajectory__step">
+            <span class="stretching-trajectory__num">01</span>
+            <span class="stretching-trajectory__label">Cómo te mueves</span>
+          </div>
+          <span class="stretching-trajectory__arrow" aria-hidden="true">→</span>
+          <div class="stretching-trajectory__step">
+            <span class="stretching-trajectory__num">02</span>
+            <span class="stretching-trajectory__label">Qué necesitas</span>
+          </div>
+          <span class="stretching-trajectory__arrow" aria-hidden="true">→</span>
+          <div class="stretching-trajectory__step">
+            <span class="stretching-trajectory__num">03</span>
+            <span class="stretching-trajectory__label">Qué limitaciones aparecen</span>
+          </div>
+          <span class="stretching-trajectory__arrow" aria-hidden="true">→</span>
+          <div class="stretching-trajectory__step">
+            <span class="stretching-trajectory__num">04</span>
+            <span class="stretching-trajectory__label">Qué objetivo tienes</span>
+          </div>
+        </div>
+
+        <div class="stretching-concept__contrast">
+          <div class="stretching-contrast-col stretching-contrast-col--no">
+            <span class="stretching-contrast-col__tag">No buscamos</span>
+            <h3 class="stretching-contrast-col__title">Forzar una posición.</h3>
+            <p class="stretching-contrast-col__text">Evitamos tensiones agresivas que generen respuestas reflejas de defensa o sobrecarga en los tejidos articulares.</p>
+          </div>
+          <div class="stretching-contrast-col stretching-contrast-col--yes">
+            <span class="stretching-contrast-col__tag">Buscamos</span>
+            <h3 class="stretching-contrast-col__title">Ganar espacio de movimiento de forma progresiva y útil.</h3>
+            <p class="stretching-contrast-col__text">Trabajar sobre la tolerancia de los tejidos y el control motor para que la amplitud ganada sea funcional y duradera fuera de la sesión.</p>
+          </div>
+        </div>
+
+        <div class="stretching-concept__method-link">
+          <span class="stretching-concept__method-badge">El Método Marshall</span>
+          <p class="stretching-concept__method-text">
+            Este enfoque conecta directamente con el principio fundador del centro: evaluar con precisión clínica para intervenir con movimiento consciente.
+          </p>
+          <a class="stretching-concept__method-cta" href="../metodo.html">
+            <span>Conocer los principios del Método</span>
+            <span aria-hidden="true">→</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 6. Qué se trabaja en cada sesión (Interactiva) ============
+       Lista editorial numerada a la izquierda con interacción fluida;
+       a la derecha, imagen grande dinámica que aporta contexto visual. -->
+  <section class="stretching-work" id="que-trabajamos" aria-label="Qué se trabaja en cada sesión de Stretching">
+    <div class="container">
+      <div class="stretching-work__head" data-reveal>
+        <p class="eyebrow section-eyebrow">Ámbitos de trabajo</p>
+        <h2 class="section-heading">Qué se trabaja en cada sesión</h2>
+        <p class="section-lead">Cada sesión combina varios de estos objetivos según cómo llegues ese día, equilibrando descarga, movilidad y control.</p>
+      </div>
+
+      <div class="stretching-work__grid" data-stretching-work data-reveal style="--i:1">
+        <div class="stretching-work__list">
+          <article class="stretching-work-item is-active" data-work-index="0" tabindex="0" role="button" aria-expanded="true">
+            <span class="stretching-work-item__num">01</span>
+            <div class="stretching-work-item__content">
+              <h3 class="stretching-work-item__title">Movilidad</h3>
+              <p class="stretching-work-item__lead">Amplía el rango de movimiento de tus articulaciones para que cueste menos moverte cada día.</p>
+              <div class="stretching-work-item__detail">
+                <p>Trabajamos cadera, hombros, tobillos y columna en sus ejes naturales, reduciendo la fricción articular y facilitando gestos cotidianos fluidos.</p>
+              </div>
+            </div>
+          </article>
+
+          <article class="stretching-work-item" data-work-index="1" tabindex="0" role="button" aria-expanded="false">
+            <span class="stretching-work-item__num">02</span>
+            <div class="stretching-work-item__content">
+              <h3 class="stretching-work-item__title">Flexibilidad</h3>
+              <p class="stretching-work-item__lead">Gana elasticidad muscular de forma progresiva y adaptada a tu punto de partida.</p>
+              <div class="stretching-work-item__detail">
+                <p>Elongación consciente de las cadenas musculares posteriores y anteriores, respetando el umbral de comodidad sin provocar rebotes ni rigidez refleja.</p>
+              </div>
+            </div>
+          </article>
+
+          <article class="stretching-work-item" data-work-index="2" tabindex="0" role="button" aria-expanded="false">
+            <span class="stretching-work-item__num">03</span>
+            <div class="stretching-work-item__content">
+              <h3 class="stretching-work-item__title">Amplitud de movimiento</h3>
+              <p class="stretching-work-item__lead">Trabaja el recorrido completo de cada gesto, sin forzar más allá de lo que tu cuerpo permite.</p>
+              <div class="stretching-work-item__detail">
+                <p>Buscamos ganar grados de libertad en los extremos de rango donde habitualmente se pierde control, mejorando la seguridad en cualquier movimiento.</p>
+              </div>
+            </div>
+          </article>
+
+          <article class="stretching-work-item" data-work-index="3" tabindex="0" role="button" aria-expanded="false">
+            <span class="stretching-work-item__num">04</span>
+            <div class="stretching-work-item__content">
+              <h3 class="stretching-work-item__title">Tensión muscular</h3>
+              <p class="stretching-work-item__lead">Libera la tensión acumulada por el día a día, el deporte o las posturas mantenidas.</p>
+              <div class="stretching-work-item__detail">
+                <p>Desactivación de contracturas y sobrecarga en cuello, espalda y piernas mediante respiración diafragmática y tracciones guiadas.</p>
+              </div>
+            </div>
+          </article>
+
+          <article class="stretching-work-item" data-work-index="4" tabindex="0" role="button" aria-expanded="false">
+            <span class="stretching-work-item__num">05</span>
+            <div class="stretching-work-item__content">
+              <h3 class="stretching-work-item__title">Recuperación corporal</h3>
+              <p class="stretching-work-item__lead">Acompaña la recuperación entre sesiones de fuerza, Pilates u otras actividades físicas.</p>
+              <div class="stretching-work-item__detail">
+                <p>Estimula la oxigenación de los tejidos y restablece el tono de reposo neuromuscular para favorecer una recuperación óptima.</p>
+              </div>
+            </div>
+          </article>
+        </div>
+
+        <div class="stretching-work__visual" aria-hidden="true">
+          <div class="stretching-work__card">
+            <figure class="stretching-work__figure">
+              <img
+                src="../../assets/img/stock/stretching-1440.webp"
+                srcset="../../assets/img/stock/stretching-720.webp 720w, ../../assets/img/stock/stretching-1440.webp 1440w"
+                sizes="(min-width: 960px) 38vw, 100vw"
+                alt="Detalle de trabajo guiado de movilidad y amplitud en Physio Wellness"
+                loading="lazy"
+                width="1440"
+                height="1799"
+              >
+              <div class="stretching-work__badge">
+                <span class="stretching-work__badge-tag">Sesión guiada individual</span>
+                <p class="stretching-work__badge-text">Trabajo 1 a 1 adaptado a tu ritmo, movilidad y sensación del día.</p>
+              </div>
+            </figure>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 7. NUEVA SECCIÓN — Cómo es una sesión ============
+       Recorrido progresivo 01 -> 02 -> 03 con línea de progreso
+       que se va completando según el avance y la lectura. -->
+  <section class="stretching-session" id="como-es-la-sesion" aria-label="Cómo es una sesión de Stretching">
+    <div class="container">
+      <div class="stretching-session__head" data-reveal>
+        <p class="eyebrow section-eyebrow">El recorrido</p>
+        <h2 class="section-heading">Una sesión que parte de cómo estás ese día</h2>
+        <p class="section-lead">Tres momentos coordinados para asegurar que cada minuto de trabajo tiene un propósito claro y un beneficio tangible.</p>
+      </div>
+
+      <div class="stretching-session__timeline" data-stretching-session data-reveal style="--i:1">
+        <div class="stretching-session__line" aria-hidden="true">
+          <div class="stretching-session__progress" data-session-progress></div>
+        </div>
+
+        <div class="stretching-session__steps">
+          <div class="stretching-step is-active" data-step="1">
+            <div class="stretching-step__marker" aria-hidden="true">
+              <span class="stretching-step__dot"></span>
+              <span class="stretching-step__num">01</span>
+            </div>
+            <div class="stretching-step__body">
+              <p class="stretching-step__phase">Momento 01</p>
+              <h3 class="stretching-step__title">Observamos</h3>
+              <p class="stretching-step__desc">Cómo llegas, cómo te mueves y qué necesitas trabajar.</p>
+              <p class="stretching-step__sub">Valoramos la sensación general de rigidez, las zonas de sobrecarga acumulada y los rangos articulares antes de comenzar cualquier movimiento.</p>
+            </div>
+          </div>
+
+          <div class="stretching-step" data-step="2">
+            <div class="stretching-step__marker" aria-hidden="true">
+              <span class="stretching-step__dot"></span>
+              <span class="stretching-step__num">02</span>
+            </div>
+            <div class="stretching-step__body">
+              <p class="stretching-step__phase">Momento 02</p>
+              <h3 class="stretching-step__title">Trabajamos</h3>
+              <p class="stretching-step__desc">Movilidad, flexibilidad, respiración, amplitud de movimiento o descarga según las necesidades de la sesión.</p>
+              <p class="stretching-step__sub">Aplicamos estiramientos asistidos, tracciones suaves, movilidad articular activa y trabajo fascial según los requerimientos detectados.</p>
+            </div>
+          </div>
+
+          <div class="stretching-step" data-step="3">
+            <div class="stretching-step__marker" aria-hidden="true">
+              <span class="stretching-step__dot"></span>
+              <span class="stretching-step__num">03</span>
+            </div>
+            <div class="stretching-step__body">
+              <p class="stretching-step__phase">Momento 03</p>
+              <h3 class="stretching-step__title">Integramos</h3>
+              <p class="stretching-step__desc">Buscamos que el movimiento ganado tenga sentido y continuidad fuera de la sesión.</p>
+              <p class="stretching-step__sub">Consolidamos las sensaciones corporales con pautas sencillas y conscientes para que mantengas la soltura en tu rutina diaria o entrenamientos.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 8. REDISEÑADA — Relación entre áreas ============
+       Hub interactivo con Stretching como núcleo activo y sinergias claras:
+       Stretching + Fuerza / Stretching + Pilates / Stretching + Fisioterapia. -->
+  <section class="stretching-ecosystem" id="relacion-areas" aria-label="Ecosistema de movimiento y relación entre áreas">
+    <div class="container">
+      <div class="stretching-ecosystem__head" data-reveal>
+        <p class="eyebrow section-eyebrow">Ecosistema Physio Wellness</p>
+        <h2 class="section-heading">El movimiento no funciona por áreas aisladas</h2>
+        <p class="section-lead">Entendemos el cuerpo como una unidad funcional donde cada disciplina potencia a las demás. Stretching actúa como el punto de encuentro para ganar movilidad, soltura y recuperación.</p>
+      </div>
+
+      <div class="stretching-ecosystem__hub" data-stretching-ecosystem data-reveal style="--i:1">
+        <div class="stretching-ecosystem__nav" role="tablist" aria-label="Relación de Stretching con otras áreas">
+          <div class="stretching-eco-pill is-core" aria-label="Stretching (Área central activa)">
+            <span class="stretching-eco-pill__status">NÚCLEO ACTIVO</span>
+            <span class="stretching-eco-pill__name">STRETCHING</span>
+          </div>
+
+          <div class="stretching-eco-divider" aria-hidden="true">+</div>
+
+          <button
+            type="button"
+            class="stretching-eco-tab is-active"
+            role="tab"
+            aria-selected="true"
+            aria-controls="eco-panel-fuerza"
+            id="eco-tab-fuerza"
+            data-eco-target="fuerza"
+          >
+            <span class="stretching-eco-tab__num">01</span>
+            <span class="stretching-eco-tab__title">Fuerza</span>
+          </button>
+
+          <button
+            type="button"
+            class="stretching-eco-tab"
+            role="tab"
+            aria-selected="false"
+            aria-controls="eco-panel-pilates"
+            id="eco-tab-pilates"
+            data-eco-target="pilates"
+          >
+            <span class="stretching-eco-tab__num">02</span>
+            <span class="stretching-eco-tab__title">Pilates</span>
+          </button>
+
+          <button
+            type="button"
+            class="stretching-eco-tab"
+            role="tab"
+            aria-selected="false"
+            aria-controls="eco-panel-fisio"
+            id="eco-tab-fisio"
+            data-eco-target="fisio"
+          >
+            <span class="stretching-eco-tab__num">03</span>
+            <span class="stretching-eco-tab__title">Fisioterapia</span>
+          </button>
+        </div>
+
+        <div class="stretching-ecosystem__panels">
+          <div class="stretching-eco-panel is-active" id="eco-panel-fuerza" role="tabpanel" aria-labelledby="eco-tab-fuerza">
+            <div class="stretching-eco-panel__grid">
+              <div class="stretching-eco-panel__content">
+                <div class="stretching-eco-panel__synergy">
+                  <span class="stretching-eco-panel__tag">Sinergia activa</span>
+                  <h3 class="stretching-eco-panel__headline">Stretching + Fuerza</h3>
+                </div>
+                <p class="stretching-eco-panel__desc">Puede complementar el trabajo de movilidad y recuperación dentro del entrenamiento.</p>
+                <p class="stretching-eco-panel__detail">Entrenar la fuerza sin suficiente rango articular comprime las estructuras; al incorporar Stretching aseguras que cada gesto se desarrolle en una trayectoria óptima, descargando la musculatura sobrecargada entre entrenamientos.</p>
+                <a class="stretching-eco-panel__link" href="strength.html">Ver área de Fuerza <span aria-hidden="true">→</span></a>
+              </div>
+              <div class="stretching-eco-panel__badge" aria-hidden="true">
+                <span class="stretching-eco-badge__title">Propósito</span>
+                <span class="stretching-eco-badge__sub">Amplitud articular + Potencia controlada</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="stretching-eco-panel" id="eco-panel-pilates" role="tabpanel" aria-labelledby="eco-tab-pilates" hidden>
+            <div class="stretching-eco-panel__grid">
+              <div class="stretching-eco-panel__content">
+                <div class="stretching-eco-panel__synergy">
+                  <span class="stretching-eco-panel__tag">Sinergia activa</span>
+                  <h3 class="stretching-eco-panel__headline">Stretching + Pilates</h3>
+                </div>
+                <p class="stretching-eco-panel__desc">Puede ayudar a ampliar o preparar determinados rangos de movimiento.</p>
+                <p class="stretching-eco-panel__detail">El trabajo en el Reformer exige control motor y alineación corporal. Las sesiones de Stretching liberan las restricciones miofasciales para que los ejercicios de Pilates se ejecuten con mayor fluidez y precisión técnica.</p>
+                <a class="stretching-eco-panel__link" href="pilates.html">Ver área de Pilates <span aria-hidden="true">→</span></a>
+              </div>
+              <div class="stretching-eco-panel__badge" aria-hidden="true">
+                <span class="stretching-eco-badge__title">Propósito</span>
+                <span class="stretching-eco-badge__sub">Control del centro + Elasticidad miofascial</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="stretching-eco-panel" id="eco-panel-fisio" role="tabpanel" aria-labelledby="eco-tab-fisio" hidden>
+            <div class="stretching-eco-panel__grid">
+              <div class="stretching-eco-panel__content">
+                <div class="stretching-eco-panel__synergy">
+                  <span class="stretching-eco-panel__tag">Sinergia activa</span>
+                  <h3 class="stretching-eco-panel__headline">Stretching + Fisioterapia</h3>
+                </div>
+                <p class="stretching-eco-panel__desc">Puede dar continuidad al trabajo de movimiento dentro de determinados procesos.</p>
+                <p class="stretching-eco-panel__detail">Tras completar una fase clínica de tratamiento en fisioterapia, el Stretching asistido permite reintroducir movimiento progresivo y prevenir recaídas al mantener el espacio articular ganado.</p>
+                <a class="stretching-eco-panel__link" href="physiotherapy.html">Ver área de Fisioterapia <span aria-hidden="true">→</span></a>
+              </div>
+              <div class="stretching-eco-panel__badge" aria-hidden="true">
+                <span class="stretching-eco-badge__title">Propósito</span>
+                <span class="stretching-eco-badge__sub">Recuperación tisular + Reeducación del gesto</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="stretching-ecosystem__footer">
+          <a class="area-relation__cta" href="../servicios.html">Conocer todas las áreas y servicios de Physio Wellness →</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 9. NUEVA SECCIÓN VISUAL — El espacio ============
+       Composición asimétrica editorial con fotografía real del centro en Sitges:
+       luz natural, calma acústica y materiales cálidos. -->
+  <section class="stretching-space" id="el-espacio" aria-label="El espacio de Physio Wellness en Sitges">
+    <div class="container">
+      <div class="stretching-space__head" data-reveal>
+        <p class="eyebrow section-eyebrow">Instalaciones en Sitges</p>
+        <h2 class="section-heading">Un espacio para bajar el ritmo y moverte</h2>
+        <p class="section-lead">Luz natural, calma acústica y materiales nobles para crear un entorno propicio para desconectar de las prisas y enfocar tu atención en el cuerpo.</p>
+      </div>
+
+      <div class="stretching-space__mosaic" data-reveal style="--i:1">
+        <figure class="stretching-space__item stretching-space__item--main">
+          <img
+            src="../../assets/img/local/local-pilates-estudio-1440.webp"
+            srcset="../../assets/img/local/local-pilates-estudio-720.webp 720w, ../../assets/img/local/local-pilates-estudio-1440.webp 1440w"
+            sizes="(min-width: 900px) 58vw, 100vw"
+            alt="Sala diáfana con luz natural y suelo de madera en Physio Wellness Sitges"
+            loading="lazy"
+            width="1440"
+            height="960"
+          >
+          <figcaption class="stretching-space__caption">Espacio diáfano con luz natural para trabajo en suelo y movilidad asistida</figcaption>
+        </figure>
+
+        <div class="stretching-space__col">
+          <figure class="stretching-space__item stretching-space__item--secondary">
+            <img
+              src="../../assets/img/local/local-fisio-natural-1440.webp"
+              srcset="../../assets/img/local/local-fisio-natural-720.webp 720w, ../../assets/img/local/local-fisio-natural-1440.webp 1440w"
+              sizes="(min-width: 900px) 38vw, 100vw"
+              alt="Cabina cálida con plantas y camilla para estiramiento asistido individualizado"
+              loading="lazy"
+              width="1440"
+              height="960"
+            >
+            <figcaption class="stretching-space__caption">Cabina clínica cálida con privacidad para sesiones individualizadas 1 a 1</figcaption>
+          </figure>
+
+          <figure class="stretching-space__item stretching-space__item--tertiary">
+            <img
+              src="../../assets/img/local/local-lounge-1440.webp"
+              srcset="../../assets/img/local/local-lounge-720.webp 720w, ../../assets/img/local/local-lounge-1440.webp 1440w"
+              sizes="(min-width: 900px) 38vw, 100vw"
+              alt="Zona lounge de transición y pausa en el centro Physio Wellness"
+              loading="lazy"
+              width="1440"
+              height="960"
+            >
+            <figcaption class="stretching-space__caption">Entorno de transición y pausa antes y después de cada sesión</figcaption>
+          </figure>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 10. MEJORADA — Sección de Tarifas ============
+       Jerarquía superior, más aire y coherencia de precios. -->
+  <section class="stretching-rates" id="tarifas-stretching" aria-label="Tarifas de Stretching">
+    <div class="container">
+      <div class="stretching-rates__card" data-reveal>
+        <div class="stretching-rates__content">
+          <p class="eyebrow section-eyebrow">Tarifas</p>
+          <h2 class="stretching-rates__title">Una misma forma de acompañarte</h2>
+          <p class="stretching-rates__lead">
+            Stretching comparte la misma estructura de valoración inicial y sesiones que las demás áreas clínicas de Physio Wellness.
+          </p>
+          <p class="stretching-rates__note">
+            Misma tarifa de sesión individual en clínica que Fisioterapia, Bienestar, Fuerza y Pilates.
+          </p>
+        </div>
+        <div class="stretching-rates__action">
+          <a class="btn btn--primary stretching-rates__btn" href="../tarifas.html#en-la-clinica">
+            <span>Ver tarifas en clínica</span>
+            <svg class="service-hero__cta-arrow" width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+              <path d="M1 7h11M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </a>
+          <a class="stretching-rates__secondary" href="https://wa.me/34644678344" target="_blank" rel="noopener">
+            <span>Consultar bonos por WhatsApp</span>
+            <span aria-hidden="true">→</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 11. Reseñas de Google ============
+       Cinta continua de opiniones reales verificadas en Physio Wellness,
+       priorizando testimonios vinculados a movilidad, recuperación y acompañamiento. -->
   <section class="google-reviews" aria-label="Reseñas de Google de pacientes">
     <div class="container">
       <div class="google-reviews__head">
@@ -458,13 +965,13 @@
           </li>
 
           <li class="google-review-card">
-            <span class="google-review-card__tag">Fisioterapia</span>
+            <span class="google-review-card__tag">Movilidad & Recuperación</span>
             <p class="google-review-card__rating">
               <span class="google-review-card__stars" aria-hidden="true">★★★★★</span>
               <span class="sr-only">Valoración: 5 de 5 estrellas</span>
             </p>
             <blockquote class="google-review-card__quote">
-              <p>Recomiendo totalmente a este fisioterapeuta a cualquiera que necesite una atención de calidad. Tiene un conocimiento muy amplio, es atento y está realmente comprometido con la recuperación de sus pacientes. Desde la primera sesión se tomó el tiempo de entender la raíz del problema, no solo los síntomas, y creó un plan de tratamiento personalizado que marcó una diferencia real.</p>
+              <p>Recomiendo totalmente a este profesional a cualquiera que necesite una atención de calidad. Tiene un conocimiento muy amplio, es atento y está realmente comprometido con la recuperación de sus pacientes. Desde la primera sesión se tomó el tiempo de entender la raíz del problema, no solo los síntomas, y creó un plan de tratamiento personalizado que marcó una diferencia real.</p>
               <p>¡Gracias!</p>
             </blockquote>
             <footer class="google-review-card__meta">
@@ -511,8 +1018,8 @@
               <span class="sr-only">Valoración: 5 de 5 estrellas</span>
             </p>
             <blockquote class="google-review-card__quote">
-              <p>He tenido una muy buena experiencia en esta clínica de fisioterapia. El tratamiento me ayudó de verdad a quitarme el dolor de espalda, y noté una mejoría importante después de las sesiones. Abril, la administradora, es muy amable, atenta y organizada, lo que hace que cada visita sea cómoda y sin complicaciones.</p>
-              <p>Un agradecimiento especial a Marshall, un fisioterapeuta muy cualificado, profesional, atento y que realmente sabe lo que hace. Me sentí seguro y bien cuidado durante todo el proceso. Recomiendo totalmente este centro a cualquiera que tenga dolor de espalda o busque fisioterapia de calidad.</p>
+              <p>He tenido una muy buena experiencia en esta clínica. El tratamiento me ayudó de verdad a quitarme el dolor de espalda, y noté una mejoría importante después de las sesiones. Abril, la administradora, es muy amable, atenta y organizada, lo que hace que cada visita sea cómoda y sin complicaciones.</p>
+              <p>Un agradecimiento especial a Marshall, muy cualificado, profesional, atento y que realmente sabe lo que hace. Me sentí seguro y bien cuidado durante todo el proceso.</p>
             </blockquote>
             <footer class="google-review-card__meta">
               <span class="google-review-card__author">A.</span>
@@ -521,7 +1028,7 @@
           </li>
 
           <li class="google-review-card">
-            <span class="google-review-card__tag">Recuperación</span>
+            <span class="google-review-card__tag">Sensación corporal</span>
             <p class="google-review-card__rating">
               <span class="google-review-card__stars" aria-hidden="true">★★★★★</span>
               <span class="sr-only">Valoración: 5 de 5 estrellas</span>
@@ -539,9 +1046,8 @@
     </div>
   </section>
 
-  <!-- ============ CTA final ============
-       Mismo bloque de conversión que el resto de páginas de servicio,
-       con el titular y el texto del CTA propuestos para esta fase. -->
+  <!-- ============ 12. CTA final ============
+       Cierre natural de la página, tras haber presentado en profundidad el servicio. -->
   <section class="cta-final">
     <div class="container cta-final__inner" data-reveal>
       <h2 class="cta-final__title">Dale más espacio a tu movimiento.</h2>

@@ -48,6 +48,56 @@
 }
 </script>
 
+<!-- Schema.org FAQPage Structured Data -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "¿Necesito preparar algún espacio en casa?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Únicamente un espacio despejado donde podamos desplegar la camilla de tratamiento (aproximadamente 2 × 1,5 metros), con buena iluminación y una temperatura agradable. Del resto de detalles nos encargamos nosotros."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "¿Traéis el material necesario?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Sí. El fisioterapeuta acude con camilla portátil profesional, toallas y sábanas desechables de protección higiénica, cremas terapéuticas y los elementos de terapia manual o ejercicio activo que se precisen."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "¿Cuánto dura una sesión a domicilio?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Las sesiones de seguimiento tienen una duración de 50 minutos de trabajo individual directo. En el caso de una primera visita, destinamos hasta 60 minutos para realizar una anamnesis completa, exploración física y tratamiento inicial."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "¿Puedo hacer todo mi proceso de recuperación en casa?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "En muchos casos sí, especialmente durante etapas de dolor limitante, fases agudas o recuperación postoperatoria inicial. Si en fases avanzadas tu evolución requiere maquinaria específica (como Pilates Reformer o sala de fuerza), valoraremos contigo el momento oportuno para continuar en el centro."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "¿Cómo sé si la fisioterapia a domicilio es adecuada para mí?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Si tienes dudas sobre si tu dolencia puede ser atendida con plenas garantías en tu vivienda, ponte en contacto con nosotros. Nuestro equipo valorará tu caso de forma individualizada antes de formalizar la cita."
+      }
+    }
+  ]
+}
+</script>
+
 <!-- Open Graph Meta Tags (Social Sharing) -->
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://physiowellness.es/es/servicios/fisioterapia-domicilio/">
@@ -82,11 +132,10 @@
         </button>
         <div class="nav-dropdown" id="nav-servicios" hidden>
           <a href="physiotherapy.html">Fisioterapia</a>
-          <a href="wellness.html">Bienestar</a>
           <a href="strength.html">Fuerza</a>
           <a href="pilates.html">Pilates</a>
+          <a href="wellness.html">Bienestar</a>
           <a href="stretching.html">Stretching</a>
-          <a href="fisioterapia-a-domicilio.html" aria-current="page">Fisioterapia a domicilio</a>
           <a class="nav-dropdown__all" href="../servicios.html">Ver todos los servicios</a>
         </div>
       </div>
@@ -169,11 +218,10 @@
       </button>
       <div class="m-acc__panel" id="m-servicios" hidden>
         <a href="physiotherapy.html">Fisioterapia</a>
-        <a href="wellness.html">Bienestar</a>
         <a href="strength.html">Fuerza</a>
         <a href="pilates.html">Pilates</a>
+        <a href="wellness.html">Bienestar</a>
         <a href="stretching.html">Stretching</a>
-        <a href="fisioterapia-a-domicilio.html" aria-current="page">Fisioterapia a domicilio</a>
         <a class="m-acc__all" href="../servicios.html">Ver todos los servicios</a>
       </div>
     </div>
@@ -213,16 +261,7 @@
 
 <main id="main">
 
-  <!-- ============ Service Hero System (Fisioterapia a domicilio) ============
-       FASE 2 (familia de páginas de servicio): misma arquitectura de hero
-       que physiotherapy.html (.service-hero, ver styles.css), sin marca de
-       agua de disciplina. Titular y lead reutilizan literalmente la idea y
-       el texto ya aprobados en servicios.html (sección "Fisioterapia a
-       domicilio", #home-care): no se inventa ningún claim nuevo. Misma
-       fotografía real (domicilio-visita, ver ASSET_SOURCES.md) ya usada en
-       physiotherapy.html y en servicios.html: es la única fotografía real
-       de "a domicilio" disponible, así que se reutiliza aquí también en
-       vez de sumar una imagen de stock genérica. -->
+  <!-- ============ 01. Hero ============ -->
   <section class="service-hero service-hero--domicilio" id="hero">
     <div class="service-hero__container">
       <nav class="breadcrumb service-hero__breadcrumb" aria-label="Ruta de navegación">
@@ -261,7 +300,7 @@
               src="../../assets/img/stock/domicilio-visita-1122.webp"
               srcset="../../assets/img/stock/domicilio-visita-720.webp 720w, ../../assets/img/stock/domicilio-visita-1122.webp 1122w"
               sizes="(min-width: 1200px) 54vw, (min-width: 860px) 52vw, 100vw"
-              alt="Fisioterapeuta realizando una sesión de tratamiento a domicilio"
+              alt="Fisioterapeuta de Physio Wellness acudiendo con el equipamiento necesario a una visita a domicilio"
               width="1122"
               height="1402"
               loading="eager"
@@ -294,7 +333,7 @@
           </div>
         </div>
 
-        <a href="#que-es-a-domicilio" class="service-hero__scroll-cue" aria-label="Desplazarse a la siguiente sección">
+        <a href="#un-proceso-individual" class="service-hero__scroll-cue" aria-label="Desplazarse a la siguiente sección">
           <span>DESCUBRIR</span>
           <span class="service-hero__scroll-arrow" aria-hidden="true">↓</span>
         </a>
@@ -302,29 +341,505 @@
     </div>
   </section>
 
-  <!-- ============ Qué es Fisioterapia a domicilio ============
-       Misma estructura .service-context que strength.html/stretching.html.
-       Texto reutilizado literalmente del bloque "Fisioterapia a domicilio"
-       ya aprobado en servicios.html (#home-care): no se desarrolla
-       contenido nuevo en esta fase. -->
-  <section class="service-context" id="que-es-a-domicilio">
-    <div class="container service-context__grid">
-      <div class="service-context__text" data-reveal>
+  <!-- ============ 02. Potenciación: Un proceso individual ============ -->
+  <section class="domicilio-journey" id="un-proceso-individual">
+    <div class="container domicilio-journey__grid">
+      <div class="domicilio-journey__content" data-reveal>
         <p class="eyebrow section-eyebrow">Una modalidad de Fisioterapia</p>
         <h2 class="section-heading">Un proceso individual, sin que tengas que desplazarte</h2>
-        <div class="area-block__text">
-          <p>Si no puedes acudir al centro o necesitas recibir atención en casa, puedes realizar tu proceso de fisioterapia a domicilio.</p>
-          <p>La sesión mantiene una atención individual y adaptada a tu situación, con el objetivo de valorar tus necesidades, realizar el tratamiento y dar continuidad a tu recuperación sin que tengas que desplazarte.</p>
+        <p class="domicilio-journey__lead">Si no puedes acudir al centro o necesitas recibir atención en casa, la fisioterapia a domicilio mantiene el mismo criterio clínico, rigor y cercanía que nuestras sesiones en consulta.</p>
+        <p class="area-block__text">No es una intervención aislada ni un servicio de urgencia puntual: es un proceso terapéutico completo, estructurado para comprender tu punto de partida, aliviar el dolor, recuperar movilidad y asegurar una progresión continua en tu propio entorno.</p>
+
+        <div class="domicilio-journey__stages" aria-label="Fases del proceso a domicilio">
+          <div class="domicilio-journey__stage">
+            <span class="domicilio-journey__stage-dot" aria-hidden="true"></span>
+            <div class="domicilio-journey__stage-head">
+              <span class="domicilio-journey__stage-num">01</span>
+              <h3 class="domicilio-journey__stage-title">Valoración inicial</h3>
+            </div>
+            <p class="domicilio-journey__stage-desc">Entendemos qué te ocurre, analizamos tu movilidad y limitaciones funcionales en tu contexto diario.</p>
+          </div>
+
+          <div class="domicilio-journey__stage">
+            <span class="domicilio-journey__stage-dot" aria-hidden="true"></span>
+            <div class="domicilio-journey__stage-head">
+              <span class="domicilio-journey__stage-num">02</span>
+              <h3 class="domicilio-journey__stage-title">Tratamiento adaptado</h3>
+            </div>
+            <p class="domicilio-journey__stage-desc">Aplicamos terapia manual, técnicas articulares y ejercicio activo con el material trasladado a tu casa.</p>
+          </div>
+
+          <div class="domicilio-journey__stage">
+            <span class="domicilio-journey__stage-dot" aria-hidden="true"></span>
+            <div class="domicilio-journey__stage-head">
+              <span class="domicilio-journey__stage-num">03</span>
+              <h3 class="domicilio-journey__stage-title">Seguimiento continuo</h3>
+            </div>
+            <p class="domicilio-journey__stage-desc">Pautamos recomendaciones específicas y evaluamos tu evolución sesión a sesión para consolidar mejoras.</p>
+          </div>
         </div>
       </div>
-      <figure class="service-photo" data-reveal style="--i:1" aria-hidden="true">
-        <img src="../../assets/img/stock/domicilio-visita-1122.webp" srcset="../../assets/img/stock/domicilio-visita-720.webp 720w, ../../assets/img/stock/domicilio-visita-1122.webp 1122w" sizes="(min-width:860px) 42vw, 100vw" alt="" loading="lazy" width="1122" height="1402">
-      </figure>
+
+      <div class="domicilio-journey__visual" data-reveal style="--i:1">
+        <figure class="domicilio-journey__figure">
+          <img
+            src="../../assets/img/stock/domicilio-visita-1122.webp"
+            srcset="../../assets/img/stock/domicilio-visita-720.webp 720w, ../../assets/img/stock/domicilio-visita-1122.webp 1122w"
+            sizes="(min-width: 960px) 44vw, 100vw"
+            alt="Fisioterapeuta trasladando camilla portátil y equipo clínico para una sesión a domicilio"
+            loading="lazy"
+            width="1122"
+            height="1402"
+          >
+          <div class="domicilio-journey__tag" aria-hidden="true">
+            <span class="domicilio-journey__tag-dot"></span>
+            <span>Atención domiciliaria · Physio Wellness</span>
+          </div>
+        </figure>
+      </div>
     </div>
   </section>
 
-  <!-- ============ CTA final ============ -->
-  <section class="cta-final">
+  <!-- ============ 03. ¿Cuándo tiene sentido? ============ -->
+  <section class="domicilio-when" id="cuando-tiene-sentido">
+    <div class="container">
+      <div class="domicilio-when__head" data-reveal>
+        <p class="eyebrow section-eyebrow">Situaciones habituales</p>
+        <h2 class="section-heading">¿Cuándo tiene sentido la fisioterapia a domicilio?</h2>
+        <p class="section-lead">La atención en casa responde a circunstancias concretas donde el desplazamiento compromete tu comodidad, seguridad o recuperación.</p>
+      </div>
+
+      <div class="domicilio-when__grid" data-reveal style="--i:1">
+        <ul class="domicilio-when__list" role="list">
+          <li class="domicilio-when__item is-active" data-img="../../assets/img/disciplines/fisio/ae26bb46-82b0-4914-8159-5d01e68f3f81-720.webp" data-caption="Exploración y adaptación de la movilidad funcional">
+            <button class="domicilio-when__btn" type="button" aria-expanded="true" aria-controls="when-panel-1" id="when-btn-1">
+              <span class="domicilio-when__num">01</span>
+              <span class="domicilio-when__title">Movilidad reducida</span>
+              <span class="domicilio-when__chevron" aria-hidden="true"></span>
+            </button>
+            <div class="domicilio-when__panel" id="when-panel-1" role="region" aria-labelledby="when-btn-1">
+              <p class="domicilio-when__desc">Dificultades temporales o prolongadas para caminar, bajar escaleras o desplazarte por la ciudad de manera autónoma y segura.</p>
+            </div>
+          </li>
+
+          <li class="domicilio-when__item" data-img="../../assets/img/disciplines/fisio/0df88b9f-0f58-4dbf-b5cc-001eb67eb239-720.webp" data-caption="Tratamiento manual suave y control del tejido en fases postoperatorias">
+            <button class="domicilio-when__btn" type="button" aria-expanded="false" aria-controls="when-panel-2" id="when-btn-2">
+              <span class="domicilio-when__num">02</span>
+              <span class="domicilio-when__title">Recuperación postoperatoria</span>
+              <span class="domicilio-when__chevron" aria-hidden="true"></span>
+            </button>
+            <div class="domicilio-when__panel" id="when-panel-2" role="region" aria-labelledby="when-btn-2" hidden>
+              <p class="domicilio-when__desc">Primeras fases tras una cirugía donde se requiere reposo relativo y es prioritario evitar traslados en vehículo o esperas incómodas.</p>
+            </div>
+          </li>
+
+          <li class="domicilio-when__item" data-img="../../assets/img/disciplines/fisio/3618ab1e-11e0-412a-9ad7-bea6708c17f4-720.webp" data-caption="Escucha cercana y valoración exhaustiva del dolor agudo">
+            <button class="domicilio-when__btn" type="button" aria-expanded="false" aria-controls="when-panel-3" id="when-btn-3">
+              <span class="domicilio-when__num">03</span>
+              <span class="domicilio-when__title">Dolor que dificulta desplazarte</span>
+              <span class="domicilio-when__chevron" aria-hidden="true"></span>
+            </button>
+            <div class="domicilio-when__panel" id="when-panel-3" role="region" aria-labelledby="when-btn-3" hidden>
+              <p class="domicilio-when__desc">Episodios agudos de dolor lumbar, ciática o bloqueos articulares donde cualquier movimiento al exterior agrava los síntomas.</p>
+            </div>
+          </li>
+
+          <li class="domicilio-when__item" data-img="../../assets/img/disciplines/fisio/5af02bda-9e2c-442f-af09-c3c4f8285313-720.webp" data-caption="Trabajo activo de movilidad funcional adaptado al ritmo de cada persona">
+            <button class="domicilio-when__btn" type="button" aria-expanded="false" aria-controls="when-panel-4" id="when-btn-4">
+              <span class="domicilio-when__num">04</span>
+              <span class="domicilio-when__title">Personas mayores</span>
+              <span class="domicilio-when__chevron" aria-hidden="true"></span>
+            </button>
+            <div class="domicilio-when__panel" id="when-panel-4" role="region" aria-labelledby="when-btn-4" hidden>
+              <p class="domicilio-when__desc">Atención pausada y cercana en su entorno habitual, trabajando sobre la movilidad real, transferencias y la seguridad dentro del hogar.</p>
+            </div>
+          </li>
+
+          <li class="domicilio-when__item" data-img="../../assets/img/disciplines/fisio/ae26bb46-82b0-4914-8159-5d01e68f3f81-720.webp" data-caption="Movilización protegida y dosificación de cargas tempranas tras una lesión">
+            <button class="domicilio-when__btn" type="button" aria-expanded="false" aria-controls="when-panel-5" id="when-btn-5">
+              <span class="domicilio-when__num">05</span>
+              <span class="domicilio-when__title">Recuperación después de una lesión</span>
+              <span class="domicilio-when__chevron" aria-hidden="true"></span>
+            </button>
+            <div class="domicilio-when__panel" id="when-panel-5" role="region" aria-labelledby="when-btn-5" hidden>
+              <p class="domicilio-when__desc">Esguinces, fracturas en evolución o traumatismos que recomiendan no apoyar peso de forma innecesaria en los primeros días.</p>
+            </div>
+          </li>
+
+          <li class="domicilio-when__item" data-img="../../assets/img/stock/domicilio-visita-720.webp" data-caption="Atención individualizada con el método de Physio Wellness en tu vivienda">
+            <button class="domicilio-when__btn" type="button" aria-expanded="false" aria-controls="when-panel-6" id="when-btn-6">
+              <span class="domicilio-when__num">06</span>
+              <span class="domicilio-when__title">Cuando necesitas que nosotros vayamos a ti</span>
+              <span class="domicilio-when__chevron" aria-hidden="true"></span>
+            </button>
+            <div class="domicilio-when__panel" id="when-panel-6" role="region" aria-labelledby="when-btn-6" hidden>
+              <p class="domicilio-when__desc">Horarios exigentes, necesidades de conciliación o simplemente la preferencia de recibir tu sesión con total privacidad y tranquilidad.</p>
+            </div>
+          </li>
+        </ul>
+
+        <div class="domicilio-when__visual-wrap" aria-hidden="true">
+          <figure class="domicilio-when__visual">
+            <img
+              class="domicilio-when__img"
+              src="../../assets/img/disciplines/fisio/ae26bb46-82b0-4914-8159-5d01e68f3f81-720.webp"
+              alt=""
+              loading="lazy"
+              width="720"
+              height="540"
+            >
+            <figcaption class="domicilio-when__caption">Exploración y adaptación de la movilidad funcional</figcaption>
+          </figure>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 04. Sección principal: La clínica se desplaza contigo ============ -->
+  <section class="domicilio-shift" id="la-clinica-se-desplaza">
+    <div class="container domicilio-shift__inner">
+      <div class="domicilio-shift__content" data-reveal>
+        <p class="eyebrow domicilio-shift__eyebrow">El mismo rigor clínico</p>
+        <h2 class="domicilio-shift__title">La clínica se desplaza contigo.</h2>
+        <p class="domicilio-shift__lead">Trasladamos nuestro criterio y forma de trabajar hasta tu espacio. Recibes en casa una atención tan rigurosa y completa como la que ofrecemos en consulta.</p>
+
+        <div class="domicilio-shift__cards">
+          <div class="domicilio-shift__card">
+            <div class="domicilio-shift__card-head">
+              <span class="domicilio-shift__card-num">01</span>
+              <h3 class="domicilio-shift__card-title">Valoramos tu situación.</h3>
+            </div>
+            <p class="domicilio-shift__card-desc">Análisis minucioso del dolor, balance articular y factores biomecánicos con la misma precisión que en consulta.</p>
+          </div>
+
+          <div class="domicilio-shift__card">
+            <div class="domicilio-shift__card-head">
+              <span class="domicilio-shift__card-num">02</span>
+              <h3 class="domicilio-shift__card-title">Llevamos el material necesario.</h3>
+            </div>
+            <p class="domicilio-shift__card-desc">Camilla portátil profesional, productos higiénicos y herramientas terapéuticas adaptadas a tus requerimientos.</p>
+          </div>
+
+          <div class="domicilio-shift__card">
+            <div class="domicilio-shift__card-head">
+              <span class="domicilio-shift__card-num">03</span>
+              <h3 class="domicilio-shift__card-title">Adaptamos el tratamiento al espacio disponible.</h3>
+            </div>
+            <p class="domicilio-shift__card-desc">Tu hogar se convierte en un entorno clínico seguro, tranquilo y cómodo, sin necesidad de acondicionamientos complejos.</p>
+          </div>
+
+          <div class="domicilio-shift__card">
+            <div class="domicilio-shift__card-head">
+              <span class="domicilio-shift__card-num">04</span>
+              <h3 class="domicilio-shift__card-title">Diseñamos el proceso con el mismo criterio que en consulta.</h3>
+            </div>
+            <p class="domicilio-shift__card-desc">Misma metodología, dedicación individual y pautas de evolución continua para consolidar resultados.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="domicilio-shift__media-wrap" data-reveal style="--i:1">
+        <figure class="domicilio-shift__media">
+          <img
+            class="domicilio-shift__img"
+            src="../../assets/img/local/local-fisio-natural-1440.webp"
+            srcset="../../assets/img/local/local-fisio-natural-720.webp 720w, ../../assets/img/local/local-fisio-natural-1440.webp 1440w"
+            sizes="(min-width: 960px) 46vw, 100vw"
+            alt="Detalle de atención fisioterapéutica profesional con camilla y material de tratamiento"
+            loading="lazy"
+            width="1440"
+            height="1800"
+          >
+          <div class="domicilio-shift__media-quote">
+            <p class="domicilio-shift__quote-text">“La fisioterapia a domicilio traslada el estándar clínico de Physio Wellness al paciente, nunca al revés.”</p>
+          </div>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 05. Así funciona una visita a domicilio ============ -->
+  <section class="process service-process domicilio-process" id="como-funciona-visita">
+    <div class="container service-process__grid">
+      <div class="service-process__intro" data-reveal>
+        <p class="eyebrow section-eyebrow">El recorrido paso a paso</p>
+        <h2 class="section-heading">Así funciona una visita a domicilio</h2>
+        <p class="service-process__note">Organizamos cada etapa para que la experiencia sea fluida, clara y transparente desde el primer contacto hasta el seguimiento de tu recuperación.</p>
+        <a class="service-process__link" href="https://wa.me/34644678344" target="_blank" rel="noopener">
+          Consultar disponibilidad o resolver dudas
+          <span class="service-feature__arrow" aria-hidden="true">→</span>
+        </a>
+      </div>
+
+      <ol class="service-process__steps" data-sp-steps>
+        <li class="service-process__step" data-sp-step>
+          <span class="service-process__marker" aria-hidden="true"><span class="service-process__dot"></span></span>
+          <div class="service-process__body">
+            <span class="service-process__number" aria-hidden="true">01</span>
+            <h3 class="specialty-item__title" style="margin-bottom: var(--sp-1);">Reserva</h3>
+            <p class="service-process__text">Contactas con el centro por DocFav o WhatsApp y explicas brevemente qué necesitas y tu ubicación en Sitges o cercanías.</p>
+          </div>
+        </li>
+
+        <li class="service-process__step" data-sp-step>
+          <span class="service-process__marker" aria-hidden="true"><span class="service-process__dot"></span></span>
+          <div class="service-process__body">
+            <span class="service-process__number" aria-hidden="true">02</span>
+            <h3 class="specialty-item__title" style="margin-bottom: var(--sp-1);">Valoramos</h3>
+            <p class="service-process__text">Revisamos tu situación clínica con antelación para preparar la sesión y seleccionar el material específico para tu caso.</p>
+          </div>
+        </li>
+
+        <li class="service-process__step" data-sp-step>
+          <span class="service-process__marker" aria-hidden="true"><span class="service-process__dot"></span></span>
+          <div class="service-process__body">
+            <span class="service-process__number" aria-hidden="true">03</span>
+            <h3 class="specialty-item__title" style="margin-bottom: var(--sp-1);">Nos desplazamos</h3>
+            <p class="service-process__text">El fisioterapeuta acude puntualmente a tu domicilio con la camilla plegable y todo el equipo necesario para la sesión.</p>
+          </div>
+        </li>
+
+        <li class="service-process__step" data-sp-step>
+          <span class="service-process__marker" aria-hidden="true"><span class="service-process__dot"></span></span>
+          <div class="service-process__body">
+            <span class="service-process__number" aria-hidden="true">04</span>
+            <h3 class="specialty-item__title" style="margin-bottom: var(--sp-1);">Tratamiento</h3>
+            <p class="service-process__text">Valoración funcional in situ, terapia manual y pautas de movimiento dosificadas según tu tolerancia y el espacio de tu hogar.</p>
+          </div>
+        </li>
+
+        <li class="service-process__step" data-sp-step>
+          <span class="service-process__marker" aria-hidden="true"><span class="service-process__dot"></span></span>
+          <div class="service-process__body">
+            <span class="service-process__number" aria-hidden="true">05</span>
+            <h3 class="specialty-item__title" style="margin-bottom: var(--sp-1);">Seguimiento</h3>
+            <p class="service-process__text">Definimos contigo las recomendaciones para los próximos días y planificamos la continuidad del proceso según tu evolución.</p>
+          </div>
+        </li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- ============ 06. Todo lo necesario viaja con nosotros ============ -->
+  <section class="domicilio-kit" id="material-domicilio">
+    <div class="container">
+      <div class="domicilio-kit__head" data-reveal>
+        <p class="eyebrow section-eyebrow">Equipamiento profesional</p>
+        <h2 class="section-heading">Todo lo necesario viaja con nosotros.</h2>
+        <p class="section-lead">No necesitas disponer de material especial en casa. Trasladamos el instrumental profesional adecuado para asegurar un tratamiento seguro y cómodo.</p>
+      </div>
+
+      <div class="domicilio-kit__inner" data-reveal style="--i:1">
+        <figure class="domicilio-kit__figure">
+          <img
+            class="domicilio-kit__img"
+            src="../../assets/img/stock/domicilio-visita-1122.webp"
+            srcset="../../assets/img/stock/domicilio-visita-720.webp 720w, ../../assets/img/stock/domicilio-visita-1122.webp 1122w"
+            sizes="(min-width: 960px) 46vw, 100vw"
+            alt="Maletín y camilla portátil de tratamiento que acompaña cada sesión a domicilio de Physio Wellness"
+            loading="lazy"
+            width="1122"
+            height="1402"
+          >
+        </figure>
+
+        <div class="domicilio-kit__items">
+          <div class="domicilio-kit__item">
+            <div class="domicilio-kit__item-head">
+              <span class="domicilio-kit__item-tag">01</span>
+              <h3 class="domicilio-kit__item-title">Valoración funcional</h3>
+            </div>
+            <p class="domicilio-kit__item-desc">Test ortopédicos, goniometría precisa y exploración de la respuesta neuromuscular para determinar el origen de tu limitación.</p>
+          </div>
+
+          <div class="domicilio-kit__item">
+            <div class="domicilio-kit__item-head">
+              <span class="domicilio-kit__item-tag">02</span>
+              <h3 class="domicilio-kit__item-title">Camilla portátil ergonómica</h3>
+            </div>
+            <p class="domicilio-kit__item-desc">Camilla clínica regulable en altura, con apoyo acolchado y orificio facial para garantizar tu descanso postural durante la terapia.</p>
+          </div>
+
+          <div class="domicilio-kit__item">
+            <div class="domicilio-kit__item-head">
+              <span class="domicilio-kit__item-tag">03</span>
+              <h3 class="domicilio-kit__item-title">Terapia manual &amp; Higiene</h3>
+            </div>
+            <p class="domicilio-kit__item-desc">Cremas neutras de grado terapéutico, toallas y sábanas desechables para cumplir los más altos estándares de higiene sanitaria.</p>
+          </div>
+
+          <div class="domicilio-kit__item">
+            <div class="domicilio-kit__item-head">
+              <span class="domicilio-kit__item-tag">04</span>
+              <h3 class="domicilio-kit__item-title">Movilidad y ejercicio guiado</h3>
+            </div>
+            <p class="domicilio-kit__item-desc">Bandas elásticas de resistencia controlada, accesorios de propiocepción y ejercicios adaptables al mobiliario cotidiano de tu hogar.</p>
+          </div>
+
+          <div class="domicilio-kit__item">
+            <div class="domicilio-kit__item-head">
+              <span class="domicilio-kit__item-tag">05</span>
+              <h3 class="domicilio-kit__item-title">Pautas de seguimiento</h3>
+            </div>
+            <p class="domicilio-kit__item-desc">Guía clara de autocuidado, corrección ergonómica y recomendaciones específicas entre visita y visita.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 07. Información práctica de la sesión ============ -->
+  <section class="domicilio-plan" id="informacion-practica">
+    <div class="container">
+      <div class="domicilio-plan__card" data-reveal>
+        <div class="domicilio-plan__content">
+          <div class="domicilio-plan__badge-strip">
+            <span class="domicilio-plan__badge">Modalidad a domicilio</span>
+            <span class="domicilio-plan__badge">Atención 1 a 1</span>
+          </div>
+          <h2 class="domicilio-plan__time">Fisioterapia a domicilio — 50 min</h2>
+          <div class="domicilio-plan__pillars">
+            <span>Valoración</span>
+            <span aria-hidden="true">·</span>
+            <span>Tratamiento</span>
+            <span aria-hidden="true">·</span>
+            <span>Seguimiento</span>
+          </div>
+          <p class="domicilio-plan__desc">Sesión individual completa de fisioterapia en tu propio hogar, dirigida por un fisioterapeuta colegiado con dedicación exclusiva durante toda la intervención. Si es tu primera sesión, dedicamos hasta 60 minutos para una valoración clínica inicial exhaustiva.</p>
+        </div>
+
+        <div class="domicilio-plan__action">
+          <a class="btn btn--primary domicilio-plan__btn" href="https://www.docfav.com/portal/physio-wellness-by-marshall" target="_blank" rel="noopener">
+            Reservar sesión a domicilio
+          </a>
+          <a class="domicilio-plan__whatsapp" href="https://wa.me/34644678344" target="_blank" rel="noopener">
+            <span>Consultar disponibilidad por WhatsApp</span>
+            <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M1 11L11 1M11 1H3M11 1V9" stroke="currentColor" stroke-width="1.3"/></svg>
+          </a>
+          <p class="domicilio-plan__tarifas-note">
+            El desplazamiento en Sitges y hasta 10 km está incluido. Consulta los detalles de suplementos en nuestras <a href="../tarifas.html#a-domicilio">Tarifas de Fisioterapia</a>.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 08. Zona de desplazamiento ============ -->
+  <section class="domicilio-coverage" id="zona-desplazamiento">
+    <div class="container domicilio-coverage__inner">
+      <div class="domicilio-coverage__content" data-reveal>
+        <p class="eyebrow section-eyebrow">Área de servicio</p>
+        <h2 class="section-heading">¿Hasta dónde nos desplazamos?</h2>
+        <p class="domicilio-coverage__text">El servicio de fisioterapia a domicilio tiene su base en Sitges y ofrece cobertura en la localidad y municipios cercanos del Garraf y Penedès.</p>
+        <p class="domicilio-coverage__text" style="font-size: 1rem; color: var(--pw-ink-70);">Consúltanos tu ubicación exacta y te confirmaremos con rapidez la disponibilidad del servicio y los tiempos de desplazamiento correspondientes a tu zona.</p>
+
+        <div class="domicilio-coverage__actions">
+          <a class="btn btn--primary" href="https://wa.me/34644678344" target="_blank" rel="noopener">
+            Consultar por WhatsApp
+          </a>
+          <a class="btn btn--outline" href="../contacto.html">
+            Ver vías de contacto
+          </a>
+        </div>
+      </div>
+
+      <div class="domicilio-coverage__visual" data-reveal style="--i:1" aria-hidden="true">
+        <div class="domicilio-radar">
+          <div class="domicilio-radar__ring domicilio-radar__ring--1"></div>
+          <div class="domicilio-radar__ring domicilio-radar__ring--2"></div>
+          <div class="domicilio-radar__ring domicilio-radar__ring--3"></div>
+          <div class="domicilio-radar__axis domicilio-radar__axis--h"></div>
+          <div class="domicilio-radar__axis domicilio-radar__axis--v"></div>
+
+          <div class="domicilio-radar__hub">
+            <span class="domicilio-radar__hub-dot"></span>
+            <span class="domicilio-radar__hub-title">Sitges (Base)</span>
+          </div>
+
+          <span class="domicilio-radar__satellite domicilio-radar__satellite--1">Radio de atención</span>
+          <span class="domicilio-radar__satellite domicilio-radar__satellite--2">Zona Garraf</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 09. FAQ específica ============ -->
+  <section class="faq" id="faq-domicilio">
+    <div class="container faq__inner">
+      <div class="faq__head" data-reveal>
+        <p class="eyebrow section-eyebrow">Dudas habituales</p>
+        <h2 class="section-heading">Preguntas frecuentes sobre fisioterapia a domicilio</h2>
+        <p class="section-lead">Respuestas claras y prudentes a las consultas más habituales antes de tu primera visita en casa.</p>
+
+        <div class="faq__help-link" style="margin-top: var(--sp-6);">
+          <a href="https://wa.me/34644678344" target="_blank" rel="noopener">
+            ¿Tienes otra duda concreta? Escríbenos por WhatsApp
+            <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M1 11L11 1M11 1H3M11 1V9" stroke="currentColor" stroke-width="1.4"/></svg>
+          </a>
+        </div>
+      </div>
+
+      <div class="faq__list" data-reveal style="--i:1">
+        <div class="faq__item">
+          <h3 class="faq__item-heading">
+            <button class="faq__q" type="button" aria-expanded="false" aria-controls="faq-dom-1" id="faq-dom-q-1">
+              ¿Necesito preparar algún espacio en casa?
+            </button>
+          </h3>
+          <div class="faq__a" id="faq-dom-1" role="region" aria-labelledby="faq-dom-q-1" hidden>
+            <p>Únicamente un espacio despejado donde podamos desplegar la camilla de tratamiento (aproximadamente 2 × 1,5 metros), con buena iluminación y una temperatura agradable. Del resto de detalles nos encargamos nosotros.</p>
+          </div>
+        </div>
+
+        <div class="faq__item">
+          <h3 class="faq__item-heading">
+            <button class="faq__q" type="button" aria-expanded="false" aria-controls="faq-dom-2" id="faq-dom-q-2">
+              ¿Traéis el material necesario?
+            </button>
+          </h3>
+          <div class="faq__a" id="faq-dom-2" role="region" aria-labelledby="faq-dom-q-2" hidden>
+            <p>Sí. El fisioterapeuta acude con camilla portátil profesional, toallas y sábanas desechables de protección higiénica, cremas terapéuticas y los elementos de terapia manual o ejercicio activo que se precisen.</p>
+          </div>
+        </div>
+
+        <div class="faq__item">
+          <h3 class="faq__item-heading">
+            <button class="faq__q" type="button" aria-expanded="false" aria-controls="faq-dom-3" id="faq-dom-q-3">
+              ¿Cuánto dura una sesión a domicilio?
+            </button>
+          </h3>
+          <div class="faq__a" id="faq-dom-3" role="region" aria-labelledby="faq-dom-q-3" hidden>
+            <p>Las sesiones de seguimiento tienen una duración de 50 minutos de trabajo individual directo. En el caso de una primera visita, destinamos hasta 60 minutos para realizar una anamnesis completa, exploración física y tratamiento inicial.</p>
+          </div>
+        </div>
+
+        <div class="faq__item">
+          <h3 class="faq__item-heading">
+            <button class="faq__q" type="button" aria-expanded="false" aria-controls="faq-dom-4" id="faq-dom-q-4">
+              ¿Puedo hacer todo mi proceso de recuperación en casa?
+            </button>
+          </h3>
+          <div class="faq__a" id="faq-dom-4" role="region" aria-labelledby="faq-dom-q-4" hidden>
+            <p>En muchos casos sí, especialmente durante etapas de dolor limitante, fases agudas o recuperación postoperatoria inicial. Si en fases avanzadas tu evolución requiere maquinaria específica (como Pilates Reformer o sala de fuerza), valoraremos contigo el momento oportuno para continuar en el centro.</p>
+          </div>
+        </div>
+
+        <div class="faq__item">
+          <h3 class="faq__item-heading">
+            <button class="faq__q" type="button" aria-expanded="false" aria-controls="faq-dom-5" id="faq-dom-q-5">
+              ¿Cómo sé si la fisioterapia a domicilio es adecuada para mí?
+            </button>
+          </h3>
+          <div class="faq__a" id="faq-dom-5" role="region" aria-labelledby="faq-dom-q-5" hidden>
+            <p>Si tienes dudas sobre si tu dolencia puede ser atendida con plenas garantías en tu vivienda, ponte en contacto con nosotros. Nuestro equipo valorará tu caso de forma individualizada antes de formalizar la cita.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 10. CTA final ============ -->
+  <section class="cta-final" id="cta-final">
     <div class="container cta-final__inner" data-reveal>
       <h2 class="cta-final__title">Continúa tu recuperación sin desplazarte.</h2>
       <p class="cta-final__lead">Valoración, tratamiento y seguimiento en tu propia casa, con la misma atención individual que en el centro.</p>

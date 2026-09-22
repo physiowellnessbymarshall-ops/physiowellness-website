@@ -384,7 +384,9 @@ var prefersReducedMotion = window.matchMedia && window.matchMedia('(prefers-redu
       if(contextTitle) contextTitle.textContent = area;
       if(contextText) contextText.textContent = desc;
       if(contextCta){
-        contextCta.textContent = 'Ver tarifas de ' + area;
+        var docLang = (document.documentElement.lang || 'es').toLowerCase();
+        var ctaText = docLang.startsWith('ca') ? ('Veure tarifes de ' + area) : (docLang.startsWith('en') ? ('View rates for ' + area) : ('Ver tarifas de ' + area));
+        contextCta.textContent = ctaText;
         contextCta.href = '#en-la-clinica';
         contextCta.removeAttribute('target');
         contextCta.removeAttribute('rel');
@@ -1269,9 +1271,13 @@ var prefersReducedMotion = window.matchMedia && window.matchMedia('(prefers-redu
         btn.hidden = true;
         return;
       }
+      var docLang = (document.documentElement.lang || 'es').toLowerCase();
+      var readMoreText = docLang.startsWith('ca') ? 'Llegir complet' : (docLang.startsWith('en') ? 'Read more' : 'Leer completo');
+      var showLessText = docLang.startsWith('ca') ? 'Mostrar menys' : (docLang.startsWith('en') ? 'Show less' : 'Mostrar menos');
+
       btn.hidden = false;
       btn.setAttribute('aria-expanded','false');
-      btn.textContent = 'Leer completo';
+      btn.textContent = readMoreText;
     };
 
     /* la tipografía cambia el número de líneas: se mide cuando está lista */
@@ -1288,15 +1294,18 @@ var prefersReducedMotion = window.matchMedia && window.matchMedia('(prefers-redu
       btn.addEventListener('click', function(){
         var quote = document.getElementById(btn.getAttribute('aria-controls'));
         if(!quote) return;
+        var docLang = (document.documentElement.lang || 'es').toLowerCase();
+        var readMoreText = docLang.startsWith('ca') ? 'Llegir complet' : (docLang.startsWith('en') ? 'Read more' : 'Leer completo');
+        var showLessText = docLang.startsWith('ca') ? 'Mostrar menys' : (docLang.startsWith('en') ? 'Show less' : 'Mostrar menos');
         var open = btn.getAttribute('aria-expanded') === 'true';
         if(open){
           quote.setAttribute('data-clamped','');
           btn.setAttribute('aria-expanded','false');
-          btn.textContent = 'Leer completo';
+          btn.textContent = readMoreText;
         } else {
           quote.removeAttribute('data-clamped');
           btn.setAttribute('aria-expanded','true');
-          btn.textContent = 'Mostrar menos';
+          btn.textContent = showLessText;
         }
       });
     });
@@ -2827,11 +2836,58 @@ var prefersReducedMotion = window.matchMedia && window.matchMedia('(prefers-redu
       }
     }
 
+    var formLang = (document.documentElement.lang || 'es').toLowerCase();
+    var formI18n = {
+      es: {
+        errName: 'Por favor, introduce tu nombre.',
+        errEmailEmpty: 'Por favor, introduce tu correo electrónico.',
+        errEmailInvalid: 'Por favor, introduce un correo electrónico válido.',
+        errMessageEmpty: 'Por favor, escribe tu mensaje o consulta.',
+        errMessageShort: 'El mensaje es demasiado corto (mínimo 5 caracteres).',
+        subject: 'Consulta web: ',
+        bodyName: 'Nombre: ',
+        bodyEmail: '\nEmail: ',
+        bodyPhone: '\nTeléfono: ',
+        bodyMsg: '\n\nMensaje:\n',
+        waIntro: 'Hola Physio Wellness, soy ',
+        waConsult: ' Consulta: '
+      },
+      ca: {
+        errName: 'Si us plau, introdueix el teu nom.',
+        errEmailEmpty: 'Si us plau, introdueix el teu correu electrònic.',
+        errEmailInvalid: 'Si us plau, introdueix un correu electrònic vàlid.',
+        errMessageEmpty: 'Si us plau, escriu el teu missatge o consulta.',
+        errMessageShort: 'El missatge és massa curt (mínim 5 caràcters).',
+        subject: 'Consulta web: ',
+        bodyName: 'Nom: ',
+        bodyEmail: '\nEmail: ',
+        bodyPhone: '\nTelèfon: ',
+        bodyMsg: '\n\nMissatge:\n',
+        waIntro: 'Hola Physio Wellness, sóc ',
+        waConsult: ' Consulta: '
+      },
+      en: {
+        errName: 'Please enter your name.',
+        errEmailEmpty: 'Please enter your email address.',
+        errEmailInvalid: 'Please enter a valid email address.',
+        errMessageEmpty: 'Please write your message or inquiry.',
+        errMessageShort: 'The message is too short (at least 5 characters).',
+        subject: 'Web inquiry: ',
+        bodyName: 'Name: ',
+        bodyEmail: '\nEmail: ',
+        bodyPhone: '\nPhone: ',
+        bodyMsg: '\n\nMessage:\n',
+        waIntro: 'Hello Physio Wellness, I am ',
+        waConsult: ' Inquiry: '
+      }
+    };
+    var tMsg = formLang.startsWith('ca') ? formI18n.ca : (formLang.startsWith('en') ? formI18n.en : formI18n.es);
+
     function validateName(){
       if(!nameInput) return true;
       var val = nameInput.value.trim();
       if(!val){
-        setFieldError(nameInput, 'error-name', 'Por favor, introduce tu nombre.');
+        setFieldError(nameInput, 'error-name', tMsg.errName);
         return false;
       }
       setFieldError(nameInput, 'error-name', '');
@@ -2842,11 +2898,11 @@ var prefersReducedMotion = window.matchMedia && window.matchMedia('(prefers-redu
       if(!emailInput) return true;
       var val = emailInput.value.trim();
       if(!val){
-        setFieldError(emailInput, 'error-email', 'Por favor, introduce tu correo electrónico.');
+        setFieldError(emailInput, 'error-email', tMsg.errEmailEmpty);
         return false;
       }
       if(!emailRegex.test(val)){
-        setFieldError(emailInput, 'error-email', 'Por favor, introduce un correo electrónico válido.');
+        setFieldError(emailInput, 'error-email', tMsg.errEmailInvalid);
         return false;
       }
       setFieldError(emailInput, 'error-email', '');
@@ -2857,11 +2913,11 @@ var prefersReducedMotion = window.matchMedia && window.matchMedia('(prefers-redu
       if(!messageInput) return true;
       var val = messageInput.value.trim();
       if(!val){
-        setFieldError(messageInput, 'error-message', 'Por favor, escribe tu mensaje o consulta.');
+        setFieldError(messageInput, 'error-message', tMsg.errMessageEmpty);
         return false;
       }
       if(val.length < 5){
-        setFieldError(messageInput, 'error-message', 'El mensaje es demasiado corto (mínimo 5 caracteres).');
+        setFieldError(messageInput, 'error-message', tMsg.errMessageShort);
         return false;
       }
       setFieldError(messageInput, 'error-message', '');
@@ -2908,9 +2964,9 @@ var prefersReducedMotion = window.matchMedia && window.matchMedia('(prefers-redu
       var msgVal = messageInput ? messageInput.value.trim() : '';
 
       /* Preparar enlaces dinámicos para correo y WhatsApp */
-      var subject = 'Consulta web: ' + nameVal;
-      var emailBody = 'Nombre: ' + nameVal + '\nEmail: ' + emailVal + (phoneVal ? '\nTeléfono: ' + phoneVal : '') + '\n\nMensaje:\n' + msgVal;
-      var waBody = 'Hola Physio Wellness, soy ' + nameVal + '.' + (phoneVal ? ' (Tel: ' + phoneVal + ')' : '') + ' Consulta: ' + msgVal;
+      var subject = tMsg.subject + nameVal;
+      var emailBody = tMsg.bodyName + nameVal + tMsg.bodyEmail + emailVal + (phoneVal ? (tMsg.bodyPhone + phoneVal) : '') + tMsg.bodyMsg + msgVal;
+      var waBody = tMsg.waIntro + nameVal + '.' + (phoneVal ? (' (Tel: ' + phoneVal + ')') : '') + tMsg.waConsult + msgVal;
 
       if(emailActionBtn){
         emailActionBtn.href = 'mailto:hola@physiowellness.es?subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(emailBody);

@@ -3972,6 +3972,8 @@ var prefersReducedMotion = window.matchMedia && window.matchMedia('(prefers-redu
           if(heroImg){
             heroImg.src = newSrc;
             heroImg.alt = newAlt;
+            heroImg.removeAttribute('width');
+            heroImg.removeAttribute('height');
           }
           if(badgeEl) badgeEl.textContent = newBadge;
           if(nameEl) nameEl.textContent = newName;
@@ -4075,8 +4077,25 @@ var prefersReducedMotion = window.matchMedia && window.matchMedia('(prefers-redu
         });
       }
 
-      // Inicialización
-      updateDisplay(0, true);
+      // Inicialización con soporte de parámetro de URL (?equip= o ?item=)
+      var initialIdx = 0;
+      try {
+        var urlParams = new URLSearchParams(window.location.search);
+        var itemParam = urlParams.get('equip') || urlParams.get('item');
+        if(itemParam){
+          var paramNum = parseInt(itemParam, 10);
+          if(!isNaN(paramNum) && paramNum >= 1 && paramNum <= total){
+            initialIdx = paramNum - 1;
+          } else {
+            var searchLower = itemParam.toLowerCase();
+            items.forEach(function(btn, i){
+              var btnName = (btn.getAttribute('data-name') || '').toLowerCase();
+              if(btnName.indexOf(searchLower) !== -1) initialIdx = i;
+            });
+          }
+        }
+      } catch(e){}
+      updateDisplay(initialIdx, true);
     });
   }catch(e){ console.warn('equipmentShowcaseSystem', e); }
 })();

@@ -504,6 +504,13 @@
               Tus datos se tratarán únicamente para responder a tu consulta conforme a nuestra <a href="../../es/privacidad/">política de privacidad</a>.
             </p>
 
+
+            <!-- Honeypot anti-spam: oculto para usuarios reales; el backend debe rechazar si no está vacío -->
+            <div class="form-honeypot" aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden;">
+              <label for="hp-website">No rellenar</label>
+              <input type="text" id="hp-website" name="website" tabindex="-1" autocomplete="off" value="">
+            </div>
+
             <button type="submit" class="btn btn--primary contact-form__submit">
               <span>Enviar mensaje</span>
               <span class="btn__arrow" aria-hidden="true">→</span>

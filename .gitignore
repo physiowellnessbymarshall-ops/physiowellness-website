@@ -1,6 +1,8 @@
 # Sistema operativo
 .DS_Store
+**/.DS_Store
 Thumbs.db
+ehthumbs.db
 
 # Editor
 .vscode/
@@ -19,12 +21,15 @@ yarn.lock
 *.log
 npm-debug.log*
 
-# Archivos temporales
+# Archivos temporales / entorno
 .env
 .env.local
+.env.*.local
 *.tmp
 
 # Build output (si lo hay)
 dist/
 build/
+
+# Utilidades de desarrollo local (NO son parte del sitio público)
 scratch/

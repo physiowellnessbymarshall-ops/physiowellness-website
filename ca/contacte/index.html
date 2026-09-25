@@ -503,6 +503,13 @@
               Les teves dades es tractaran únicament per respondre a la teva consulta de conformitat amb la nostra <a href="../../ca/privacitat/">política de privacitat</a>.
             </p>
 
+
+            <!-- Honeypot anti-spam: ocult per a usuaris reals; el backend ha de rebutjar si no està buit -->
+            <div class="form-honeypot" aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden;">
+              <label for="hp-website">No omplir</label>
+              <input type="text" id="hp-website" name="website" tabindex="-1" autocomplete="off" value="">
+            </div>
+
             <button type="submit" class="btn btn--primary contact-form__submit">
               <span>Enviar missatge</span>
               <span class="btn__arrow" aria-hidden="true">→</span>

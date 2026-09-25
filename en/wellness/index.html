@@ -3,71 +3,234 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Bienestar corporal en Sitges | Physio Wellness</title>
-<meta name="description" content="Bienestar en Sitges: sesiones para cuidar, recuperar y optimizar tu cuerpo con terapia manual, presoterapia y tecnologías avanzadas en Physio Wellness by Marshall.">
+<title>Wellness & Body Recovery in Sitges | Physio Wellness</title>
+<meta name="description" content="Body wellness sessions in Sitges: restorative manual therapy, pressotherapy, and advanced recovery technology at Physio Wellness by Marshall.">
 <link rel="canonical" href="https://physiowellness.es/en/wellness/">
 <link rel="alternate" hreflang="es" href="https://physiowellness.es/es/bienestar/">
 <link rel="alternate" hreflang="ca" href="https://physiowellness.es/ca/benestar/">
 <link rel="alternate" hreflang="en" href="https://physiowellness.es/en/wellness/">
+<link rel="alternate" hreflang="x-default" href="https://physiowellness.es/es/bienestar/">
+
+<!-- Open Graph / Facebook -->
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Physio Wellness by Marshall">
+<meta property="og:title" content="Wellness & Body Recovery in Sitges | Physio Wellness">
+<meta property="og:description" content="Body wellness sessions in Sitges: restorative manual therapy, pressotherapy, and advanced recovery technology at Physio Wellness by Marshall.">
+<meta property="og:url" content="https://physiowellness.es/en/wellness/">
+<meta property="og:image" content="https://physiowellness.es/src/assets/img/disciplines/wellness/1247ff42-3e28-444a-9eb6-8cf9b33a41fe-1440.webp">
+<meta property="og:locale" content="en_GB">
+
+<!-- Twitter / X -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Wellness & Body Recovery in Sitges | Physio Wellness">
+<meta name="twitter:description" content="Body wellness sessions in Sitges: restorative manual therapy, pressotherapy, and advanced recovery technology at Physio Wellness by Marshall.">
+<meta name="twitter:image" content="https://physiowellness.es/src/assets/img/disciplines/wellness/1247ff42-3e28-444a-9eb6-8cf9b33a41fe-1440.webp">
 <link rel="icon" href="../../src/assets/img/logo-icon-black.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Jost:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,300;0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../../src/css/styles.css">
-<!-- [data-reveal] (§7 de styles.css) parte de opacity:0 y depende de main.js
-     para mostrarse; override preventivo para no dejar contenido invisible
-     si JavaScript está desactivado. -->
-<noscript><style>
-  [data-reveal]{opacity:1!important;transform:none!important;}
-  .wellness-needs__mobile-img{display:block!important;}
-</style></noscript>
 
-<!-- Schema.org LocalBusiness Structured Data -->
+<!-- Schema.org JSON-LD Structured Data -->
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
-  "@type": "LocalBusiness",
-  "name": "Physio Wellness by Marshall - Bienestar",
-  "url": "https://physiowellness.es/es/servicios/wellness/",
-  "description": "Bienestar en Sitges: sesiones de recuperación, descarga muscular y cuidado corporal guiado en Physio Wellness by Marshall.",
-  "address": {
-    "@type": "PostalAddress",
-    "streetAddress": "Avinguda Camí dels Capellans, 79, local 3",
-    "addressLocality": "Sitges",
-    "postalCode": "08870",
-    "addressCountry": "ES"
-  },
-  "telephone": "+34644678344",
-  "email": "hola@physiowellness.es",
-  "aggregateRating": {
-    "@type": "AggregateRating",
-    "ratingValue": "5",
-    "reviewCount": "6"
-  },
-  "areaServed": {
-    "@type": "City",
-    "name": "Sitges"
-  }
+  "@graph": [
+    {
+      "@type": "MedicalBusiness",
+      "@id": "https://physiowellness.es/#business",
+      "name": "Physio Wellness by Marshall",
+      "legalName": "Marçal Ramirez Roig",
+      "url": "https://physiowellness.es/",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://physiowellness.es/src/assets/img/logo-icon-black.png"
+      },
+      "image": "https://physiowellness.es/src/assets/img/local/local-recepcion-1440.webp",
+      "telephone": "+34644678344",
+      "email": "hola@physiowellness.es",
+      "priceRange": "€€",
+      "currenciesAccepted": "EUR",
+      "paymentAccepted": "Cash, Credit Card, Bizum",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "Avinguda Camí dels Capellans, 79, local 3",
+        "addressLocality": "Sitges",
+        "postalCode": "08870",
+        "addressRegion": "Barcelona",
+        "addressCountry": "ES"
+      },
+      "geo": {
+        "@type": "GeoCoordinates",
+        "latitude": 41.2415,
+        "longitude": 1.8028
+      },
+      "openingHoursSpecification": [
+        {
+          "@type": "OpeningHoursSpecification",
+          "dayOfWeek": [
+            "Monday",
+            "Tuesday",
+            "Wednesday",
+            "Thursday",
+            "Friday"
+          ],
+          "opens": "09:00",
+          "closes": "13:00"
+        },
+        {
+          "@type": "OpeningHoursSpecification",
+          "dayOfWeek": [
+            "Monday",
+            "Tuesday",
+            "Wednesday",
+            "Thursday",
+            "Friday"
+          ],
+          "opens": "15:00",
+          "closes": "19:00"
+        }
+      ],
+      "location": [
+        {
+          "@type": "Place",
+          "name": "Physio Wellness - Clinical Space",
+          "address": {
+            "@type": "PostalAddress",
+            "streetAddress": "Avinguda Camí dels Capellans, 79, local 3",
+            "addressLocality": "Sitges",
+            "postalCode": "08870",
+            "addressRegion": "Barcelona",
+            "addressCountry": "ES"
+          }
+        },
+        {
+          "@type": "Place",
+          "name": "Physio Wellness - Strength & Pilates Studio",
+          "address": {
+            "@type": "PostalAddress",
+            "streetAddress": "Carrer de Sant Honorat, 26, local 2",
+            "addressLocality": "Sitges",
+            "postalCode": "08870",
+            "addressRegion": "Barcelona",
+            "addressCountry": "ES"
+          }
+        }
+      ],
+      "founder": {
+        "@type": "Person",
+        "name": "Marçal Ramirez Roig",
+        "jobTitle": "Fisioterapeuta Colegiado nº 14.599",
+        "alumniOf": "Col·legi de Fisioterapeutes de Catalunya"
+      },
+      "areaServed": [
+        {
+          "@type": "City",
+          "name": "Sitges"
+        },
+        {
+          "@type": "City",
+          "name": "Sant Pere de Ribes"
+        },
+        {
+          "@type": "City",
+          "name": "Vilanova i la Geltrú"
+        },
+        {
+          "@type": "AdministrativeArea",
+          "name": "Garraf"
+        }
+      ],
+      "knowsLanguage": [
+        "es",
+        "ca",
+        "en"
+      ]
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://physiowellness.es/#website",
+      "name": "Physio Wellness by Marshall",
+      "url": "https://physiowellness.es/",
+      "inLanguage": [
+        "es",
+        "ca",
+        "en"
+      ],
+      "publisher": {
+        "@id": "https://physiowellness.es/#business"
+      }
+    },
+    {
+      "@type": "WebPage",
+      "@id": "https://physiowellness.es/en/wellness/#webpage",
+      "url": "https://physiowellness.es/en/wellness/",
+      "name": "Wellness & Body Recovery in Sitges | Physio Wellness",
+      "description": "Body wellness sessions in Sitges: restorative manual therapy, pressotherapy, and advanced recovery technology at Physio Wellness by Marshall.",
+      "inLanguage": "en",
+      "isPartOf": {
+        "@id": "https://physiowellness.es/#website"
+      },
+      "about": {
+        "@id": "https://physiowellness.es/#business"
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "@id": "https://physiowellness.es/en/wellness/#breadcrumb",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://physiowellness.es/en/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Services",
+          "item": "https://physiowellness.es/en/services/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Wellness",
+          "item": "https://physiowellness.es/en/wellness/"
+        }
+      ]
+    },
+    {
+      "@type": "Service",
+      "@id": "https://physiowellness.es/en/wellness/#service",
+      "name": "Wellness & Body Recovery",
+      "serviceType": "WellnessRecovery",
+      "description": "Body wellness sessions in Sitges: restorative manual therapy, pressotherapy, and advanced recovery technology at Physio Wellness by Marshall.",
+      "provider": {
+        "@id": "https://physiowellness.es/#business"
+      },
+      "areaServed": {
+        "@type": "City",
+        "name": "Sitges"
+      },
+      "hasOfferCatalog": {
+        "@type": "OfferCatalog",
+        "name": "Wellness & Body Recovery",
+        "itemListElement": [
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "Service",
+              "name": "Wellness & Body Recovery"
+            }
+          }
+        ]
+      }
+    }
+  ]
 }
 </script>
-
-<!-- Open Graph Meta Tags (Social Sharing) -->
-<meta property="og:type" content="website">
-<meta property="og:url" content="https://physiowellness.es/es/servicios/wellness/">
-<meta property="og:title" content="Bienestar corporal en Sitges | Physio Wellness">
-<meta property="og:description" content="Cuidar, recuperar y optimizar el cuerpo. Un trabajo corporal específico, no una experiencia de spa.">
-<meta property="og:image" content="https://physiowellness.es/assets/img/disciplines/wellness/50eefdba-207e-4222-989f-99ab900a5f42-1440.webp">
-<meta property="og:image:width" content="1122">
-<meta property="og:image:height" content="1402">
-
-<!-- Twitter Card Meta Tags -->
-<meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Bienestar corporal en Sitges | Physio Wellness">
-<meta name="twitter:description" content="Cuidar, recuperar y optimizar el cuerpo. Un trabajo corporal específico, no una experiencia de spa.">
-<meta name="twitter:image" content="https://physiowellness.es/assets/img/disciplines/wellness/50eefdba-207e-4222-989f-99ab900a5f42-1440.webp">
-
 </head>
-<body class="page-servicios page-wellness">
+<body class="page-wellness">
 
 <a class="skip-link" href="#main">Skip to content</a>
 
@@ -79,7 +242,7 @@
 
     <nav class="main-nav" aria-label="Main navigation">
       <div class="nav-item" data-disclosure-group="nav">
-        <button class="nav-item__btn" type="button" data-disclosure-toggle aria-expanded="false" aria-controls="nav-services">
+        <button class="nav-item__btn is-current" type="button" data-disclosure-toggle aria-expanded="false" aria-controls="nav-services">
           Services
           <svg class="nav-item__chevron" width="9" height="6" viewBox="0 0 9 6" fill="none" aria-hidden="true"><path d="M1 1l3.5 3.5L8 1" stroke="currentColor" stroke-width="1.3" stroke-linecap="square"/></svg>
         </button>
@@ -87,7 +250,7 @@
           <a href="../../en/physiotherapy/">Physiotherapy</a>
           <a href="../../en/strength/">Strength</a>
           <a href="../../en/pilates/">Pilates</a>
-          <a href="../../en/wellness/">Wellness</a>
+          <a href="../../en/wellness/" class="is-current" aria-current="page">Wellness</a>
           <a href="../../en/stretching/">Stretching</a>
           <a class="nav-dropdown__all" href="../../en/services/">View all services</a>
         </div>
@@ -113,7 +276,7 @@
 
     <div class="header-actions">
       <nav class="lang-switch" aria-label="Language selector">
-        <a href="../../en/wellness/">ES</a><span>/</span>
+        <a href="../../es/bienestar/">ES</a><span>/</span>
         <a href="../../ca/benestar/">CAT</a><span>/</span>
         <a href="./" aria-current="true">EN</a>
       </nav>
@@ -165,7 +328,7 @@
 
   <nav class="mobile-nav" aria-label="Mobile navigation">
     <div class="m-acc" data-disclosure-group="mobile">
-      <button class="m-acc__btn" type="button" data-disclosure-toggle aria-expanded="false" aria-controls="m-services">
+      <button class="m-acc__btn is-current" type="button" data-disclosure-toggle aria-expanded="false" aria-controls="m-services">
         Services
         <svg class="m-acc__chevron" width="14" height="9" viewBox="0 0 14 9" fill="none" aria-hidden="true"><path d="M1 1l6 6 6-6" stroke="currentColor" stroke-width="1.4" stroke-linecap="square"/></svg>
       </button>
@@ -173,7 +336,7 @@
         <a href="../../en/physiotherapy/">Physiotherapy</a>
         <a href="../../en/strength/">Strength</a>
         <a href="../../en/pilates/">Pilates</a>
-        <a href="../../en/wellness/">Wellness</a>
+        <a href="../../en/wellness/" class="is-current" aria-current="page">Wellness</a>
         <a href="../../en/stretching/">Stretching</a>
         <a class="m-acc__all" href="../../en/services/">View all services</a>
       </div>
@@ -199,7 +362,7 @@
 
   <div class="mobile-menu__bottom">
     <nav class="lang-switch lang-switch--in-menu" aria-label="Language selector">
-      <a href="../../en/wellness/">ES</a><span>/</span>
+      <a href="../../es/bienestar/">ES</a><span>/</span>
       <a href="../../ca/benestar/">CAT</a><span>/</span>
       <a href="./" aria-current="true">EN</a>
     </nav>
@@ -214,11 +377,7 @@
 
 <main id="main">
 
-  <!-- ============ 1. Service Hero System (Bienestar) ============
-       Misma arquitectura que physiotherapy.html (.service-hero).
-       Dirección visual calmada y editorial con descriptor numérico,
-       titular "Cuidar, recuperar y optimizar el cuerpo." e indicadores
-       inferiores exactos: 01 Sesión guiada / 02 En centro / 03 Sitges. -->
+  <!-- ============ 1. Hero ============ -->
   <section class="service-hero service-hero--wellness" id="hero">
     <div class="service-hero__container">
       <nav class="breadcrumb service-hero__breadcrumb" aria-label="Breadcrumb">
@@ -231,19 +390,19 @@
 
       <div class="service-hero__grid">
         <div class="service-hero__content">
-          <p class="service-hero__descriptor">02 — BIENESTAR</p>
-          <h1 class="service-hero__headline">Cuidar, recuperar y optimizar el cuerpo.</h1>
-          <p class="service-hero__lead">Un espacio para bajar el ritmo, liberar tensión y dedicar tiempo a tu cuerpo. Sesiones guiadas en el centro orientadas al cuidado específico y la recuperación corporal.</p>
+          <p class="service-hero__descriptor">02 — WELLNESS</p>
+          <h1 class="service-hero__headline">Care for, recover and optimise your body.</h1>
+          <p class="service-hero__lead">A dedicated space to slow down, release tension, and restore your body. Guided sessions at our centre focused on targeted recovery and overall physical balance.</p>
 
           <div class="service-hero__actions">
-            <a class="btn btn--primary service-hero__cta-primary" href="#que-es-el-bienestar">
-              <span>Descubrir Bienestar</span>
+            <a class="btn btn--primary service-hero__cta-primary" href="#what-is-wellness">
+              <span>Explore Wellness</span>
               <svg class="service-hero__cta-arrow" width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
                 <path d="M1 7h11M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
               </svg>
             </a>
             <a class="service-hero__cta-secondary" href="https://wa.me/34644678344" target="_blank" rel="noopener">
-              <span>¿Tienes dudas? Escríbenos</span>
+              <span>Have questions? Message us</span>
               <svg class="service-hero__secondary-arrow" width="11" height="11" viewBox="0 0 11 11" fill="none" aria-hidden="true">
                 <path d="M1 10L10 1M10 1H3M10 1V8" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
               </svg>
@@ -257,7 +416,7 @@
               src="../../src/assets/img/disciplines/wellness/50eefdba-207e-4222-989f-99ab900a5f42-1440.webp"
               srcset="../../src/assets/img/disciplines/wellness/50eefdba-207e-4222-989f-99ab900a5f42-720.webp 720w, ../../src/assets/img/disciplines/wellness/50eefdba-207e-4222-989f-99ab900a5f42-1440.webp 1122w"
               sizes="(min-width: 1200px) 54vw, (min-width: 860px) 52vw, 100vw"
-              alt="Persona en sesión calmada de bienestar con terapia de luz roja en un espacio cálido de Physio Wellness Sitges"
+              alt="Person in a restorative wellness session with red light therapy in a warm setting at Physio Wellness Sitges"
               width="1122"
               height="1402"
               loading="eager"
@@ -266,7 +425,7 @@
             <div class="service-hero__media-gradient" aria-hidden="true"></div>
             <span class="service-hero__tag" aria-hidden="true">
               <span class="service-hero__tag-line"></span>
-              Bienestar
+              Wellness
             </span>
           </figure>
         </div>
@@ -276,12 +435,12 @@
         <div class="service-hero__meta-items">
           <div class="service-hero__meta-item">
             <span class="service-hero__meta-index">01</span>
-            <span class="service-hero__meta-text">SESIÓN GUIADA</span>
+            <span class="service-hero__meta-text">GUIDED SESSION</span>
           </div>
           <div class="service-hero__meta-sep" aria-hidden="true">/</div>
           <div class="service-hero__meta-item">
             <span class="service-hero__meta-index">02</span>
-            <span class="service-hero__meta-text">EN CENTRO</span>
+            <span class="service-hero__meta-text">IN-CENTRE</span>
           </div>
           <div class="service-hero__meta-sep" aria-hidden="true">/</div>
           <div class="service-hero__meta-item">
@@ -290,25 +449,23 @@
           </div>
         </div>
 
-        <a href="#que-es-el-bienestar" class="service-hero__scroll-cue" aria-label="Desplazarse a la siguiente sección">
-          <span>DESCUBRIR</span>
+        <a href="#what-is-wellness" class="service-hero__scroll-cue" aria-label="Scroll to next section">
+          <span>EXPLORE</span>
           <span class="service-hero__scroll-arrow" aria-hidden="true">↓</span>
         </a>
       </div>
     </div>
   </section>
 
-  <!-- ============ 2. Qué es Bienestar ============
-       Concepto central: "Un trabajo corporal específico, no una experiencia de spa."
-       Fotografía real de presoterapia del centro. Redacción concisa y clara. -->
-  <section class="service-context" id="que-es-el-bienestar">
+  <!-- ============ 2. What is Wellness ============ -->
+  <section class="service-context" id="what-is-wellness">
     <div class="container service-context__grid">
       <div class="service-context__text" data-reveal>
-        <p class="eyebrow section-eyebrow">Qué es Bienestar</p>
-        <h2 class="section-heading">Un trabajo corporal específico, no una experiencia de spa</h2>
+        <p class="eyebrow section-eyebrow">What is Wellness</p>
+        <h2 class="section-heading">Targeted bodywork, not a day-spa treatment</h2>
         <div class="area-block__text">
-          <p>En Physio Wellness entendemos el bienestar como una disciplina activa de salud y rendimiento: un espacio para reducir la sobrecarga muscular, facilitar la regeneración de los tejidos y devolver al cuerpo su equilibrio funcional.</p>
-          <p>No sustituye la valoración clínica cuando existe una lesión aguda, sino que actúa como una herramienta especializada para favorecer la recuperación, acompañar tus entrenamientos o incorporar el cuidado corporal sistemático a tu semana.</p>
+          <p>At Physio Wellness, we approach wellness as an active discipline for health and performance: a dedicated space to reduce muscle tension, promote tissue regeneration, and restore functional balance to your body.</p>
+          <p>It is not a substitute for clinical assessment when addressing an acute injury; rather, it serves as a specialised discipline to enhance recovery, complement your training, or integrate structured physical care into your weekly routine.</p>
         </div>
       </div>
       <figure class="service-photo" data-reveal style="--i:1" aria-hidden="true">
@@ -316,7 +473,7 @@
           src="../../src/assets/img/disciplines/wellness/455dab1c-ca3e-4edf-9958-6e5dcb796470-1440.webp"
           srcset="../../src/assets/img/disciplines/wellness/455dab1c-ca3e-4edf-9958-6e5dcb796470-720.webp 720w, ../../src/assets/img/disciplines/wellness/455dab1c-ca3e-4edf-9958-6e5dcb796470-1440.webp 1122w"
           sizes="(min-width:860px) 42vw, 100vw"
-          alt="Sesión de presoterapia y recuperación corporal en Physio Wellness Sitges"
+          alt="Pressotherapy and body recovery session at Physio Wellness Sitges"
           loading="lazy"
           width="1122"
           height="1402"
@@ -325,21 +482,17 @@
     </div>
   </section>
 
-  <!-- ============ 3. ¿Qué necesitas hoy? ============
-       Interacción editorial a dos columnas:
-       Listado vertical de 4 opciones a la izquierda; fotografía grande dinámica
-       a la derecha con transición suave al interactuar (hover/click/teclado).
-       Totalmente usable en móvil. -->
-  <section class="wellness-needs" id="que-necesitas-hoy">
+  <!-- ============ 3. What does your body need today? ============ -->
+  <section class="wellness-needs" id="what-do-you-need">
     <div class="container">
       <div class="wellness-needs__head" data-reveal>
-        <p class="eyebrow section-eyebrow">Objetivos de bienestar</p>
-        <h2 class="section-heading">¿Qué necesitas hoy?</h2>
-        <p class="section-lead">Cuatro formas de acompañar tu cuerpo según el momento en el que te encuentras, tu nivel de fatiga y la exigencia de tus últimos días.</p>
+        <p class="eyebrow section-eyebrow">Wellness goals</p>
+        <h2 class="section-heading">What does your body need today?</h2>
+        <p class="section-lead">Four targeted pathways tailored to where you are right now, your fatigue levels, and the physical demands of recent days.</p>
       </div>
 
       <div class="wellness-needs__layout" data-wellness-needs data-reveal style="--i:1">
-        <div class="wellness-needs__list" role="tablist" aria-label="Objetivos de bienestar">
+        <div class="wellness-needs__list" role="tablist" aria-label="Wellness goals">
           
           <button
             type="button"
@@ -348,27 +501,20 @@
             aria-selected="true"
             aria-controls="wellness-need-panel"
             id="need-tab-0"
-            data-need-index="0"
-            data-photo-src="../../src/assets/img/disciplines/wellness/wellness-reboots-mujer-1440.webp"
-            data-photo-srcset="../../src/assets/img/disciplines/wellness/wellness-reboots-mujer-720.webp 720w, ../../src/assets/img/disciplines/wellness/wellness-reboots-mujer-1440.webp 1024w"
-            data-photo-alt="Sesión de recuperación corporal con presoterapia Reboots en Physio Wellness"
+            data-photo-src="../../src/assets/img/disciplines/wellness/455dab1c-ca3e-4edf-9958-6e5dcb796470-1440.webp"
+            data-photo-srcset="../../src/assets/img/disciplines/wellness/455dab1c-ca3e-4edf-9958-6e5dcb796470-720.webp 720w, ../../src/assets/img/disciplines/wellness/455dab1c-ca3e-4edf-9958-6e5dcb796470-1440.webp 1122w"
+            data-photo-alt="Recovery session with pneumatic compression boots at Physio Wellness Sitges"
             data-badge-index="01"
-            data-badge-title="Recuperar"
-            data-badge-focus="Presoterapia + Drenaje linfático"
+            data-badge-title="Muscle recovery"
+            data-badge-focus="Venous return and recovery"
           >
-            <div class="wellness-need-item__top">
-              <span class="wellness-need-item__num">01</span>
-              <span class="wellness-need-item__tag">Rendimiento & Carga</span>
+            <span class="wellness-need-item__num" aria-hidden="true">01</span>
+            <div class="wellness-need-item__content">
+              <h3 class="wellness-need-item__title">Muscle recovery</h3>
+              <p class="wellness-need-item__desc">After training, competition, or intense physical exertion.</p>
+              <span class="wellness-need-item__focus">Focus: Venous return and metabolic waste removal</span>
             </div>
-            <h3 class="wellness-need-item__title">Recuperar</h3>
-            <p class="wellness-need-item__desc">Después de entrenamientos, competición o periodos de alta carga física.</p>
-            <div class="wellness-need-item__footer">
-              <span class="wellness-need-item__focus">Enfoque: Retorno venoso y eliminación de metabolitos</span>
-              <span class="wellness-need-item__arrow" aria-hidden="true">→</span>
-            </div>
-            <div class="wellness-needs__mobile-img" aria-hidden="true">
-              <img src="../../src/assets/img/disciplines/wellness/wellness-reboots-mujer-720.webp" alt="" loading="lazy">
-            </div>
+            <span class="wellness-need-item__arrow" aria-hidden="true">→</span>
           </button>
 
           <button
@@ -378,27 +524,20 @@
             aria-selected="false"
             aria-controls="wellness-need-panel"
             id="need-tab-1"
-            data-need-index="1"
-            data-photo-src="../../src/assets/img/disciplines/wellness/wellness-theragun-1440.webp"
-            data-photo-srcset="../../src/assets/img/disciplines/wellness/wellness-theragun-720.webp 720w, ../../src/assets/img/disciplines/wellness/wellness-theragun-1440.webp 1320w"
-            data-photo-alt="Descarga miofascial y terapia percusiva con Theragun en Physio Wellness"
+            data-photo-src="../../src/assets/img/disciplines/wellness/499c436d-bc10-4436-8d97-b503a84b5e24-1440.webp"
+            data-photo-srcset="../../src/assets/img/disciplines/wellness/499c436d-bc10-4436-8d97-b503a84b5e24-720.webp 720w, ../../src/assets/img/disciplines/wellness/499c436d-bc10-4436-8d97-b503a84b5e24-1440.webp 1122w"
+            data-photo-alt="Targeted manual therapy for neck and back tension relief at Physio Wellness Sitges"
             data-badge-index="02"
-            data-badge-title="Descargar"
-            data-badge-focus="Masaje terapéutico + Liberación miofascial"
+            data-badge-title="Tension release"
+            data-badge-focus="Releasing tension and muscle ease"
           >
-            <div class="wellness-need-item__top">
-              <span class="wellness-need-item__num">02</span>
-              <span class="wellness-need-item__tag">Tensión & Rigidez</span>
+            <span class="wellness-need-item__num" aria-hidden="true">02</span>
+            <div class="wellness-need-item__content">
+              <h3 class="wellness-need-item__title">Tension release</h3>
+              <p class="wellness-need-item__desc">Relieving accumulated muscle fatigue, stiffness, or heaviness.</p>
+              <span class="wellness-need-item__focus">Focus: Deactivating contractures and muscle looseness</span>
             </div>
-            <h3 class="wellness-need-item__title">Descargar</h3>
-            <p class="wellness-need-item__desc">Reducir la sensación de fatiga, pesadez o sobrecarga corporal acumulada.</p>
-            <div class="wellness-need-item__footer">
-              <span class="wellness-need-item__focus">Enfoque: Desactivación de contracturas y soltura muscular</span>
-              <span class="wellness-need-item__arrow" aria-hidden="true">→</span>
-            </div>
-            <div class="wellness-needs__mobile-img" aria-hidden="true">
-              <img src="../../src/assets/img/disciplines/wellness/wellness-theragun-720.webp" alt="" loading="lazy">
-            </div>
+            <span class="wellness-need-item__arrow" aria-hidden="true">→</span>
           </button>
 
           <button
@@ -408,27 +547,20 @@
             aria-selected="false"
             aria-controls="wellness-need-panel"
             id="need-tab-2"
-            data-need-index="2"
-            data-photo-src="../../src/assets/img/disciplines/wellness/wellness-mitolight-hombre-1440.webp"
-            data-photo-srcset="../../src/assets/img/disciplines/wellness/wellness-mitolight-hombre-720.webp 720w, ../../src/assets/img/disciplines/wellness/wellness-mitolight-hombre-1440.webp 1024w"
-            data-photo-alt="Sesión de fotobiomodulación y terapia de luz roja con panel Mito Light en Physio Wellness"
+            data-photo-src="../../src/assets/img/disciplines/wellness/4df29dab-6a0e-4ec6-be5e-b2b8cbea0489-1440.webp"
+            data-photo-srcset="../../src/assets/img/disciplines/wellness/4df29dab-6a0e-4ec6-be5e-b2b8cbea0489-720.webp 720w, ../../src/assets/img/disciplines/wellness/4df29dab-6a0e-4ec6-be5e-b2b8cbea0489-1440.webp 1122w"
+            data-photo-alt="Focused wellness and physical maintenance session at Physio Wellness Sitges"
             data-badge-index="03"
-            data-badge-title="Cuidar"
-            data-badge-focus="Cuidado tisular + Fotobiomodulación / Luz roja"
+            data-badge-title="Ongoing care"
+            data-badge-focus="Regular maintenance and balance"
           >
-            <div class="wellness-need-item__top">
-              <span class="wellness-need-item__num">03</span>
-              <span class="wellness-need-item__tag">Hábito & Prevención</span>
+            <span class="wellness-need-item__num" aria-hidden="true">03</span>
+            <div class="wellness-need-item__content">
+              <h3 class="wellness-need-item__title">Ongoing care</h3>
+              <p class="wellness-need-item__desc">Building regular recovery and body care sessions into your ongoing routine.</p>
+              <span class="wellness-need-item__focus">Focus: Sustainable physical maintenance and deep tissue care</span>
             </div>
-            <h3 class="wellness-need-item__title">Cuidar</h3>
-            <p class="wellness-need-item__desc">Incorporar sesiones de cuidado corporal y recuperación dentro de la rutina habitual.</p>
-            <div class="wellness-need-item__footer">
-              <span class="wellness-need-item__focus">Enfoque: Mantenimiento regular, calma y prevención</span>
-              <span class="wellness-need-item__arrow" aria-hidden="true">→</span>
-            </div>
-            <div class="wellness-needs__mobile-img" aria-hidden="true">
-              <img src="../../src/assets/img/disciplines/wellness/wellness-mitolight-hombre-720.webp" alt="" loading="lazy">
-            </div>
+            <span class="wellness-need-item__arrow" aria-hidden="true">→</span>
           </button>
 
           <button
@@ -438,27 +570,20 @@
             aria-selected="false"
             aria-controls="wellness-need-panel"
             id="need-tab-3"
-            data-need-index="3"
-            data-photo-src="../../src/assets/img/disciplines/wellness/4df29dab-6a0e-4ec6-be5e-b2b8cbea0489-1440.webp"
-            data-photo-srcset="../../src/assets/img/disciplines/wellness/4df29dab-6a0e-4ec6-be5e-b2b8cbea0489-720.webp 720w, ../../src/assets/img/disciplines/wellness/4df29dab-6a0e-4ec6-be5e-b2b8cbea0489-1440.webp 1122w"
-            data-photo-alt="Recuperación y trabajo complementario en el suelo en Physio Wellness"
+            data-photo-src="../../src/assets/img/disciplines/wellness/power-plate-my5-silver.webp"
+            data-photo-srcset="../../src/assets/img/disciplines/wellness/power-plate-my5-silver.webp 505w"
+            data-photo-alt="Vibrational stimulation and tissue activation session with Power Plate at Physio Wellness Sitges"
             data-badge-index="04"
-            data-badge-title="Complementar"
-            data-badge-focus="Coordinación con Fisioterapia y Fuerza"
+            data-badge-title="Active transition"
+            data-badge-focus="Tissue readiness and transition"
           >
-            <div class="wellness-need-item__top">
-              <span class="wellness-need-item__num">04</span>
-              <span class="wellness-need-item__tag">Proceso Global</span>
+            <span class="wellness-need-item__num" aria-hidden="true">04</span>
+            <div class="wellness-need-item__content">
+              <h3 class="wellness-need-item__title">Active transition</h3>
+              <p class="wellness-need-item__desc">Supporting physiotherapy, strength conditioning, or a progressive return to sport.</p>
+              <span class="wellness-need-item__focus">Focus: Neuromuscular readiness and tissue adaptation</span>
             </div>
-            <h3 class="wellness-need-item__title">Complementar</h3>
-            <p class="wellness-need-item__desc">Acompañar un proceso de fisioterapia, fuerza o vuelta progresiva al deporte.</p>
-            <div class="wellness-need-item__footer">
-              <span class="wellness-need-item__focus">Enfoque: Aceleración de asimilación e integración funcional</span>
-              <span class="wellness-need-item__arrow" aria-hidden="true">→</span>
-            </div>
-            <div class="wellness-needs__mobile-img" aria-hidden="true">
-              <img src="../../src/assets/img/disciplines/wellness/4df29dab-6a0e-4ec6-be5e-b2b8cbea0489-720.webp" alt="" loading="lazy">
-            </div>
+            <span class="wellness-need-item__arrow" aria-hidden="true">→</span>
           </button>
 
         </div>
@@ -466,150 +591,146 @@
         <div class="wellness-needs__visual" id="wellness-need-panel" role="tabpanel" aria-labelledby="need-tab-0">
           <figure class="wellness-needs__figure">
             <img
-              class="wellness-needs__img"
-              data-wellness-needs-img
-              src="../../src/assets/img/disciplines/wellness/wellness-reboots-mujer-1440.webp"
-              srcset="../../src/assets/img/disciplines/wellness/wellness-reboots-mujer-720.webp 720w, ../../src/assets/img/disciplines/wellness/wellness-reboots-mujer-1440.webp 1024w"
-              sizes="(min-width: 960px) 44vw, 100vw"
-              alt="Sesión de recuperación corporal con presoterapia Reboots en Physio Wellness"
-              width="1024"
-              height="1536"
+              src="../../src/assets/img/disciplines/wellness/455dab1c-ca3e-4edf-9958-6e5dcb796470-1440.webp"
+              srcset="../../src/assets/img/disciplines/wellness/455dab1c-ca3e-4edf-9958-6e5dcb796470-720.webp 720w, ../../src/assets/img/disciplines/wellness/455dab1c-ca3e-4edf-9958-6e5dcb796470-1440.webp 1122w"
+              sizes="(min-width: 860px) 46vw, 100vw"
+              alt="Recovery session with pneumatic compression boots at Physio Wellness Sitges"
+              width="1122"
+              height="1402"
               loading="lazy"
+              data-wellness-needs-img
             >
-            <div class="wellness-needs__overlay" aria-hidden="true"></div>
-            <figcaption class="wellness-needs__badge">
-              <div class="wellness-needs__badge-header">
-                <span class="wellness-needs__badge-index" data-wellness-needs-index>01</span>
-                <span class="wellness-needs__badge-title" data-wellness-needs-title>Recuperar</span>
+            <div class="wellness-needs__badge">
+              <span class="wellness-needs__badge-index" data-wellness-needs-index>01</span>
+              <div>
+                <strong class="wellness-needs__badge-title" data-wellness-needs-title>Muscle recovery</strong>
+                <span class="wellness-needs__badge-focus" data-wellness-needs-focus>Venous return and recovery</span>
               </div>
-              <span class="wellness-needs__badge-focus" data-wellness-needs-focus>Presoterapia + Drenaje linfático</span>
-            </figcaption>
+            </div>
           </figure>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- ============ 4. Herramientas para cada objetivo ============
-       Beneficio/objetivo como protagonista, herramientas reales confirmadas después.
-       Estructura editorial sin aspecto de catálogo de máquinas. -->
-  <section class="wellness-tools" id="herramientas-objetivos">
+  <!-- ============ 4. Tools for each goal ============ -->
+  <section class="wellness-tools" id="tools-goals">
     <div class="container">
       <div class="wellness-tools__head" data-reveal>
-        <p class="eyebrow section-eyebrow">Metodología y tecnología</p>
-        <h2 class="section-heading">Herramientas para cada objetivo</h2>
-        <p class="section-lead">Primero definimos el beneficio que busca tu cuerpo y después seleccionamos las técnicas y tecnologías adecuadas para conseguirlo.</p>
+        <p class="eyebrow section-eyebrow">Methodology and technology</p>
+        <h2 class="section-heading">Tools for each objective</h2>
+        <p class="section-lead">We first define the specific benefit your body requires, then select the appropriate hands-on techniques and clinical technologies to achieve it.</p>
       </div>
 
       <div class="wellness-tools__grid" data-wellness-tools-container data-reveal style="--i:1">
         
-        <!-- Objetivo 01: Recuperación -->
-        <article class="wellness-tool-card is-active" data-tool-card="recuperacion">
+        <!-- Goal 01: Recovery -->
+        <article class="wellness-tool-card is-active" data-tool-card="recovery">
           <div class="wellness-tool-card__header">
             <span class="wellness-tool-card__num">01</span>
             <div class="wellness-tool-card__heading">
-              <p class="wellness-tool-card__category">Objetivo corporal</p>
-              <h3 class="wellness-tool-card__title">Recuperación</h3>
+              <p class="wellness-tool-card__category">Body goal</p>
+              <h3 class="wellness-tool-card__title">Recovery</h3>
             </div>
           </div>
-          <p class="wellness-tool-card__lead">Estrategias orientadas a acelerar la regeneración de los tejidos, estimular el retorno venoso y reabsorber la fatiga después de semanas de alta carga física, entrenamiento intenso o competición.</p>
+          <p class="wellness-tool-card__lead">Strategies designed to accelerate tissue regeneration, stimulate venous return, and clear fatigue after intense training blocks, demanding workouts, or competitions.</p>
           
           <div class="wellness-tool-card__tools">
-            <p class="wellness-tool-card__tools-label">Herramientas que podemos incorporar:</p>
+            <p class="wellness-tool-card__tools-label">Tools we may incorporate:</p>
             <ul class="wellness-tool-card__list">
               <li class="wellness-tool-item">
-                <strong class="wellness-tool-item__name">Presoterapia secuencial</strong>
-                <span class="wellness-tool-item__desc">Compresión neumática progresiva para facilitar el drenaje circulatorio y la eliminación de desechos metabólicos acumulados.</span>
+                <strong class="wellness-tool-item__name">Sequential pressotherapy</strong>
+                <span class="wellness-tool-item__desc">Graduated pneumatic compression to facilitate circulatory drainage and clear accumulated metabolic waste.</span>
               </li>
               <li class="wellness-tool-item">
                 <strong class="wellness-tool-item__name">Manual lymphatic drainage</strong>
-                <span class="wellness-tool-item__desc">Técnica manual suave y rítmica orientada a descongestionar tejidos sobrecargados y aliviar la pesadez.</span>
+                <span class="wellness-tool-item__desc">Gentle, rhythmic manual techniques designed to decongest overloaded tissues and relieve heaviness.</span>
               </li>
               <li class="wellness-tool-item">
-                <strong class="wellness-tool-item__name">Fotobiomodulación / Luz roja</strong>
-                <span class="wellness-tool-item__desc">Longitudes de onda específicas que estimulan la función celular y favorecen los procesos naturales de recuperación tisular.</span>
+                <strong class="wellness-tool-item__name">Photobiomodulation / Red light</strong>
+                <span class="wellness-tool-item__desc">Specific therapeutic wavelengths that stimulate cellular energy production and support natural tissue repair.</span>
               </li>
             </ul>
           </div>
         </article>
 
-        <!-- Objetivo 02: Descarga -->
-        <article class="wellness-tool-card" data-tool-card="descarga">
+        <!-- Goal 02: Decongestion -->
+        <article class="wellness-tool-card" data-tool-card="decongestion">
           <div class="wellness-tool-card__header">
             <span class="wellness-tool-card__num">02</span>
             <div class="wellness-tool-card__heading">
-              <p class="wellness-tool-card__category">Objetivo corporal</p>
-              <h3 class="wellness-tool-card__title">Descarga</h3>
+              <p class="wellness-tool-card__category">Body goal</p>
+              <h3 class="wellness-tool-card__title">Decongestion</h3>
             </div>
           </div>
-          <p class="wellness-tool-card__lead">Trabajo manual y descontracturante dirigido a reducir la sensación de rigidez, contracturas profundas y fatiga acumulada en los grandes grupos musculares.</p>
+          <p class="wellness-tool-card__lead">Targeted manual release work designed to ease muscle stiffness, release deep contractures, and clear fatigue across major muscle groups.</p>
           
           <div class="wellness-tool-card__tools">
-            <p class="wellness-tool-card__tools-label">Herramientas que podemos incorporar:</p>
+            <p class="wellness-tool-card__tools-label">Tools we may incorporate:</p>
             <ul class="wellness-tool-card__list">
               <li class="wellness-tool-item">
-                <strong class="wellness-tool-item__name">Masaje terapéutico descontracturante</strong>
-                <span class="wellness-tool-item__desc">Maniobras manuales profundas enfocadas en zonas de mayor tensión postural o deportiva para devolver soltura al músculo.</span>
+                <strong class="wellness-tool-item__name">Therapeutic deep-tissue massage</strong>
+                <span class="wellness-tool-item__desc">Focused, deep manual manoeuvres targeting areas of postural or athletic strain to restore muscle suppleness.</span>
               </li>
               <li class="wellness-tool-item">
-                <strong class="wellness-tool-item__name">Liberación miofascial</strong>
-                <span class="wellness-tool-item__desc">Técnicas manuales precisas sobre fascias y puntos gatillo para deshacer adherencias y mejorar la flexibilidad tisular.</span>
+                <strong class="wellness-tool-item__name">Myofascial release</strong>
+                <span class="wellness-tool-item__desc">Precise manual pressure on fascial restrictions and trigger points to release adhesions and restore tissue mobility.</span>
               </li>
             </ul>
           </div>
         </article>
 
-        <!-- Objetivo 03: Activación -->
-        <article class="wellness-tool-card" data-tool-card="activacion">
+        <!-- Goal 03: Activation -->
+        <article class="wellness-tool-card" data-tool-card="activation">
           <div class="wellness-tool-card__header">
             <span class="wellness-tool-card__num">03</span>
             <div class="wellness-tool-card__heading">
-              <p class="wellness-tool-card__category">Objetivo corporal</p>
-              <h3 class="wellness-tool-card__title">Activación</h3>
+              <p class="wellness-tool-card__category">Body goal</p>
+              <h3 class="wellness-tool-card__title">Activation</h3>
             </div>
           </div>
-          <p class="wellness-tool-card__lead">Preparación corporal y neuromuscular antes de determinados esfuerzos, competiciones o sesiones exigentes, despertando el tono muscular sin generar fatiga previa.</p>
+          <p class="wellness-tool-card__lead">Neuromuscular and physical readiness before events, competitions, or intense efforts, waking muscle tone without creating premature fatigue.</p>
           
           <div class="wellness-tool-card__tools">
-            <p class="wellness-tool-card__tools-label">Herramientas que podemos incorporar:</p>
+            <p class="wellness-tool-card__tools-label">Tools we may incorporate:</p>
             <ul class="wellness-tool-card__list">
               <li class="wellness-tool-item">
-                <strong class="wellness-tool-item__name">Movilidad articular guiada</strong>
-                <span class="wellness-tool-item__desc">Secuencias asistidas para abrir rangos de movimiento, lubricar las articulaciones y preparar el cuerpo para el esfuerzo.</span>
+                <strong class="wellness-tool-item__name">Guided joint mobility</strong>
+                <span class="wellness-tool-item__desc">Assisted sequences to open movement ranges, lubricate articular joints, and prepare the body for exertion.</span>
               </li>
               <li class="wellness-tool-item">
-                <strong class="wellness-tool-item__name">Estimulación neuromuscular (PowerPlate)</strong>
-                <span class="wellness-tool-item__desc">Vibración controlada para activar la microcirculación, el reclutamiento de fibras y la propiocepción muscular.</span>
+                <strong class="wellness-tool-item__name">Neuromuscular stimulation (Power Plate)</strong>
+                <span class="wellness-tool-item__desc">Calibrated vibration to enhance microcirculation, motor unit recruitment, and proprioception.</span>
               </li>
             </ul>
           </div>
         </article>
 
-        <!-- Objetivo 04: Cuidado -->
-        <article class="wellness-tool-card" data-tool-card="cuidado">
+        <!-- Goal 04: Care -->
+        <article class="wellness-tool-card" data-tool-card="care">
           <div class="wellness-tool-card__header">
             <span class="wellness-tool-card__num">04</span>
             <div class="wellness-tool-card__heading">
-              <p class="wellness-tool-card__category">Objetivo corporal</p>
-              <h3 class="wellness-tool-card__title">Cuidado</h3>
+              <p class="wellness-tool-card__category">Body goal</p>
+              <h3 class="wellness-tool-card__title">Care</h3>
             </div>
           </div>
-          <p class="wellness-tool-card__lead">Sesiones orientadas al mantenimiento regular, el descanso y la prevención, creando un hábito continuo que cuida tu cuerpo antes de que aparezca una molestia.</p>
+          <p class="wellness-tool-card__lead">Sessions dedicated to regular maintenance, nervous system decompression, and proactive health—building an ongoing routine that cares for your body before discomfort appears.</p>
           
           <div class="wellness-tool-card__tools">
-            <p class="wellness-tool-card__tools-label">Herramientas que podemos incorporar:</p>
+            <p class="wellness-tool-card__tools-label">Tools we may incorporate:</p>
             <ul class="wellness-tool-card__list">
               <li class="wellness-tool-item">
-                <strong class="wellness-tool-item__name">Masaje circulatorio y relajante</strong>
-                <span class="wellness-tool-item__desc">Ritmo pausado y continuo para calmar el sistema nervioso, liberar tensiones acumuladas y favorecer el descanso profundo.</span>
+                <strong class="wellness-tool-item__name">Circulatory and restorative massage</strong>
+                <span class="wellness-tool-item__desc">Calm, steady pacing to settle the nervous system, release built-up tension, and promote restful recovery.</span>
               </li>
               <li class="wellness-tool-item">
-                <strong class="wellness-tool-item__name">Radiofrecuencia (INDIBA)</strong>
-                <span class="wellness-tool-item__desc">Diatermia profunda para mejorar la vascularización, oxigenar el tejido y estimular los procesos regenerativos celulares.</span>
+                <strong class="wellness-tool-item__name">Radiofrequency (INDIBA / TECAR)</strong>
+                <span class="wellness-tool-item__desc">Deep targeted diathermy to boost vascularisation, oxygenate tissues, and stimulate cellular regeneration.</span>
               </li>
               <li class="wellness-tool-item">
-                <strong class="wellness-tool-item__name">Pautas de hábitos y descanso</strong>
-                <span class="wellness-tool-item__desc">Recomendaciones personalizadas de hidratación, descanso y movilidad para prolongar los efectos de la sesión.</span>
+                <strong class="wellness-tool-item__name">Lifestyle and rest guidelines</strong>
+                <span class="wellness-tool-item__desc">Personalised hydration, recovery, and mobility strategies to prolong the benefits of your session.</span>
               </li>
             </ul>
           </div>
@@ -619,18 +740,15 @@
     </div>
   </section>
 
-  <!-- ============ 5. Una sesión adaptada a ti ============
-       Recorrido en 4 pasos claros y concisos (1-2 líneas por paso).
-       Reutiliza el componente .service-process del Design System con
-       sticky intro, línea conectora de progreso y crossfade de fotos. -->
-  <section class="process service-process" id="sesion-adaptada">
+  <!-- ============ 5. A session tailored to you ============ -->
+  <section class="process service-process" id="tailored-session">
     <div class="container service-process__grid">
       <div class="service-process__intro" data-reveal>
-        <p class="eyebrow section-eyebrow">Tu sesión, paso a paso</p>
-        <h2 class="section-heading">Una sesión adaptada a ti</h2>
-        <p class="service-process__note">No seguimos protocolos cerrados ni tratamientos genéricos. Cada sesión se construye a partir de lo que tu cuerpo necesita en ese momento.</p>
+        <p class="eyebrow section-eyebrow">Your session, step by step</p>
+        <h2 class="section-heading">A session tailored to you</h2>
+        <p class="service-process__note">We never follow rigid scripts or one-size-fits-all protocols. Every session is shaped around what your body needs at that exact moment.</p>
         <a class="service-process__link" href="https://wa.me/34644678344" target="_blank" rel="noopener">
-          ¿Tienes dudas sobre qué reservar? Escríbenos <span class="service-feature__arrow" aria-hidden="true">→</span>
+          Not sure what to book? Message us on WhatsApp <span class="service-feature__arrow" aria-hidden="true">→</span>
         </a>
         <figure class="service-process__visual" data-crossfade aria-hidden="true">
           <img data-crossfade-img src="../../src/assets/img/disciplines/wellness/499c436d-bc10-4436-8d97-b503a84b5e24-720.webp" alt="" loading="lazy" width="720" height="899">
@@ -643,8 +761,8 @@
           <div class="service-process__body">
             <span class="service-process__number" aria-hidden="true">01</span>
             <div class="service-process__text">
-              <h3 class="service-process__step-title">Entendemos qué necesitas</h3>
-              <p>Hablamos contigo sobre tus sensaciones, nivel de fatiga y la exigencia de tus últimos días para fijar la prioridad de la sesión.</p>
+              <h3 class="service-process__step-title">We understand your needs</h3>
+              <p>We talk through how your body feels, your fatigue levels, and recent physical demands to establish the clear priority for your session.</p>
             </div>
           </div>
         </li>
@@ -654,8 +772,8 @@
           <div class="service-process__body">
             <span class="service-process__number" aria-hidden="true">02</span>
             <div class="service-process__text">
-              <h3 class="service-process__step-title">Seleccionamos el trabajo</h3>
-              <p>Definimos la combinación más eficaz de terapia manual, presoterapia o tecnologías del centro según tu objetivo.</p>
+              <h3 class="service-process__step-title">We select the approach</h3>
+              <p>We define the most effective combination of manual therapy, pressotherapy, and centre technology for your objective.</p>
             </div>
           </div>
         </li>
@@ -665,8 +783,8 @@
           <div class="service-process__body">
             <span class="service-process__number" aria-hidden="true">03</span>
             <div class="service-process__text">
-              <h3 class="service-process__step-title">Realizamos la sesión</h3>
-              <p>Trabajo corporal específico en cabina privada, con la intensidad, el ritmo y el tiempo que requiere tu recuperación.</p>
+              <h3 class="service-process__step-title">We deliver the session</h3>
+              <p>Focused bodywork in a private room, with the intensity, rhythm, and dedicated time your recovery requires.</p>
             </div>
           </div>
         </li>
@@ -676,8 +794,8 @@
           <div class="service-process__body">
             <span class="service-process__number" aria-hidden="true">04</span>
             <div class="service-process__text">
-              <h3 class="service-process__step-title">Te damos recomendaciones</h3>
-              <p>Pautas sencillas de descanso, movilidad e hidratación para prolongar y consolidar los beneficios conseguidos.</p>
+              <h3 class="service-process__step-title">We provide clear guidelines</h3>
+              <p>Practical rest, mobility, and hydration advice to prolong and solidify the progress achieved.</p>
             </div>
           </div>
         </li>
@@ -685,98 +803,92 @@
     </div>
   </section>
 
-  <!-- ============ 6. Bienestar dentro del Método Marshall ============
-       Composición visual conectada que muestra la relación continua:
-       FISIOTERAPIA ↔ BIENESTAR ↔ FUERZA
-       No son cards independientes: es un sistema integrado con líneas,
-       nodos dinámicos y enlace directo a El Método. -->
-  <section class="wellness-method" id="metodo-marshall">
+  <!-- ============ 6. Wellness within The Marshall Method ============ -->
+  <section class="wellness-method" id="marshall-method">
     <div class="container">
       <div class="wellness-method__head" data-reveal>
-        <p class="eyebrow eyebrow--on-dark">El Método Marshall</p>
-        <h2 class="wellness-method__title">Bienestar no trabaja aislado</h2>
-        <p class="wellness-method__lead">Puede formar parte de un proceso de fisioterapia, complementar tu entrenamiento o convertirse en un espacio específico de recuperación.</p>
+        <p class="eyebrow eyebrow--on-dark">The Marshall Method</p>
+        <h2 class="wellness-method__title">Wellness does not work in isolation</h2>
+        <p class="wellness-method__lead">It can form part of a physiotherapy pathway, complement your strength training, or serve as a dedicated recovery routine.</p>
       </div>
 
       <div class="wellness-method__diagram" data-reveal style="--i:1">
         
-        <!-- Nodo 1: Fisioterapia -->
+        <!-- Node 1: Physiotherapy -->
         <div class="wellness-node wellness-node--physio">
           <div class="wellness-node__indicator">
             <span class="wellness-node__dot"></span>
             <span class="wellness-node__index">01</span>
           </div>
-          <h3 class="wellness-node__title">Fisioterapia</h3>
-          <p class="wellness-node__desc">Valoración clínica inicial, resolución del dolor agudo y tratamiento de lesiones musculoesqueléticas.</p>
-          <a class="wellness-node__link" href="../../en/physiotherapy/">Ver Fisioterapia <span aria-hidden="true">→</span></a>
+          <h3 class="wellness-node__title">Physiotherapy</h3>
+          <p class="wellness-node__desc">Initial clinical assessment, addressing acute pain, and treatment of musculoskeletal injuries.</p>
+          <a class="wellness-node__link" href="../../en/physiotherapy/">View Physiotherapy <span aria-hidden="true">→</span></a>
         </div>
 
-        <!-- Conector A: Fisioterapia <-> Bienestar -->
+        <!-- Connector A: Physiotherapy <-> Wellness -->
         <div class="wellness-connector" aria-hidden="true">
           <div class="wellness-connector__line">
             <span class="wellness-connector__pulse"></span>
           </div>
           <div class="wellness-connector__tag">
-            <span>Asimilación tisular</span>
+            <span>Tissue assimilation</span>
             <span class="wellness-connector__arrow">↔</span>
           </div>
         </div>
 
-        <!-- Nodo 2: Bienestar (Protagonista / Centro) -->
+        <!-- Node 2: Wellness (Featured / Core) -->
         <div class="wellness-node wellness-node--wellness is-featured">
-          <div class="wellness-node__badge">Eje de recuperación</div>
+          <div class="wellness-node__badge">Recovery core</div>
           <div class="wellness-node__indicator">
             <span class="wellness-node__dot"></span>
             <span class="wellness-node__index">02</span>
           </div>
-          <h3 class="wellness-node__title">Bienestar</h3>
-          <p class="wellness-node__desc">Descarga muscular, drenaje, presoterapia y optimización corporal para asimilar el esfuerzo y resetear el cuerpo.</p>
-          <span class="wellness-node__current">Estás en esta área</span>
+          <h3 class="wellness-node__title">Wellness</h3>
+          <p class="wellness-node__desc">Muscular release, lymphatic drainage, pressotherapy, and body optimisation to assimilate effort and reset the body.</p>
+          <span class="wellness-node__current">You are in this area</span>
         </div>
 
-        <!-- Conector B: Bienestar <-> Fuerza -->
+        <!-- Connector B: Wellness <-> Strength -->
         <div class="wellness-connector" aria-hidden="true">
           <div class="wellness-connector__line">
             <span class="wellness-connector__pulse"></span>
           </div>
           <div class="wellness-connector__tag">
-            <span>Regeneración activa</span>
+            <span>Active regeneration</span>
             <span class="wellness-connector__arrow">↔</span>
           </div>
         </div>
 
-        <!-- Nodo 3: Fuerza -->
+        <!-- Node 3: Strength -->
         <div class="wellness-node wellness-node--strength">
           <div class="wellness-node__indicator">
             <span class="wellness-node__dot"></span>
             <span class="wellness-node__index">03</span>
           </div>
-          <h3 class="wellness-node__title">Fuerza</h3>
-          <p class="wellness-node__desc">Desarrollo de capacidad física, control motor con Pilates Reformer y readaptación para moverte con confianza.</p>
-          <a class="wellness-node__link" href="../../en/strength/">Ver Fuerza <span aria-hidden="true">→</span></a>
+          <h3 class="wellness-node__title">Strength</h3>
+          <p class="wellness-node__desc">Developing physical capacity, motor control with Pilates Reformer, and functional rehabilitation to move with confidence.</p>
+          <a class="wellness-node__link" href="../../en/strength/">View Strength <span aria-hidden="true">→</span></a>
         </div>
 
       </div>
 
       <div class="wellness-method__action" data-reveal style="--i:2">
-        <a class="btn btn--outline" href="../../en/method/">Descubrir el Método Marshall</a>
-        <p class="wellness-method__note">Un sistema integral en Sitges para acompañar cada etapa de tu cuerpo.</p>
+        <a class="btn btn--outline" href="../../en/method/">Discover The Marshall Method</a>
+        <p class="wellness-method__note">An integrated system in Sitges supporting every stage of your body.</p>
       </div>
     </div>
   </section>
 
-  <!-- ============ 7. ¿Para quién es? ============
-       Identificación clara de perfiles. Composición visual con gran titular/lateral
-       y un flujo secuencial espacioso, con numeraciones grandes 01/02/03/04 y aire editorial. -->
-  <section class="wellness-profiles" id="para-quien-es">
+  <!-- ============ 7. Who is it for? ============ -->
+  <section class="wellness-profiles" id="who-is-it-for">
     <div class="container wellness-profiles__grid">
       <div class="wellness-profiles__intro" data-reveal>
-        <p class="eyebrow section-eyebrow">Perfiles habituales</p>
-        <h2 class="section-heading">¿Para quién es?</h2>
-        <p class="section-lead">El cuidado corporal tiene sentido en diferentes momentos y niveles de actividad, tanto si entrenas al máximo como si buscas un espacio regular de salud.</p>
+        <p class="eyebrow section-eyebrow">Common profiles</p>
+        <h2 class="section-heading">Who is it for?</h2>
+        <p class="section-lead">Targeted body care is valuable at different times and activity levels, whether you train at a high level or simply want a regular health routine.</p>
         <div class="wellness-profiles__accent-box">
           <span class="wellness-profiles__accent-num">04</span>
-          <p class="wellness-profiles__accent-text">Momentos donde el trabajo corporal marca una diferencia real en tu día a día.</p>
+          <p class="wellness-profiles__accent-text">Key situations where structured bodywork makes a real difference to your daily life.</p>
         </div>
       </div>
 
@@ -785,36 +897,36 @@
         <article class="wellness-profile-item">
           <span class="wellness-profile-item__num">01</span>
           <div class="wellness-profile-item__content">
-            <h3 class="wellness-profile-item__title">Entrenas habitualmente</h3>
-            <p class="wellness-profile-item__highlight">Quieres mejorar cómo recupera tu cuerpo entre sesiones.</p>
-            <p class="wellness-profile-item__desc">Para corredores, ciclistas o personas que entrenan fuerza y buscan asimilar mejor las cargas, reduciendo la fatiga residual acumulada para rendir con mayor frescura en cada sesión.</p>
+            <h3 class="wellness-profile-item__title">You train regularly</h3>
+            <p class="wellness-profile-item__highlight">You want to improve how your body recovers between workouts.</p>
+            <p class="wellness-profile-item__desc">For runners, cyclists, or strength trainees looking to assimilate training volume, reduce lingering muscular fatigue, and perform fresher in every session.</p>
           </div>
         </article>
 
         <article class="wellness-profile-item">
           <span class="wellness-profile-item__num">02</span>
           <div class="wellness-profile-item__content">
-            <h3 class="wellness-profile-item__title">Compites o tienes semanas de mucha carga</h3>
-            <p class="wellness-profile-item__highlight">Buscas integrar recuperación dentro de tu planificación.</p>
-            <p class="wellness-profile-item__desc">Tanto en periodos de alto volumen deportivo como en momentos de gran exigencia laboral y estrés postural, liberas tensiones profundas y estimulas la circulación de retorno.</p>
+            <h3 class="wellness-profile-item__title">You compete or face high-demand weeks</h3>
+            <p class="wellness-profile-item__highlight">You want to embed structured recovery into your schedule.</p>
+            <p class="wellness-profile-item__desc">During peak athletic training or periods of heavy work pressure and postural strain, releasing deep tension and encouraging venous return.</p>
           </div>
         </article>
 
         <article class="wellness-profile-item">
           <span class="wellness-profile-item__num">03</span>
           <div class="wellness-profile-item__content">
-            <h3 class="wellness-profile-item__title">Estás en un proceso de recuperación</h3>
-            <p class="wellness-profile-item__highlight">Quieres complementar el trabajo realizado en fisioterapia.</p>
-            <p class="wellness-profile-item__desc">Coordinamos la descarga y el drenaje con tu evolución clínica para favorecer la respuesta tisular sin interferir con el tratamiento fisioterapéutico principal.</p>
+            <h3 class="wellness-profile-item__title">You are in a recovery process</h3>
+            <p class="wellness-profile-item__highlight">You want to complement your physiotherapy work.</p>
+            <p class="wellness-profile-item__desc">We coordinate muscle release and drainage with your clinical recovery, supporting tissue healing without interfering with your primary physiotherapy treatment.</p>
           </div>
         </article>
 
         <article class="wellness-profile-item">
           <span class="wellness-profile-item__num">04</span>
           <div class="wellness-profile-item__content">
-            <h3 class="wellness-profile-item__title">Quieres cuidar tu cuerpo</h3>
-            <p class="wellness-profile-item__highlight">Buscas incorporar recuperación y cuidado corporal dentro de tu rutina.</p>
-            <p class="wellness-profile-item__desc">Para quienes pasan muchas horas sentados o de pie, acumulan sobrecarga en espalda y piernas o simplemente deciden regalarle a su cuerpo una pausa consciente de calidad.</p>
+            <h3 class="wellness-profile-item__title">You want proactive body care</h3>
+            <p class="wellness-profile-item__highlight">You want to introduce recovery and physical care into your routine.</p>
+            <p class="wellness-profile-item__desc">For those spending long hours sitting or standing, dealing with stiffness in their back and legs, or simply choosing to give their body a conscious, quality pause.</p>
           </div>
         </article>
 
@@ -822,56 +934,56 @@
     </div>
   </section>
 
-  <!-- ============ Tecnología y Ecosistema de Bienestar ============ -->
-  <section class="equipment-showcase" id="tecnologia" aria-label="Tecnología orientada al cuidado y la recuperación">
+  <!-- ============ 8. Technology and Wellness Ecosystem ============ -->
+  <section class="equipment-showcase" id="technology" aria-label="Technology dedicated to care and recovery">
     <div class="container">
       <div class="equipment-showcase__head" data-reveal>
-        <p class="eyebrow section-eyebrow">Ecosistema de bienestar</p>
-        <h2 class="section-heading">Tecnología orientada al cuidado y la recuperación</h2>
-        <p class="section-lead">Herramientas seleccionadas para devolver al cuerpo su equilibrio, facilitar la regeneración de los tejidos y aliviar la sobrecarga física y tensional.</p>
+        <p class="eyebrow section-eyebrow">Wellness ecosystem</p>
+        <h2 class="section-heading">Technology dedicated to care and recovery</h2>
+        <p class="section-lead">Clinical-grade equipment selected to restore balance, support tissue regeneration, and relieve physical and postural strain.</p>
       </div>
 
       <div class="equipment-showcase__stage" data-equipment-showcase data-reveal style="--i:1">
-        <!-- Columna Protagonista (Display interactivo) -->
+        <!-- Featured Column (Interactive Display) -->
         <article class="equipment-showcase__featured">
           <div class="equipment-showcase__media">
-            <img class="equipment-showcase__img" data-equipment-hero-img src="../../src/assets/img/machinery/mito-light.webp" alt="Panel Mito Light para terapia de fotobiomodulación y luz roja" width="348" height="956" loading="lazy">
+            <img class="equipment-showcase__img" data-equipment-hero-img src="../../src/assets/img/machinery/mito-light.webp" alt="Mito Light panel for photobiomodulation and red light therapy" width="348" height="956" loading="lazy">
           </div>
           <div class="equipment-showcase__info">
-            <span class="equipment-showcase__badge" data-equipment-badge>Fotobiomodulación</span>
+            <span class="equipment-showcase__badge" data-equipment-badge>Photobiomodulation</span>
             <h3 class="equipment-showcase__name" data-equipment-name>Mito Light</h3>
-            <p class="equipment-showcase__role" data-equipment-role>Terapia de luz roja e infrarroja cercana</p>
-            <p class="equipment-showcase__desc" data-equipment-desc>Emite longitudes de onda específicas que estimulan la función mitocondrial celular, acelerando la regeneración de tejidos y reduciendo la inflamación y la fatiga corporal.</p>
+            <p class="equipment-showcase__role" data-equipment-role>Red and near-infrared light therapy</p>
+            <p class="equipment-showcase__desc" data-equipment-desc>Emits targeted wavelengths that stimulate mitochondrial function, accelerating cellular repair while reducing inflammation and physical fatigue.</p>
           </div>
         </article>
 
-        <!-- Columna Selector / Rail de exploración -->
+        <!-- Selector Column / Exploration Rail -->
         <div class="equipment-showcase__nav">
           <div class="equipment-showcase__nav-head">
-            <span class="equipment-showcase__nav-label">Equipamiento disponible</span>
+            <span class="equipment-showcase__nav-label">Available equipment</span>
             <div class="equipment-showcase__controls">
-              <button type="button" class="equipment-showcase__btn equipment-showcase__btn--prev" data-equipment-prev aria-label="Ver equipo anterior">
+              <button type="button" class="equipment-showcase__btn equipment-showcase__btn--prev" data-equipment-prev aria-label="View previous equipment">
                 <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M9 2L4 7l5 5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
               </button>
               <span class="equipment-showcase__counter" data-equipment-counter aria-live="polite">01 / 06</span>
-              <button type="button" class="equipment-showcase__btn equipment-showcase__btn--next" data-equipment-next aria-label="Ver siguiente equipo">
+              <button type="button" class="equipment-showcase__btn equipment-showcase__btn--next" data-equipment-next aria-label="View next equipment">
                 <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M5 2l5 5-5 5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
               </button>
             </div>
           </div>
 
-          <div class="equipment-showcase__track" role="tablist" aria-label="Equipos de bienestar">
+          <div class="equipment-showcase__track" role="tablist" aria-label="Wellness equipment">
             <button type="button" role="tab" class="equipment-showcase__item-btn is-active" aria-selected="true" data-equipment-item
               data-img-src="../../src/assets/img/machinery/mito-light.webp"
-              data-img-alt="Panel Mito Light para terapia de fotobiomodulación y luz roja"
-              data-badge="Fotobiomodulación"
+              data-img-alt="Mito Light panel for photobiomodulation and red light therapy"
+              data-badge="Photobiomodulation"
               data-name="Mito Light"
-              data-role="Terapia de luz roja e infrarroja cercana"
-              data-desc="Emite longitudes de onda específicas que estimulan la función mitocondrial celular, acelerando la regeneración de tejidos y reduciendo la inflamación y la fatiga corporal.">
+              data-role="Red and near-infrared light therapy"
+              data-desc="Emits targeted wavelengths that stimulate mitochondrial function, accelerating cellular repair while reducing inflammation and physical fatigue.">
               <span class="equipment-showcase__item-num">01</span>
               <div>
                 <h4 class="equipment-showcase__item-name">Mito Light</h4>
-                <span class="equipment-showcase__item-tag">Luz roja · Regeneración</span>
+                <span class="equipment-showcase__item-tag">Red light · Regeneration</span>
               </div>
               <div class="equipment-showcase__item-thumb">
                 <img src="../../src/assets/img/machinery/mito-light.webp" alt="" width="348" height="956" loading="lazy">
@@ -880,15 +992,15 @@
 
             <button type="button" role="tab" class="equipment-showcase__item-btn" aria-selected="false" data-equipment-item
               data-img-src="../../src/assets/img/machinery/reboots.webp"
-              data-img-alt="Botas de presoterapia Reboots para recuperación y drenaje circulatorio"
-              data-badge="Presoterapia deportiva"
+              data-img-alt="Reboots compression boots for recovery and circulatory drainage"
+              data-badge="Athletic pressotherapy"
               data-name="Reboots"
-              data-role="Compresión neumática secuencial progresiva"
-              data-desc="Ondas de compresión que reactivan el retorno venoso y linfático, acelerando la eliminación de metabolitos y devolviendo una sensación de ligereza inmediata a las piernas.">
+              data-role="Sequential progressive pneumatic compression"
+              data-desc="Compression waves that reactivate venous and lymphatic circulation, clearing metabolic byproducts and delivering immediate lightness to tired legs.">
               <span class="equipment-showcase__item-num">02</span>
               <div>
                 <h4 class="equipment-showcase__item-name">Reboots</h4>
-                <span class="equipment-showcase__item-tag">Presoterapia · Drenaje</span>
+                <span class="equipment-showcase__item-tag">Pressotherapy · Drainage</span>
               </div>
               <div class="equipment-showcase__item-thumb">
                 <img src="../../src/assets/img/machinery/reboots.webp" alt="" width="1006" height="816" loading="lazy">
@@ -897,15 +1009,15 @@
 
             <button type="button" role="tab" class="equipment-showcase__item-btn" aria-selected="false" data-equipment-item
               data-img-src="../../src/assets/img/machinery/theraface-mask.webp"
-              data-img-alt="Theraface Mask para terapia LED facial y relajación craneofacial"
-              data-badge="Cuidado dérmico &amp; Calma"
+              data-img-alt="Theraface Mask for facial LED therapy and craniofacial relaxation"
+              data-badge="Dermal care &amp; Calm"
               data-name="Theraface Mask"
-              data-role="Máscara facial LED con fototerapia de espectro múltiple"
-              data-desc="Combina luz roja, azul e infrarroja con vibración suave para estimular la síntesis de colágeno, reducir la tensión de los músculos faciales y favorecer un descanso profundo.">
+              data-role="LED facial mask with multi-spectrum phototherapy"
+              data-desc="Combines red, blue, and infrared light with gentle micro-vibrations to support collagen synthesis, ease facial muscle tension, and promote deep relaxation.">
               <span class="equipment-showcase__item-num">03</span>
               <div>
                 <h4 class="equipment-showcase__item-name">Theraface Mask</h4>
-                <span class="equipment-showcase__item-tag">LED facial · Descanso</span>
+                <span class="equipment-showcase__item-tag">Facial LED · Rest</span>
               </div>
               <div class="equipment-showcase__item-thumb">
                 <img src="../../src/assets/img/machinery/theraface-mask.webp" alt="" width="803" height="913" loading="lazy">
@@ -914,15 +1026,15 @@
 
             <button type="button" role="tab" class="equipment-showcase__item-btn" aria-selected="false" data-equipment-item
               data-img-src="../../src/assets/img/machinery/smartgoggles.webp"
-              data-img-alt="Gafas de masaje ocular SmartGoggles con calor y vibración biométrica"
-              data-badge="Alivio tensional"
+              data-img-alt="SmartGoggles eye massage with biometric heat and vibration"
+              data-badge="Tension relief"
               data-name="SmartGoggles"
-              data-role="Masaje biométrico ocular con calor y vibración (Therabody)"
-              data-desc="Sensores que ajustan patrones de calor y microvibración en las sienes para calmar el ritmo cardíaco, aliviar la fatiga visual y disipar dolores de cabeza tensionales.">
+              data-role="Biometric eye massage with heat and vibration (Therabody)"
+              data-desc="Intelligent sensors adjust heat and micro-vibration patterns around the temples to calm heart rate, relieve eyestrain, and ease tension headaches.">
               <span class="equipment-showcase__item-num">04</span>
               <div>
                 <h4 class="equipment-showcase__item-name">SmartGoggles</h4>
-                <span class="equipment-showcase__item-tag">Vibración &amp; Calor · Sienes</span>
+                <span class="equipment-showcase__item-tag">Vibration &amp; Heat · Temples</span>
               </div>
               <div class="equipment-showcase__item-thumb">
                 <img src="../../src/assets/img/machinery/smartgoggles.webp" alt="" width="1500" height="686" loading="lazy">
@@ -931,15 +1043,15 @@
 
             <button type="button" role="tab" class="equipment-showcase__item-btn" aria-selected="false" data-equipment-item
               data-img-src="../../src/assets/img/machinery/emsculpt.webp"
-              data-img-alt="Equipo EMSculpt para estimulación electromagnética y tono muscular"
-              data-badge="Tonificación profunda"
+              data-img-alt="EMSculpt equipment for electromagnetic stimulation and muscle tone"
+              data-badge="Deep conditioning"
               data-name="EMSculpt"
-              data-role="Estimulación electromagnética de alta intensidad"
-              data-desc="Genera contracciones musculares supramáximas que mejoran el tono, fortalecen el soporte corporal y optimizan la composición muscular de manera pasiva y no invasiva.">
+              data-role="High-intensity focused electromagnetic stimulation"
+              data-desc="Induces supramaximal muscle contractions that enhance tone, strengthen functional core support, and improve neuromuscular condition non-invasively.">
               <span class="equipment-showcase__item-num">05</span>
               <div>
                 <h4 class="equipment-showcase__item-name">EMSculpt</h4>
-                <span class="equipment-showcase__item-tag">Tono muscular · Pasivo</span>
+                <span class="equipment-showcase__item-tag">Muscle tone · Passive</span>
               </div>
               <div class="equipment-showcase__item-thumb">
                 <img src="../../src/assets/img/machinery/emsculpt.webp" alt="" width="539" height="727" loading="lazy">
@@ -948,15 +1060,15 @@
 
             <button type="button" role="tab" class="equipment-showcase__item-btn" aria-selected="false" data-equipment-item
               data-img-src="../../src/assets/img/machinery/power-plate-my5-silver.webp"
-              data-img-alt="Power Plate para relajación neuromuscular y estimulación circulatoria"
-              data-badge="Estimulación circulatoria"
+              data-img-alt="Power Plate for neuromuscular relaxation and circulatory stimulation"
+              data-badge="Circulatory stimulation"
               data-name="Power Plate"
-              data-role="Vibración mecánica armónica"
-              data-desc="Vibraciones a baja frecuencia que reactivan la microcirculación tisular, facilitan la relajación miofascial y estimulan el drenaje corporal de forma suave y sin fatiga.">
+              data-role="Harmonic mechanical vibration"
+              data-desc="Low-frequency micro-vibrations that stimulate tissue microcirculation, facilitate myofascial release, and encourage lymphatic drainage gently without fatigue.">
               <span class="equipment-showcase__item-num">06</span>
               <div>
                 <h4 class="equipment-showcase__item-name">Power Plate</h4>
-                <span class="equipment-showcase__item-tag">Vibración suave · Circulación</span>
+                <span class="equipment-showcase__item-tag">Gentle vibration · Circulation</span>
               </div>
               <div class="equipment-showcase__item-thumb">
                 <img src="../../src/assets/img/machinery/power-plate-my5-silver.webp" alt="" width="505" height="985" loading="lazy">
@@ -968,124 +1080,124 @@
     </div>
   </section>
 
-  <!-- ============ 8. Reseñas editoriales / Experiencias en Physio Wellness ============ -->
-  <section class="editorial-reviews" id="resenas" aria-label="Experiencias reales de pacientes">
+  <!-- ============ 9. Editorial Reviews / Real Patient Experiences ============ -->
+  <section class="editorial-reviews" id="resenas" aria-label="Real patient experiences">
     <div class="container">
       <div class="editorial-reviews__layout">
 
-        <!-- Columna de contexto: Eyebrow + Titular + Google rating -->
+        <!-- Context Column: Eyebrow + Title + Google rating -->
         <div class="editorial-reviews__col-intro" data-reveal>
           <div class="editorial-reviews__head">
-            <p class="eyebrow section-eyebrow">Experiencias reales</p>
-            <h2 class="section-heading editorial-reviews__title">Lo que dicen quienes confían en nosotros</h2>
+            <p class="eyebrow section-eyebrow">Real experiences</p>
+            <h2 class="section-heading editorial-reviews__title">What our patients say</h2>
           </div>
 
           <div class="editorial-reviews__google">
             <span class="editorial-reviews__google-stars" aria-hidden="true">★★★★★</span>
-            <span class="editorial-reviews__google-score">5,0</span>
+            <span class="editorial-reviews__google-score">5.0</span>
             <span class="editorial-reviews__google-sep" aria-hidden="true">·</span>
-            <span class="editorial-reviews__google-label">Reseñas verificadas en Google</span>
+            <span class="editorial-reviews__google-label">Verified Google reviews</span>
           </div>
         </div>
 
-        <!-- Columna derecha: escenario de la reseña protagonista -->
+        <!-- Right Column: Featured Review Stage -->
         <div class="editorial-reviews__col-stage">
           <div class="editorial-reviews__stage" data-reviews-stage>
 
-            <!-- Testimonio 1: M. A. B. F. -->
+            <!-- Testimonial 1: M. A. B. F. -->
             <article class="editorial-reviews__item is-active" data-reviews-item>
               <div class="editorial-reviews__mark" aria-hidden="true">“</div>
               <blockquote class="editorial-reviews__quote">
-                <p>Marçal es un excelente profesional, en dos sesiones la mejoría es total.</p>
-                <p>Las instalaciones impecables, y también destacar la eficiencia y amabilidad de Abril.</p>
+                <p>Marçal is an outstanding professional; after two sessions, the improvement was complete.</p>
+                <p>The facilities are spotless, and Abril's efficiency and kindness are exceptional.</p>
               </blockquote>
               <footer class="editorial-reviews__meta">
                 <cite class="editorial-reviews__author">M. A. B. F.</cite>
                 <span class="editorial-reviews__sep" aria-hidden="true">·</span>
-                <span class="editorial-reviews__source">Paciente en Physio Wellness</span>
+                <span class="editorial-reviews__source">Patient at Physio Wellness</span>
               </footer>
             </article>
 
-            <!-- Testimonio 2: J. D. -->
+            <!-- Testimonial 2: J. D. -->
             <article class="editorial-reviews__item" data-reviews-item>
               <div class="editorial-reviews__mark" aria-hidden="true">“</div>
               <blockquote class="editorial-reviews__quote">
-                <p>Recomiendo totalmente a este fisioterapeuta a cualquiera que necesite una atención de calidad. Tiene un conocimiento muy amplio, es atento y está realmente comprometido con la recuperación de sus pacientes. Desde la primera sesión se tomó el tiempo de entender la raíz del problema, no solo los síntomas, y creó un plan de tratamiento personalizado que marcó una diferencia real.</p>
-                <p>¡Gracias!</p>
+                <p>I thoroughly recommend this physiotherapist to anyone seeking quality care. He has extensive knowledge, is attentive, and is genuinely committed to his patients' recovery. From the first session, he took the time to understand the root cause of the problem, not just the symptoms, and created a personalised treatment plan that made a real difference.</p>
+                <p>Thank you!</p>
               </blockquote>
               <footer class="editorial-reviews__meta">
                 <cite class="editorial-reviews__author">J. D.</cite>
                 <span class="editorial-reviews__sep" aria-hidden="true">·</span>
-                <span class="editorial-reviews__source">Paciente en Physio Wellness</span>
+                <span class="editorial-reviews__source">Patient at Physio Wellness</span>
               </footer>
             </article>
 
-            <!-- Testimonio 3: C. C. G. -->
+            <!-- Testimonial 3: C. C. G. -->
             <article class="editorial-reviews__item" data-reviews-item>
               <div class="editorial-reviews__mark" aria-hidden="true">“</div>
               <blockquote class="editorial-reviews__quote">
-                <p>Marçal es muy profesional, resolutivo y transmite confianza. Soy paciente oncológica y su tratamiento está dando muy buen resultado. También me ha dado unos ejercicios que puedo hacer en mi casa. Estoy muy conforme.</p>
+                <p>Marçal is highly professional, effective, and inspires confidence. As an oncology patient, his treatment has provided excellent results. He also provided home exercises to maintain progress. I am very pleased.</p>
               </blockquote>
               <footer class="editorial-reviews__meta">
                 <cite class="editorial-reviews__author">C. C. G.</cite>
                 <span class="editorial-reviews__sep" aria-hidden="true">·</span>
-                <span class="editorial-reviews__source">Paciente en Physio Wellness</span>
+                <span class="editorial-reviews__source">Patient at Physio Wellness</span>
               </footer>
             </article>
 
-            <!-- Testimonio 4: I. G. -->
+            <!-- Testimonial 4: I. G. -->
             <article class="editorial-reviews__item" data-reviews-item>
               <div class="editorial-reviews__mark" aria-hidden="true">“</div>
               <blockquote class="editorial-reviews__quote">
-                <p>Muy buenas manos, técnica y conocimiento profundo, con un trato muy atento y personalizado. Disponen de todo tipo de maquinaria cuando hace falta. Estoy tratando una lesión de rodilla y ya noté mejoría desde la primera sesión.</p>
-                <p>Totalmente recomendable, Marçal y su equipo son de lo mejor.</p>
+                <p>Skillful hands, excellent technique, and deep clinical knowledge delivered with attentive, personalised care. They have all types of advanced machinery when needed. I am treating a knee injury and felt improvement from the very first session.</p>
+                <p>Highly recommended—Marçal and his team are first-class.</p>
               </blockquote>
               <footer class="editorial-reviews__meta">
                 <cite class="editorial-reviews__author">I. G.</cite>
                 <span class="editorial-reviews__sep" aria-hidden="true">·</span>
-                <span class="editorial-reviews__source">Paciente en Physio Wellness</span>
+                <span class="editorial-reviews__source">Patient at Physio Wellness</span>
               </footer>
             </article>
 
-            <!-- Testimonio 5: A. -->
+            <!-- Testimonial 5: A. -->
             <article class="editorial-reviews__item" data-reviews-item>
               <div class="editorial-reviews__mark" aria-hidden="true">“</div>
               <blockquote class="editorial-reviews__quote">
-                <p>He tenido una muy buena experiencia en esta clínica de fisioterapia. El tratamiento me ayudó de verdad a quitarme el dolor de espalda, y noté una mejoría importante después de las sesiones. Abril, la administradora, es muy amable, atenta y organizada, lo que hace que cada visita sea cómoda y sin complicaciones.</p>
-                <p>Un agradecimiento especial a Marshall, un fisioterapeuta muy cualificado, profesional, atento y que realmente sabe lo que hace. Me sentí seguro y bien cuidado durante todo el proceso. Recomiendo totalmente este centro a cualquiera que tenga dolor de espalda o busque fisioterapia de calidad.</p>
+                <p>I had a very positive experience at this physiotherapy clinic. The treatment genuinely helped relieve my back pain, and I felt significant improvement following the sessions. Abril, the clinic coordinator, is warm, attentive, and organised, making every visit comfortable and seamless.</p>
+                <p>Special thanks to Marshall—a highly skilled, professional, and attentive physiotherapist who truly knows his craft. I felt safe and well cared for throughout. I recommend this centre wholeheartedly to anyone with back pain or in search of high-quality care.</p>
               </blockquote>
               <footer class="editorial-reviews__meta">
                 <cite class="editorial-reviews__author">A.</cite>
                 <span class="editorial-reviews__sep" aria-hidden="true">·</span>
-                <span class="editorial-reviews__source">Paciente en Physio Wellness</span>
+                <span class="editorial-reviews__source">Patient at Physio Wellness</span>
               </footer>
             </article>
 
-            <!-- Testimonio 6: T. M. -->
+            <!-- Testimonial 6: T. M. -->
             <article class="editorial-reviews__item" data-reviews-item>
               <div class="editorial-reviews__mark" aria-hidden="true">“</div>
               <blockquote class="editorial-reviews__quote">
-                <p>Encontré este centro y me han gustado mucho las sesiones que he tenido. Tiene un buen conocimiento del cuerpo y sabe cómo hacer que el paciente se sienta mejor tanto de forma inmediata como a largo plazo.</p>
+                <p>I discovered this centre and have been very pleased with my sessions. He has a thorough understanding of the human body and knows exactly how to help patients feel better both immediately and in the long term.</p>
               </blockquote>
               <footer class="editorial-reviews__meta">
                 <cite class="editorial-reviews__author">T. M.</cite>
                 <span class="editorial-reviews__sep" aria-hidden="true">·</span>
-                <span class="editorial-reviews__source">Paciente en Physio Wellness</span>
+                <span class="editorial-reviews__source">Patient at Physio Wellness</span>
               </footer>
             </article>
 
           </div>
 
-          <!-- Navegación editorial situada en la columna de la reseña -->
-          <div class="editorial-reviews__nav" aria-label="Navegación de testimonios">
+          <!-- Review Navigation Controls -->
+          <div class="editorial-reviews__nav" aria-label="Testimonial navigation">
             <div class="editorial-reviews__controls">
-              <button type="button" class="editorial-reviews__btn editorial-reviews__btn--prev" data-reviews-prev aria-label="Ver testimonio anterior">
+              <button type="button" class="editorial-reviews__btn editorial-reviews__btn--prev" data-reviews-prev aria-label="View previous review">
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                   <polyline points="15 18 9 12 15 6"></polyline>
                 </svg>
               </button>
               <span class="editorial-reviews__counter" data-reviews-counter aria-live="polite">01 / 06</span>
-              <button type="button" class="editorial-reviews__btn editorial-reviews__btn--next" data-reviews-next aria-label="Ver siguiente testimonio">
+              <button type="button" class="editorial-reviews__btn editorial-reviews__btn--next" data-reviews-next aria-label="View next review">
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                   <polyline points="9 18 15 12 9 6"></polyline>
                 </svg>
@@ -1101,10 +1213,7 @@
     </div>
   </section>
 
-  <!-- ============ 9. CTA final ============
-       Cierre natural de la página, tras haber presentado en profundidad el servicio.
-       Claim: "Incorpora el cuidado corporal a tu proceso."
-       Botones oficiales: Reservar sesión de Bienestar (DocFav) y Hablar por WhatsApp. -->
+  <!-- ============ 10. Final CTA ============ -->
   <section class="cta-final cta-final--photo photo-banner">
     <figure class="photo-banner__media" aria-hidden="true">
       <img
@@ -1119,11 +1228,11 @@
       >
     </figure>
     <div class="container cta-final__inner photo-banner__inner" data-reveal>
-      <h2 class="cta-final__title">Incorpora el cuidado corporal a tu proceso.</h2>
-      <p class="cta-final__lead">Sesiones de Bienestar pensadas para bajar el ritmo, liberar tensión y dedicar tiempo a tu cuerpo.</p>
+      <h2 class="cta-final__title">Integrate dedicated body care into your recovery.</h2>
+      <p class="cta-final__lead">Wellness sessions designed to slow down, release muscular tension, and give your body the time and attention it deserves.</p>
       <div class="cta-final__actions">
-        <a class="btn btn--primary" href="https://www.docfav.com/portal/physio-wellness-by-marshall" target="_blank" rel="noopener">Reservar sesión de Bienestar</a>
-        <a class="btn btn--outline" href="https://wa.me/34644678344" target="_blank" rel="noopener">Chat on WhatsApp</a>
+        <a class="btn btn--primary" href="https://www.docfav.com/portal/physio-wellness-by-marshall" target="_blank" rel="noopener">Book a Wellness session</a>
+        <a class="btn btn--outline" href="https://wa.me/34644678344" target="_blank" rel="noopener">Message us on WhatsApp</a>
       </div>
     </div>
   </section>
@@ -1135,7 +1244,7 @@
     <div class="site-footer__top">
       <div>
         <a class="site-footer__brand" href="#main">
-          <img src="../../src/assets/img/logo-mark-white.png" alt="Physio Wellness by Marshall">
+          <img src="../../src/assets/img/logo-mark-white.png" alt="Physio Wellness by Marshall" width="815" height="639" loading="lazy">
         </a>
       </div>
 
@@ -1170,7 +1279,6 @@
     </div>
   </div>
 </footer>
-
 
 <script src="../../src/js/main.js"></script>
 </body>

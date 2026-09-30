@@ -63,4 +63,4 @@ physiowellness-web/
 
 ---
 
-**Proyecto construido paso a paso con Claude Code.**
+**Proyecto construido paso a paso con Claude Code.** 

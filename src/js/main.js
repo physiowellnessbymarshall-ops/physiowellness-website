@@ -222,17 +222,21 @@ var prefersReducedMotion = window.matchMedia && window.matchMedia('(prefers-redu
     var menu = document.getElementById('mobile-menu');
     if(!toggle || !menu) return;
 
+    var docLang = (document.documentElement.lang || 'es').toLowerCase();
+    var closeLabel = docLang.startsWith('ca') ? 'Tancar menú' : (docLang.startsWith('en') ? 'Close menu' : 'Cerrar menú');
+    var openLabel = docLang.startsWith('ca') ? 'Obrir menú' : (docLang.startsWith('en') ? 'Open menu' : 'Abrir menú');
+
     var open = function(){
       menu.classList.add('is-open');
       toggle.setAttribute('aria-expanded','true');
-      toggle.setAttribute('aria-label','Cerrar menú');
+      toggle.setAttribute('aria-label', closeLabel);
       document.body.style.overflow = 'hidden';
       if(close) close.focus();
     };
     var closeMenu = function(returnFocus){
       menu.classList.remove('is-open');
       toggle.setAttribute('aria-expanded','false');
-      toggle.setAttribute('aria-label','Abrir menú');
+      toggle.setAttribute('aria-label', openLabel);
       document.body.style.overflow = '';
       /* los acordeones vuelven a su estado cerrado */
       menu.querySelectorAll('[data-disclosure-toggle]').forEach(function(btn){
@@ -1255,11 +1259,21 @@ var prefersReducedMotion = window.matchMedia && window.matchMedia('(prefers-redu
    verdad sobra texto, y el botón únicamente aparece en ese caso.        */
 (function quoteToggles(){
   try{
-    var toggles = document.querySelectorAll('[data-quote-toggle]');
-    if(!toggles.length) return;
+    var getQuote = function(btn){
+      var wrap = btn.closest('.testimonials__item-text, .testimonials__story, .testimonials__quote-wrap');
+      return (wrap && wrap.querySelector('.testimonials__quote')) || document.getElementById(btn.getAttribute('aria-controls'));
+    };
+
+    var getLabels = function(){
+      var docLang = (document.documentElement.lang || 'es').toLowerCase();
+      return {
+        readMore: docLang.startsWith('ca') ? 'Llegir complet' : (docLang.startsWith('en') ? 'Read more' : 'Leer completo'),
+        showLess: docLang.startsWith('ca') ? 'Mostrar menys' : (docLang.startsWith('en') ? 'Show less' : 'Mostrar menos')
+      };
+    };
 
     var setup = function(btn){
-      var quote = document.getElementById(btn.getAttribute('aria-controls'));
+      var quote = getQuote(btn);
       if(!quote) return;
 
       /* con el recorte puesto, el texto sobra si el contenido desborda la caja */
@@ -1271,43 +1285,56 @@ var prefersReducedMotion = window.matchMedia && window.matchMedia('(prefers-redu
         btn.hidden = true;
         return;
       }
-      var docLang = (document.documentElement.lang || 'es').toLowerCase();
-      var readMoreText = docLang.startsWith('ca') ? 'Llegir complet' : (docLang.startsWith('en') ? 'Read more' : 'Leer completo');
-      var showLessText = docLang.startsWith('ca') ? 'Mostrar menys' : (docLang.startsWith('en') ? 'Show less' : 'Mostrar menos');
-
+      var labels = getLabels();
       btn.hidden = false;
       btn.setAttribute('aria-expanded','false');
-      btn.textContent = readMoreText;
+      btn.textContent = labels.readMore;
     };
 
     /* la tipografía cambia el número de líneas: se mide cuando está lista */
     if(document.fonts && document.fonts.ready){
       document.fonts.ready.then(function(){
-        toggles.forEach(function(btn){
+        document.querySelectorAll('[data-quote-toggle]').forEach(function(btn){
           if(btn.getAttribute('aria-expanded') !== 'true') setup(btn);
         });
       });
     }
 
-    toggles.forEach(function(btn){
+    document.querySelectorAll('[data-quote-toggle]').forEach(function(btn){
       setup(btn);
-      btn.addEventListener('click', function(){
-        var quote = document.getElementById(btn.getAttribute('aria-controls'));
-        if(!quote) return;
-        var docLang = (document.documentElement.lang || 'es').toLowerCase();
-        var readMoreText = docLang.startsWith('ca') ? 'Llegir complet' : (docLang.startsWith('en') ? 'Read more' : 'Leer completo');
-        var showLessText = docLang.startsWith('ca') ? 'Mostrar menys' : (docLang.startsWith('en') ? 'Show less' : 'Mostrar menos');
-        var open = btn.getAttribute('aria-expanded') === 'true';
-        if(open){
-          quote.setAttribute('data-clamped','');
-          btn.setAttribute('aria-expanded','false');
-          btn.textContent = readMoreText;
-        } else {
-          quote.removeAttribute('data-clamped');
-          btn.setAttribute('aria-expanded','true');
-          btn.textContent = showLessText;
-        }
-      });
+    });
+
+    /* Delegación de eventos para soportar clones dinámicos del visor sticky */
+    document.addEventListener('click', function(e){
+      var btn = e.target.closest('[data-quote-toggle]');
+      if(!btn) return;
+      var quote = getQuote(btn);
+      if(!quote) return;
+      var labels = getLabels();
+      var open = btn.getAttribute('aria-expanded') === 'true';
+      if(open){
+        quote.setAttribute('data-clamped','');
+        btn.setAttribute('aria-expanded','false');
+        btn.textContent = labels.readMore;
+      } else {
+        quote.removeAttribute('data-clamped');
+        btn.setAttribute('aria-expanded','true');
+        btn.textContent = labels.showLess;
+      }
+      var targetId = btn.getAttribute('aria-controls');
+      if(targetId){
+        document.querySelectorAll('[data-quote-toggle][aria-controls="' + targetId + '"]').forEach(function(otherBtn){
+          if(otherBtn !== btn){
+            otherBtn.setAttribute('aria-expanded', open ? 'false' : 'true');
+            otherBtn.textContent = open ? labels.readMore : labels.showLess;
+            var otherQuote = getQuote(otherBtn);
+            if(otherQuote){
+              if(open) otherQuote.setAttribute('data-clamped','');
+              else otherQuote.removeAttribute('data-clamped');
+            }
+          }
+        });
+      }
     });
 
     /* al cambiar el ancho, un fragmento puede dejar de necesitar recorte */
@@ -1315,7 +1342,7 @@ var prefersReducedMotion = window.matchMedia && window.matchMedia('(prefers-redu
     window.addEventListener('resize', function(){
       clearTimeout(t);
       t = setTimeout(function(){
-        toggles.forEach(function(btn){
+        document.querySelectorAll('[data-quote-toggle]').forEach(function(btn){
           if(btn.getAttribute('aria-expanded') === 'true') return;
           setup(btn);
         });
@@ -1324,7 +1351,61 @@ var prefersReducedMotion = window.matchMedia && window.matchMedia('(prefers-redu
   }catch(e){ console.warn('quoteToggles', e); }
 })();
 
+/* ---------- Modal de lectura completa para testimonios (Tamás Náray) ---------- */
+(function testimonialModal(){
+  try{
+    var openModal = function(id){
+      var modal = document.getElementById(id);
+      if(!modal) return;
+      if(typeof modal.showModal === 'function'){
+        modal.showModal();
+      } else {
+        modal.setAttribute('open', '');
+      }
+      document.body.style.overflow = 'hidden';
+    };
+
+    var closeModal = function(modal){
+      if(!modal) return;
+      if(typeof modal.close === 'function'){
+        modal.close();
+      } else {
+        modal.removeAttribute('open');
+      }
+      document.body.style.overflow = '';
+    };
+
+    document.addEventListener('click', function(e){
+      var openBtn = e.target.closest('[data-open-testimonial]');
+      if(openBtn){
+        e.preventDefault();
+        var targetId = openBtn.getAttribute('data-open-testimonial') || 'testimonial-modal-tamas';
+        openModal(targetId);
+        return;
+      }
+
+      var closeBtn = e.target.closest('[data-close-testimonial-modal]');
+      if(closeBtn){
+        e.preventDefault();
+        var modal = closeBtn.closest('dialog.testimonial-modal');
+        closeModal(modal);
+        return;
+      }
+    });
+
+    document.addEventListener('keydown', function(e){
+      if(e.key === 'Escape'){
+        var openDialog = document.querySelector('dialog.testimonial-modal[open]');
+        if(openDialog){
+          closeModal(openDialog);
+        }
+      }
+    });
+  }catch(e){ console.warn('testimonialModal', e); }
+})();
+
 /* ---------- 15. Testimonios editoriales por scroll vertical (Sistema escalable N) ----------
+
    Arquitectura desacoplada y paramétrica: lee la fuente semántica única (#testimonials-flow),
    hidrata el escenario sticky interactivo (.testimonials__stage y .testimonials__text-stage)
    y calcula dinámicamente alturas, capas de apilamiento y ventanas de transición según N.
@@ -2870,15 +2951,15 @@ var prefersReducedMotion = window.matchMedia && window.matchMedia('(prefers-redu
         errName: 'Please enter your name.',
         errEmailEmpty: 'Please enter your email address.',
         errEmailInvalid: 'Please enter a valid email address.',
-        errMessageEmpty: 'Please write your message or inquiry.',
+        errMessageEmpty: 'Please write your message or enquiry.',
         errMessageShort: 'The message is too short (at least 5 characters).',
-        subject: 'Web inquiry: ',
+        subject: 'Web enquiry: ',
         bodyName: 'Name: ',
         bodyEmail: '\nEmail: ',
         bodyPhone: '\nPhone: ',
         bodyMsg: '\n\nMessage:\n',
         waIntro: 'Hello Physio Wellness, I am ',
-        waConsult: ' Inquiry: '
+        waConsult: ' Enquiry: '
       }
     };
     var tMsg = formLang.startsWith('ca') ? formI18n.ca : (formLang.startsWith('en') ? formI18n.en : formI18n.es);

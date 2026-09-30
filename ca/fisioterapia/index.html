@@ -3,76 +3,245 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Fisioteràpia a Sitges | Physio Wellness</title>
-<meta name="description" content="Fisioteràpia a Sitges: valoració, tractament i recuperació funcional amb Physio Wellness by Marshall. Consulta les subespecialitats i reserva la teva primera visita.">
+<title>Fisioteràpia a Sitges | Physio Wellness by Marshall</title>
+<meta name="description" content="Fisioteràpia a Sitges: valoració diagnòstica exhaustiva, teràpia manual i readaptació funcional amb en Marçal Ramirez a Physio Wellness.">
 <link rel="canonical" href="https://physiowellness.es/ca/fisioterapia/">
 <link rel="alternate" hreflang="es" href="https://physiowellness.es/es/fisioterapia/">
 <link rel="alternate" hreflang="ca" href="https://physiowellness.es/ca/fisioterapia/">
 <link rel="alternate" hreflang="en" href="https://physiowellness.es/en/physiotherapy/">
+<link rel="alternate" hreflang="x-default" href="https://physiowellness.es/es/fisioterapia/">
+
+<!-- Open Graph / Facebook -->
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Physio Wellness by Marshall">
+<meta property="og:title" content="Fisioteràpia a Sitges | Physio Wellness by Marshall">
+<meta property="og:description" content="Fisioteràpia a Sitges: valoració diagnòstica exhaustiva, teràpia manual i readaptació funcional amb en Marçal Ramirez a Physio Wellness.">
+<meta property="og:url" content="https://physiowellness.es/ca/fisioterapia/">
+<meta property="og:image" content="https://physiowellness.es/src/assets/img/disciplines/fisio/5af02bda-9e2c-442f-af09-c3c4f8285313-1440.webp">
+<meta property="og:locale" content="ca_ES">
+
+<!-- Twitter / X -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Fisioteràpia a Sitges | Physio Wellness by Marshall">
+<meta name="twitter:description" content="Fisioteràpia a Sitges: valoració diagnòstica exhaustiva, teràpia manual i readaptació funcional amb en Marçal Ramirez a Physio Wellness.">
+<meta name="twitter:image" content="https://physiowellness.es/src/assets/img/disciplines/fisio/5af02bda-9e2c-442f-af09-c3c4f8285313-1440.webp">
 <link rel="icon" href="../../src/assets/img/logo-icon-black.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Jost:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../../src/css/styles.css">
 <!-- [data-reveal] (§7 de styles.css) parte de opacity:0 y depende de main.js
-     para mostrarse. Si JavaScript está desactivado del todo, nunca se añade
-     la clase .is-visible y el contenido quedaría invisible. Mismo override
-     ya usado en tarifas.html, aplicado aquí porque esta página reutiliza el
-     mismo mecanismo de revelado.
-     .symptom-explorer__panel[hidden]: mismo caso que .faq__a/.cond__a en
-     tarifas.html — botón real + panel [hidden] controlado por main.js
-     (symptomExplorer). Sin JS el contenido quedaría inalcanzable, así que
-     se fuerza visible aquí igual que en tarifas.html. -->
+para mostrarse. Si JavaScript está desactivado del todo, nunca se añade
+la clase .is-visible y el contenido quedaría invisible. Mismo override
+ya usado en tarifas.html, aplicado aquí porque esta página reutiliza el
+mismo mecanismo de revelado.
+.symptom-explorer__panel[hidden]: mismo caso que .faq__a/.cond__a en
+tarifas.html — botón real + panel [hidden] controlado por main.js
+(symptomExplorer). Sin JS el contenido quedaría inalcanzable, así que
+se fuerza visible aquí igual que en tarifas.html. -->
 <noscript><style>
-  [data-reveal]{opacity:1!important;transform:none!important;}
-  .symptom-explorer__panel[hidden]{display:block!important;}
+[data-reveal]{opacity:1!important;transform:none!important;}
+.symptom-explorer__panel[hidden]{display:block!important;}
 </style></noscript>
 
-<!-- Schema.org LocalBusiness Structured Data -->
+<!-- Schema.org JSON-LD Structured Data -->
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
-  "@type": "LocalBusiness",
-  "name": "Physio Wellness by Marshall - Fisioterapia",
-  "url": "https://physiowellness.es/es/servicios/fisioterapia/",
-  "description": "Fisioterapia en Sitges: valoración, tratamiento y recuperación funcional con Physio Wellness by Marshall.",
-  "address": {
-    "@type": "PostalAddress",
-    "streetAddress": "Avinguda Camí dels Capellans, 79, local 3",
-    "addressLocality": "Sitges",
-    "postalCode": "08870",
-    "addressCountry": "ES"
-  },
-  "telephone": "+34644678344",
-  "email": "hola@physiowellness.es",
-  "aggregateRating": {
-    "@type": "AggregateRating",
-    "ratingValue": "5",
-    "reviewCount": "6"
-  },
-  "areaServed": {
-    "@type": "City",
-    "name": "Sitges"
-  },
-  "medicalSpecialty": "Fisioterapia"
+  "@graph": [
+    {
+      "@type": "MedicalBusiness",
+      "@id": "https://physiowellness.es/#business",
+      "name": "Physio Wellness by Marshall",
+      "legalName": "Marçal Ramirez Roig",
+      "url": "https://physiowellness.es/",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://physiowellness.es/src/assets/img/logo-icon-black.png"
+      },
+      "image": "https://physiowellness.es/src/assets/img/local/local-recepcion-1440.webp",
+      "telephone": "+34644678344",
+      "email": "hola@physiowellness.es",
+      "priceRange": "€€",
+      "currenciesAccepted": "EUR",
+      "paymentAccepted": "Cash, Credit Card, Bizum",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "Avinguda Camí dels Capellans, 79, local 3",
+        "addressLocality": "Sitges",
+        "postalCode": "08870",
+        "addressRegion": "Barcelona",
+        "addressCountry": "ES"
+      },
+      "geo": {
+        "@type": "GeoCoordinates",
+        "latitude": 41.2415,
+        "longitude": 1.8028
+      },
+      "openingHoursSpecification": [
+        {
+          "@type": "OpeningHoursSpecification",
+          "dayOfWeek": [
+            "Monday",
+            "Tuesday",
+            "Wednesday",
+            "Thursday",
+            "Friday"
+          ],
+          "opens": "09:00",
+          "closes": "13:00"
+        },
+        {
+          "@type": "OpeningHoursSpecification",
+          "dayOfWeek": [
+            "Monday",
+            "Tuesday",
+            "Wednesday",
+            "Thursday",
+            "Friday"
+          ],
+          "opens": "15:00",
+          "closes": "19:00"
+        }
+      ],
+      "location": [
+        {
+          "@type": "Place",
+          "name": "Physio Wellness - Consulta Clínica",
+          "address": {
+            "@type": "PostalAddress",
+            "streetAddress": "Avinguda Camí dels Capellans, 79, local 3",
+            "addressLocality": "Sitges",
+            "postalCode": "08870",
+            "addressRegion": "Barcelona",
+            "addressCountry": "ES"
+          }
+        },
+        {
+          "@type": "Place",
+          "name": "Physio Wellness - Estudi de Força i Pilates",
+          "address": {
+            "@type": "PostalAddress",
+            "streetAddress": "Carrer de Sant Honorat, 26, local 2",
+            "addressLocality": "Sitges",
+            "postalCode": "08870",
+            "addressRegion": "Barcelona",
+            "addressCountry": "ES"
+          }
+        }
+      ],
+      "founder": {
+        "@type": "Person",
+        "name": "Marçal Ramirez Roig",
+        "jobTitle": "Fisioterapeuta Colegiado nº 14.599",
+        "alumniOf": "Col·legi de Fisioterapeutes de Catalunya"
+      },
+      "areaServed": [
+        {
+          "@type": "City",
+          "name": "Sitges"
+        },
+        {
+          "@type": "City",
+          "name": "Sant Pere de Ribes"
+        },
+        {
+          "@type": "City",
+          "name": "Vilanova i la Geltrú"
+        },
+        {
+          "@type": "AdministrativeArea",
+          "name": "Garraf"
+        }
+      ],
+      "knowsLanguage": [
+        "es",
+        "ca",
+        "en"
+      ]
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://physiowellness.es/#website",
+      "name": "Physio Wellness by Marshall",
+      "url": "https://physiowellness.es/",
+      "inLanguage": [
+        "es",
+        "ca",
+        "en"
+      ],
+      "publisher": {
+        "@id": "https://physiowellness.es/#business"
+      }
+    },
+    {
+      "@type": "WebPage",
+      "@id": "https://physiowellness.es/ca/fisioterapia/#webpage",
+      "url": "https://physiowellness.es/ca/fisioterapia/",
+      "name": "Fisioteràpia a Sitges | Physio Wellness by Marshall",
+      "description": "Fisioteràpia a Sitges: valoració diagnòstica exhaustiva, teràpia manual i readaptació funcional amb en Marçal Ramirez a Physio Wellness.",
+      "inLanguage": "ca",
+      "isPartOf": {
+        "@id": "https://physiowellness.es/#website"
+      },
+      "about": {
+        "@id": "https://physiowellness.es/#business"
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "@id": "https://physiowellness.es/ca/fisioterapia/#breadcrumb",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Inici",
+          "item": "https://physiowellness.es/ca/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Serveis",
+          "item": "https://physiowellness.es/ca/serveis/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Fisioteràpia",
+          "item": "https://physiowellness.es/ca/fisioterapia/"
+        }
+      ]
+    },
+    {
+      "@type": "Service",
+      "@id": "https://physiowellness.es/ca/fisioterapia/#service",
+      "name": "Fisioteràpia Clínica a Sitges",
+      "serviceType": "Physiotherapy",
+      "description": "Fisioteràpia a Sitges: valoració diagnòstica exhaustiva, teràpia manual i readaptació funcional amb en Marçal Ramirez a Physio Wellness.",
+      "provider": {
+        "@id": "https://physiowellness.es/#business"
+      },
+      "areaServed": {
+        "@type": "City",
+        "name": "Sitges"
+      },
+      "hasOfferCatalog": {
+        "@type": "OfferCatalog",
+        "name": "Fisioteràpia Clínica a Sitges",
+        "itemListElement": [
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "Service",
+              "name": "Fisioteràpia Clínica a Sitges"
+            }
+          }
+        ]
+      }
+    }
+  ]
 }
 </script>
-
-<!-- Open Graph Meta Tags (Social Sharing) -->
-<meta property="og:type" content="website">
-<meta property="og:url" content="https://physiowellness.es/es/servicios/fisioterapia/">
-<meta property="og:title" content="Fisioterapia en Sitges | Physio Wellness">
-<meta property="og:description" content="Valoración, tratamiento y recuperación funcional. Seis ámbitos de fisioterapia en clínica o a domicilio.">
-<meta property="og:image" content="https://physiowellness.es/assets/img/stock/hero-fisio-1440.webp">
-<meta property="og:image:width" content="1440">
-<meta property="og:image:height" content="960">
-
-<!-- Twitter Card Meta Tags -->
-<meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Fisioterapia en Sitges | Physio Wellness">
-<meta name="twitter:description" content="Valoración, tratamiento y recuperación funcional">
-<meta name="twitter:image" content="https://physiowellness.es/assets/img/stock/hero-fisio-1440.webp">
-
 </head>
 <body class="page-servicios page-physio">
 
@@ -104,7 +273,7 @@
 
       <div class="nav-item" data-disclosure-group="nav">
         <button class="nav-item__btn" type="button" data-disclosure-toggle aria-expanded="false" aria-controls="nav-coneix-nos">
-          Coneix-nos
+          Coneix&#8209;nos
           <svg class="nav-item__chevron" width="9" height="6" viewBox="0 0 9 6" fill="none" aria-hidden="true"><path d="M1 1l3.5 3.5L8 1" stroke="currentColor" stroke-width="1.3" stroke-linecap="square"/></svg>
         </button>
         <div class="nav-dropdown" id="nav-coneix-nos" hidden>
@@ -120,7 +289,7 @@
 
     <div class="header-actions">
       <nav class="lang-switch" aria-label="Selector d'idioma">
-        <a href="../../ca/fisioterapia/">ES</a><span>/</span>
+        <a href="../../es/fisioterapia/">ES</a><span>/</span>
         <a href="./" aria-current="true">CAT</a><span>/</span>
         <a href="../../en/physiotherapy/">EN</a>
       </nav>
@@ -148,7 +317,7 @@
           </div>
 
           <a class="booking-panel__help" href="https://wa.me/34644678344" target="_blank" rel="noopener">
-            No saps què reservar? Escriu-nos per WhatsApp
+            No saps què reservar? Escriu&#8209;nos per WhatsApp
           </a>
         </div>
       </div>
@@ -190,7 +359,7 @@
 
     <div class="m-acc" data-disclosure-group="mobile">
       <button class="m-acc__btn" type="button" data-disclosure-toggle aria-expanded="false" aria-controls="m-coneix-nos">
-        Coneix-nos
+        Coneix&#8209;nos
         <svg class="m-acc__chevron" width="14" height="9" viewBox="0 0 14 9" fill="none" aria-hidden="true"><path d="M1 1l6 6 6-6" stroke="currentColor" stroke-width="1.4" stroke-linecap="square"/></svg>
       </button>
       <div class="m-acc__panel" id="m-coneix-nos" hidden>
@@ -206,7 +375,7 @@
 
   <div class="mobile-menu__bottom">
     <nav class="lang-switch lang-switch--in-menu" aria-label="Selector d'idioma">
-      <a href="../../ca/fisioterapia/">ES</a><span>/</span>
+      <a href="../../es/fisioterapia/">ES</a><span>/</span>
       <a href="./" aria-current="true">CAT</a><span>/</span>
       <a href="../../en/physiotherapy/">EN</a>
     </nav>
@@ -297,7 +466,7 @@
       <nav class="breadcrumb service-hero__breadcrumb" aria-label="Ruta de navegació">
         <ol>
           <li><a href="../../ca/">Inici</a></li>
-          <li><a href="../../ca/serveis/">Servicios</a></li>
+          <li><a href="../../ca/serveis/">Serveis</a></li>
           <li aria-current="page">Fisioteràpia</li>
         </ol>
       </nav>
@@ -305,7 +474,7 @@
       <div class="service-hero__grid">
         <div class="service-hero__content">
           <p class="service-hero__descriptor">01 — FISIOTERÀPIA</p>
-          <h1 class="service-hero__headline">Entendre el que et limita,<br>per tornar a moure't millor.</h1>
+          <h1 class="service-hero__headline">Entendre el que et limita, per tornar a moure't&nbsp;millor.</h1>
           <p class="service-hero__lead">No cal arribar amb un diagnòstic tancat. Comencem entenent què et passa i què necessites per tornar a moure't amb confiança.</p>
 
           <div class="service-hero__actions">
@@ -316,7 +485,7 @@
               </svg>
             </a>
             <a class="service-hero__cta-secondary" href="https://wa.me/34644678344" target="_blank" rel="noopener">
-              <span>No saps què reservar? Escriu-nos</span>
+              <span>No saps què reservar? Escriu&#8209;nos</span>
               <svg class="service-hero__secondary-arrow" width="11" height="11" viewBox="0 0 11 11" fill="none" aria-hidden="true">
                 <path d="M1 10L10 1M10 1H3M10 1V8" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
               </svg>
@@ -406,7 +575,7 @@
       <div class="specialty-list__head" data-reveal>
         <p class="eyebrow section-eyebrow">En què et podem ajudar?</p>
         <h2 class="section-heading">No cal que sàpigues quin tipus de fisioteràpia necessites</h2>
-        <p class="section-lead">Tria què et passa i veuràs l'àmbit de fisioteràpia amb el qual ho abordem.</p>
+        <p class="section-lead">Physio Wellness ofereix fisioteràpia clínica personalitzada a Sitges per valorar, alleujar i tractar el dolor musculoesquelètic, lesions i limitacions funcionals. Tria què et passa i veuràs l'àmbit de fisioteràpia amb el qual ho abordem.</p>
       </div>
 
       <div class="symptom-explorer" data-reveal style="--i:2">
@@ -709,27 +878,27 @@
         <li class="service-menu__item" data-reveal>
           <span class="service-menu__label">Primera consulta presencial</span>
           <span class="service-menu__details"><span class="service-menu__duration">60 min</span><span class="service-menu__modality">A la clínica</span></span>
-          <a class="service-menu__link" href="../../es/tarifas/#en-la-clinica">Veure tarifa <span class="service-menu__arrow" aria-hidden="true">→</span></a>
+          <a class="service-menu__link" href="../../ca/tarifes/#en-la-clinica">Veure tarifa <span class="service-menu__arrow" aria-hidden="true">→</span></a>
         </li>
         <li class="service-menu__item" data-reveal>
           <span class="service-menu__label">Primera consulta a domicili</span>
           <span class="service-menu__details"><span class="service-menu__duration">60 min</span><span class="service-menu__modality">A domicili</span></span>
-          <a class="service-menu__link" href="../../es/tarifas/#a-domicilio">Veure tarifa <span class="service-menu__arrow" aria-hidden="true">→</span></a>
+          <a class="service-menu__link" href="../../ca/tarifes/#a-domicili">Veure tarifa <span class="service-menu__arrow" aria-hidden="true">→</span></a>
         </li>
         <li class="service-menu__item" data-reveal>
           <span class="service-menu__label">Seguiment</span>
           <span class="service-menu__details"><span class="service-menu__duration">30 min</span><span class="service-menu__modality">A la clínica</span></span>
-          <a class="service-menu__link" href="../../es/tarifas/#en-la-clinica">Veure tarifa <span class="service-menu__arrow" aria-hidden="true">→</span></a>
+          <a class="service-menu__link" href="../../ca/tarifes/#en-la-clinica">Veure tarifa <span class="service-menu__arrow" aria-hidden="true">→</span></a>
         </li>
         <li class="service-menu__item" data-reveal>
           <span class="service-menu__label">Seguiment</span>
           <span class="service-menu__details"><span class="service-menu__duration">50 min</span><span class="service-menu__modality">A la clínica</span></span>
-          <a class="service-menu__link" href="../../es/tarifas/#en-la-clinica">Veure tarifa <span class="service-menu__arrow" aria-hidden="true">→</span></a>
+          <a class="service-menu__link" href="../../ca/tarifes/#en-la-clinica">Veure tarifa <span class="service-menu__arrow" aria-hidden="true">→</span></a>
         </li>
         <li class="service-menu__item" data-reveal>
           <span class="service-menu__label">Seguiment a domicili</span>
           <span class="service-menu__details"><span class="service-menu__duration">50 min</span><span class="service-menu__modality">A domicili</span></span>
-          <a class="service-menu__link" href="../../es/tarifas/#a-domicilio">Veure tarifa <span class="service-menu__arrow" aria-hidden="true">→</span></a>
+          <a class="service-menu__link" href="../../ca/tarifes/#a-domicili">Veure tarifa <span class="service-menu__arrow" aria-hidden="true">→</span></a>
         </li>
       </ul>
 
@@ -766,18 +935,18 @@
           <p class="service-feature__desc">Si no et pots desplaçar al centre, pots realitzar el teu procés de fisioteràpia a domicili, amb el mateix seguiment.</p>
         </div>
         <figure class="service-feature__photo">
-          <img src="../../src/assets/img/stock/domicilio-visita-1122.webp" srcset="../../src/assets/img/stock/domicilio-visita-720.webp 720w, ../../src/assets/img/stock/domicilio-visita-1122.webp 1122w" sizes="(min-width:860px) 38vw, 100vw" alt="Fisioterapeuta llegando con su maletín de tratamiento a la puerta de una vivienda para una visita a domicilio." loading="lazy" width="1122" height="1402">
+          <img src="../../src/assets/img/stock/domicilio-visita-1122.webp" srcset="../../src/assets/img/stock/domicilio-visita-720.webp 720w, ../../src/assets/img/stock/domicilio-visita-1122.webp 1122w" sizes="(min-width:860px) 38vw, 100vw" alt="Fisioterapeuta arribant amb el seu maletí de tractament a la porta d'un habitatge per a una visita a domicili." loading="lazy" width="1122" height="1402">
         </figure>
         <div class="service-feature__actions">
-          <a class="service-feature__link" href="../../es/tarifas/#a-domicilio">Veure condicions a domicili <span class="service-feature__arrow" aria-hidden="true">→</span></a>
-          <a class="service-feature__link" href="../../es/tarifas/#en-la-clinica">Veure totes les tarifes <span class="service-feature__arrow" aria-hidden="true">→</span></a>
+          <a class="service-feature__link" href="../../ca/tarifes/#a-domicili">Veure condicions a domicili <span class="service-feature__arrow" aria-hidden="true">→</span></a>
+          <a class="service-feature__link" href="../../ca/tarifes/#en-la-clinica">Veure totes les tarifes <span class="service-feature__arrow" aria-hidden="true">→</span></a>
         </div>
       </div>
     </div>
   </section>
 
   <!-- ============ Tecnología y Equipamiento Clínico ============ -->
-  <section class="equipment-showcase" id="tecnologia" aria-label="Tecnología al servicio de tu recuperación">
+  <section class="equipment-showcase" id="tecnologia" aria-label="Tecnologia al servei de la teva recuperació">
     <div class="container">
       <div class="equipment-showcase__head" data-reveal>
         <p class="eyebrow section-eyebrow">Equipament clínic</p>
@@ -789,7 +958,7 @@
         <!-- Columna Protagonista (Display interactivo) -->
         <article class="equipment-showcase__featured">
           <div class="equipment-showcase__media">
-            <img class="equipment-showcase__img" data-equipment-hero-img src="../../src/assets/img/machinery/magnetolith.webp" alt="Equipo Magnetolith para terapia de magnetotransducción extracorpórea" width="930" height="1133" loading="lazy">
+            <img class="equipment-showcase__img" data-equipment-hero-img src="../../src/assets/img/machinery/magnetolith.webp" alt="Equip Magnetolith per a teràpia de magnetotransducció extracorpòria" width="930" height="1133" loading="lazy">
           </div>
           <div class="equipment-showcase__info">
             <span class="equipment-showcase__badge" data-equipment-badge>Regeneració tissular</span>
@@ -814,10 +983,10 @@
             </div>
           </div>
 
-          <div class="equipment-showcase__track" role="tablist" aria-label="Equipos de fisioterapia">
+          <div class="equipment-showcase__track" role="tablist" aria-label="Equips de fisioteràpia">
             <button type="button" role="tab" class="equipment-showcase__item-btn is-active" aria-selected="true" data-equipment-item
               data-img-src="../../src/assets/img/machinery/magnetolith.webp"
-              data-img-alt="Equipo Magnetolith para terapia de magnetotransducción extracorpórea"
+              data-img-alt="Equip Magnetolith per a teràpia de magnetotransducció extracorpòria"
               data-badge="Regeneració tissular"
               data-name="Magnetolith"
               data-role="Tecnologia d'alta intensitat (EMTT)"
@@ -834,7 +1003,7 @@
 
             <button type="button" role="tab" class="equipment-showcase__item-btn" aria-selected="false" data-equipment-item
               data-img-src="../../src/assets/img/machinery/intradermik.webp"
-              data-img-alt="Dispositivo Intradermik TECARpro para radiofrecuencia y diatermia profunda"
+              data-img-alt="Dispositiu Intradermik TECARpro per a radiofreqüència i diatèrmia profunda"
               data-badge="Diatèrmia profunda"
               data-name="Intradermik · TECARpro"
               data-role="Transferència elèctrica capacitiva i resistiva"
@@ -851,7 +1020,7 @@
 
             <button type="button" role="tab" class="equipment-showcase__item-btn" aria-selected="false" data-equipment-item
               data-img-src="../../src/assets/img/machinery/physio.webp"
-              data-img-alt="Dispositivo Chattanooga PHYSIO para electroterapia y neuromodulación"
+              data-img-alt="Dispositiu Chattanooga PHYSIO per a electroteràpia i neuromodulació"
               data-badge="Electroestimulació clínica"
               data-name="PHYSIO"
               data-role="Estimulador de quatre canals (TENS &amp; NMES)"
@@ -868,7 +1037,7 @@
 
             <button type="button" role="tab" class="equipment-showcase__item-btn" aria-selected="false" data-equipment-item
               data-img-src="../../src/assets/img/machinery/theragun-pro.webp"
-              data-img-alt="Theragun PRO para terapia de percusión muscular profunda"
+              data-img-alt="Theragun PRO per a teràpia de percussió muscular profunda"
               data-badge="Teràpia percussiva"
               data-name="Theragun PRO"
               data-role="Percussió muscular profunda EQ-150"
@@ -889,7 +1058,7 @@
   </section>
 
   <!-- ============ Reseñas editoriales / Experiencias en Physio Wellness ============ -->
-  <section class="editorial-reviews" id="resenas" aria-label="Experiencias reales de pacientes">
+  <section class="editorial-reviews" id="resenas" aria-label="Experiències reals de pacients">
     <div class="container">
       <div class="editorial-reviews__layout">
 
@@ -916,7 +1085,7 @@
             <article class="editorial-reviews__item is-active" data-reviews-item>
               <div class="editorial-reviews__mark" aria-hidden="true">“</div>
               <blockquote class="editorial-reviews__quote">
-                <p>El millor fisioterapeuta amb qui he treballat mai! En Marçal porta més d'un any tractant els meus problemes derivats de l'edat i m'ha ajudat a evitar-ne de nous. Té un tracte molt humà i proper, i una excel·lent formació. Parla anglès, castellà i català. L'he recomanat a tothom que conec amb molèsties. A més, sempre respon amb rapidesa i és molt puntual. Un deu!</p>
+                <p>El millor fisioterapeuta amb qui he treballat mai! En Marçal porta més d'un any tractant els meus problemes derivats de l'edat i m'ha ajudat a evitar&#8209;ne de nous. Té un tracte molt humà i proper, i una excel·lent formació. Parla anglès, castellà i català. L'he recomanat a tothom que conec amb molèsties. A més, sempre respon amb rapidesa i és molt puntual. Un deu!</p>
               </blockquote>
               <footer class="editorial-reviews__meta">
                 <cite class="editorial-reviews__author">David Johnson</cite>
@@ -997,15 +1166,15 @@
           </div>
 
           <!-- Navegación editorial situada en la columna de la reseña -->
-          <div class="editorial-reviews__nav" aria-label="Navegación de testimonios">
+          <div class="editorial-reviews__nav" aria-label="Navegació de testimonis">
             <div class="editorial-reviews__controls">
-              <button type="button" class="editorial-reviews__btn editorial-reviews__btn--prev" data-reviews-prev aria-label="Ver testimonio anterior">
+              <button type="button" class="editorial-reviews__btn editorial-reviews__btn--prev" data-reviews-prev aria-label="Veure testimoni anterior">
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                   <polyline points="15 18 9 12 15 6"></polyline>
                 </svg>
               </button>
               <span class="editorial-reviews__counter" data-reviews-counter aria-live="polite">01 / 06</span>
-              <button type="button" class="editorial-reviews__btn editorial-reviews__btn--next" data-reviews-next aria-label="Ver siguiente testimonio">
+              <button type="button" class="editorial-reviews__btn editorial-reviews__btn--next" data-reviews-next aria-label="Veure següent testimoni">
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                   <polyline points="9 18 15 12 9 6"></polyline>
                 </svg>
@@ -1032,7 +1201,7 @@
        stretching — sin sobreexplicar cada área, solo como puente hacia
        el resto del proyecto. Misma fotografía (hero-clinic.webp, real
        fotografía del centro) y mismo enlace real a ../metodo.html. -->
-  <section class="photo-banner discipline-bridge" aria-label="El Método Marshall">
+  <section class="photo-banner discipline-bridge" aria-label="El Mètode Marshall">
     <figure class="photo-banner__media" aria-hidden="true">
       <img src="../../src/assets/img/hero-clinic.webp" alt="" loading="lazy" width="2000" height="1331">
     </figure>
@@ -1070,7 +1239,7 @@
     <div class="site-footer__top">
       <div>
         <a class="site-footer__brand" href="#main">
-          <img src="../../src/assets/img/logo-mark-white.png" alt="Physio Wellness by Marshall">
+          <img src="../../src/assets/img/logo-mark-white.png" alt="Physio Wellness by Marshall" width="815" height="639" loading="lazy">
         </a>
       </div>
 

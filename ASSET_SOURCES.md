@@ -187,7 +187,7 @@ Las imágenes funcionan como universo visual de la experiencia real del centro (
 
 | Capa | Archivos servidos | Origen / Licencia | Descripción de la escena | Rol en la secuencia |
 | :--- | :--- | :--- | :--- | :--- |
-| Capa 1 (Base) | `src/assets/img/local/local-fisio-1440.webp` | Fotografía real propia del centro (Sitges) | Sala de fisioterapia clínica y luz natural del centro. | Escena inicial para la Historia 1 (Jorge Díaz). |
+| Capa 1 (Base) | `src/assets/img/reviews/jorge-diaz-720.webp` / `-1200.webp` | Aportada para testimonio de Jorge Díaz | Retrato real de Jorge Díaz. | Escena para el Testimonio 2 (Jorge Díaz). |
 | Capa 2 (Asciende) | `src/assets/img/reviews/david-johnson-720.webp` / `-1200.webp` | Aportada por el paciente / cliente (David Johnson / David Johnson1), actualizada 2026-09-10 | Retrato real de David Johnson sonriente con camisa color salmón/coral y gafas de sol sobre la cabeza. | Asciende desde abajo al hacer scroll hacia la Historia 2 (David Johnson). |
 | Capa 3 (Asciende) | `src/assets/img/local/local-lounge-720.webp` / `-1440.webp` | Fotografía real propia del centro (Sitges) | Zona de bienvenida y espera con luz natural, sillones verde oliva de terciopelo, mesa dorada, mármol y plantas. | Asciende desde abajo al hacer scroll hacia la Historia 3 (atención, calma y cuidado global). |
 

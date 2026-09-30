@@ -1,0 +1,6 @@
+# robots.txt for https://physiowellness.es/
+User-agent: *
+Allow: /
+
+# XML Sitemap
+Sitemap: https://physiowellness.es/sitemap.xml

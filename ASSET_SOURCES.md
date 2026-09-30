@@ -260,7 +260,7 @@ Renovación editorial de la galería de instalaciones del centro en `index.html`
 | **1x1 Superior** | `src/assets/img/local/local-fisio-natural-720.webp` / `-1440.webp` | Fotografía profesional propia (sesión Sandra, #26) | Consulta de valoración con amplio ventanal a la calle ("Here Begins Your Wellness") y luz natural exterior. |
 | **Panorámica 2x1** | `src/assets/img/local/local-fisio-recuperacion-720.webp` / `-1440.webp` | Fotografía profesional propia (`fotos local 1/01-Physio Wellness.jpg`) | Sala activa con espaldera blanca, rack Corength, bandas elásticas, PowerPlate y sofá en rincón para readaptación. |
 
-### Espacio 02: Strength & Pilates (Local 2, Sant Honorat, 26)
+### Espacio 02: Strength & Pilates (Local 2, Avinguda Camí dels Capellans, 81)
 | Posición | Archivo servido | Origen / Licencia | Descripción de la escena |
 | :--- | :--- | :--- | :--- |
 | **Vertical 1x2** | `src/assets/img/local/local-lounge-720.webp` / `-1440.webp` | Fotografía profesional propia (`fotos local 2/09-Physio Wellness by Marshall Local 2.jpg`) | Sillones de terciopelo verde oliva acanalado, mesa cónica de latón y pared de mármol retroiluminada (encuadre vertical 2:3). |
@@ -437,7 +437,7 @@ Ampliación de `src/pages/servicios/pilates.html` a una narrativa completa de se
 | **Hero** | `src/assets/img/disciplines/pilates/230151d6-6497-438c-b67b-863393bb572f-1440.webp` / `-720.webp` | Fotografía real de disciplina aportada por el cliente | Sesión de Pilates Reformer con instructora acompañando el movimiento (mantenida de fase anterior). |
 | **02. Un trabajo guiado** | `src/assets/img/disciplines/pilates/3d3800cd-cb1f-45b2-88bc-0fa15cbb436f-1440.webp` / `-720.webp` | Fotografía real de disciplina aportada por el cliente | Ejercicio guiado en máquina de Pilates Reformer con agarre y tracción. |
 | **03. Qué trabajamos** | `src/assets/img/disciplines/pilates/8928754e-bf56-47fb-a5bd-c52d3fd25a89-1440.webp` / `-720.webp` | Fotografía real de disciplina aportada por el cliente | Hombre de rodillas sobre el carro del Reformer realizando tracción de correas con control postural y estabilidad. |
-| **04. El Reformer se adapta a ti** | `src/assets/img/local/local-pilates-1440.webp` / `-720.webp` | Fotografía profesional propia (sesión Sandra, Local 2 #05) | Estudio privado de Pilates Reformer en Sitges (Sant Honorat, 26) con máquina Pilatu en madera noble, carro, muelles y espejo de arco. Base para los 4 hotspots interactivos. |
+| **04. El Reformer se adapta a ti** | `src/assets/img/local/local-pilates-1440.webp` / `-720.webp` | Fotografía profesional propia (sesión Sandra, Local 2 #05) | Estudio privado de Pilates Reformer en Sitges (Avinguda Camí dels Capellans, 81) con máquina Pilatu en madera noble, carro, muelles y espejo de arco. Base para los 4 hotspots interactivos. |
 | **06. Así es una sesión** | `src/assets/img/disciplines/pilates/ddb4278a-27fd-4908-995a-38c497090852-1440.webp` / `-720.webp` | Fotografía real de disciplina aportada por el cliente | Mujer en extensión fluida lateral (mermaid) sobre el carro del Reformer, apoyando una mano en la barra de pies. |
 
 ## Fuerza / Strength: ampliación editorial y narrativa (2026-09-18)
@@ -474,7 +474,7 @@ Incorporación de equipamiento tecnológico real del centro (referenciado desde 
 
 ### Espacio de entrenamiento: Galería editorial Strength & Pilates (2026-09-21)
 
-Actualización de la sección «El espacio de entrenamiento» (`#espacio-entrenamiento`) en `src/pages/servicios/strength.html` con una galería equilibrada de 3 fotografías reales del Local 2 (Sant Honorat, 26):
+Actualización de la sección «El espacio de entrenamiento» (`#espacio-entrenamiento`) en `src/pages/servicios/strength.html` con una galería equilibrada de 3 fotografías reales del Local 2 (Avinguda Camí dels Capellans, 81):
 
 | Posición | Archivo servido | Origen / Licencia | Descripción de la escena |
 | :--- | :--- | :--- | :--- |

@@ -1,0 +1,99 @@
+# ==============================================================================
+# Physio Wellness by Marshall — Hostinger Production Server Configuration
+# Target domain: https://physiowellness.es/
+# ==============================================================================
+
+# 1. UTF-8 Encoding
+AddDefaultCharset UTF-8
+
+# 2. Prevent Directory Listing
+Options -Indexes
+
+# 3. Protect Hidden Files and Sensitive Documentation
+<FilesMatch "^\.|\.(md|log|sh|py|sql|bak|env)$">
+    Require all denied
+</FilesMatch>
+
+# 4. Custom 404 Error Page
+ErrorDocument 404 /404.html
+
+# 5. Rewrite Engine (HTTPS + Trailing Slash Canonicalization)
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteBase /
+
+    # 5.1 Force HTTPS (només per al domini de producció physiowellness.es)
+    RewriteCond %{HTTP_HOST} ^(www\.)?physiowellness\.es$ [NC]
+    RewriteCond %{HTTPS} !=on
+    RewriteCond %{HTTP:X-Forwarded-Proto} !https [NC]
+    RewriteRule ^(.*)$ https://physiowellness.es/$1 [R=301,L]
+
+    # 5.2 Redirigir www a domini canònic sense www
+    RewriteCond %{HTTP_HOST} ^www\.physiowellness\.es$ [NC]
+    RewriteRule ^(.*)$ https://physiowellness.es/$1 [R=301,L]
+
+    # 5.3 Forçar barra final en directoris (agnòstic al domini, compatible amb domini temporal)
+    RewriteCond %{REQUEST_FILENAME} -d
+    RewriteCond %{REQUEST_URI} !(.*)/$
+    RewriteRule ^(.*)$ /$1/ [R=301,L]
+
+    # 5.4 Fallback per rutes d'assets que ometen ../ des de subdirectoris d'idioma
+    RewriteRule ^(?:ca|es|en)/src/(.*)$ /src/$1 [L]
+</IfModule>
+
+# 6. MIME Types (Modern Web Assets)
+<IfModule mod_mime.c>
+    AddType image/webp .webp
+    AddType image/avif .avif
+    AddType font/woff2 .woff2
+    AddType application/manifest+json .webmanifest
+    AddType application/ld+json .jsonld
+</IfModule>
+
+# 7. Browser Caching (Performance)
+<IfModule mod_expires.c>
+    ExpiresActive On
+    ExpiresDefault "access plus 1 month"
+
+    # HTML: Short cache / revalidate (1 hour)
+    ExpiresByType text/html "access plus 1 hour"
+
+    # Static CSS & JS: 1 year (immutable or version-controlled)
+    ExpiresByType text/css "access plus 1 year"
+    ExpiresByType application/javascript "access plus 1 year"
+    ExpiresByType text/javascript "access plus 1 year"
+
+    # Images & Media: 1 year
+    ExpiresByType image/webp "access plus 1 year"
+    ExpiresByType image/avif "access plus 1 year"
+    ExpiresByType image/png "access plus 1 year"
+    ExpiresByType image/jpeg "access plus 1 year"
+    ExpiresByType image/svg+xml "access plus 1 year"
+    ExpiresByType image/x-icon "access plus 1 year"
+
+    # Fonts: 1 year
+    ExpiresByType font/woff2 "access plus 1 year"
+</IfModule>
+
+# 8. Security Headers
+<IfModule mod_headers.c>
+    # Prevent MIME sniffing
+    Header always set X-Content-Type-Options "nosniff"
+
+    # Prevent clickjacking
+    Header always set X-Frame-Options "SAMEORIGIN"
+
+    # Referrer Policy
+    Header always set Referrer-Policy "strict-origin-when-cross-origin"
+
+    # Permissions Policy (restrict sensitive hardware access)
+    Header always set Permissions-Policy "geolocation=(), camera=(), microphone=()"
+
+    # HTTP Strict Transport Security (HSTS) - Enabled for 1 year with preload
+    Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains" env=HTTPS
+</IfModule>
+
+# 9. Compression (Gzip / Brotli)
+<IfModule mod_deflate.c>
+    AddOutputFilterByType DEFLATE text/html text/plain text/xml text/css application/javascript application/json image/svg+xml
+</IfModule>

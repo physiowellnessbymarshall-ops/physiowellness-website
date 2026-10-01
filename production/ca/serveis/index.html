@@ -308,21 +308,24 @@
 
   <!-- ==========================================================================
        01 — HERO EDITORIAL DE SERVEIS
+       Composició asimètrica editorial, tipografia protagonista, reveal mitjançant
+       màscara sobre fotografia de gran escala i índex interactiu de disciplines.
        ========================================================================== -->
   <section class="sv-hero">
     <div class="container sv-hero__inner">
-      <nav class="breadcrumb sv-hero__breadcrumb" aria-label="Ruta de navegació" data-reveal>
-        <ol>
-          <li><a href="../../ca/">Inici</a></li>
-          <li aria-current="page">Serveis</li>
-        </ol>
-      </nav>
+      <div class="sv-hero__topbar" data-reveal>
+        <p class="sv-hero__eyebrow">SERVEIS · PHYSIO WELLNESS</p>
+        <span class="sv-hero__location">Sitges · Capellans, 79 i 81</span>
+      </div>
 
-      <div class="sv-hero__grid">
-        <div class="sv-hero__content">
+      <div class="sv-hero__canvas">
+        <div class="sv-hero__narrative">
           <div data-reveal style="--i:1">
-            <p class="sv-hero__eyebrow">SERVEIS · PHYSIO WELLNESS</p>
-            <h1 class="sv-hero__title">No sempre necessites una sola&nbsp;cosa.</h1>
+            <h1 class="sv-hero__title">
+              <span class="sv-hero__title-line">No sempre</span>
+              <span class="sv-hero__title-line">necessites una</span>
+              <span class="sv-hero__title-line sv-hero__title-line--em">sola cosa.</span>
+            </h1>
           </div>
 
           <div class="sv-hero__lead" data-reveal style="--i:2">
@@ -331,52 +334,98 @@
           </div>
 
           <div class="sv-hero__actions" data-reveal style="--i:3">
-            <a class="btn btn--primary" href="#explorador">Troba el teu punt de partida ↓</a>
-            <a class="btn btn--outline" href="https://www.docfav.com/portal/physio-wellness-by-marshall" target="_blank" rel="noopener">Reservar primera consulta</a>
+            <a class="btn btn--primary sv-hero__cta" href="#explorador">
+              <span>Troba el teu punt de partida</span>
+              <svg width="15" height="15" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M8 2v10M3.5 7.5L8 12l4.5-4.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </a>
+            <a class="sv-hero__action-link" href="https://www.docfav.com/portal/physio-wellness-by-marshall" target="_blank" rel="noopener">Reservar primera consulta →</a>
           </div>
 
-          <div class="sv-hero__tags" data-reveal style="--i:4">
-            <a class="sv-hero__tag-item" href="../../ca/fisioterapia/">01 Fisioteràpia</a>
-            <a class="sv-hero__tag-item" href="../../ca/forca/">02 Força</a>
-            <a class="sv-hero__tag-item" href="../../ca/pilates/">03 Pilates</a>
-            <a class="sv-hero__tag-item" href="../../ca/benestar/">04 Benestar</a>
-            <a class="sv-hero__tag-item" href="../../ca/stretching/">05 Stretching</a>
+          <!-- Índex Editorial Interactiu de Disciplines -->
+          <div class="sv-hero__index-wrap" data-reveal style="--i:4">
+            <div class="sv-hero__index-head">
+              <span class="sv-hero__index-label">Índex editorial de disciplines</span>
+              <span class="sv-hero__index-count">05 Àrees Integratives</span>
+            </div>
+            <nav class="sv-hero__index-list" aria-label="Navegació de disciplines">
+              <a class="sv-hero__index-item" href="../../ca/fisioterapia/" data-hero-service="0">
+                <span class="sv-hero__index-num">01</span>
+                <span class="sv-hero__index-name">Fisioteràpia</span>
+                <span class="sv-hero__index-meta">Dolor, lesió & biomecànica</span>
+                <span class="sv-hero__index-arrow" aria-hidden="true">→</span>
+              </a>
+              <a class="sv-hero__index-item" href="../../ca/forca/" data-hero-service="1">
+                <span class="sv-hero__index-num">02</span>
+                <span class="sv-hero__index-name">Força</span>
+                <span class="sv-hero__index-meta">Readaptació & massa activa</span>
+                <span class="sv-hero__index-arrow" aria-hidden="true">→</span>
+              </a>
+              <a class="sv-hero__index-item" href="../../ca/pilates/" data-hero-service="2">
+                <span class="sv-hero__index-num">03</span>
+                <span class="sv-hero__index-name">Pilates</span>
+                <span class="sv-hero__index-meta">Reformer & control motor</span>
+                <span class="sv-hero__index-arrow" aria-hidden="true">→</span>
+              </a>
+              <a class="sv-hero__index-item" href="../../ca/benestar/" data-hero-service="3">
+                <span class="sv-hero__index-num">04</span>
+                <span class="sv-hero__index-name">Benestar</span>
+                <span class="sv-hero__index-meta">Recuperació cel·lular & descans</span>
+                <span class="sv-hero__index-arrow" aria-hidden="true">→</span>
+              </a>
+              <a class="sv-hero__index-item" href="../../ca/stretching/" data-hero-service="4">
+                <span class="sv-hero__index-num">05</span>
+                <span class="sv-hero__index-name">Stretching</span>
+                <span class="sv-hero__index-meta">Mobilitat & descompressió</span>
+                <span class="sv-hero__index-arrow" aria-hidden="true">→</span>
+              </a>
+            </nav>
           </div>
         </div>
 
-        <div class="sv-hero__media" data-reveal style="--i:2">
-          <figure class="sv-hero__frame">
+        <!-- Columna Fotogràfica: Escala, Asimetria i Reveal de Màscara -->
+        <div class="sv-hero__media-col" data-reveal style="--i:2">
+          <div class="sv-hero__stage">
             <img 
               class="sv-hero__img" 
               src="../../src/assets/img/local/local-fisio-recuperacion-1440.webp" 
               srcset="../../src/assets/img/local/local-fisio-recuperacion-720.webp 720w, ../../src/assets/img/local/local-fisio-recuperacion-1440.webp 1440w" 
-              sizes="(min-width: 960px) 40vw, 100vw" 
+              sizes="(min-width: 1200px) 48vw, (min-width: 960px) 44vw, 100vw" 
               alt="Espai clínic i de moviment de Physio Wellness Sitges" 
               width="1440" 
               height="960"
               loading="eager"
               fetchpriority="high"
             >
-            <figcaption class="sv-hero__badge">
-              <span class="sv-hero__badge-num">05 ÀREES INTEGRATIVES · SITGES</span>
-              <p class="sv-hero__badge-text">Atenció clínica individual i moviment guiat a Sitges</p>
-            </figcaption>
-          </figure>
+            <div class="sv-hero__media-caption">
+              <span class="sv-hero__caption-tag">PW · SITGES · CAPELLANS 79-81</span>
+              <p class="sv-hero__caption-txt">Atenció clínica individual i moviment guiat a Sitges</p>
+            </div>
+          </div>
         </div>
       </div>
 
+      <!-- Franja Inferior Editorial (3 Atributs Integrats) -->
       <div class="sv-hero__strip" data-reveal style="--i:4">
         <div class="sv-hero__strip-item">
           <span class="sv-hero__strip-idx">01</span>
-          <span class="sv-hero__strip-txt">VALORACIÓ INDIVIDUAL</span>
+          <div class="sv-hero__strip-content">
+            <span class="sv-hero__strip-title">Valoració individual</span>
+            <span class="sv-hero__strip-sub">Diagnòstic clínic 1 a 1 sense protocols estandarditzats</span>
+          </div>
         </div>
         <div class="sv-hero__strip-item">
           <span class="sv-hero__strip-idx">02</span>
-          <span class="sv-hero__strip-txt">CRITERI CLÍNIC I ACTIU</span>
+          <div class="sv-hero__strip-content">
+            <span class="sv-hero__strip-title">Criteri clínic i actiu</span>
+            <span class="sv-hero__strip-sub">Teràpia manual complementada amb reeducació motora</span>
+          </div>
         </div>
         <div class="sv-hero__strip-item">
           <span class="sv-hero__strip-idx">03</span>
-          <span class="sv-hero__strip-txt">SITGES · 2 ESPAIS CONNECTATS</span>
+          <div class="sv-hero__strip-content">
+            <span class="sv-hero__strip-title">Sitges · 2 espais connectats</span>
+            <span class="sv-hero__strip-sub">Consulta clínica (79) i estudi de moviment (81)</span>
+          </div>
         </div>
       </div>
     </div>
@@ -931,44 +980,209 @@
   </section>
 
   <!-- ==========================================================================
-       06 — EXPERIÈNCIA / CRITERI
+       06 — EXPERIÈNCIA / CRITERI (CRESCENDO CAP A VERD FOSC)
+       Experiència visual basada en dades reals, escala tipogràfica, fotografia real
+       dels 2 espais de Sitges i lideratge de Marçal Ramirez.
        ========================================================================== -->
-  <section class="sv-criterio" aria-label="Criteri i trajectòria">
-    <div class="container">
-      <div class="sv-criterio__head" data-reveal>
-        <p class="eyebrow section-eyebrow">CRITERI PROFESSIONAL A SITGES</p>
-        <h2 class="section-heading">Experiència contrastada per orientar-te amb rigor</h2>
-        <p class="section-lead">La diferència entre un alleujament puntual i una recuperació real rau en el criteri clínic amb què es mesura i s'ajusta cada etapa del teu procés.</p>
-      </div>
+  <!-- ==========================================================================
+       06 — EXPERIÈNCIA / CRITERI (NARRATIVA EDITORIAL DE SCROLL)
+       Experiència que es mesura en processos reals: narrativa visual,
+       escala tipogràfica, fotografia real i motion refinat.
+       ========================================================================== -->
+  <section class="sv-criterio" id="experiencia" aria-label="Experiència contrastada i criteri clínic">
+    <!-- Atmospheric lighting background -->
+    <div class="sv-criterio__ambient" aria-hidden="true"></div>
 
-      <div class="sv-criterio__stats" data-reveal style="--i:1">
-        <div class="sv-criterio__stat">
-          <span class="sv-criterio__stat-num">+10</span>
-          <p class="sv-criterio__stat-title">Anys d'experiència</p>
-          <p class="sv-criterio__stat-desc">En fisioteràpia clínica, biomecànica i readaptació esportiva.</p>
-        </div>
-        <div class="sv-criterio__stat">
-          <span class="sv-criterio__stat-num">+1.500</span>
-          <p class="sv-criterio__stat-title">Pacients acompanyats</p>
-          <p class="sv-criterio__stat-desc">En processos reals de recuperació, guany de força i salut.</p>
-        </div>
-        <div class="sv-criterio__stat">
-          <span class="sv-criterio__stat-num">100%</span>
-          <p class="sv-criterio__stat-title">Atenció individual</p>
-          <p class="sv-criterio__stat-desc">Sessions individuals 1 a 1 sense rotació ni esperes.</p>
-        </div>
-        <div class="sv-criterio__stat">
-          <span class="sv-criterio__stat-num">2</span>
-          <p class="sv-criterio__stat-title">Espais a Sitges</p>
-          <p class="sv-criterio__stat-desc">Consulta clínica i estudi de força/Pilates connectats.</p>
-        </div>
-      </div>
+    <div class="container sv-criterio__container">
+      
+      <!-- Entrada de secció / Header editorial amb ampli aire -->
+      <header class="sv-criterio__entry" data-criterio-reveal>
+        <p class="eyebrow sv-criterio__eyebrow">CRITERI PROFESSIONAL A SITGES</p>
+        <h2 class="sv-criterio__title">
+          Experiència que es mesura<br>
+          <span class="sv-criterio__title-highlight">en processos reals.</span>
+        </h2>
+        <p class="sv-criterio__context">
+          La diferència entre un alleujament puntual i una recuperació real rau en el rigor clínic amb què avaluem, tractem i consolidem cada avanç del teu procés.
+        </p>
+      </header>
 
-      <div class="sv-criterio__footer" data-reveal style="--i:2">
-        <p class="sv-criterio__footer-text">Sota la direcció de Marçal Ramirez (Fisioterapeuta Col·legiat nº 14.599), combinem criteri manual, exercici actiu i l'última tecnologia per cuidar la teva salut física.</p>
-        <a class="sv-criterio__link" href="../../ca/coneix-nos/equip/">Conèixer l'equip i el centre →</a>
-      </div>
-    </div>
+      <!-- Spine / Timeline connector vertical de progrés -->
+      <div class="sv-criterio__narrative" data-criterio-narrative>
+        <div class="sv-criterio__spine" aria-hidden="true">
+          <div class="sv-criterio__spine-fill" data-criterio-spine></div>
+        </div>
+
+        <!-- MOMENT 01 — +10: Escala monumental, tipografia pura i espai negatiu -->
+        <article class="sv-criterio__moment sv-criterio__moment--01" data-criterio-moment="1" data-criterio-reveal>
+          <div class="sv-criterio__moment-tag">
+            <span class="sv-criterio__moment-step">01</span>
+            <span class="sv-criterio__moment-label">TRAJECTÒRIA CLÍNICA</span>
+          </div>
+
+          <div class="sv-criterio__m01-layout">
+            <div class="sv-criterio__m01-number-wrap">
+              <div class="sv-criterio__num-mask">
+                <span class="sv-criterio__massive-num" data-count="10" data-prefix="+">+10</span>
+              </div>
+            </div>
+            <div class="sv-criterio__m01-body">
+              <h3 class="sv-criterio__moment-heading">Anys d'experiència</h3>
+              <p class="sv-criterio__moment-lead">En fisioteràpia clínica, biomecànica i readaptació esportiva.</p>
+              <p class="sv-criterio__moment-desc">
+                Més d'una dècada d'exercici continuat a Sitges fonamentat en el diagnòstic precís, el tractament manual minuciós i l'evidència clínica.
+              </p>
+            </div>
+          </div>
+        </article>
+
+        <!-- MOMENT 02 — +1.500: Fotografia real de sessió + número colossal a la dreta -->
+        <article class="sv-criterio__moment sv-criterio__moment--02" data-criterio-moment="2" data-criterio-reveal>
+          <div class="sv-criterio__moment-tag">
+            <span class="sv-criterio__moment-step">02</span>
+            <span class="sv-criterio__moment-label">PROCESSOS REALS</span>
+          </div>
+
+          <div class="sv-criterio__m02-layout">
+            <!-- Foto real a l'esquerra -->
+            <div class="sv-criterio__m02-media-wrap">
+              <figure class="sv-criterio__media-frame" data-parallax-speed="0.08">
+                <img class="sv-criterio__m02-img"
+                     src="../../src/assets/img/disciplines/fisio/ae26bb46-82b0-4914-8159-5d01e68f3f81-1440.webp"
+                     srcset="../../src/assets/img/disciplines/fisio/ae26bb46-82b0-4914-8159-5d01e68f3f81-720.webp 720w, ../../src/assets/img/disciplines/fisio/ae26bb46-82b0-4914-8159-5d01e68f3f81-1440.webp 1440w"
+                     sizes="(min-width: 960px) 46vw, 92vw"
+                     alt="Fisioterapeuta en sessió de valoració i teràpia manual amb pacient a Physio Wellness"
+                     loading="lazy" width="1122" height="1402">
+                <figcaption class="sv-criterio__caption">
+                  <span class="sv-criterio__caption-dot"></span>
+                  Tractament i valoració manual individualitzada en consulta
+                </figcaption>
+              </figure>
+            </div>
+
+            <!-- Número enorme a la dreta + text -->
+            <div class="sv-criterio__m02-content">
+              <div class="sv-criterio__num-mask">
+                <span class="sv-criterio__massive-num" data-count="1500" data-prefix="+" data-format="spanish">+1.500</span>
+              </div>
+              <h3 class="sv-criterio__moment-heading">Pacients acompanyats</h3>
+              <p class="sv-criterio__moment-lead">En processos reals de recuperació, guany de força i salut.</p>
+              <p class="sv-criterio__moment-desc">
+                Persones que van arribar amb dolor agut, lesions esportives o pèrdua de mobilitat, i que han recuperat la seva autonomia mitjançant un seguiment proper i honest.
+              </p>
+            </div>
+          </div>
+        </article>
+
+        <!-- MOMENT 03 — 100%: Moment purament tipogràfic, escala colossal, espai i ritme -->
+        <article class="sv-criterio__moment sv-criterio__moment--03" data-criterio-moment="3" data-criterio-reveal>
+          <div class="sv-criterio__moment-tag">
+            <span class="sv-criterio__moment-step">03</span>
+            <span class="sv-criterio__moment-label">EXCLUSIVITAT I RIGOR</span>
+          </div>
+
+          <div class="sv-criterio__m03-stage">
+            <div class="sv-criterio__m03-num-display" data-criterio-scale>
+              <span class="sv-criterio__scale-num">100%</span>
+            </div>
+            <div class="sv-criterio__m03-lockup">
+              <h3 class="sv-criterio__m03-eyetitle">ATENCIÓ INDIVIDUAL</h3>
+              <p class="sv-criterio__m03-lead">Sessions individuals 1 a 1, sense rotació ni esperes.</p>
+              <p class="sv-criterio__m03-body">
+                El temps, la cabina clínica i la dedicació del professional estan reservats en exclusiva per a tu. Sense sales compartides ni atencions dividides.
+              </p>
+            </div>
+          </div>
+        </article>
+
+        <!-- MOMENT 04 — 2: Els dos espais connectats a Sitges amb fotografia editorial asimètrica -->
+        <article class="sv-criterio__moment sv-criterio__moment--04" data-criterio-moment="4" data-criterio-reveal>
+          <div class="sv-criterio__moment-tag">
+            <span class="sv-criterio__moment-step">04</span>
+            <span class="sv-criterio__moment-label">INFRAESTRUCTURA INTEGRADA</span>
+          </div>
+
+          <div class="sv-criterio__m04-header">
+            <div class="sv-criterio__num-mask">
+              <span class="sv-criterio__massive-num">2</span>
+            </div>
+            <div class="sv-criterio__m04-title-group">
+              <h3 class="sv-criterio__moment-heading">ESPAIS CONNECTATS A SITGES</h3>
+              <p class="sv-criterio__moment-lead">Dues seus complementàries dissenyades com a part d'un mateix sistema de recuperació activa i moviment.</p>
+            </div>
+          </div>
+
+          <!-- Composició editorial de dues imatges asimètriques -->
+          <div class="sv-criterio__m04-spaces">
+            <!-- Espai 1: Consulta clínica -->
+            <div class="sv-criterio__space-col sv-criterio__space-col--primary" data-parallax-speed="0.04">
+              <div class="sv-criterio__space-img-wrap sv-criterio__space-img-wrap--tall">
+                <img class="sv-criterio__space-img"
+                     src="../../src/assets/img/local/local-fisio-1440.webp"
+                     srcset="../../src/assets/img/local/local-fisio-720.webp 720w, ../../src/assets/img/local/local-fisio-1440.webp 1440w"
+                     sizes="(min-width: 960px) 46vw, 92vw"
+                     alt="Cabina de consulta clínica de fisioteràpia amb llitera Swop i disseny de roure i llum càlida"
+                     loading="lazy" width="1440" height="960">
+              </div>
+              <div class="sv-criterio__space-meta">
+                <span class="sv-criterio__space-num">SEU 01 · CAPELLANS 79</span>
+                <h4 class="sv-criterio__space-name">Consulta clínica</h4>
+                <p class="sv-criterio__space-desc">Diagnòstic ecogràfic, teràpia manual ortopèdica, neuromodulació i cabina individualitzada de tractament.</p>
+              </div>
+            </div>
+
+            <!-- Espai 2: Força · Pilates · moviment (lleugerament desplaçada) -->
+            <div class="sv-criterio__space-col sv-criterio__space-col--secondary" data-parallax-speed="-0.04">
+              <div class="sv-criterio__space-img-wrap sv-criterio__space-img-wrap--offset">
+                <img class="sv-criterio__space-img"
+                     src="../../src/assets/img/local/local-pilates-estudio-1440.webp"
+                     srcset="../../src/assets/img/local/local-pilates-estudio-720.webp 720w, ../../src/assets/img/local/local-pilates-estudio-1440.webp 1440w"
+                     sizes="(min-width: 960px) 44vw, 92vw"
+                     alt="Estudi de Pilates Reformer amb màquina Pilatu i arquitectura contemporània"
+                     loading="lazy" width="1440" height="960">
+              </div>
+              <div class="sv-criterio__space-meta">
+                <span class="sv-criterio__space-num">SEU 02 · CAPELLANS 81</span>
+                <h4 class="sv-criterio__space-name">Força · Pilates · moviment</h4>
+                <p class="sv-criterio__space-desc">Estudi amb Pilates Reformer, equipament de força Technogym i readaptació biomecànica activa.</p>
+              </div>
+            </div>
+          </div>
+        </article>
+
+      </div><!-- /.sv-criterio__narrative -->
+
+      <!-- TANCAMENT EDITORIAL: Tancament propi per a Marçal Ramirez i crida a l'equip -->
+      <footer class="sv-criterio__closure" data-criterio-reveal>
+        <div class="sv-criterio__closure-card">
+          <div class="sv-criterio__closure-media">
+            <img class="sv-criterio__closure-portrait"
+                 src="../../src/assets/img/team/marcal-ramirez.jpg"
+                 alt="Marçal Ramirez Roig, Director de Physio Wellness a Sitges"
+                 loading="lazy" width="140" height="140">
+            <div class="sv-criterio__closure-badge">
+              <span class="sv-criterio__badge-title">Marçal Ramirez Roig</span>
+              <span class="sv-criterio__badge-col">Col. 14.599</span>
+            </div>
+          </div>
+
+          <div class="sv-criterio__closure-content">
+            <span class="sv-criterio__closure-eyebrow">DIRECCIÓ I PROPÒSIT</span>
+            <h3 class="sv-criterio__closure-title">Un mateix criteri darrere de cada etapa.</h3>
+            <p class="sv-criterio__closure-text">
+              Sota la direcció de Marçal Ramirez (Fisioterapeuta Col·legiat nº 14.599), combinem criteri manual, exercici actiu i tecnologia per cuidar de la teva salut física.
+            </p>
+            <div class="sv-criterio__closure-cta">
+              <a class="btn btn--primary sv-criterio__cta-btn" href="../../ca/coneix-nos/equip/">
+                <span>Conèixer l'equip i el centre</span>
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+              </a>
+            </div>
+          </div>
+        </div>
+      </footer>
+
+    </div><!-- /.container -->
   </section>
 
   <!-- ==========================================================================

@@ -85,7 +85,7 @@ img, picture{max-width:100%;display:block;}
 a{color:inherit;text-decoration:none;}
 button{font-family:inherit;cursor:pointer;background:none;border:0;padding:0;color:inherit;}
 [hidden]{display:none!important;}
-h1,h2,h3,h4{
+h1,h2,h3,h4,h5,h6{
   margin:0;
   font-family:var(--font-base);
   font-weight:500;
@@ -107,9 +107,72 @@ h4{
   line-height:1.35;
   letter-spacing:0;
 }
-p{margin:0;}
+h5,h6{
+  line-height:1.4;
+  letter-spacing:0;
+}
+p{margin:0;text-wrap:pretty;}
 p + p{margin-top:var(--space-md);}
 ul{margin:0;padding:0;list-style:none;}
+
+/* Tipografia editorial i prevenció sistemàtica d'òrfenes */
+.display,
+.hero__title,
+.section-heading,
+.section-title,
+.page-hero__title,
+.service-hero__headline,
+.method-hero__title,
+.visit-hero__title,
+.choice-card__title,
+.journey-card__title,
+.timeline-card__title,
+.moment-card__title,
+.reformer-card__title,
+.strength-rate-card__title,
+.wellness-tool-card__title,
+.cta-final__title,
+.cta__title,
+.cta-banner__title,
+.split__title,
+.faq__q,
+.faq-item__question,
+.first-visit__step-title,
+.continuity-path__title,
+.seasonal-program__headline,
+.seasonal-programme__headline,
+.snow-closing__headline,
+.stretching-rates__title,
+.sv-hero__title,
+.sv-block__title,
+.sv-consultation__title {
+  text-wrap: balance;
+}
+
+.hero__lead,
+.section-lead,
+.section-subtitle,
+.page-hero__text p,
+.service-hero__lead,
+.method-hero__lead,
+.cta-final__lead,
+.cta-banner__text,
+.quote,
+.editorial-quote,
+.quote__text,
+.areas-detail__intro p,
+.path__text p,
+.expertise__text p,
+.travel__text,
+.cond__a,
+.faq__a,
+.sv-hero__lead,
+.sv-consultation__lead,
+.sv-block__text,
+.snow-closing__text,
+.stretching-rates__lead {
+  text-wrap: pretty;
+}
 
 .container{
   width:100%;
@@ -563,8 +626,8 @@ a:focus-visible,button:focus-visible,input:focus-visible{
 }
 
 .section-eyebrow{margin-bottom:var(--space-sm-md);}
-.section-heading{font-size:var(--fs-h2);line-height:1.18;letter-spacing:-.015em;max-width:26ch;}
-.section-lead{font-size:var(--fs-lead);line-height:1.6;color:var(--pw-ink-70);max-width:44ch;text-wrap:pretty;}
+.section-heading{font-size:var(--fs-h2);line-height:1.18;letter-spacing:-.015em;max-width:32ch;text-wrap:balance;}
+.section-lead{font-size:var(--fs-lead);line-height:1.6;color:var(--pw-ink-70);max-width:48ch;text-wrap:pretty;}
 /* Jerarquía editorial Gestalt:
    Eyebrow -> (petit / 12px) -> Heading -> (mitjà / 20px) -> Lead -> (gran / 32px) -> Contingut */
 .section-heading + .section-lead{margin-top:var(--space-md-lg);}
@@ -1603,9 +1666,10 @@ a:focus-visible,button:focus-visible,input:focus-visible{
 }
 .first-visit__step-content{flex:1 1 auto;min-width:0;}
 .first-visit__step-title{
-  font-size:1.05rem;font-weight:550;line-height:1.35;
+  font-size:clamp(0.95rem, 2.4vw, 1.05rem);font-weight:550;line-height:1.35;
   color:var(--pw-ink);margin:0 0 .25rem 0;
   transition:color var(--dur-med) var(--ease-out);
+  text-wrap:balance;
 }
 .first-visit__step-desc{
   font-size:.92rem;line-height:1.5;
@@ -2993,7 +3057,7 @@ a:focus-visible,button:focus-visible,input:focus-visible{
 .cta-final__inner .eyebrow{margin-bottom:var(--space-sm-md);}
 .cta-final__title{font-size:var(--fs-h2);line-height:1.18;letter-spacing:-.015em;text-wrap:balance;}
 .cta-final__title + .cta-final__lead{margin-top:var(--space-md-lg);}
-.cta-final__lead{font-size:var(--fs-lead);line-height:1.6;color:rgba(255,255,255,.82);max-width:44ch;}
+.cta-final__lead{font-size:var(--fs-lead);line-height:1.6;color:rgba(255,255,255,.82);max-width:48ch;text-wrap:pretty;}
 .cta-final__lead + .cta-final__actions{margin-top:var(--space-xl);}
 .cta-final__actions{display:flex;flex-wrap:wrap;justify-content:center;gap:var(--space-md);}
 
@@ -3079,14 +3143,15 @@ a:focus-visible,button:focus-visible,input:focus-visible{
 .page-hero__eyebrow{margin-bottom:var(--space-sm-md);}
 .page-hero__title{
   font-size:clamp(2.15rem,4.6vw,4rem);
-  max-width:24ch;
+  max-width:28ch;
+  text-wrap:balance;
 }
 .page-hero__text{
   display:grid;gap:var(--sp-5);
-  max-width:48ch;
+  max-width:52ch;
   margin-block:var(--sp-8) var(--sp-10);
 }
-.page-hero__text p{font-size:var(--fs-lead);color:rgba(255,255,255,.84);}
+.page-hero__text p{font-size:var(--fs-lead);color:rgba(255,255,255,.84);text-wrap:pretty;}
 .page-hero__actions{display:flex;flex-wrap:wrap;align-items:center;gap:var(--sp-4);}
 .page-hero__micro{
   margin-top:var(--sp-6);
@@ -3979,7 +4044,7 @@ a:focus-visible,button:focus-visible,input:focus-visible{
   }
 }
 
-.split__title{font-size:var(--fs-h3);font-weight:500;max-width:16ch;}
+.split__title{font-size:var(--fs-h3);font-weight:500;max-width:28ch;text-wrap:balance;}
 .split__duration{display:flex;align-items:baseline;gap:.4rem;margin-top:var(--sp-6);}
 .split__num{
   font-size:clamp(2.25rem,6vw,3rem);
@@ -4076,7 +4141,7 @@ a:focus-visible,button:focus-visible,input:focus-visible{
 @media (min-width:960px){
   .faq__inner{grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr);gap:var(--sp-16);align-items:start;}
 }
-.faq .section-heading{font-size:clamp(1.85rem,2.7vw,2.45rem);line-height:1.2;}
+.faq .section-heading{font-size:clamp(1.75rem,2.2vw,2.15rem);line-height:1.2;text-wrap:balance;}
 .faq__list{display:grid;}
 .faq__item{border-bottom:1px solid var(--pw-line);}
 .faq__item:first-child{border-top:1px solid var(--pw-line);}
@@ -4229,6 +4294,7 @@ a:focus-visible,button:focus-visible,input:focus-visible{
    se queda anclado mientras se recorren bonos y condiciones al lado. */
 @media (min-width:960px){
   .page-tarifas .rates__head{position:sticky;top:6rem;align-self:start;}
+  .page-tarifas .rates__head .section-heading{font-size:clamp(1.75rem,2.7vw,2.4rem);text-wrap:balance;}
 }
 
 /* ----- "A domicilio": ruptura oscura -----
@@ -4928,12 +4994,13 @@ a:not(.booking-panel__help):focus-visible,
   margin:0;
 }
 .method-hero__title{
-  font-size:clamp(2.75rem,6.5vw,5.5rem);
+  font-size:clamp(2.15rem,3.8vw,3.5rem);
   font-weight:500;
   line-height:1.08;
   letter-spacing:-.02em;
   color:var(--pw-ink);
   margin:0 0 var(--space-md-lg);
+  text-wrap:balance;
 }
 .method-hero__statement{
   margin-bottom:var(--sp-6);
@@ -9016,6 +9083,9 @@ a:not(.booking-panel__help):focus-visible,
   .visit-continuity__paths {
     grid-template-columns: repeat(5, 1fr);
   }
+  .continuity-path {
+    padding: clamp(0.9rem, 1.2vw, 1.2rem);
+  }
 }
 .continuity-path {
   background: var(--pw-white);
@@ -9039,11 +9109,12 @@ a:not(.booking-panel__help):focus-visible,
   margin-bottom: var(--sp-3);
 }
 .continuity-path__title {
-  font-size: 1.1rem;
+  font-size: clamp(0.98rem, 1.1vw, 1.05rem);
   font-weight: 500;
   color: var(--pw-ink);
   line-height: 1.25;
   margin: 0 0 var(--sp-2);
+  text-wrap: balance;
 }
 .continuity-path__desc {
   font-size: var(--fs-small);
@@ -10311,7 +10382,7 @@ a:not(.booking-panel__help):focus-visible,
    de un fade en bloque. Disparo: misma clase .is-visible que revealOnScroll()
    ya añade a este <h2> — sin JS nuevo. */
 .seasonal-program__headline {
-  font-size: clamp(3.2rem, 7.5vw, 6.5rem);
+  font-size: clamp(2.8rem, 5.8vw, 5.25rem);
   font-weight: 500;
   line-height: 1.06;
   letter-spacing: -0.025em;
@@ -10536,7 +10607,7 @@ a:not(.booking-panel__help):focus-visible,
     padding-block: clamp(4.5rem, 10vh, 6rem);
   }
   .seasonal-program__headline {
-    font-size: clamp(2.5rem, 11vw, 3.6rem);
+    font-size: clamp(1.85rem, 8.2vw, 2.6rem);
     line-height: 1;
   }
   .seasonal-program__pillars {
@@ -10955,10 +11026,11 @@ a:not(.booking-panel__help):focus-visible,
 }
 
 .snow-fatigue__headline {
-  font-size: var(--fs-h2);
+  font-size: clamp(1.4rem, 4vw, var(--fs-h2));
   font-weight: 500;
   line-height: 1.15;
   margin: 0 0 var(--sp-4);
+  text-wrap: balance;
 }
 
 .snow-fatigue__text {
@@ -11580,6 +11652,7 @@ a:not(.booking-panel__help):focus-visible,
   line-height: 1.3;
   color: var(--pw-ink);
   margin: 0;
+  text-wrap: balance;
 }
 
 /* Sección 08: Programa y Precio */
@@ -11743,17 +11816,18 @@ a:not(.booking-panel__help):focus-visible,
 .snow-closing__inner {
   position: relative;
   z-index: 2;
-  max-width: 780px;
+  max-width: 860px;
   margin-inline: auto;
 }
 
 .snow-closing__headline {
-  font-size: var(--fs-display);
+  font-size: clamp(2.25rem, 5.2vw, 4.75rem);
   font-weight: 500;
   line-height: 1.1;
   letter-spacing: -0.02em;
   margin: 0 0 var(--space-md-lg);
   color: var(--pw-white);
+  text-wrap: balance;
 }
 
 .snow-closing__supporting {
@@ -11946,13 +12020,14 @@ a:not(.booking-panel__help):focus-visible,
 /* Titular imponente con amplia presencia y peso editorial */
 .service-hero__headline {
   font-family: var(--font-base);
-  font-size: clamp(2.65rem, 4.6vw, 4.5rem);
+  font-size: clamp(2.15rem, 3.0vw, 2.95rem);
   font-weight: 500;
-  line-height: 1.12;
+  line-height: 1.14;
   letter-spacing: -0.02em;
   color: var(--pw-white);
-  max-width: 26ch;
+  max-width: 38ch;
   margin: 0 0 clamp(1.15rem, 2.2vh, 1.65rem);
+  text-wrap: balance;
 }
 
 /* Párrafo explicativo con respiración y lectura pausada */
@@ -12340,8 +12415,9 @@ a:not(.booking-panel__help):focus-visible,
   }
 
   .service-hero__headline {
-    font-size: clamp(1.75rem, 7.5vw, 3rem);
+    font-size: clamp(1.5rem, 6.2vw, 2.25rem);
     max-width: 100%;
+    text-wrap: balance;
   }
 
   .service-hero__lead {
@@ -15956,10 +16032,11 @@ a:not(.booking-panel__help):focus-visible,
 }
 
 .stretching-rates__title {
-  font-size: var(--fs-h2);
+  font-size: clamp(1.75rem, 2.9vw, 2.5rem);
   font-weight: 600;
   color: var(--pw-ink);
   line-height: 1.15;
+  text-wrap: balance;
 }
 
 .stretching-rates__lead {
@@ -16636,11 +16713,12 @@ a:not(.booking-panel__help):focus-visible,
 }
 
 .domicilio-plan__time {
-  font-size: clamp(2rem, 4vw, 3rem);
+  font-size: clamp(1.35rem, 2.4vw, 1.95rem);
   font-weight: 600;
   letter-spacing: -0.02em;
   color: var(--pw-ink);
-  line-height: 1;
+  line-height: 1.15;
+  text-wrap: balance;
 }
 
 .domicilio-plan__pillars {
@@ -18072,12 +18150,13 @@ a:not(.booking-panel__help):focus-visible,
   background: var(--pw-primary);
 }
 .sv-hero__title {
-  font-size: clamp(2.6rem, 5.6vw, 4.6rem);
-  line-height: 1.06;
+  font-size: clamp(2.15rem, 4.8vw, 4.2rem);
+  line-height: 1.08;
   letter-spacing: -0.025em;
   color: var(--pw-ink);
   margin-bottom: var(--sp-5);
-  max-width: 18ch;
+  max-width: 28ch;
+  text-wrap: balance;
 }
 .sv-hero__lead {
   font-size: var(--fs-lead);
@@ -18600,12 +18679,13 @@ a:not(.booking-panel__help):focus-visible,
   margin-bottom: var(--sp-2);
 }
 .sv-block__title {
-  font-size: clamp(1.8rem, 2.9vw, 2.45rem);
+  font-size: clamp(1.45rem, 2.5vw, 2.25rem);
   line-height: 1.15;
   letter-spacing: -0.02em;
   color: var(--pw-ink);
   margin-bottom: var(--sp-4);
-  max-width: 22ch;
+  max-width: 30ch;
+  text-wrap: balance;
 }
 .sv-block__text {
   font-size: var(--fs-lead);
@@ -19095,12 +19175,13 @@ a:not(.booking-panel__help):focus-visible,
   background: var(--pw-primary);
 }
 .sv-consultation__title {
-  font-size: clamp(2.3rem, 4.2vw, 3.5rem);
-  line-height: 1.1;
+  font-size: clamp(1.85rem, 3.2vw, 2.75rem);
+  line-height: 1.12;
   letter-spacing: -0.025em;
   color: var(--pw-ink);
   margin-bottom: var(--sp-5);
-  max-width: 18ch;
+  max-width: 30ch;
+  text-wrap: balance;
 }
 .sv-consultation__lead {
   font-size: var(--fs-lead);

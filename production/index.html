@@ -28,11 +28,28 @@
     max-width: 420px;
     width: 100%;
   }
-  .lang-select h1 {
-    font-size: 24px;
-    font-weight: 500;
-    margin-bottom: 24px;
-    letter-spacing: 0.05em;
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+  .lang-logo-wrap {
+    margin: 0 auto 28px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .lang-logo {
+    width: 100%;
+    max-width: 200px;
+    height: auto;
+    display: block;
   }
   .lang-links {
     display: flex;
@@ -51,6 +68,17 @@
   }
   .lang-links a:hover {
     background: rgba(255,255,255,0.18);
+  }
+  @media (max-width: 480px) {
+    body {
+      padding: 24px 16px;
+    }
+    .lang-logo {
+      max-width: 180px;
+    }
+    .lang-logo-wrap {
+      margin-bottom: 24px;
+    }
   }
 </style>
 <!-- Open Graph / Facebook -->
@@ -204,8 +232,10 @@
 </head>
 <body>
   <div class="lang-select">
-    <img src="src/assets/img/logo-icon-white.png" alt="Physio Wellness by Marshall" width="60" height="69" style="margin-bottom: 20px;">
-    <h1>PHYSIO WELLNESS</h1>
+    <div class="lang-logo-wrap">
+      <img src="src/assets/img/logo-mark-white.png" alt="Physio Wellness by Marshall" class="lang-logo" width="815" height="639">
+    </div>
+    <h1 class="sr-only">Physio Wellness by Marshall</h1>
     <p style="color: rgba(255,255,255,0.6); margin: 0 0 28px; font-size: 15px; font-weight: 400;">Sitges · Fisioteràpia · Fisioterapia · Physiotherapy</p>
     <div class="lang-links">
       <a href="es/">Español</a>

@@ -36,8 +36,8 @@ transversal**: no hay un precio distinto por área. Las cinco tarjetas de
 | Sesión                          | Precio / sesión | Bonos                                                    |
 | -------------------------------- | ---------------- | --------------------------------------------------------- |
 | Valoración y sesión inicial 60'  | 100 €            | No aplica (obligatoria, se factura aparte, sin bono)      |
-| Sesión individual 50'            | 80 €             | 4 ses. 76 €/ses. (304 €) · 8 ses. 72 €/ses. (576 €) · 12 ses. 70 €/ses. (840 €) |
-| Sesión individual 30'            | 50 €             | 4 ses. 47,50 €/ses. (190 €) · 8 ses. 45 €/ses. (360 €) · 12 ses. 43,75 €/ses. (525 €) |
+| Sesión individual 50'            | 80 €             | 4 ses. 76 €/ses. (304 €) · 8 ses. 72 €/ses. (576 €)       |
+| Sesión individual 30'            | 50 €             | 4 ses. 47,50 €/ses. (190 €) · 8 ses. 45 €/ses. (360 €)     |
 
 **Valoración inicial:** obligatoria para todos los usuarios, con
 independencia del área. No se realizan sesiones sin valoración previa. Se

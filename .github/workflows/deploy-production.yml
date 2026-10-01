@@ -1,0 +1,35 @@
+name: Deploy production
+
+on:
+  push:
+    branches:
+      - antigravity/services-marshall-pacing
+    paths:
+      - "production/**"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Configure Git
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+      - name: Generate production branch
+        run: |
+          git subtree split --prefix=production -b deploy-production
+
+      - name: Push production branch
+        run: |
+          git push origin deploy-production:production

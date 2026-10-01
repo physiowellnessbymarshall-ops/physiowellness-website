@@ -4382,6 +4382,221 @@ var prefersReducedMotion = window.matchMedia && window.matchMedia('(prefers-redu
   }
 })();
 
+/* ---------- Hero Editorial Motion & Mask Reveal (.sv-hero) ----------
+   Reveal progresivo de máscara y escala sobre la fotografía principal,
+   desplazamiento sutil por scroll (parallax controlado) y respuesta orgánica
+   al interactuar con el índice editorial de disciplinas. */
+(function svHeroMotionSystem(){
+  try {
+    var hero = document.querySelector('.sv-hero');
+    if(!hero) return;
+
+    requestAnimationFrame(function(){
+      requestAnimationFrame(function(){
+        hero.classList.add('is-ready');
+      });
+    });
+
+    var indexItems = hero.querySelectorAll('.sv-hero__index-item');
+    if(indexItems.length){
+      indexItems.forEach(function(item){
+        item.addEventListener('mouseenter', function(){
+          hero.classList.add('has-index-hover');
+        });
+        item.addEventListener('mouseleave', function(){
+          hero.classList.remove('has-index-hover');
+        });
+      });
+    }
+
+    if(prefersReducedMotion) return;
+
+    var heroImg = hero.querySelector('.sv-hero__img');
+    if(!heroImg) return;
+
+    var ticking = false;
+    window.addEventListener('scroll', function(){
+      if(!ticking){
+        requestAnimationFrame(function(){
+          var y = window.scrollY;
+          if(y < window.innerHeight * 1.2){
+            var offset = y * 0.07;
+            heroImg.style.transform = 'translateY(' + offset.toFixed(1) + 'px)';
+          }
+          ticking = false;
+        });
+        ticking = true;
+      }
+    }, { passive: true });
+  } catch(e){
+    console.warn('svHeroMotionSystem', e);
+  }
+})();
+
+/* ---------- Criterio Section: Editorial Scroll Narrative & Motion (.sv-criterio) ----------
+   Narrativa de scroll editorial:
+   1. Mask reveal y entrada escalonada por IntersectionObserver.
+   2. Conteo fluido orgánico para +10 y +1.500 / +1,500 una sola vez al entrar en viewport.
+   3. Línea vertical conectora (spine) que crece progresivamente con el scroll.
+   4. Parallax y escala sutil con rAF (ticking).
+   5. Doble red de seguridad con fallback y respeto de prefers-reduced-motion. */
+(function svCriterioNarrativeSystem(){
+  try {
+    var section = document.querySelector('.sv-criterio');
+    if(!section) return;
+
+    var moments = Array.prototype.slice.call(section.querySelectorAll('[data-criterio-reveal]'));
+    var counters = Array.prototype.slice.call(section.querySelectorAll('[data-count]'));
+    var spineFill = section.querySelector('[data-criterio-spine]');
+    var narrative = section.querySelector('[data-criterio-narrative]');
+    var scaleNum = section.querySelector('[data-criterio-scale] .sv-criterio__scale-num');
+    var parallaxEls = Array.prototype.slice.call(section.querySelectorAll('[data-parallax-speed]'));
+
+    function formatNumber(num, formatType){
+      if(formatType === 'spanish' || formatType === 'thousands'){
+        return num.toLocaleString('es-ES');
+      } else if(formatType === 'english'){
+        return num.toLocaleString('en-US');
+      }
+      return num.toString();
+    }
+
+    if(prefersReducedMotion || !('IntersectionObserver' in window)){
+      moments.forEach(function(m){ m.classList.add('is-visible'); });
+      if(spineFill) spineFill.style.height = '100%';
+      counters.forEach(function(c){
+        var target = parseInt(c.getAttribute('data-count'), 10);
+        var prefix = c.getAttribute('data-prefix') || '';
+        var suffix = c.getAttribute('data-suffix') || '';
+        var format = c.getAttribute('data-format') || '';
+        c.textContent = prefix + formatNumber(target, format) + suffix;
+      });
+      return;
+    }
+
+    // 1. Observer para reveals de momentos
+    var revealObserver = new IntersectionObserver(function(entries){
+      entries.forEach(function(entry){
+        if(entry.isIntersecting){
+          entry.target.classList.add('is-visible');
+          revealObserver.unobserve(entry.target);
+
+          // Animar contador interno si existe
+          var countEl = entry.target.querySelector('[data-count]');
+          if(countEl && !countEl.classList.contains('is-counted')){
+            animateCounter(countEl);
+          }
+        }
+      });
+    }, {
+      rootMargin: '0px 0px -10% 0px',
+      threshold: 0.15
+    });
+
+    moments.forEach(function(m){
+      revealObserver.observe(m);
+    });
+
+    // 2. Conteo fluido
+    function animateCounter(el){
+      el.classList.add('is-counted');
+      var target = parseInt(el.getAttribute('data-count'), 10);
+      var prefix = el.getAttribute('data-prefix') || '';
+      var suffix = el.getAttribute('data-suffix') || '';
+      var format = el.getAttribute('data-format') || '';
+      var duration = target > 500 ? 1400 : 900;
+      var startTime = null;
+
+      function easeOutCubic(t){
+        return 1 - Math.pow(1 - t, 3);
+      }
+
+      function step(now){
+        if(!startTime) startTime = now;
+        var elapsed = now - startTime;
+        var progress = Math.min(elapsed / duration, 1);
+        var currentVal = Math.round(easeOutCubic(progress) * target);
+
+        el.textContent = prefix + formatNumber(currentVal, format) + suffix;
+
+        if(progress < 1){
+          requestAnimationFrame(step);
+        } else {
+          el.textContent = prefix + formatNumber(target, format) + suffix;
+          el.classList.add('is-finished');
+        }
+      }
+
+      requestAnimationFrame(step);
+    }
+
+    // 3. Scroll effects: Spine fill, parallax sutil y escala de 100%
+    var ticking = false;
+    function updateScrollEffects(){
+      if(!narrative) {
+        ticking = false;
+        return;
+      }
+
+      var vh = window.innerHeight;
+      var narrativeRect = narrative.getBoundingClientRect();
+
+      // Spine Fill
+      if(spineFill && narrativeRect.height > 0){
+        var startOffset = vh * 0.75;
+        var progressPx = startOffset - narrativeRect.top;
+        var totalDist = narrativeRect.height;
+        var pct = Math.max(0, Math.min(100, (progressPx / totalDist) * 100));
+        spineFill.style.height = pct.toFixed(1) + '%';
+      }
+
+      // Parallax sutil en imágenes
+      if(window.innerWidth >= 860){
+        parallaxEls.forEach(function(el){
+          var speed = parseFloat(el.getAttribute('data-parallax-speed')) || 0.05;
+          var rect = el.getBoundingClientRect();
+          if(rect.bottom > 0 && rect.top < vh){
+            var centerDiff = (vh / 2) - (rect.top + rect.height / 2);
+            var shift = centerDiff * speed;
+            el.style.transform = 'translate3d(0, ' + shift.toFixed(1) + 'px, 0)';
+          }
+        });
+
+        // Escala sutil en 100%
+        if(scaleNum){
+          var scaleRect = scaleNum.getBoundingClientRect();
+          if(scaleRect.bottom > 0 && scaleRect.top < vh){
+            var scaleProg = 1 - Math.abs((vh / 2) - (scaleRect.top + scaleRect.height / 2)) / (vh * 0.8);
+            var scaleVal = 0.96 + Math.max(0, Math.min(0.06, scaleProg * 0.06));
+            scaleNum.style.transform = 'scale(' + scaleVal.toFixed(3) + ')';
+          }
+        }
+      }
+
+      ticking = false;
+    }
+
+    window.addEventListener('scroll', function(){
+      if(!ticking){
+        requestAnimationFrame(updateScrollEffects);
+        ticking = true;
+      }
+    }, { passive: true });
+
+    // Ejecución inicial tras carga
+    updateScrollEffects();
+
+    // Red de seguridad: si no intersecta en 3s, mostrar todo
+    setTimeout(function(){
+      moments.forEach(function(m){ m.classList.add('is-visible'); });
+    }, 3000);
+
+  } catch(e){
+    console.warn('svCriterioNarrativeSystem', e);
+  }
+})();
+
+
 
 
 

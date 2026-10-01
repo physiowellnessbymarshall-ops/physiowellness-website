@@ -18146,23 +18146,25 @@ a:not(.booking-panel__help):focus-visible,
   font-weight: 500;
 }
 
-/* Editorial Asymmetrical Canvas */
+/* Editorial Asymmetrical Canvas: narrative left, bold photo right */
 .sv-hero__canvas {
   display: grid;
   grid-template-columns: 1fr;
   gap: clamp(2.5rem, 5vw, 4.5rem);
   align-items: start;
 }
-@media (min-width: 960px) {
+@media (min-width: 820px) {
   .sv-hero__canvas {
-    grid-template-columns: 1.16fr 0.84fr;
-    gap: clamp(2.5rem, 4.5vw, 4.5rem);
+    grid-template-columns: 1.05fr 0.95fr;
+    gap: clamp(2rem, 3.5vw, 4rem);
+    align-items: stretch;
   }
 }
 @media (min-width: 1200px) {
   .sv-hero__canvas {
-    grid-template-columns: 1.22fr 0.78fr;
-    gap: clamp(3rem, 5.5vw, 5.5rem);
+    grid-template-columns: 1fr 1fr;
+    gap: clamp(3rem, 5vw, 5rem);
+    align-items: stretch;
   }
 }
 
@@ -18351,7 +18353,7 @@ a:not(.booking-panel__help):focus-visible,
   position: relative;
   width: 100%;
   height: 100%;
-  min-height: clamp(420px, 64vh, 720px);
+  min-height: clamp(380px, 55vh, 640px);
   border-radius: 4px;
   overflow: hidden;
   background: var(--pw-mist);
@@ -18363,6 +18365,7 @@ a:not(.booking-panel__help):focus-visible,
     margin-right: calc(-1 * min(3vw, 48px));
     border-top-right-radius: 0;
     border-bottom-right-radius: 0;
+    min-height: clamp(560px, 72vh, 800px);
   }
 }
 .sv-hero__img {

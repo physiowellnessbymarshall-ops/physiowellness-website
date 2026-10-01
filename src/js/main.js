@@ -4391,12 +4391,34 @@ var prefersReducedMotion = window.matchMedia && window.matchMedia('(prefers-redu
     var hero = document.querySelector('.sv-hero');
     if(!hero) return;
 
-    requestAnimationFrame(function(){
-      requestAnimationFrame(function(){
-        hero.classList.add('is-ready');
+    /* Collect all [data-reveal] within the hero — sorted by their --i value
+       so we can stagger them independently of the global IntersectionObserver
+       (which uses -8% rootMargin and would miss elements below the fold
+       within an already-tall hero section). */
+    var reveals = Array.prototype.slice.call(hero.querySelectorAll('[data-reveal]'));
+
+    function activateHeroReveals() {
+      hero.classList.add('is-ready');
+      if(prefersReducedMotion) {
+        reveals.forEach(function(el) { el.classList.add('is-visible'); });
+        return;
+      }
+      reveals.forEach(function(el) {
+        var idx = parseInt(el.style.getPropertyValue('--i') || el.getAttribute('style') && el.getAttribute('style').match(/--i\s*:\s*(\d+)/) && el.getAttribute('style').match(/--i\s*:\s*(\d+)/)[1] || 0, 10);
+        var delay = idx * 90;
+        setTimeout(function() { el.classList.add('is-visible'); }, delay);
       });
+    }
+
+    /* Double rAF so layout is fully settled before triggering */
+    requestAnimationFrame(function(){
+      requestAnimationFrame(activateHeroReveals);
     });
 
+    /* Also mark as observed so global IntersectionObserver skips them cleanly */
+    reveals.forEach(function(el) { el.dataset.heroManaged = '1'; });
+
+    /* Hover interaction: sibling dimming on index */
     var indexItems = hero.querySelectorAll('.sv-hero__index-item');
     if(indexItems.length){
       indexItems.forEach(function(item){
@@ -4411,6 +4433,7 @@ var prefersReducedMotion = window.matchMedia && window.matchMedia('(prefers-redu
 
     if(prefersReducedMotion) return;
 
+    /* Subtle parallax on hero image while scrolling near top */
     var heroImg = hero.querySelector('.sv-hero__img');
     if(!heroImg) return;
 

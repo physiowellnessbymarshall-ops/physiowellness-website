@@ -4237,6 +4237,153 @@ var prefersReducedMotion = window.matchMedia && window.matchMedia('(prefers-redu
   }catch(e){ console.warn('equipmentShowcaseSystem', e); }
 })();
 
+/* ---------- Interactive Services Explorer (.sv-explorer) ----------
+   Selector interactivo de necesidades para la página "Todos los servicios".
+   En escritorio: selección por click/hover sobre las 5 áreas actualiza el
+   panel visual activo (.sv-explorer__panel) con animación suave y accesibilidad ARIA.
+   En móvil: gestiona acordeón accesible para que no dependa de hover ni desborde.
+   Soporte completo de teclado (ArrowUp, ArrowDown, Home, End) y prefers-reduced-motion. */
+(function servicesExplorerSystem(){
+  try {
+    var root = document.querySelector('.sv-explorer');
+    if(!root) return;
+
+    var tabs = Array.prototype.slice.call(root.querySelectorAll('[data-explorer-tab]'));
+    var panels = Array.prototype.slice.call(root.querySelectorAll('[data-explorer-panel]'));
+    var mobilePanels = Array.prototype.slice.call(root.querySelectorAll('[data-explorer-mobile-panel]'));
+    if(!tabs.length) return;
+
+    var currentIndex = 0;
+
+    function activateTab(index, focusTab){
+      if(index < 0 || index >= tabs.length) return;
+      currentIndex = index;
+
+      tabs.forEach(function(tab, i){
+        var isActive = (i === index);
+        tab.classList.toggle('is-active', isActive);
+        tab.setAttribute('aria-selected', isActive ? 'true' : 'false');
+        tab.setAttribute('tabindex', isActive ? '0' : '-1');
+
+        if(mobilePanels[i]){
+          mobilePanels[i].hidden = !isActive;
+        }
+      });
+
+      panels.forEach(function(panel, i){
+        panel.classList.toggle('is-active', i === index);
+      });
+
+      if(focusTab && tabs[index]){
+        tabs[index].focus();
+      }
+    }
+
+    tabs.forEach(function(tab, idx){
+      tab.addEventListener('click', function(){
+        activateTab(idx, false);
+      });
+
+      tab.addEventListener('pointerenter', function(e){
+        if(e.pointerType === 'mouse'){
+          activateTab(idx, false);
+        }
+      });
+
+      tab.addEventListener('keydown', function(e){
+        var nextIdx = -1;
+        if(e.key === 'ArrowDown' || e.key === 'ArrowRight'){
+          e.preventDefault();
+          nextIdx = (currentIndex + 1) % tabs.length;
+        } else if(e.key === 'ArrowUp' || e.key === 'ArrowLeft'){
+          e.preventDefault();
+          nextIdx = (currentIndex - 1 + tabs.length) % tabs.length;
+        } else if(e.key === 'Home'){
+          e.preventDefault();
+          nextIdx = 0;
+        } else if(e.key === 'End'){
+          e.preventDefault();
+          nextIdx = tabs.length - 1;
+        }
+        if(nextIdx !== -1){
+          activateTab(nextIdx, true);
+        }
+      });
+    });
+
+    activateTab(0, false);
+  } catch(e){
+    console.warn('servicesExplorerSystem', e);
+  }
+})();
+
+/* ---------- Services Sequence Scroll Spy (.sv-areas__nav-sticky) ----------
+   Sincroniza el enlace activo del riel de navegación secuencial 01 -> 05
+   a medida que el usuario recorre con scroll las cinco áreas integrativas. */
+(function servicesSequenceSpySystem(){
+  try {
+    var nav = document.querySelector('.sv-areas__nav-sticky');
+    if(!nav) return;
+    var links = Array.prototype.slice.call(nav.querySelectorAll('.sv-areas__nav-link'));
+    var blocks = Array.prototype.slice.call(document.querySelectorAll('.sv-areas .sv-block[id]'));
+    if(!links.length || !blocks.length) return;
+
+    if(!('IntersectionObserver' in window)){
+      if(links[0]) links[0].classList.add('is-active');
+      return;
+    }
+
+    var observer = new IntersectionObserver(function(entries){
+      entries.forEach(function(entry){
+        if(entry.isIntersecting){
+          var id = entry.target.id;
+          links.forEach(function(link){
+            var href = link.getAttribute('href');
+            var matches = href && href.indexOf('#' + id) !== -1;
+            link.classList.toggle('is-active', matches);
+          });
+        }
+      });
+    }, {
+      rootMargin: '-20% 0px -55% 0px'
+    });
+
+    blocks.forEach(function(block){
+      observer.observe(block);
+    });
+  } catch(e){
+    console.warn('servicesSequenceSpySystem', e);
+  }
+})();
+
+/* ---------- Timeline Step Activation on Scroll (.sv-timeline) ----------
+   Activa suavemente cada nodo 01-05 a medida que entra en el viewport al hacer scroll. */
+(function timelineScrollSystem(){
+  try {
+    var items = Array.prototype.slice.call(document.querySelectorAll('.sv-timeline__item'));
+    if(!items.length || !('IntersectionObserver' in window)) return;
+
+    var observer = new IntersectionObserver(function(entries){
+      entries.forEach(function(entry){
+        if(entry.isIntersecting){
+          entry.target.classList.add('is-active');
+        }
+      });
+    }, {
+      rootMargin: '0px 0px -15% 0px',
+      threshold: 0.25
+    });
+
+    items.forEach(function(item){
+      observer.observe(item);
+    });
+  } catch(e){
+    console.warn('timelineScrollSystem', e);
+  }
+})();
+
+
+
 
 
 

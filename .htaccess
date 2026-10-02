@@ -3,42 +3,47 @@
 # Target domain: https://physiowellness.es/
 # ==============================================================================
 
-# 1. UTF-8 Encoding
+# 1. UTF-8 Encoding & Server Defaults
 AddDefaultCharset UTF-8
+ServerSignature Off
 
 # 2. Prevent Directory Listing
 Options -Indexes
 
-# 3. Protect Hidden Files and Sensitive Documentation
-<FilesMatch "^\.|\.(md|log|sh|py|sql|bak|env)$">
+# 3. Protect Sensitive File Extensions, Backups and Configs
+<FilesMatch "(?i)(contact-config\.php$|\.(md|log|sh|py|sql|bak|env|zip|tar|gz|tgz|rar|7z|ini|conf|config|ya?ml|dist|orig|save|old|temp|tmp|swp)$)">
     Require all denied
 </FilesMatch>
 
-# 4. Custom 404 Error Page
+# 4. Custom Error Pages (Mask internal errors & forbidden responses)
 ErrorDocument 404 /404.html
+ErrorDocument 403 /404.html
 
-# 5. Rewrite Engine (HTTPS + Trailing Slash Canonicalization)
+# 5. Rewrite Engine (HTTPS + Trailing Slash Canonicalization + Access Protection)
 <IfModule mod_rewrite.c>
     RewriteEngine On
     RewriteBase /
 
-    # 5.1 Force HTTPS (només per al domini de producció physiowellness.es)
-    RewriteCond %{HTTP_HOST} ^(www\.)?physiowellness\.es$ [NC]
+    # 5.0 Protect hidden files and directories (.git, .env, etc.) except .well-known
+    RewriteCond %{REQUEST_URI} !^/\.well-known/ [NC]
+    RewriteRule (^|/)\. - [F,L]
+
+    # 5.0.1 Protect internal documentation and dev utility directories
+    RewriteRule ^(docs|scratch)(/|$) - [F,L]
+
+    # 5.1 Force HTTPS
     RewriteCond %{HTTPS} !=on
     RewriteCond %{HTTP:X-Forwarded-Proto} !https [NC]
     RewriteRule ^(.*)$ https://physiowellness.es/$1 [R=301,L]
 
-    # 5.2 Redirigir www a domini canònic sense www
+    # 5.2 Redirect non-www to canonical domain (if requested on www)
     RewriteCond %{HTTP_HOST} ^www\.physiowellness\.es$ [NC]
     RewriteRule ^(.*)$ https://physiowellness.es/$1 [R=301,L]
 
-    # 5.3 Forçar barra final en directoris (agnòstic al domini, compatible amb domini temporal)
+    # 5.3 Force Trailing Slash on Directory URLs (prevents duplicate content)
     RewriteCond %{REQUEST_FILENAME} -d
     RewriteCond %{REQUEST_URI} !(.*)/$
-    RewriteRule ^(.*)$ /$1/ [R=301,L]
-
-    # 5.4 Fallback per rutes d'assets que ometen ../ des de subdirectoris d'idioma
-    RewriteRule ^(?:ca|es|en)/src/(.*)$ /src/$1 [L]
+    RewriteRule ^(.*)$ https://physiowellness.es/$1/ [R=301,L]
 </IfModule>
 
 # 6. MIME Types (Modern Web Assets)
@@ -75,22 +80,35 @@ ErrorDocument 404 /404.html
     ExpiresByType font/woff2 "access plus 1 year"
 </IfModule>
 
-# 8. Security Headers
+# 8. Security Headers & Server Hardening
 <IfModule mod_headers.c>
+    # Hide PHP / server signature headers
+    Header unset X-Powered-By
+    Header always unset X-Powered-By
+
     # Prevent MIME sniffing
     Header always set X-Content-Type-Options "nosniff"
 
-    # Prevent clickjacking
+    # Prevent clickjacking (legacy fallback for browsers without frame-ancestors)
     Header always set X-Frame-Options "SAMEORIGIN"
 
     # Referrer Policy
     Header always set Referrer-Policy "strict-origin-when-cross-origin"
 
-    # Permissions Policy (restrict sensitive hardware access)
-    Header always set Permissions-Policy "geolocation=(), camera=(), microphone=()"
+    # Restrict cross-domain policies
+    Header always set X-Permitted-Cross-Domain-Policies "none"
 
-    # HTTP Strict Transport Security (HSTS) - Enabled for 1 year with preload
-    Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains" env=HTTPS
+    # Permissions Policy (restrict sensitive hardware and browser capabilities)
+    Header always set Permissions-Policy "geolocation=(), camera=(), microphone=(), payment=(), usb=()"
+
+    # Content Security Policy (protects against XSS/injections while fully supporting existing assets, Google Maps embeds & GA4 after consent)
+    Header always set Content-Security-Policy "default-src 'self'; script-src 'self' 'unsafe-inline' https://www.googletagmanager.com; style-src 'self' https://fonts.googleapis.com 'unsafe-inline'; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: https: https://*.google-analytics.com https://*.googletagmanager.com; media-src 'self'; frame-src 'self' https://www.google.com https://maps.google.com; connect-src 'self' https://*.google-analytics.com https://*.analytics.google.com https://*.googletagmanager.com; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'self'; upgrade-insecure-requests"
+
+    # HTTP Strict Transport Security (HSTS)
+    # PENDENT PER AL DOMINI DEFINITIU: No s'activa durant el domini provisional/staging
+    # per evitar bloquejos irreversibles al navegador o problemes amb subdominis (sense includeSubDomains no justificat).
+    # S'activarà en l'auditoria final un cop validat el certificat SSL al domini definitiu https://physiowellness.es/
+    # Header always set Strict-Transport-Security "max-age=31536000" env=HTTPS
 </IfModule>
 
 # 9. Compression (Gzip / Brotli)

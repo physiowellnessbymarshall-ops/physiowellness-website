@@ -1,0 +1,16 @@
+# ==============================================================================
+# Physio Wellness — API Directory Security Configuration
+# ==============================================================================
+
+# Disable directory listing
+Options -Indexes
+
+# Block direct access to all scripts, configs, libraries and data files by default
+<FilesMatch "(?i)\.(php|json|log|cache|lock|example)$">
+    Require all denied
+</FilesMatch>
+
+# Exclusively allow public execution of the contact endpoint
+<Files "contact.php">
+    Require all granted
+</Files>

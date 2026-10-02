@@ -27,9 +27,25 @@ npm-debug.log*
 .env.*.local
 *.tmp
 
+# Configuración privada de SMTP y backend (credenciales fuera de Git)
+contact-config.php
+api/contact-config.php
+api/.cache/
+
 # Build output (si lo hay)
 dist/
 build/
+
+# Backups y archivos comprimidos
+*.zip
+*.tar
+*.tar.gz
+*.tgz
+*.rar
+*.7z
+*.bak
+*.sql
+*.old
 
 # Utilidades de desarrollo local (NO son parte del sitio público)
 scratch/

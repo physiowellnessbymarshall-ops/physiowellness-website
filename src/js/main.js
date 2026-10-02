@@ -8,6 +8,541 @@ document.documentElement.classList.add('js');
 
 var prefersReducedMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
+/* ==========================================================================
+   PHYSIO WELLNESS — CONFIGURACIÓ GOOGLE ANALYTICS 4 & PRIVACITAT
+   Google Consent Mode v2 (Mode Bàsic) + Banner de Cookies + Panell
+   --------------------------------------------------------------------------
+   ÚNIC LLOC ON CAL CONFIGURAR EL MEASUREMENT ID DE GA4:
+   Modifica el valor de GA_MEASUREMENT_ID pel teu ID real de GA4 (ex: 'G-1234567890').
+   ========================================================================== */
+var GA_MEASUREMENT_ID = 'G-XXXXXXXXXX';
+var CONSENT_VERSION = '1.0';
+var CONSENT_STORAGE_KEY = 'pw_cookie_consent';
+
+// Configuració accessible globalment
+window.PW_GA_CONFIG = {
+  id: GA_MEASUREMENT_ID,
+  version: CONSENT_VERSION,
+  storageKey: CONSENT_STORAGE_KEY
+};
+
+// Funció global per disparar esdeveniments GA4 respectant el consentiment
+var pwTrackEvent = function(eventName, params) {
+  try {
+    var stored = null;
+    try {
+      var raw = localStorage.getItem(CONSENT_STORAGE_KEY);
+      if (raw) stored = JSON.parse(raw);
+    } catch(e) {}
+    if (!stored || stored.version !== CONSENT_VERSION || !stored.analytics) {
+      return; // Sense consentiment analític actiu, no s'envia res
+    }
+    if (typeof window.gtag === 'function') {
+      window.gtag('event', eventName, params || {});
+    }
+  } catch(err) {
+    console.warn('[GA4] trackEvent error:', err);
+  }
+};
+window.pwTrackEvent = pwTrackEvent;
+
+(function initGoogleConsentAndBanner(){
+  try {
+    // 1. dataLayer i funció gtag
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){ window.dataLayer.push(arguments); }
+    window.gtag = gtag;
+
+    // 2. Google Consent Mode (Mode Bàsic): estat predeterminat denegat
+    // Abans de qualsevol decisió de l'usuari, tot romandrà en 'denied'
+    gtag('consent', 'default', {
+      'analytics_storage': 'denied',
+      'ad_storage': 'denied',
+      'ad_user_data': 'denied',
+      'ad_personalization': 'denied'
+    });
+
+    var TWELVE_MONTHS_MS = 365 * 24 * 60 * 60 * 1000;
+    var isGaLoaded = false;
+
+    // Llegir decisió prèvia desada
+    function getStoredConsent() {
+      try {
+        var raw = localStorage.getItem(CONSENT_STORAGE_KEY);
+        if (!raw) return null;
+        var data = JSON.parse(raw);
+        if (!data || typeof data !== 'object') return null;
+        if (data.version !== CONSENT_VERSION) return null;
+        if (typeof data.timestamp !== 'number' || (Date.now() - data.timestamp) > TWELVE_MONTHS_MS) return null;
+        return data;
+      } catch(e) {
+        return null;
+      }
+    }
+
+    // Desar consentiment
+    function saveConsent(analyticsGranted) {
+      try {
+        var payload = {
+          version: CONSENT_VERSION,
+          analytics: !!analyticsGranted,
+          timestamp: Date.now()
+        };
+        localStorage.setItem(CONSENT_STORAGE_KEY, JSON.stringify(payload));
+      } catch(e) {
+        console.warn('[Consent] localStorage error', e);
+      }
+    }
+
+    // Carregar gtag.js dinàmicament (només quan hi hagi consentiment analític)
+    function loadGoogleAnalytics() {
+      if (isGaLoaded) return;
+      isGaLoaded = true;
+
+      // Actualitzar Consent Mode a granted per a analytics_storage
+      gtag('consent', 'update', {
+        'analytics_storage': 'granted'
+      });
+
+      // Retirar qualsevol flag de desactivació
+      if (window['ga-disable-' + GA_MEASUREMENT_ID]) {
+        delete window['ga-disable-' + GA_MEASUREMENT_ID];
+      }
+
+      // Inserir gtag.js de Google
+      var script = document.createElement('script');
+      script.async = true;
+      script.src = 'https://www.googletagmanager.com/gtag/js?id=' + encodeURIComponent(GA_MEASUREMENT_ID);
+      document.head.appendChild(script);
+
+      // Inicialitzar GA4 una sola vegada
+      gtag('js', new Date());
+      gtag('config', GA_MEASUREMENT_ID, {
+        'anonymize_ip': true,
+        'send_page_view': true,
+        'page_location': window.location.href,
+        'page_title': document.title
+      });
+    }
+
+    // Netejar cookies pròpies de GA4
+    function clearGaCookies() {
+      try {
+        var cookieList = document.cookie.split(';');
+        var host = window.location.hostname;
+        var domains = ['', host, '.' + host];
+        var parts = host.split('.');
+        if (parts.length > 2) {
+          domains.push('.' + parts.slice(-2).join('.'));
+        }
+        for (var i = 0; i < cookieList.length; i++) {
+          var c = cookieList[i].trim();
+          var name = c.split('=')[0];
+          if (name === '_ga' || name === '_gid' || name === '_gat' || name.indexOf('_ga_') === 0) {
+            for (var d = 0; d < domains.length; d++) {
+              var dom = domains[d];
+              var domStr = dom ? '; domain=' + dom : '';
+              document.cookie = name + '=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/' + domStr;
+              document.cookie = name + '=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=' + window.location.pathname + domStr;
+            }
+          }
+        }
+      } catch(e) {
+        console.warn('[Consent] cookie clear error', e);
+      }
+    }
+
+    // Revocar consentiment d'analítica
+    function revokeGoogleAnalytics() {
+      gtag('consent', 'update', {
+        'analytics_storage': 'denied'
+      });
+      window['ga-disable-' + GA_MEASUREMENT_ID] = true;
+      clearGaCookies();
+    }
+
+    // Detecció d'idioma (ca, es, en)
+    var docLang = (document.documentElement.lang || '').toLowerCase();
+    var path = window.location.pathname.toLowerCase();
+    var currentLang = 'es';
+    if (docLang.startsWith('ca') || path.indexOf('/ca/') !== -1) {
+      currentLang = 'ca';
+    } else if (docLang.startsWith('en') || path.indexOf('/en/') !== -1) {
+      currentLang = 'en';
+    } else if (docLang.startsWith('es') || path.indexOf('/es/') !== -1) {
+      currentLang = 'es';
+    }
+
+    var i18n = {
+      ca: {
+        bannerTitle: 'Utilitzem cookies analítiques?',
+        bannerText: 'Utilitzem Google Analytics per entendre com s’utilitza la web i poder-la millorar. Només activarem les cookies analítiques si ens dones permís. Pots canviar la teva elecció en qualsevol moment.',
+        accept: 'Acceptar analítica',
+        reject: 'Rebutjar',
+        settings: 'Configurar',
+        modalTitle: 'Configuració de cookies',
+        modalIntro: 'Respectem la teva privacitat. Pots triar quines cookies autoritzes. La teva selecció es recordarà durant 12 mesos i pots modificar-la en qualsevol moment.',
+        necessaryTitle: 'Necessàries',
+        necessaryBadge: 'Sempre actives',
+        necessaryDesc: 'Permeten funcionalitats imprescindibles com la navegació, la seguretat del lloc web i recordar la teva selecció de consentiment. No es poden desactivar.',
+        analyticsTitle: 'Analítica',
+        analyticsBadge: 'Google Analytics 4',
+        analyticsDesc: 'Serveix per obtenir estadístiques anònimes d’ús i entendre com s’utilitza la web per poder-la millorar. Desactivada per defecte.',
+        save: 'Desar preferències',
+        acceptAll: 'Acceptar-ho tot',
+        rejectAll: 'Rebutjar-ho tot',
+        closeModal: 'Tancar panell de cookies',
+        footerLink: 'Preferències de cookies'
+      },
+      es: {
+        bannerTitle: '¿Utilizamos cookies analíticas?',
+        bannerText: 'Utilizamos Google Analytics para entender cómo se utiliza la web y poder mejorarla. Solo activaremos las cookies analíticas si nos das permiso. Puedes cambiar tu elección en cualquier momento.',
+        accept: 'Aceptar analítica',
+        reject: 'Rechazar',
+        settings: 'Configurar',
+        modalTitle: 'Configuración de cookies',
+        modalIntro: 'Respetamos tu privacidad. Puedes elegir qué cookies autorizas. Tu selección se recordará durante 12 meses y puedes modificarla en cualquier momento.',
+        necessaryTitle: 'Necesarias',
+        necessaryBadge: 'Siempre activas',
+        necessaryDesc: 'Permiten funcionalidades imprescindibles como la navegación, la seguridad del sitio web y recordar tu selección de consentimiento. No se pueden desactivar.',
+        analyticsTitle: 'Analítica',
+        analyticsBadge: 'Google Analytics 4',
+        analyticsDesc: 'Sirve para obtener estadísticas anónimas de uso y entender cómo se utiliza la web para poder mejorarla. Desactivada por defecto.',
+        save: 'Guardar preferencias',
+        acceptAll: 'Aceptar todo',
+        rejectAll: 'Rechazar todo',
+        closeModal: 'Cerrar panel de cookies',
+        footerLink: 'Preferencias de cookies'
+      },
+      en: {
+        bannerTitle: 'Do we use analytical cookies?',
+        bannerText: 'We use Google Analytics to understand how the website is used and improve it. We will only activate analytical cookies if you give us permission. You can change your choice at any time.',
+        accept: 'Accept analytics',
+        reject: 'Reject',
+        settings: 'Settings',
+        modalTitle: 'Cookie settings',
+        modalIntro: 'We respect your privacy. You can choose which cookies you authorize. Your selection will be remembered for 12 months and can be changed at any time.',
+        necessaryTitle: 'Necessary',
+        necessaryBadge: 'Always active',
+        necessaryDesc: 'Enable essential features such as navigation, site security, and remembering your consent choice. They cannot be disabled.',
+        analyticsTitle: 'Analytics',
+        analyticsBadge: 'Google Analytics 4',
+        analyticsDesc: 'Used to gather anonymous usage statistics and understand how the website is used to improve it. Disabled by default.',
+        save: 'Save preferences',
+        acceptAll: 'Accept all',
+        rejectAll: 'Reject all',
+        closeModal: 'Close cookie panel',
+        footerLink: 'Cookie preferences'
+      }
+    };
+
+    var t = i18n[currentLang] || i18n.es;
+
+    // Comprovar si ja existeix consentiment previ vàlid
+    var currentConsent = getStoredConsent();
+    if (currentConsent && currentConsent.analytics) {
+      loadGoogleAnalytics();
+    }
+
+    var bannerEl = null;
+    var modalEl = null;
+    var lastFocusedEl = null;
+
+    function buildUI() {
+      // 1. Construir Banner
+      bannerEl = document.createElement('aside');
+      bannerEl.className = 'pw-cookie-banner';
+      bannerEl.id = 'pw-cookie-banner';
+      bannerEl.setAttribute('role', 'region');
+      bannerEl.setAttribute('aria-label', t.bannerTitle);
+
+      bannerEl.innerHTML =
+        '<div class="pw-cookie-banner__inner">' +
+          '<div class="pw-cookie-banner__content">' +
+            '<h2 class="pw-cookie-banner__title">' + t.bannerTitle + '</h2>' +
+            '<p class="pw-cookie-banner__text">' + t.bannerText + '</p>' +
+          '</div>' +
+          '<div class="pw-cookie-banner__actions">' +
+            '<button type="button" class="pw-cookie-banner__btn pw-cookie-banner__btn--accept" id="pw-cookie-accept">' + t.accept + '</button>' +
+            '<button type="button" class="pw-cookie-banner__btn pw-cookie-banner__btn--reject" id="pw-cookie-reject">' + t.reject + '</button>' +
+            '<button type="button" class="pw-cookie-banner__btn pw-cookie-banner__btn--settings" id="pw-cookie-config">' + t.settings + '</button>' +
+          '</div>' +
+        '</div>';
+
+      // 2. Construir Panell de Configuració (Modal Layer 2)
+      modalEl = document.createElement('div');
+      modalEl.className = 'pw-cookie-modal';
+      modalEl.id = 'pw-cookie-modal';
+      modalEl.setAttribute('role', 'dialog');
+      modalEl.setAttribute('aria-modal', 'true');
+      modalEl.setAttribute('aria-labelledby', 'pw-cookie-modal-title');
+      modalEl.setAttribute('aria-describedby', 'pw-cookie-modal-desc');
+
+      modalEl.innerHTML =
+        '<div class="pw-cookie-modal__backdrop" id="pw-cookie-backdrop" aria-hidden="true"></div>' +
+        '<div class="pw-cookie-modal__stage">' +
+          '<div class="pw-cookie-modal__header">' +
+            '<h2 class="pw-cookie-modal__title" id="pw-cookie-modal-title">' + t.modalTitle + '</h2>' +
+            '<button type="button" class="pw-cookie-modal__close" id="pw-cookie-close" aria-label="' + t.closeModal + '">✕</button>' +
+          '</div>' +
+          '<div class="pw-cookie-modal__body">' +
+            '<p class="pw-cookie-modal__intro" id="pw-cookie-modal-desc">' + t.modalIntro + '</p>' +
+            '<div class="pw-cookie-categories">' +
+              // Categoria 1: Necessàries (sempre actives)
+              '<div class="pw-cookie-card">' +
+                '<div class="pw-cookie-card__head">' +
+                  '<div class="pw-cookie-card__info">' +
+                    '<h3 class="pw-cookie-card__name">' + t.necessaryTitle + '</h3>' +
+                    '<span class="pw-cookie-card__badge pw-cookie-card__badge--always">' + t.necessaryBadge + '</span>' +
+                  '</div>' +
+                  '<label class="pw-toggle">' +
+                    '<input type="checkbox" checked disabled aria-label="' + t.necessaryTitle + ': ' + t.necessaryBadge + '">' +
+                    '<span class="pw-toggle__track"><span class="pw-toggle__thumb"></span></span>' +
+                  '</label>' +
+                '</div>' +
+                '<p class="pw-cookie-card__desc">' + t.necessaryDesc + '</p>' +
+              '</div>' +
+              // Categoria 2: Analítica (Google Analytics 4)
+              '<div class="pw-cookie-card">' +
+                '<div class="pw-cookie-card__head">' +
+                  '<div class="pw-cookie-card__info">' +
+                    '<h3 class="pw-cookie-card__name">' + t.analyticsTitle + '</h3>' +
+                    '<span class="pw-cookie-card__badge pw-cookie-card__badge--vendor">' + t.analyticsBadge + '</span>' +
+                  '</div>' +
+                  '<label class="pw-toggle" for="pw-cookie-analytics-check">' +
+                    '<input type="checkbox" id="pw-cookie-analytics-check" aria-label="' + t.analyticsTitle + ': ' + t.analyticsBadge + '">' +
+                    '<span class="pw-toggle__track"><span class="pw-toggle__thumb"></span></span>' +
+                  '</label>' +
+                '</div>' +
+                '<p class="pw-cookie-card__desc">' + t.analyticsDesc + '</p>' +
+              '</div>' +
+            '</div>' +
+          '</div>' +
+          '<div class="pw-cookie-modal__footer">' +
+            '<button type="button" class="pw-cookie-modal__btn pw-cookie-modal__btn--reject-all" id="pw-cookie-reject-all">' + t.rejectAll + '</button>' +
+            '<button type="button" class="pw-cookie-modal__btn pw-cookie-modal__btn--accept-all" id="pw-cookie-accept-all">' + t.acceptAll + '</button>' +
+            '<button type="button" class="pw-cookie-modal__btn pw-cookie-modal__btn--save" id="pw-cookie-save">' + t.save + '</button>' +
+          '</div>' +
+        '</div>';
+
+      document.body.appendChild(bannerEl);
+      document.body.appendChild(modalEl);
+
+      // Mostrar banner si no hi ha decisió prèvia vàlida
+      if (!currentConsent) {
+        bannerEl.classList.add('is-visible');
+      }
+
+      // Assegurar botó de preferències al footer
+      ensureFooterCookieButton();
+
+      // Enllaçar esdeveniments
+      bindUIEvents();
+    }
+
+    function ensureFooterCookieButton() {
+      var legalNavs = document.querySelectorAll('.site-footer__legal');
+      for (var i = 0; i < legalNavs.length; i++) {
+        var nav = legalNavs[i];
+        if (!nav.querySelector('[data-open-cookie-settings]')) {
+          var btn = document.createElement('button');
+          btn.type = 'button';
+          btn.className = 'site-footer__cookie-btn';
+          btn.setAttribute('data-open-cookie-settings', '');
+          btn.textContent = t.footerLink;
+          nav.appendChild(btn);
+        }
+      }
+    }
+
+    function openModal() {
+      lastFocusedEl = document.activeElement;
+      var stored = getStoredConsent();
+      var analyticsCheckbox = document.getElementById('pw-cookie-analytics-check');
+      if (analyticsCheckbox) {
+        analyticsCheckbox.checked = stored ? !!stored.analytics : false;
+      }
+      if (bannerEl) {
+        bannerEl.classList.remove('is-visible');
+      }
+      modalEl.classList.add('is-open');
+      document.body.style.overflow = 'hidden';
+
+      var closeBtn = document.getElementById('pw-cookie-close');
+      if (closeBtn) {
+        closeBtn.focus();
+      }
+    }
+
+    function closeModal() {
+      modalEl.classList.remove('is-open');
+      document.body.style.overflow = '';
+      if (lastFocusedEl && typeof lastFocusedEl.focus === 'function') {
+        lastFocusedEl.focus();
+      }
+    }
+
+    function handleAccept() {
+      saveConsent(true);
+      if (bannerEl) bannerEl.classList.remove('is-visible');
+      closeModal();
+      loadGoogleAnalytics();
+    }
+
+    function handleReject() {
+      var hadAnalytics = false;
+      var stored = getStoredConsent();
+      if (stored && stored.analytics) hadAnalytics = true;
+      saveConsent(false);
+      if (bannerEl) bannerEl.classList.remove('is-visible');
+      closeModal();
+      if (hadAnalytics || isGaLoaded) {
+        revokeGoogleAnalytics();
+      }
+    }
+
+    function handleSavePreferences() {
+      var analyticsCheckbox = document.getElementById('pw-cookie-analytics-check');
+      var isChecked = analyticsCheckbox ? analyticsCheckbox.checked : false;
+      if (isChecked) {
+        handleAccept();
+      } else {
+        handleReject();
+      }
+    }
+
+    function bindUIEvents() {
+      var btnAccept = document.getElementById('pw-cookie-accept');
+      var btnReject = document.getElementById('pw-cookie-reject');
+      var btnConfig = document.getElementById('pw-cookie-config');
+      var btnClose = document.getElementById('pw-cookie-close');
+      var backdrop = document.getElementById('pw-cookie-backdrop');
+      var btnSave = document.getElementById('pw-cookie-save');
+      var btnAcceptAll = document.getElementById('pw-cookie-accept-all');
+      var btnRejectAll = document.getElementById('pw-cookie-reject-all');
+
+      if (btnAccept) btnAccept.addEventListener('click', handleAccept);
+      if (btnReject) btnReject.addEventListener('click', handleReject);
+      if (btnConfig) btnConfig.addEventListener('click', openModal);
+      if (btnClose) btnClose.addEventListener('click', closeModal);
+      if (backdrop) backdrop.addEventListener('click', closeModal);
+      if (btnSave) btnSave.addEventListener('click', handleSavePreferences);
+      if (btnAcceptAll) btnAcceptAll.addEventListener('click', handleAccept);
+      if (btnRejectAll) btnRejectAll.addEventListener('click', handleReject);
+
+      // Clics a "Preferències de cookies" al footer o enllaços similars
+      document.addEventListener('click', function(e){
+        var trigger = e.target.closest('[data-open-cookie-settings], [data-cookie-settings], a[href*="cookies#settings"]');
+        if (trigger) {
+          e.preventDefault();
+          openModal();
+        }
+      });
+
+      // Trap de focus i tecla Escape
+      document.addEventListener('keydown', function(e){
+        if (!modalEl || !modalEl.classList.contains('is-open')) return;
+
+        if (e.key === 'Escape') {
+          e.preventDefault();
+          closeModal();
+          return;
+        }
+
+        if (e.key === 'Tab') {
+          var focusables = modalEl.querySelectorAll('button:not([disabled]), input:not([disabled]), [tabindex]:not([tabindex="-1"])');
+          if (!focusables.length) return;
+          var firstEl = focusables[0];
+          var lastEl = focusables[focusables.length - 1];
+
+          if (e.shiftKey) {
+            if (document.activeElement === firstEl) {
+              e.preventDefault();
+              lastEl.focus();
+            }
+          } else {
+            if (document.activeElement === lastEl) {
+              e.preventDefault();
+              firstEl.focus();
+            }
+          }
+        }
+      });
+    }
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', buildUI);
+    } else {
+      buildUI();
+    }
+
+    // 3. Esdeveniments GA4 mínims: booking_click, whatsapp_click, phone_click, email_click
+    function getCtaLocation(el) {
+      try {
+        var parent = el.closest('[id], section, header, footer, aside, .booking-panel');
+        if (!parent) return 'body';
+        if (parent.id) return parent.id;
+        if (parent.tagName.toLowerCase() === 'header') return 'header';
+        if (parent.tagName.toLowerCase() === 'footer') return 'footer';
+        var cls = parent.className;
+        if (typeof cls === 'string' && cls.trim().length > 0) {
+          return cls.trim().split(/\s+/)[0];
+        }
+        return parent.tagName.toLowerCase();
+      } catch(e) {
+        return 'unknown';
+      }
+    }
+
+    document.addEventListener('click', function(e){
+      var link = e.target.closest('a, button');
+      if (!link) return;
+
+      var href = (link.getAttribute('href') || '').trim();
+      var ctaLocation = getCtaLocation(link);
+
+      // WhatsApp click
+      if (href.indexOf('wa.me') !== -1 || href.indexOf('api.whatsapp.com') !== -1) {
+        pwTrackEvent('whatsapp_click', {
+          language: currentLang,
+          cta_location: ctaLocation
+        });
+        return;
+      }
+
+      // Phone click
+      if (href.indexOf('tel:') === 0) {
+        pwTrackEvent('phone_click', {
+          language: currentLang,
+          cta_location: ctaLocation
+        });
+        return;
+      }
+
+      // Email click
+      if (href.indexOf('mailto:') === 0) {
+        pwTrackEvent('email_click', {
+          language: currentLang,
+          cta_location: ctaLocation
+        });
+        return;
+      }
+
+      // Booking click
+      if (href.indexOf('docfav.com') !== -1 || link.classList.contains('booking__btn') || link.classList.contains('book-bar__btn')) {
+        pwTrackEvent('booking_click', {
+          language: currentLang,
+          cta_location: ctaLocation
+        });
+        return;
+      }
+    });
+
+  } catch(err) {
+    console.warn('[Consent] Error d\'inicialització:', err);
+  }
+})();
+
 /* ---------- header: fondo sólido + ocultar/mostrar según dirección de scroll ----------
    Componente global (se sirve desde el único main.js compartido por todas las
    páginas): no es una implementación exclusiva de Fisioterapia. Se oculta al
@@ -2876,11 +3411,10 @@ var prefersReducedMotion = window.matchMedia && window.matchMedia('(prefers-redu
   }catch(e){ console.warn('visitJourneySystem', e); }
 })();
 
-/* ---------- Formulario de contacto: validación accesible y aviso transparente ----------
-   Gestiona la validación en tiempo real y al enviar del formulario de contacto.
-   Dado que no existe aún backend de envío de correos en el proyecto estático,
-   informa honestamente al usuario sin fingir un envío inexistente, ofreciendo
-   acciones inmediatas para abrir su correo o WhatsApp con el contenido ya redactado. */
+/* ---------- Formulario de contacto: validación en tiempo real y envío por PHP/SMTP ----------
+   Gestiona la validación accesible en tiempo real y el envío asíncrono seguro vía endpoint PHP + SMTP.
+   Mantiene el diseño intacto, deshabilita el botón con indicador de carga, previene doble clic,
+   y muestra la confirmación o el error en el propio componente sin recargas ni pérdida de datos. */
 (function contactFormHandler(){
   try{
     var form = document.getElementById('contact-form');
@@ -2890,11 +3424,19 @@ var prefersReducedMotion = window.matchMedia && window.matchMedia('(prefers-redu
     var emailInput = document.getElementById('contact-email');
     var phoneInput = document.getElementById('contact-phone');
     var messageInput = document.getElementById('contact-message');
+    var hpInput = document.getElementById('hp-website');
+    var submitBtn = document.getElementById('contact-submit-btn') || form.querySelector('button[type="submit"]');
+    var btnTextEl = submitBtn ? (submitBtn.querySelector('.btn__text') || submitBtn.querySelector('span:not(.btn__arrow):not(.btn__spinner)')) : null;
     var noticeEl = document.getElementById('contact-form-notice');
+    var noticeTitleEl = document.getElementById('contact-notice-title');
+    var noticeTextEl = document.getElementById('contact-notice-text');
+    var noticeActionsEl = document.getElementById('contact-notice-actions');
     var emailActionBtn = document.getElementById('form-action-email');
     var waActionBtn = document.getElementById('form-action-wa');
 
-    var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    var emailRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)+$/;
+    var phoneRegex = /^[0-9+\s\-().]{6,30}$/;
+    var isSubmitting = false;
 
     function setFieldError(input, errorId, errorMsg){
       if(!input) return;
@@ -2918,13 +3460,24 @@ var prefersReducedMotion = window.matchMedia && window.matchMedia('(prefers-redu
     }
 
     var formLang = (document.documentElement.lang || 'es').toLowerCase();
+    var currentLang = formLang.startsWith('ca') ? 'ca' : (formLang.startsWith('en') ? 'en' : 'es');
+
     var formI18n = {
       es: {
         errName: 'Por favor, introduce tu nombre.',
+        errNameLength: 'El nombre debe tener entre 2 y 100 caracteres.',
         errEmailEmpty: 'Por favor, introduce tu correo electrónico.',
         errEmailInvalid: 'Por favor, introduce un correo electrónico válido.',
+        errPhoneInvalid: 'Por favor, introduce un número de teléfono válido o déjalo vacío.',
         errMessageEmpty: 'Por favor, escribe tu mensaje o consulta.',
         errMessageShort: 'El mensaje es demasiado corto (mínimo 5 caracteres).',
+        errMessageLong: 'El mensaje es demasiado largo (máximo 3000 caracteres).',
+        errGeneral: 'No hemos podido enviar tu mensaje. Inténtalo de nuevo en unos minutos.',
+        errTitle: 'No se pudo enviar el mensaje',
+        successTitle: 'Mensaje enviado correctamente',
+        successMsg: 'Gracias. Hemos recibido tu mensaje y te responderemos lo antes posible.',
+        btnSending: 'Enviando...',
+        btnSubmit: 'Enviar mensaje',
         subject: 'Consulta web: ',
         bodyName: 'Nombre: ',
         bodyEmail: '\nEmail: ',
@@ -2935,10 +3488,19 @@ var prefersReducedMotion = window.matchMedia && window.matchMedia('(prefers-redu
       },
       ca: {
         errName: 'Si us plau, introdueix el teu nom.',
+        errNameLength: 'El nom ha de tenir entre 2 i 100 caràcters.',
         errEmailEmpty: 'Si us plau, introdueix el teu correu electrònic.',
         errEmailInvalid: 'Si us plau, introdueix un correu electrònic vàlid.',
+        errPhoneInvalid: 'Si us plau, introdueix un número de telèfon vàlid o deixa\'l buit.',
         errMessageEmpty: 'Si us plau, escriu el teu missatge o consulta.',
         errMessageShort: 'El missatge és massa curt (mínim 5 caràcters).',
+        errMessageLong: 'El missatge és massa llarg (màxim 3000 caràcters).',
+        errGeneral: 'No hem pogut enviar el teu missatge. Torna-ho a provar d\'aquí a uns minuts.',
+        errTitle: 'No s\'ha pogut enviar el missatge',
+        successTitle: 'Missatge enviat correctament',
+        successMsg: 'Gràcies. Hem rebut el teu missatge i et respondrem al més aviat possible.',
+        btnSending: 'Enviant...',
+        btnSubmit: 'Enviar missatge',
         subject: 'Consulta web: ',
         bodyName: 'Nom: ',
         bodyEmail: '\nEmail: ',
@@ -2949,10 +3511,19 @@ var prefersReducedMotion = window.matchMedia && window.matchMedia('(prefers-redu
       },
       en: {
         errName: 'Please enter your name.',
+        errNameLength: 'Name must be between 2 and 100 characters.',
         errEmailEmpty: 'Please enter your email address.',
         errEmailInvalid: 'Please enter a valid email address.',
+        errPhoneInvalid: 'Please enter a valid phone number or leave it empty.',
         errMessageEmpty: 'Please write your message or enquiry.',
         errMessageShort: 'The message is too short (at least 5 characters).',
+        errMessageLong: 'The message is too long (maximum 3000 characters).',
+        errGeneral: 'We could not send your message. Please try again in a few minutes.',
+        errTitle: 'Could not send message',
+        successTitle: 'Message sent successfully',
+        successMsg: 'Thank you. We\'ve received your message and will get back to you as soon as possible.',
+        btnSending: 'Sending...',
+        btnSubmit: 'Send message',
         subject: 'Web enquiry: ',
         bodyName: 'Name: ',
         bodyEmail: '\nEmail: ',
@@ -2962,13 +3533,17 @@ var prefersReducedMotion = window.matchMedia && window.matchMedia('(prefers-redu
         waConsult: ' Enquiry: '
       }
     };
-    var tMsg = formLang.startsWith('ca') ? formI18n.ca : (formLang.startsWith('en') ? formI18n.en : formI18n.es);
+    var tMsg = formI18n[currentLang];
 
     function validateName(){
       if(!nameInput) return true;
       var val = nameInput.value.trim();
       if(!val){
         setFieldError(nameInput, 'error-name', tMsg.errName);
+        return false;
+      }
+      if(val.length < 2 || val.length > 100){
+        setFieldError(nameInput, 'error-name', tMsg.errNameLength);
         return false;
       }
       setFieldError(nameInput, 'error-name', '');
@@ -2982,11 +3557,26 @@ var prefersReducedMotion = window.matchMedia && window.matchMedia('(prefers-redu
         setFieldError(emailInput, 'error-email', tMsg.errEmailEmpty);
         return false;
       }
-      if(!emailRegex.test(val)){
+      if(val.length > 254 || !emailRegex.test(val)){
         setFieldError(emailInput, 'error-email', tMsg.errEmailInvalid);
         return false;
       }
       setFieldError(emailInput, 'error-email', '');
+      return true;
+    }
+
+    function validatePhone(){
+      if(!phoneInput) return true;
+      var val = phoneInput.value.trim();
+      if(!val){
+        setFieldError(phoneInput, 'error-phone', '');
+        return true;
+      }
+      if(val.length < 6 || val.length > 30 || !phoneRegex.test(val)){
+        setFieldError(phoneInput, 'error-phone', tMsg.errPhoneInvalid);
+        return false;
+      }
+      setFieldError(phoneInput, 'error-phone', '');
       return true;
     }
 
@@ -2999,6 +3589,10 @@ var prefersReducedMotion = window.matchMedia && window.matchMedia('(prefers-redu
       }
       if(val.length < 5){
         setFieldError(messageInput, 'error-message', tMsg.errMessageShort);
+        return false;
+      }
+      if(val.length > 3000){
+        setFieldError(messageInput, 'error-message', tMsg.errMessageLong);
         return false;
       }
       setFieldError(messageInput, 'error-message', '');
@@ -3019,6 +3613,13 @@ var prefersReducedMotion = window.matchMedia && window.matchMedia('(prefers-redu
       });
     }
 
+    if(phoneInput){
+      phoneInput.addEventListener('blur', validatePhone);
+      phoneInput.addEventListener('input', function(){
+        if(phoneInput.getAttribute('aria-invalid') === 'true') validatePhone();
+      });
+    }
+
     if(messageInput){
       messageInput.addEventListener('blur', validateMessage);
       messageInput.addEventListener('input', function(){
@@ -3026,15 +3627,55 @@ var prefersReducedMotion = window.matchMedia && window.matchMedia('(prefers-redu
       });
     }
 
+    function hideNotice(){
+      if(!noticeEl) return;
+      noticeEl.hidden = true;
+      noticeEl.classList.remove('form-notice--success', 'form-notice--error');
+    }
+
+    function showNotice(type, title, text, showFallbackActions, nameVal, emailVal, phoneVal, msgVal){
+      if(!noticeEl) return;
+      noticeEl.hidden = false;
+      noticeEl.classList.remove('form-notice--success', 'form-notice--error');
+      noticeEl.classList.add(type === 'success' ? 'form-notice--success' : 'form-notice--error');
+
+      if(noticeTitleEl) noticeTitleEl.textContent = title;
+      if(noticeTextEl) noticeTextEl.textContent = text;
+
+      if(noticeActionsEl){
+        if(showFallbackActions){
+          noticeActionsEl.hidden = false;
+          var subject = tMsg.subject + (nameVal || '');
+          var emailBody = tMsg.bodyName + (nameVal || '') + tMsg.bodyEmail + (emailVal || '') + (phoneVal ? (tMsg.bodyPhone + phoneVal) : '') + tMsg.bodyMsg + (msgVal || '');
+          var waBody = tMsg.waIntro + (nameVal || '') + '.' + (phoneVal ? (' (Tel: ' + phoneVal + ')') : '') + tMsg.waConsult + (msgVal || '');
+
+          if(emailActionBtn){
+            emailActionBtn.href = 'mailto:hola@physiowellness.es?subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(emailBody);
+          }
+          if(waActionBtn){
+            waActionBtn.href = 'https://wa.me/34644678344?text=' + encodeURIComponent(waBody);
+          }
+        }else{
+          noticeActionsEl.hidden = true;
+        }
+      }
+
+      noticeEl.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+
     form.addEventListener('submit', function(e){
       e.preventDefault();
+      if(isSubmitting) return;
+
       var isNameValid = validateName();
       var isEmailValid = validateEmail();
+      var isPhoneValid = validatePhone();
       var isMsgValid = validateMessage();
 
-      if(!isNameValid || !isEmailValid || !isMsgValid){
+      if(!isNameValid || !isEmailValid || !isPhoneValid || !isMsgValid){
         if(!isNameValid && nameInput) nameInput.focus();
         else if(!isEmailValid && emailInput) emailInput.focus();
+        else if(!isPhoneValid && phoneInput) phoneInput.focus();
         else if(!isMsgValid && messageInput) messageInput.focus();
         return;
       }
@@ -3043,23 +3684,104 @@ var prefersReducedMotion = window.matchMedia && window.matchMedia('(prefers-redu
       var emailVal = emailInput ? emailInput.value.trim() : '';
       var phoneVal = phoneInput ? phoneInput.value.trim() : '';
       var msgVal = messageInput ? messageInput.value.trim() : '';
+      var hpVal = hpInput ? hpInput.value.trim() : '';
 
-      /* Preparar enlaces dinámicos para correo y WhatsApp */
-      var subject = tMsg.subject + nameVal;
-      var emailBody = tMsg.bodyName + nameVal + tMsg.bodyEmail + emailVal + (phoneVal ? (tMsg.bodyPhone + phoneVal) : '') + tMsg.bodyMsg + msgVal;
-      var waBody = tMsg.waIntro + nameVal + '.' + (phoneVal ? (' (Tel: ' + phoneVal + ')') : '') + tMsg.waConsult + msgVal;
+      isSubmitting = true;
+      hideNotice();
 
-      if(emailActionBtn){
-        emailActionBtn.href = 'mailto:hola@physiowellness.es?subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(emailBody);
+      if(submitBtn){
+        submitBtn.disabled = true;
+        submitBtn.classList.add('is-loading');
+        submitBtn.setAttribute('aria-busy', 'true');
       }
-      if(waActionBtn){
-        waActionBtn.href = 'https://wa.me/34644678344?text=' + encodeURIComponent(waBody);
+      if(btnTextEl){
+        btnTextEl.textContent = tMsg.btnSending;
       }
 
-      if(noticeEl){
-        noticeEl.hidden = false;
-        noticeEl.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-      }
+      var payload = {
+        name: nameVal,
+        email: emailVal,
+        phone: phoneVal,
+        message: msgVal,
+        lang: currentLang,
+        website: hpVal
+      };
+
+      var endpointUrl = (window.__PW_API_URL__ || '/api/contact.php');
+
+      fetch(endpointUrl, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'X-Requested-With': 'XMLHttpRequest'
+        },
+        body: JSON.stringify(payload)
+      })
+      .then(function(res){
+        return res.json().then(function(data){
+          return { ok: res.ok, status: res.status, data: data };
+        }).catch(function(){
+          return { ok: res.ok, status: res.status, data: null };
+        });
+      })
+      .then(function(result){
+        var data = result.data;
+        if(result.ok && data && data.success){
+          // Envío con éxito confirmado
+          showNotice('success', tMsg.successTitle, tMsg.successMsg, false);
+          form.reset();
+          if(submitBtn){
+            submitBtn.disabled = false;
+            submitBtn.classList.remove('is-loading');
+            submitBtn.removeAttribute('aria-busy');
+          }
+          if(btnTextEl){
+            btnTextEl.textContent = tMsg.btnSubmit;
+          }
+          // GA4: generate_lead (únicament amb enviament confirmat pel backend /api/contact.php)
+          if(typeof window.pwTrackEvent === 'function'){
+            window.pwTrackEvent('generate_lead', {
+              language: currentLang,
+              cta_location: 'contact_form'
+            });
+          }
+        }else{
+          // Error devuelto por el servidor
+          if(submitBtn){
+            submitBtn.disabled = false;
+            submitBtn.classList.remove('is-loading');
+            submitBtn.removeAttribute('aria-busy');
+          }
+          if(btnTextEl){
+            btnTextEl.textContent = tMsg.btnSubmit;
+          }
+
+          if(data && data.errors){
+            if(data.errors.name && nameInput) setFieldError(nameInput, 'error-name', data.errors.name);
+            if(data.errors.email && emailInput) setFieldError(emailInput, 'error-email', data.errors.email);
+            if(data.errors.phone && phoneInput) setFieldError(phoneInput, 'error-phone', data.errors.phone);
+            if(data.errors.message && messageInput) setFieldError(messageInput, 'error-message', data.errors.message);
+          }
+
+          var errorMsg = (data && data.message) ? data.message : tMsg.errGeneral;
+          showNotice('error', tMsg.errTitle, errorMsg, true, nameVal, emailVal, phoneVal, msgVal);
+        }
+      })
+      .catch(function(err){
+        if(submitBtn){
+          submitBtn.disabled = false;
+          submitBtn.classList.remove('is-loading');
+          submitBtn.removeAttribute('aria-busy');
+        }
+        if(btnTextEl){
+          btnTextEl.textContent = tMsg.btnSubmit;
+        }
+        showNotice('error', tMsg.errTitle, tMsg.errGeneral, true, nameVal, emailVal, phoneVal, msgVal);
+      })
+      .finally(function(){
+        isSubmitting = false;
+      });
+
     });
 
   }catch(e){ console.warn('contactFormHandler', e); }

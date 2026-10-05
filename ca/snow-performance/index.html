@@ -29,7 +29,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Jost:wght@400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="../../src/css/styles.css">
+<link rel="stylesheet" href="../../src/css/styles.css?v=3">
 <noscript><style>
 [data-reveal]{opacity:1!important;transform:none!important;}
 </style></noscript>
@@ -387,38 +387,72 @@
     </div>
     <div class="snow-hero__scrim" aria-hidden="true"></div>
 
-    <div class="container snow-hero__inner">
-      <nav class="breadcrumb snow-hero__breadcrumb" aria-label="Ruta de navegació" data-reveal>
-        <ol>
-          <li><a href="../../ca/">Inici</a></li>
-          <li><a href="../../ca/forca/">Força</a></li>
-          <li aria-current="page">Snow Performance</li>
-        </ol>
-      </nav>
+    <div class="snow-hero__inner">
+      <div class="snow-hero__content">
+        <nav class="breadcrumb snow-hero__breadcrumb" aria-label="Ruta de navegació">
+          <ol>
+            <li><a href="../../ca/">Inici</a></li>
+            <li><a href="../../ca/forca/">Força</a></li>
+            <li aria-current="page">Snow Performance</li>
+          </ol>
+        </nav>
 
-      <div data-reveal style="--i:1">
         <p class="snow-hero__eyebrow">Snow Performance by Marshall</p>
-        <h1 class="snow-hero__title">PREPARAT PER A LA MUNTANYA?</h1>
-      </div>
 
-      <div data-reveal style="--i:2">
+        <h1 class="snow-hero__title">
+          <span class="reveal-line"><span style="--i:1">PREPARAT PER A</span></span>
+          <span class="reveal-line"><span class="snow-hero__title-accent" style="--i:2">LA MUNTANYA?</span></span>
+        </h1>
+
         <div class="snow-hero__supporting" aria-label="Pilars del programa">
           <span>Preparar</span> · <span>Rendir</span> · <span>Protegir</span> · <span>Recuperar</span>
         </div>
-      </div>
 
-      <div class="snow-hero__lead" data-reveal style="--i:3">
-        <p>Programa de preparació física específic per a esquí i snowboard.</p>
-        <p>Arriba a la temporada amb més força, millor control i un cos preparat per respondre a les exigències de la muntanya.</p>
-      </div>
+        <div class="snow-hero__lead">
+          <p>Programa de preparació física específic per a esquí i snowboard.</p>
+          <p>Arriba a la temporada amb més força, millor control i un cos preparat per respondre a les exigències de la muntanya.</p>
+        </div>
 
-      <div class="snow-hero__actions" data-reveal style="--i:4">
-        <a class="btn btn--primary" href="#programa-precio">
-          Vull preparar la meva temporada <span aria-hidden="true">→</span>
+        <div class="snow-hero__actions">
+          <a class="btn btn--primary" href="#programa-precio">
+            Vull preparar la meva temporada <span aria-hidden="true">→</span>
+          </a>
+          <a class="btn btn--outline" href="https://wa.me/34644678344?text=Hola,%20vull%20informaci%C3%B3%20sobre%20Snow%20Performance" target="_blank" rel="noopener">
+            Consultar per WhatsApp
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <div class="snow-hero__bottom">
+      <div class="snow-hero__bottom-grid">
+        <a class="snow-hero__scroll" href="#las-demandas" aria-label="Desplaça't per preparar">
+          <span class="snow-hero__scroll-track" aria-hidden="true">
+            <span class="snow-hero__scroll-thumb"></span>
+          </span>
+          <span class="snow-hero__scroll-label">SCROLL PER PREPARAR</span>
+          <span class="snow-hero__scroll-arrow" aria-hidden="true">↓</span>
         </a>
-        <a class="btn btn--outline" href="https://wa.me/34644678344?text=Hola,%20vull%20informaci%C3%B3%20sobre%20Snow%20Performance" target="_blank" rel="noopener">
-          Consultar per WhatsApp
-        </a>
+
+        <div class="snow-hero__meta" aria-label="Dimensions del sistema Snow Performance">
+          <div class="snow-hero__meta-top">
+            <span class="snow-hero__meta-code">01 / 06</span>
+            <span class="snow-hero__meta-title">SISTEMA SNOW PERFORMANCE</span>
+          </div>
+          <div class="snow-hero__meta-pillars">
+            <span>FORÇA</span>
+            <span class="snow-hero__meta-dot" aria-hidden="true">·</span>
+            <span>EQUILIBRI</span>
+            <span class="snow-hero__meta-dot" aria-hidden="true">·</span>
+            <span>CONTROL</span>
+            <span class="snow-hero__meta-dot" aria-hidden="true">·</span>
+            <span>MOBILITAT</span>
+            <span class="snow-hero__meta-dot" aria-hidden="true">·</span>
+            <span>POTÈNCIA</span>
+            <span class="snow-hero__meta-dot" aria-hidden="true">·</span>
+            <span>RESISTÈNCIA</span>
+          </div>
+        </div>
       </div>
     </div>
   </section>
@@ -912,7 +946,7 @@
 </footer>
 
 
-<script src="../../src/js/main.js"></script>
+<script src="../../src/js/main.js?v=3"></script>
 <script>
 /* Interacción de matriz de capacidades físicas */
 (function initCapacities(){

@@ -960,6 +960,52 @@ var ANNOUNCEMENT_CONFIG = {
   }catch(e){ console.warn('pageHeroMedia', e); }
 })();
 
+/* ---------- snow-hero: revelado y transición suave al scroll ---------- */
+(function snowHeroInit(){
+  try{
+    var hero = document.querySelector('.snow-hero');
+    if(!hero) return;
+
+    requestAnimationFrame(function(){
+      requestAnimationFrame(function(){
+        hero.classList.add('is-ready');
+      });
+    });
+
+    if(prefersReducedMotion) return;
+    var bgImg = hero.querySelector('.snow-hero__bg img');
+    var content = hero.querySelector('.snow-hero__content');
+    var bottom = hero.querySelector('.snow-hero__bottom');
+    if(!bgImg) return;
+
+    var ticking = false;
+    var onScroll = function(){
+      if(!ticking){
+        requestAnimationFrame(function(){
+          var y = window.scrollY;
+          var h = hero.offsetHeight || window.innerHeight;
+          if(y <= h + 100){
+            var p = Math.min(Math.max(y / h, 0), 1);
+            bgImg.style.transform = 'scale(' + (1.02 + p * 0.05).toFixed(3) + ') translate3d(0,' + (p * 20).toFixed(1) + 'px,0)';
+            if(content){
+              content.style.transform = 'translate3d(0,' + (p * 24).toFixed(1) + 'px,0)';
+              content.style.opacity = (Math.max(0, 1 - p * 0.75)).toFixed(2);
+            }
+            if(bottom){
+              bottom.style.opacity = (Math.max(0, 1 - p * 1.5)).toFixed(2);
+            }
+          }
+          ticking = false;
+        });
+        ticking = true;
+      }
+    };
+    window.addEventListener('scroll', onScroll, {passive:true});
+    window.addEventListener('resize', onScroll);
+    onScroll();
+  }catch(e){ console.warn('snowHeroInit', e); }
+})();
+
 /* ---------- "Elige tu área": panel activo + contexto asociado ----------
    Cada panel es un <button aria-pressed> que marca el área elegida; el
    enlace "Ver tarifas" de cada panel sigue siendo un <a href="#en-la-clinica">

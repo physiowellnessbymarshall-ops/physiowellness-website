@@ -11146,46 +11146,89 @@ a:not(.booking-panel__help):focus-visible,
   color: var(--pw-ink);
 }
 
-/* Hero Landing Snow */
+/* Hero Landing Snow — Rediseño Editorial & Inmersivo */
 .snow-hero {
   position: relative;
   background-color: var(--pw-primary-900);
   color: var(--pw-white);
-  padding-top: clamp(7rem, 14vh, 10.5rem);
-  padding-bottom: clamp(5rem, 10vh, 8rem);
+  min-height: calc(100svh - 4.5rem);
+  min-height: 90vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding-top: clamp(6.25rem, 11vh, 8.5rem);
+  padding-bottom: clamp(2rem, 4vh, 3.25rem);
   overflow: hidden;
+  box-sizing: border-box;
 }
 
+@media (min-width: 1024px) {
+  .snow-hero {
+    min-height: 92vh;
+    min-height: 92svh;
+  }
+}
+
+/* Fondo fotográfico con profundidad */
 .snow-hero__bg {
   position: absolute;
   inset: 0;
   z-index: 1;
+  overflow: hidden;
+  pointer-events: none;
 }
 
 .snow-hero__bg img {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  object-position: center 35%;
-  opacity: 0.38;
+  object-position: 72% 35%;
+  opacity: 0.44;
+  transform: scale(1.02);
+  transform-origin: center center;
+  transition: transform var(--dur-slow) var(--ease-out);
 }
 
+/* Scrim multicapa: integración tonal con verde corporativo y textura alpina */
 .snow-hero__scrim {
   position: absolute;
   inset: 0;
   z-index: 2;
-  background: radial-gradient(circle at 75% 30%, rgba(38, 152, 136, 0.25), transparent 60%),
-              linear-gradient(to bottom, rgba(18, 60, 55, 0.85) 0%, rgba(18, 60, 55, 0.95) 85%, var(--pw-primary-900) 100%);
+  pointer-events: none;
+  background:
+    linear-gradient(to right,
+      var(--pw-primary-900) 0%,
+      rgba(18, 60, 55, 0.97) 36%,
+      rgba(18, 60, 55, 0.85) 54%,
+      rgba(18, 60, 55, 0.52) 80%,
+      rgba(18, 60, 55, 0.62) 100%
+    ),
+    linear-gradient(to bottom,
+      rgba(18, 60, 55, 0.8) 0%,
+      rgba(18, 60, 55, 0.3) 24%,
+      rgba(18, 60, 55, 0.2) 65%,
+      rgba(18, 60, 55, 0.9) 92%,
+      var(--pw-primary-900) 100%
+    ),
+    radial-gradient(ellipse at 78% 30%, rgba(38, 152, 136, 0.22) 0%, transparent 60%);
 }
 
+/* Contenedores de contenido */
 .snow-hero__inner {
   position: relative;
   z-index: 3;
-  max-width: 900px;
+  width: 100%;
+  max-width: var(--container);
+  margin-inline: auto;
+  padding-inline: clamp(1.5rem, 4vw, 2.75rem);
+}
+
+.snow-hero__content {
+  max-width: 58rem;
 }
 
 .snow-hero__breadcrumb {
-  margin-bottom: var(--sp-6);
+  margin-bottom: var(--space-md);
 }
 
 .snow-hero__eyebrow {
@@ -11197,7 +11240,7 @@ a:not(.booking-panel__help):focus-visible,
   display: inline-flex;
   align-items: center;
   gap: var(--sp-2);
-  margin-bottom: var(--sp-3);
+  margin-bottom: var(--space-sm-md);
 }
 
 .snow-hero__eyebrow::before {
@@ -11208,15 +11251,41 @@ a:not(.booking-panel__help):focus-visible,
   background-color: var(--pw-accent-accessible);
 }
 
+/* Titular de gran escala y ritmo editorial compacto */
 .snow-hero__title {
-  font-size: var(--fs-display);
+  font-size: clamp(3.25rem, 7.2vw, 7.25rem);
   font-weight: 500;
-  line-height: 1.1;
-  letter-spacing: -0.02em;
+  line-height: 0.94;
+  letter-spacing: -0.03em;
+  text-transform: uppercase;
   margin: 0 0 var(--space-md-lg);
   color: var(--pw-white);
+  max-width: 18ch;
 }
 
+.snow-hero__title .reveal-line {
+  overflow: hidden;
+  display: block;
+  padding-bottom: 0.14em;
+  margin-bottom: -0.14em;
+}
+
+.snow-hero__title .reveal-line > span {
+  display: block;
+  transform: translateY(115%);
+  transition: transform 0.85s var(--ease-emphatic);
+  transition-delay: calc(var(--i, 1) * 110ms);
+}
+
+.snow-hero.is-ready .snow-hero__title .reveal-line > span {
+  transform: translateY(0);
+}
+
+.snow-hero__title-accent {
+  display: inline-block;
+}
+
+/* Pilares del programa */
 .snow-hero__supporting {
   display: inline-flex;
   flex-wrap: wrap;
@@ -11227,27 +11296,313 @@ a:not(.booking-panel__help):focus-visible,
   letter-spacing: 0.14em;
   color: var(--pw-accent-accessible);
   text-transform: uppercase;
-  background: rgba(255, 255, 255, 0.08);
+  background: rgba(255, 255, 255, 0.07);
   backdrop-filter: blur(8px);
   padding: 0.45rem 1.1rem;
   border-radius: var(--radius);
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  margin-bottom: var(--sp-6);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  margin-bottom: var(--space-md-lg);
 }
 
+/* Párrafo lead */
 .snow-hero__lead {
   font-size: var(--fs-lead);
-  line-height: 1.6;
+  line-height: 1.55;
   color: rgba(255, 255, 255, 0.88);
   margin: 0 0 var(--sp-8);
-  max-width: 62ch;
+  max-width: 48ch;
 }
 
+.snow-hero__lead p + p {
+  margin-top: var(--space-sm);
+}
+
+/* Acciones / CTAs */
 .snow-hero__actions {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
   gap: var(--sp-4);
+}
+
+.snow-hero__actions .btn {
+  min-height: 3.125rem;
+  padding-inline: 1.85rem;
+}
+
+.snow-hero__actions .btn--primary {
+  box-shadow: 0 12px 28px -10px rgba(0, 0, 0, 0.45);
+}
+
+.snow-hero__actions .btn--primary:hover {
+  background: var(--pw-primary-600);
+  transform: translateY(-2px);
+  box-shadow: 0 16px 32px -12px rgba(0, 0, 0, 0.55);
+}
+
+.snow-hero__actions .btn--outline {
+  border-color: rgba(255, 255, 255, 0.35);
+  background: rgba(255, 255, 255, 0.03);
+  backdrop-filter: blur(4px);
+}
+
+.snow-hero__actions .btn--outline:hover {
+  border-color: var(--pw-accent-accessible);
+  background: rgba(255, 255, 255, 0.09);
+  color: var(--pw-white);
+  transform: translateY(-2px);
+}
+
+/* Franja inferior: Transición hacia siguiente bloque + Detalle Técnico */
+.snow-hero__bottom {
+  position: relative;
+  z-index: 3;
+  width: 100%;
+  max-width: var(--container);
+  margin-inline: auto;
+  padding-inline: clamp(1.5rem, 4vw, 2.75rem);
+  padding-top: var(--space-lg);
+  margin-top: auto;
+}
+
+.snow-hero__bottom-grid {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: var(--sp-6);
+  padding-top: var(--space-md);
+  border-top: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+/* Indicador de Scroll minimalista */
+.snow-hero__scroll {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--sp-3);
+  color: rgba(255, 255, 255, 0.65);
+  text-decoration: none;
+  font-size: 0.6875rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  font-weight: 500;
+  transition: color var(--dur-fast) var(--ease-out);
+  padding-block: var(--space-micro);
+}
+
+.snow-hero__scroll:hover {
+  color: var(--pw-white);
+}
+
+.snow-hero__scroll-track {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  width: 14px;
+  height: 24px;
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  border-radius: 8px;
+  padding-top: 3px;
+  box-sizing: border-box;
+}
+
+.snow-hero__scroll-thumb {
+  width: 2px;
+  height: 6px;
+  background-color: var(--pw-accent-accessible);
+  border-radius: 1px;
+  animation: snowScrollThumb 2s cubic-bezier(0.65, 0, 0.35, 1) infinite;
+}
+
+@keyframes snowScrollThumb {
+  0% { transform: translateY(0); opacity: 1; }
+  60% { transform: translateY(8px); opacity: 0; }
+  61% { transform: translateY(0); opacity: 0; }
+  100% { transform: translateY(0); opacity: 1; }
+}
+
+.snow-hero__scroll-arrow {
+  display: inline-block;
+  font-size: 0.85rem;
+  transition: transform var(--dur-fast) var(--ease-out);
+}
+
+.snow-hero__scroll:hover .snow-hero__scroll-arrow {
+  transform: translateY(2px);
+  color: var(--pw-accent-accessible);
+}
+
+/* Detalle Técnico Editorial (Dimensiones reales) */
+.snow-hero__meta {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: var(--space-micro);
+  text-align: right;
+  font-size: 0.6875rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.55);
+}
+
+.snow-hero__meta-top {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--sp-2);
+  font-weight: 600;
+  color: var(--pw-accent-accessible);
+  letter-spacing: 0.18em;
+}
+
+.snow-hero__meta-code {
+  font-variant-numeric: tabular-nums;
+  opacity: 0.85;
+}
+
+.snow-hero__meta-pillars {
+  display: inline-flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 0.4rem;
+  line-height: 1.4;
+  color: rgba(255, 255, 255, 0.62);
+  font-weight: 400;
+}
+
+.snow-hero__meta-dot {
+  opacity: 0.4;
+}
+
+/* Coreografía de entrada (Motion System 700-1100ms) */
+.snow-hero .snow-hero__eyebrow,
+.snow-hero .snow-hero__supporting,
+.snow-hero .snow-hero__lead,
+.snow-hero .snow-hero__actions,
+.snow-hero .snow-hero__bottom {
+  opacity: 0;
+  transform: translateY(14px);
+  transition: opacity 0.75s var(--ease-out), transform 0.75s var(--ease-out);
+}
+
+.snow-hero.is-ready .snow-hero__eyebrow {
+  opacity: 1;
+  transform: translateY(0);
+  transition-delay: 0.08s;
+}
+
+.snow-hero.is-ready .snow-hero__supporting {
+  opacity: 1;
+  transform: translateY(0);
+  transition-delay: 0.42s;
+}
+
+.snow-hero.is-ready .snow-hero__lead {
+  opacity: 1;
+  transform: translateY(0);
+  transition-delay: 0.54s;
+}
+
+.snow-hero.is-ready .snow-hero__actions {
+  opacity: 1;
+  transform: translateY(0);
+  transition-delay: 0.66s;
+}
+
+.snow-hero.is-ready .snow-hero__bottom {
+  opacity: 1;
+  transform: translateY(0);
+  transition-delay: 0.78s;
+}
+
+/* Fallback si JS no estuviese disponible */
+html:not(.js) .snow-hero .snow-hero__eyebrow,
+html:not(.js) .snow-hero .snow-hero__supporting,
+html:not(.js) .snow-hero .snow-hero__lead,
+html:not(.js) .snow-hero .snow-hero__actions,
+html:not(.js) .snow-hero .snow-hero__bottom,
+html:not(.js) .snow-hero__title .reveal-line > span {
+  opacity: 1 !important;
+  transform: none !important;
+}
+
+/* Responsive Tablet */
+@media (max-width: 960px) {
+  .snow-hero__bottom-grid {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--sp-4);
+  }
+  .snow-hero__meta {
+    align-items: flex-start;
+    text-align: left;
+  }
+  .snow-hero__meta-pillars {
+    justify-content: flex-start;
+  }
+}
+
+/* Responsive Mobile */
+@media (max-width: 640px) {
+  .snow-hero {
+    min-height: 82svh;
+    padding-top: clamp(5.5rem, 10vh, 6.5rem);
+    padding-bottom: var(--space-md);
+  }
+  .snow-hero__bg img {
+    object-position: 68% center;
+  }
+  .snow-hero__title {
+    font-size: clamp(2.5rem, 11vw, 3.75rem);
+    line-height: 0.98;
+    letter-spacing: -0.025em;
+  }
+  .snow-hero__lead {
+    font-size: 1rem;
+    margin-bottom: var(--sp-6);
+  }
+  .snow-hero__actions {
+    flex-direction: column;
+    width: 100%;
+    gap: var(--sp-3);
+  }
+  .snow-hero__actions .btn {
+    width: 100%;
+    justify-content: center;
+  }
+  .snow-hero__supporting {
+    font-size: 0.75rem;
+    letter-spacing: 0.1em;
+    padding: 0.35rem 0.75rem;
+  }
+  .snow-hero__bottom {
+    padding-top: var(--space-sm);
+  }
+  .snow-hero__bottom-grid {
+    border-top: none;
+    padding-top: 0;
+    gap: var(--sp-3);
+  }
+  .snow-hero__meta-pillars {
+    font-size: 0.625rem;
+  }
+}
+
+/* Accesibilidad: prefers-reduced-motion */
+@media (prefers-reduced-motion: reduce) {
+  .snow-hero .snow-hero__eyebrow,
+  .snow-hero .snow-hero__supporting,
+  .snow-hero .snow-hero__lead,
+  .snow-hero .snow-hero__actions,
+  .snow-hero .snow-hero__bottom,
+  .snow-hero__title .reveal-line > span,
+  .snow-hero__bg img {
+    transition: none !important;
+    transform: none !important;
+    opacity: 1 !important;
+  }
+  .snow-hero__scroll-thumb {
+    animation: none !important;
+  }
 }
 
 /* Sección 02: Skiing is harder than it looks */

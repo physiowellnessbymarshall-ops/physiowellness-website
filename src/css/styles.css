@@ -12245,111 +12245,347 @@ html:not(.js) .snow-hero__title .reveal-line > span {
   margin: 0;
 }
 
-/* Sección 08: Programa y Precio */
-.snow-pricing {
+/* Sección 08: Choose Your Programme & Every Programme Includes */
+.snow-programs {
   padding-block: var(--space-section);
   background-color: var(--pw-white);
   border-bottom: 1px solid var(--pw-line);
 }
 
-.snow-pricing__grid {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: var(--sp-8);
+.snow-programs__head {
+  max-width: 720px;
+  margin-bottom: clamp(var(--sp-8), 6vw, var(--sp-12));
 }
 
-@media (min-width: 860px) {
-  .snow-pricing__grid {
-    grid-template-columns: 1.1fr 0.9fr;
-    gap: var(--sp-12);
-    align-items: start;
+/* Grilla de los 2 grandes bloques: 04 WEEKS y 08 WEEKS */
+.snow-programs__grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--sp-6);
+  margin-bottom: clamp(var(--sp-12), 8vw, var(--sp-20));
+}
+
+@media (min-width: 900px) {
+  .snow-programs__grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--sp-8);
   }
 }
 
-.pricing-features-list {
-  list-style: none;
-  padding: 0;
+/* Tarjeta de programa (04 WEEKS / 08 WEEKS) */
+.snow-program-card {
+  background: var(--pw-mist);
+  border: 1px solid var(--pw-line);
+  border-radius: var(--radius);
+  padding: clamp(1.75rem, 4vw, 2.75rem);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  transition: border-color var(--dur-fast) var(--ease-out),
+              box-shadow var(--dur-fast) var(--ease-out);
+}
+
+.snow-program-card:hover {
+  border-color: rgba(35, 115, 105, 0.35);
+  box-shadow: 0 12px 32px -16px rgba(18, 60, 55, 0.12);
+}
+
+.snow-program-card__header {
+  margin-bottom: var(--space-lg);
+  border-bottom: 1px solid var(--pw-line);
+  padding-bottom: var(--space-md-lg);
+}
+
+.snow-program-card__badge {
+  font-size: var(--fs-label);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  color: var(--pw-primary);
+  display: inline-block;
+  margin-bottom: var(--sp-1);
+}
+
+.snow-program-card__duration {
+  display: flex;
+  align-items: baseline;
+  gap: var(--sp-3);
+  margin-bottom: var(--space-sm);
+}
+
+.snow-program-card__num {
+  font-size: clamp(3.5rem, 7vw, 5.25rem);
+  font-weight: 500;
+  line-height: 0.88;
+  letter-spacing: -0.04em;
+  color: var(--pw-primary-900);
+}
+
+.snow-program-card__unit {
+  font-size: clamp(1.25rem, 2.2vw, 1.75rem);
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  color: var(--pw-ink);
+  text-transform: uppercase;
+}
+
+.snow-program-card__desc {
+  font-size: var(--fs-small);
+  line-height: 1.55;
+  color: var(--pw-ink-70);
   margin: 0;
+  max-width: 44ch;
+}
+
+/* Opciones de frecuencia dentro del bloque */
+.snow-program-card__options {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+}
+
+.snow-option {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  background: var(--pw-white);
+  padding: var(--space-md) var(--space-md-lg);
+  border: 1px solid rgba(18, 32, 29, 0.08);
+  border-radius: var(--radius);
+  transition: border-color var(--dur-fast) var(--ease-out);
+}
+
+.snow-option:hover {
+  border-color: rgba(35, 115, 105, 0.4);
+}
+
+@media (min-width: 480px) {
+  .snow-option {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+  }
+}
+
+.snow-option__frequency {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+
+.snow-option__tag {
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  color: var(--pw-primary);
+  text-transform: uppercase;
+}
+
+.snow-option__rate {
+  font-size: 1.05rem;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  color: var(--pw-primary-900);
+  text-transform: uppercase;
+}
+
+.snow-option__deliverables {
+  display: flex;
+  align-items: baseline;
+  gap: var(--sp-2);
+}
+
+@media (min-width: 480px) {
+  .snow-option__deliverables {
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 0;
+  }
+}
+
+.snow-option__count {
+  font-size: 1.15rem;
+  font-weight: 600;
+  color: var(--pw-ink);
+  letter-spacing: -0.01em;
+}
+
+.snow-option__duration {
+  font-size: var(--fs-small);
+  color: var(--pw-ink-70);
+  font-weight: 400;
+}
+
+.snow-option__divider {
+  display: none;
+}
+
+/* Bloque Every Programme Includes (7 elementos) */
+.snow-includes {
+  background: var(--pw-primary-900);
+  color: var(--pw-white);
+  border-radius: var(--radius);
+  padding: clamp(2rem, 5vw, 3.5rem);
+  position: relative;
+  overflow: hidden;
+}
+
+.snow-includes__header {
+  max-width: 640px;
+  margin-bottom: clamp(var(--sp-8), 5vw, var(--sp-12));
+}
+
+.snow-includes__header .eyebrow {
+  color: var(--pw-accent-accessible);
+  margin-bottom: var(--space-sm);
+}
+
+.snow-includes__title {
+  font-size: clamp(1.75rem, 3.2vw, 2.75rem);
+  font-weight: 500;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  color: var(--pw-white);
+  margin: 0 0 var(--space-sm-md);
+  text-transform: uppercase;
+}
+
+.snow-includes__subtitle {
+  font-size: var(--fs-lead);
+  line-height: 1.55;
+  color: rgba(255, 255, 255, 0.82);
+  margin: 0;
+}
+
+.snow-includes__grid {
   display: grid;
   grid-template-columns: 1fr;
-  gap: var(--sp-3);
+  gap: 1px;
+  background-color: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: var(--radius);
+  margin-bottom: clamp(var(--sp-8), 5vw, var(--sp-12));
 }
 
 @media (min-width: 640px) {
-  .pricing-features-list {
+  .snow-includes__grid {
     grid-template-columns: repeat(2, 1fr);
   }
 }
 
-.pricing-feature-item {
+@media (min-width: 1024px) {
+  .snow-includes__grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.snow-include-item {
+  background-color: var(--pw-primary-900);
+  padding: clamp(1.25rem, 2.5vw, 1.75rem);
   display: flex;
-  align-items: baseline;
   gap: var(--sp-3);
-  font-size: var(--fs-body);
-  color: var(--pw-ink);
-  padding: var(--sp-2) 0;
-  border-bottom: 1px solid var(--pw-line);
+  align-items: flex-start;
 }
 
-.pricing-feature-item svg {
+.snow-include-item__num {
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  color: var(--pw-accent-accessible);
+  font-variant-numeric: tabular-nums;
+  padding-top: 0.15rem;
   flex-shrink: 0;
-  color: var(--pw-primary);
 }
 
-/* Tarjeta de precio editorial */
-.pricing-card-editorial {
-  background: var(--pw-primary-900);
-  color: var(--pw-white);
-  padding: clamp(var(--sp-8), 5vw, var(--sp-12));
-  border-radius: var(--radius);
-  border: 1px solid var(--pw-line-on-dark);
-  box-shadow: 0 16px 40px rgba(18, 60, 55, 0.2);
+.snow-include-item__body {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
 }
 
-.pricing-card-editorial__meta {
-  font-size: var(--fs-label);
-  font-weight: 600;
-  letter-spacing: 0.16em;
-  color: var(--pw-accent-accessible);
-  text-transform: uppercase;
-  margin-bottom: var(--sp-4);
-}
-
-.pricing-card-editorial__price {
-  font-size: clamp(3.5rem, 7vw, 5rem);
+.snow-include-item__title {
+  font-size: 1rem;
   font-weight: 500;
-  line-height: 0.9;
-  letter-spacing: -0.04em;
   color: var(--pw-white);
-  margin: 0 0 var(--sp-2);
+  margin: 0;
+  letter-spacing: -0.01em;
 }
 
-.pricing-card-editorial__currency {
-  font-size: 2.2rem;
-  font-weight: 400;
-  vertical-align: top;
-  margin-left: 0.2rem;
-  color: var(--pw-accent-accessible);
-}
-
-.pricing-card-editorial__note {
-  font-size: var(--fs-small);
+.snow-include-item__desc {
+  font-size: 0.8125rem;
+  line-height: 1.5;
   color: rgba(255, 255, 255, 0.72);
-  margin-bottom: var(--sp-8);
+  margin: 0;
 }
 
-.pricing-card-editorial__cta {
-  width: 100%;
-  justify-content: center;
-  background-color: var(--pw-accent);
-  color: var(--pw-primary-900);
-  font-weight: 600;
+/* CTA unificado de valor */
+.snow-includes__action {
+  border-top: 1px solid rgba(255, 255, 255, 0.15);
+  padding-top: clamp(var(--sp-6), 4vw, var(--sp-8));
 }
 
-.pricing-card-editorial__cta:hover,
-.pricing-card-editorial__cta:focus-visible {
-  background-color: #38b4a3;
-  color: var(--pw-primary-900);
+.snow-includes__cta-box {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+  max-width: 680px;
+}
+
+@media (min-width: 860px) {
+  .snow-includes__cta-box {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    max-width: 100%;
+  }
+}
+
+.snow-includes__cta-title {
+  font-size: 1.25rem;
+  font-weight: 500;
+  color: var(--pw-white);
+  margin: 0 0 0.25rem;
+}
+
+.snow-includes__cta-lead {
+  font-size: var(--fs-small);
+  line-height: 1.5;
+  color: rgba(255, 255, 255, 0.78);
+  margin: 0;
+  max-width: 44ch;
+}
+
+.snow-includes__cta-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--sp-3);
+  flex-shrink: 0;
+}
+
+.btn--outline-dark {
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  background: transparent;
+  color: var(--pw-white);
+  transition: border-color var(--dur-fast) var(--ease-out),
+              background var(--dur-fast) var(--ease-out);
+}
+
+.btn--outline-dark:hover,
+.btn--outline-dark:focus-visible {
+  border-color: var(--pw-accent-accessible);
+  background: rgba(255, 255, 255, 0.08);
+  color: var(--pw-white);
+}
+
+@media (max-width: 640px) {
+  .snow-includes__cta-buttons {
+    flex-direction: column;
+    width: 100%;
+  }
+  .snow-includes__cta-buttons .btn {
+    width: 100%;
+    justify-content: center;
+  }
 }
 
 /* Sección 09: Para Quién */

@@ -838,6 +838,7 @@ window.pwTrackEvent = pwTrackEvent;
     var hero = document.querySelector('.hero');
     var media = hero ? hero.querySelector('.hero__media img') : null;
     var content = hero ? hero.querySelector('.hero__content') : null;
+    var announcement = hero ? hero.querySelector('.hero__announcement') : null;
     if(!hero || !media) return;
 
     var onScroll = function(){
@@ -853,11 +854,77 @@ window.pwTrackEvent = pwTrackEvent;
         content.style.transform = 'translate3d(0,' + (progress * 40) + 'px,0)';
         content.style.opacity = String(1 - progress * 0.9);
       }
+
+      if(announcement){
+        announcement.style.transform = 'translate3d(0,' + (progress * 24) + 'px,0)';
+        announcement.style.opacity = String(Math.max(0, 1 - progress * 1.6));
+      }
     };
     onScroll();
     window.addEventListener('scroll', onScroll, {passive:true});
     window.addEventListener('resize', onScroll);
   }catch(e){ console.warn('heroExitTransition', e); }
+})();
+
+/* ---------- Announcement Banner (Novedad destacada) ----------
+ * Configuración central y soporte para el componente AnnouncementBanner.
+ * Permite cambiar la campaña destacada, textos y enlaces en un único lugar,
+ * o desactivar el banner temporalmente (active: false).
+ */
+var ANNOUNCEMENT_CONFIG = {
+  active: true,
+  es: {
+    label: "Nuevo",
+    title: "Ski & Snow",
+    description: "Preparación, prevención y recuperación para tu temporada de esquí.",
+    cta: "Descubrir",
+    href: "../es/snow-performance/"
+  },
+  ca: {
+    label: "Nou",
+    title: "Ski & Snow",
+    description: "Preparació, prevenció i recuperació per a la teva temporada d'esquí.",
+    cta: "Descobrir",
+    href: "../ca/snow-performance/"
+  },
+  en: {
+    label: "New",
+    title: "Ski & Snow",
+    description: "Preparation, prevention and recovery for your ski season.",
+    cta: "Discover",
+    href: "../en/snow-performance/"
+  }
+};
+
+(function initAnnouncementBanner(){
+  try{
+    var wrapper = document.querySelector('.hero__announcement');
+    if(!wrapper) return;
+
+    if(ANNOUNCEMENT_CONFIG.active === false || wrapper.getAttribute('data-announcement-active') === 'false'){
+      wrapper.classList.add('hero__announcement--hidden');
+      return;
+    }
+
+    var banner = wrapper.querySelector('.announcement-banner');
+    if(!banner) return;
+
+    var lang = document.documentElement.getAttribute('lang') || 'es';
+    var data = ANNOUNCEMENT_CONFIG[lang] || ANNOUNCEMENT_CONFIG.es;
+
+    if(banner.hasAttribute('data-announcement-auto') && data){
+      var badgeEl = banner.querySelector('.announcement-banner__badge');
+      var titleEl = banner.querySelector('.announcement-banner__title');
+      var descEl = banner.querySelector('.announcement-banner__desc');
+      var ctaEl = banner.querySelector('.announcement-banner__cta-text');
+
+      if(badgeEl && data.label) badgeEl.textContent = data.label;
+      if(titleEl && data.title) titleEl.textContent = data.title;
+      if(descEl && data.description) descEl.textContent = data.description;
+      if(ctaEl && data.cta) ctaEl.textContent = data.cta;
+      if(data.href) banner.setAttribute('href', data.href);
+    }
+  }catch(e){ console.warn('initAnnouncementBanner', e); }
 })();
 
 /* ---------- hero de página con imagen (Tarifas y futuras internas) ----------

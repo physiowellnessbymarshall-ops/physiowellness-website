@@ -52,6 +52,22 @@ Este directorio contiene fragmentos HTML que se reutilizan en múltiples página
 3. En cualquier página, pégalo **después de `</main>` y antes de `</body>`
 4. El footer se estiliza desde `src/css/styles.css`
 
+### `announcement-banner.html`
+**Uso:** Banner discreto de novedad en la parte superior del Hero de la Home, integrado bajo la barra de navegación.
+
+**Qué contiene:**
+- Estructura accesible (`<aside class="hero__announcement">`)
+- Enlace completo clicable (`.announcement-banner`)
+- Etiqueta / badge temporal (`.announcement-banner__badge` y `.announcement-banner__title`)
+- Descripción comprimible en mobile para evitar desbordamientos o saltos de línea
+- Indicador CTA con flecha animada al hover
+- Control de visibilidad (`active`: true/false o `data-announcement-active`)
+- Centralizado en `ANNOUNCEMENT_CONFIG` dentro de `src/js/main.js`
+
+**Cómo usarlo:**
+1. Pégalo dentro de `<section class="hero" id="hero">`, **después de `.hero__scrim` y antes de `.hero__content`**.
+2. Cambia los textos o el enlace según la campaña o edítalo de forma centralizada en `ANNOUNCEMENT_CONFIG` (`src/js/main.js`).
+
 ---
 
 ## Por qué es importante esto

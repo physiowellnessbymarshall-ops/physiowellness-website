@@ -53,14 +53,15 @@ Este directorio contiene fragmentos HTML que se reutilizan en múltiples página
 4. El footer se estiliza desde `src/css/styles.css`
 
 ### `announcement-banner.html`
-**Uso:** Banner discreto de novedad en la parte superior del Hero de la Home, integrado bajo la barra de navegación.
+**Uso:** Tarjeta compacta de novedad ("Announcement Card") en la parte superior izquierda del Hero de la Home, integrada bajo la barra de navegación.
 
 **Qué contiene:**
 - Estructura accesible (`<aside class="hero__announcement">`)
-- Enlace completo clicable (`.announcement-banner`)
-- Etiqueta / badge temporal (`.announcement-banner__badge` y `.announcement-banner__title`)
-- Descripción comprimible en mobile para evitar desbordamientos o saltos de línea
-- Indicador CTA con flecha animada al hover
+- Tarjeta completa clicable (`.announcement-card`) de alto contraste con fondo semitransparente oscuro `rgba(10, 24, 21, 0.88)` y `backdrop-filter: blur(14px)`
+- Etiqueta / badge temporal (`.announcement-card__badge`) en turquesa corporativo
+- Título destacado (`.announcement-card__title`) en blanco semibold
+- Descripción resumida (`.announcement-card__desc`) que se oculta automáticamente en mobile para no sobrecargar el hero
+- Indicador CTA con flecha animada al hover (`.announcement-card__cta` y `.announcement-card__cta-arrow`)
 - Control de visibilidad (`active`: true/false o `data-announcement-active`)
 - Centralizado en `ANNOUNCEMENT_CONFIG` dentro de `src/js/main.js`
 

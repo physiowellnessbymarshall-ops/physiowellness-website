@@ -1,15 +1,15 @@
 <!-- ==========================================================================
-     COMPONENTE REUTILIZABLE: AnnouncementBanner (Banner de Novedad del Hero)
+     COMPONENTE REUTILIZABLE: AnnouncementCard (Tarjeta de Novedad del Hero)
      ==========================================================================
      
-     Ubicación: Hero de la Home (zona superior, bajo el header de navegación).
-     Estilos: src/css/styles.css (.hero__announcement, .announcement-banner)
+     Ubicación: Hero de la Home (zona superior izquierda, bajo el header de navegación).
+     Estilos: src/css/styles.css (.hero__announcement, .announcement-card)
      Lógica y configuración central: src/js/main.js (ANNOUNCEMENT_CONFIG, initAnnouncementBanner)
 
      Propiedades del componente:
      - label:       Insignia/etiqueta temporal (ej: "Nuevo", "Nou", "New", "Campaña").
      - title:       Título del servicio o novedad (ej: "Ski & Snow").
-     - description: Explicación breve (se muestra en desktop/tablet; se oculta en mobile para evitar saltos de línea).
+     - description: Explicación breve (se muestra en desktop/tablet; se oculta en mobile para diseño limpio).
      - href:        Ruta de destino (ej: "../es/snow-performance/").
      - active:      Control de visibilidad ("true" para mostrar, "false" para ocultar vía data-announcement-active o .hero__announcement--hidden).
 
@@ -17,19 +17,20 @@
 -->
 <aside class="hero__announcement" aria-label="Novedad destacada" data-announcement-active="true">
   <div class="container hero__announcement-inner">
-    <a class="announcement-banner" href="../es/snow-performance/" data-announcement data-announcement-auto>
-      <span class="announcement-banner__tag">
-        <span class="announcement-banner__badge">Nuevo</span>
-        <span class="announcement-banner__sep" aria-hidden="true">·</span>
-        <span class="announcement-banner__title">Ski &amp; Snow</span>
-      </span>
-      <span class="announcement-banner__desc">Preparación, prevención y recuperación para tu temporada de esquí.</span>
-      <span class="announcement-banner__cta">
-        <span class="announcement-banner__cta-text">Descubrir</span>
-        <svg class="announcement-banner__cta-arrow" width="12" height="9" viewBox="0 0 12 9" fill="none" aria-hidden="true">
-          <path d="M1 4.5h10M7.5 1l3.5 3.5L7.5 8" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
-      </span>
+    <a class="announcement-card" href="../es/snow-performance/" data-announcement data-announcement-auto>
+      <div class="announcement-card__header">
+        <span class="announcement-card__badge">Nuevo</span>
+      </div>
+      <span class="announcement-card__title">Ski &amp; Snow</span>
+      <p class="announcement-card__desc">Preparación, prevención y recuperación para tu temporada de esquí.</p>
+      <div class="announcement-card__footer">
+        <span class="announcement-card__cta">
+          <span class="announcement-card__cta-text">Descubrir</span>
+          <svg class="announcement-card__cta-arrow" width="13" height="9" viewBox="0 0 13 9" fill="none" aria-hidden="true">
+            <path d="M1 4.5h11M8 1l3.5 3.5L8 8" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </span>
+      </div>
     </a>
   </div>
 </aside>
@@ -40,19 +41,20 @@
 <!--
 <aside class="hero__announcement" aria-label="Novetat destacada" data-announcement-active="true">
   <div class="container hero__announcement-inner">
-    <a class="announcement-banner" href="../ca/snow-performance/" data-announcement data-announcement-auto>
-      <span class="announcement-banner__tag">
-        <span class="announcement-banner__badge">Nou</span>
-        <span class="announcement-banner__sep" aria-hidden="true">·</span>
-        <span class="announcement-banner__title">Ski &amp; Snow</span>
-      </span>
-      <span class="announcement-banner__desc">Preparació, prevenció i recuperació per a la teva temporada d'esquí.</span>
-      <span class="announcement-banner__cta">
-        <span class="announcement-banner__cta-text">Descobrir</span>
-        <svg class="announcement-banner__cta-arrow" width="12" height="9" viewBox="0 0 12 9" fill="none" aria-hidden="true">
-          <path d="M1 4.5h10M7.5 1l3.5 3.5L7.5 8" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
-      </span>
+    <a class="announcement-card" href="../ca/snow-performance/" data-announcement data-announcement-auto>
+      <div class="announcement-card__header">
+        <span class="announcement-card__badge">Nou</span>
+      </div>
+      <span class="announcement-card__title">Ski &amp; Snow</span>
+      <p class="announcement-card__desc">Preparació, prevenció i recuperació per a la teva temporada d'esquí.</p>
+      <div class="announcement-card__footer">
+        <span class="announcement-card__cta">
+          <span class="announcement-card__cta-text">Descobrir</span>
+          <svg class="announcement-card__cta-arrow" width="13" height="9" viewBox="0 0 13 9" fill="none" aria-hidden="true">
+            <path d="M1 4.5h11M8 1l3.5 3.5L8 8" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </span>
+      </div>
     </a>
   </div>
 </aside>

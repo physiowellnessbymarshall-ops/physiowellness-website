@@ -856,8 +856,12 @@ window.pwTrackEvent = pwTrackEvent;
       }
 
       if(announcement){
-        announcement.style.transform = 'translate3d(0,' + (progress * 24) + 'px,0)';
-        announcement.style.opacity = String(Math.max(0, 1 - progress * 1.6));
+        if(progress > 0){
+          announcement.style.opacity = String(Math.max(0, 1 - progress * 2.5));
+        } else {
+          announcement.style.opacity = '';
+        }
+        announcement.style.transform = '';
       }
     };
     onScroll();
@@ -866,10 +870,10 @@ window.pwTrackEvent = pwTrackEvent;
   }catch(e){ console.warn('heroExitTransition', e); }
 })();
 
-/* ---------- Announcement Banner (Novedad destacada) ----------
- * Configuración central y soporte para el componente AnnouncementBanner.
+/* ---------- Announcement Card / Banner (Novedad destacada) ----------
+ * Configuración central y soporte para el componente AnnouncementCard.
  * Permite cambiar la campaña destacada, textos y enlaces en un único lugar,
- * o desactivar el banner temporalmente (active: false).
+ * o desactivar el banner/card temporalmente (active: false).
  */
 var ANNOUNCEMENT_CONFIG = {
   active: true,
@@ -906,17 +910,17 @@ var ANNOUNCEMENT_CONFIG = {
       return;
     }
 
-    var banner = wrapper.querySelector('.announcement-banner');
+    var banner = wrapper.querySelector('.announcement-card, .announcement-banner');
     if(!banner) return;
 
     var lang = document.documentElement.getAttribute('lang') || 'es';
     var data = ANNOUNCEMENT_CONFIG[lang] || ANNOUNCEMENT_CONFIG.es;
 
     if(banner.hasAttribute('data-announcement-auto') && data){
-      var badgeEl = banner.querySelector('.announcement-banner__badge');
-      var titleEl = banner.querySelector('.announcement-banner__title');
-      var descEl = banner.querySelector('.announcement-banner__desc');
-      var ctaEl = banner.querySelector('.announcement-banner__cta-text');
+      var badgeEl = banner.querySelector('.announcement-card__badge, .announcement-banner__badge');
+      var titleEl = banner.querySelector('.announcement-card__title, .announcement-banner__title');
+      var descEl = banner.querySelector('.announcement-card__desc, .announcement-banner__desc');
+      var ctaEl = banner.querySelector('.announcement-card__cta-text, .announcement-banner__cta-text');
 
       if(badgeEl && data.label) badgeEl.textContent = data.label;
       if(titleEl && data.title) titleEl.textContent = data.title;

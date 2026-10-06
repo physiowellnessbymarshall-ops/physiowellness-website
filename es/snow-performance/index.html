@@ -29,7 +29,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Jost:wght@400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="../../src/css/styles.css?v=3">
+<link rel="stylesheet" href="../../src/css/styles.css?v=4">
 <noscript><style>
 [data-reveal]{opacity:1!important;transform:none!important;}
 </style></noscript>
@@ -383,7 +383,7 @@
   <!-- ============ SECCIÓN 01 — HERO ============ -->
   <section class="snow-hero" id="hero">
     <div class="snow-hero__bg" aria-hidden="true">
-      <img src="../../src/assets/img/stock/snow-mountain-1440.webp" srcset="../../src/assets/img/stock/snow-mountain-720.webp 720w, ../../src/assets/img/stock/snow-mountain-1440.webp 1440w" sizes="100vw" alt="" loading="eager" fetchpriority="high" width="1440" height="803">
+      <img src="../../src/assets/img/stock/snow-takeover-1440.webp" srcset="../../src/assets/img/stock/snow-takeover-720.webp 720w, ../../src/assets/img/stock/snow-takeover-1440.webp 1440w" sizes="100vw" alt="Esquiador profesional en viraje técnico de alta potencia en nieve virgen con fondo alpino" loading="eager" fetchpriority="high" width="1440" height="810">
     </div>
     <div class="snow-hero__scrim" aria-hidden="true"></div>
 
@@ -397,20 +397,43 @@
           </ol>
         </nav>
 
-        <p class="snow-hero__eyebrow">Snow Performance by Marshall</p>
+        <p class="snow-hero__eyebrow">Snow Performance by Marshall · Alto Rendimiento Alpino</p>
 
         <h1 class="snow-hero__title">
           <span class="reveal-line"><span style="--i:1">¿PREPARADO PARA</span></span>
           <span class="reveal-line"><span class="snow-hero__title-accent" style="--i:2">LA MONTAÑA?</span></span>
         </h1>
 
-        <div class="snow-hero__supporting" aria-label="Pilares del programa">
-          <span>Preparar</span> · <span>Rendir</span> · <span>Proteger</span> · <span>Recuperar</span>
+        <!-- Especificaciones técnicas del programa integradas visualmente -->
+        <div class="snow-hero__specs" aria-label="Estructura técnica del programa">
+          <div class="snow-hero__spec">
+            <span class="snow-hero__spec-val">4–8</span>
+            <span class="snow-hero__spec-lbl">Semanas</span>
+          </div>
+          <span class="snow-hero__spec-sep" aria-hidden="true">·</span>
+          <div class="snow-hero__spec">
+            <span class="snow-hero__spec-val">1–2</span>
+            <span class="snow-hero__spec-lbl">Sesiones / sem</span>
+          </div>
+          <span class="snow-hero__spec-sep" aria-hidden="true">·</span>
+          <div class="snow-hero__spec">
+            <span class="snow-hero__spec-val">30–50</span>
+            <span class="snow-hero__spec-lbl">Minutos</span>
+          </div>
+        </div>
+
+        <!-- Microanotaciones de rendimiento atlético -->
+        <div class="snow-hero__rubric" aria-label="Pilares del sistema">
+          <span>FUERZA</span><span aria-hidden="true">·</span>
+          <span>EQUILIBRIO</span><span aria-hidden="true">·</span>
+          <span>CONTROL</span><span aria-hidden="true">·</span>
+          <span>POTENCIA</span><span aria-hidden="true">·</span>
+          <span>RESISTENCIA</span>
         </div>
 
         <div class="snow-hero__lead">
-          <p>Programa de preparación física específico para esquí y snowboard.</p>
-          <p>Llega a la temporada con más fuerza, mejor control y un cuerpo preparado para responder a las exigencias de la montaña.</p>
+          <p>Programa intensivo de preparación física específico para esquí y snowboard en Sitges.</p>
+          <p>Llega a la temporada con fuerza reactiva, control excéntrico y un cuerpo preparado para responder a cada bajada.</p>
         </div>
 
         <div class="snow-hero__actions">
@@ -868,88 +891,342 @@
         </article>
       </div>
 
-      <!-- EVERY PROGRAMME INCLUDES -->
-      <div class="snow-includes" data-reveal style="--i:2">
-        <div class="snow-includes__header">
-          <p class="eyebrow section-eyebrow">Sistema completo</p>
-          <h3 class="snow-includes__title">TODO PROGRAMA INCLUYE</h3>
-          <p class="snow-includes__subtitle">Independientemente de la duración que elijas, tu preparación cuenta con una metodología integral de alto rendimiento.</p>
+      <!-- ============ EL RECORRIDO COMPLETO: TODO PROGRAMA INCLUYE ============ -->
+      <div class="snow-journey" id="todo-programa-incluye" data-reveal style="--i:2">
+        <!-- Encabezado del Recorrido -->
+        <header class="snow-journey__header">
+          <div class="snow-journey__header-top">
+            <p class="eyebrow section-eyebrow">Recorrido de preparación</p>
+            <span class="snow-journey__badge">METODOLOGÍA INTEGRAL</span>
+          </div>
+          <h3 class="snow-journey__title">TODO PROGRAMA INCLUYE</h3>
+          <p class="snow-journey__subtitle">
+            No es una lista de servicios aislados. Tu preparación sigue un recorrido biomecánico integral y progresivo: desde la primera medición en clínica hasta tu última bajada en la montaña.
+          </p>
+
+          <!-- Pipeline visual rápido de las etapas -->
+          <nav class="snow-journey__pipeline" aria-label="Fases del recorrido">
+            <span class="snow-journey__pipe-step"><span>01</span> Medimos</span>
+            <span class="snow-journey__pipe-arrow" aria-hidden="true">→</span>
+            <span class="snow-journey__pipe-step"><span>02</span> Planificamos</span>
+            <span class="snow-journey__pipe-arrow" aria-hidden="true">→</span>
+            <span class="snow-journey__pipe-step"><span>03</span> Evaluamos</span>
+            <span class="snow-journey__pipe-arrow" aria-hidden="true">→</span>
+            <span class="snow-journey__pipe-step"><span>04</span> Esquiamos</span>
+            <span class="snow-journey__pipe-arrow" aria-hidden="true">→</span>
+            <span class="snow-journey__pipe-step"><span>05</span> Recuperamos</span>
+          </nav>
+        </header>
+
+        <!-- Recorrido narrativo secuencial -->
+        <div class="snow-journey__flow">
+
+          <!-- ETAPA 01 — MEDIMOS (Valoración 80+) -->
+          <article class="snow-journey-card snow-journey-card--measure" aria-labelledby="journey-step-1">
+            <div class="snow-journey-card__main">
+              <div class="snow-journey-card__tag">
+                <span class="snow-journey-card__num">01</span>
+                <span class="snow-journey-card__phase">EMPEZAMOS MIDIENDO</span>
+              </div>
+              <h4 class="snow-journey-card__title" id="journey-step-1">Valoración 80+</h4>
+              <p class="snow-journey-card__lead">
+                Análisis clínico y biomecánico exhaustivo del movimiento para detectar asimetrías y capacidades de partida antes de programar una sola carga.
+              </p>
+              <ul class="snow-journey-card__checklist" aria-label="Puntos evaluados en la valoración">
+                <li>
+                  <strong>Movilidad articular y tobillo:</strong> Comprobamos rangos de dorsiflexión y movilidad de cadera específicos de la bota de esquí.
+                </li>
+                <li>
+                  <strong>Fuerza excéntrica bilateral:</strong> Evaluamos asimetrías de fuerza entre ambas piernas para prevenir compensaciones en giros.
+                </li>
+                <li>
+                  <strong>Control propioceptivo:</strong> Medimos la velocidad de reacción neuromuscular ante perturbaciones e inestabilidades.
+                </li>
+              </ul>
+            </div>
+
+            <div class="snow-journey-card__visual snow-journey-card__visual--measure" aria-hidden="true">
+              <div class="snow-journey-hero-metric">
+                <span class="snow-journey-hero-metric__val">80+</span>
+                <span class="snow-journey-hero-metric__unit">MINUTOS</span>
+                <span class="snow-journey-hero-metric__label">TEST CLÍNICO & BIOMECÁNICO INDIVIDUAL</span>
+              </div>
+              <div class="snow-journey-metric-pills">
+                <div class="snow-journey-pill">
+                  <span class="snow-journey-pill__lbl">Rango de dorsiflexión</span>
+                  <span class="snow-journey-pill__val">Simetría L/R</span>
+                </div>
+                <div class="snow-journey-pill">
+                  <span class="snow-journey-pill__lbl">Fuerza reactiva</span>
+                  <span class="snow-journey-pill__val">Fase excéntrica</span>
+                </div>
+                <div class="snow-journey-pill">
+                  <span class="snow-journey-pill__lbl">Estabilidad de core</span>
+                  <span class="snow-journey-pill__val">Plano frontal</span>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <!-- ETAPA 02 — PLANIFICAMOS & ENTRENAMOS (Plan personalizado + Programa digital) -->
+          <article class="snow-journey-card snow-journey-card--plan" aria-labelledby="journey-step-2">
+            <div class="snow-journey-card__main">
+              <div class="snow-journey-card__tag">
+                <span class="snow-journey-card__num">02</span>
+                <span class="snow-journey-card__phase">CONSTRUIMOS TU PLAN</span>
+              </div>
+              <h4 class="snow-journey-card__title" id="journey-step-2">Plan personalizado + Programa digital</h4>
+              <p class="snow-journey-card__lead">
+                Diseñamos tu progresión individual combinando el trabajo presencial en clínica con rutinas complementarias que llevas contigo en tu móvil.
+              </p>
+
+              <div class="snow-journey-duo">
+                <div class="snow-journey-duo__item">
+                  <span class="snow-journey-duo__tag">EN CLÍNICA / ESTUDIO</span>
+                  <h5 class="snow-journey-duo__title">Plan personalizado</h5>
+                  <p class="snow-journey-duo__desc">Programación específica según tu modalidad (pista, freeride o snowboard), nivel técnico y objetivos de temporada.</p>
+                </div>
+                <div class="snow-journey-duo__item">
+                  <span class="snow-journey-duo__tag">EN CUALQUIER LUGAR</span>
+                  <h5 class="snow-journey-duo__title">Programa digital</h5>
+                  <p class="snow-journey-duo__desc">Rutinas digitales estructuradas, vídeos técnicos de movilidad y sesiones guiadas disponibles directamente en tu smartphone.</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="snow-journey-card__visual snow-journey-card__visual--app" aria-hidden="true">
+              <!-- Mockup App Interfaz Editorial -->
+              <div class="snow-app-mockup">
+                <div class="snow-app-mockup__bar">
+                  <span class="snow-app-mockup__brand">PHYSIO WELLNESS</span>
+                  <span class="snow-app-mockup__status">SEMANA 03 / 08</span>
+                </div>
+                <div class="snow-app-mockup__screen">
+                  <div class="snow-app-mockup__badge">SESIÓN ESPECÍFICA HOY</div>
+                  <div class="snow-app-mockup__title">Potencia Excéntrica & Reactividad</div>
+                  <div class="snow-app-mockup__meta">45 min · Nivel Avanzado · Esquí / Snow</div>
+
+                  <div class="snow-app-mockup__rows">
+                    <div class="snow-app-row">
+                      <span class="snow-app-row__num">1</span>
+                      <div class="snow-app-row__info">
+                        <span class="snow-app-row__name">Sentadilla unilateral en Bosu</span>
+                        <span class="snow-app-row__sub">Control excéntrico 3s · 4×8</span>
+                      </div>
+                      <span class="snow-app-row__check">✓</span>
+                    </div>
+                    <div class="snow-app-row">
+                      <span class="snow-app-row__num">2</span>
+                      <div class="snow-app-row__info">
+                        <span class="snow-app-row__name">Salto reactivo con BlazePod</span>
+                        <span class="snow-app-row__sub">Velocidad de reacción · 3×6</span>
+                      </div>
+                      <span class="snow-app-row__check">✓</span>
+                    </div>
+                    <div class="snow-app-row">
+                      <span class="snow-app-row__num">3</span>
+                      <div class="snow-app-row__info">
+                        <span class="snow-app-row__name">Movilidad rotacional de cadera</span>
+                        <span class="snow-app-row__sub">Disociación pelvis-tronco · 10 min</span>
+                      </div>
+                      <span class="snow-app-row__check">✓</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <!-- ETAPA 03 — SABEMOS CUÁNDO ESTÁS PREPARADO (Snow Readiness Score) -->
+          <article class="snow-journey-card snow-journey-card--score" aria-labelledby="journey-step-3">
+            <div class="snow-journey-score-spotlight">
+              <div class="snow-journey-score-spotlight__head">
+                <div class="snow-journey-card__tag">
+                  <span class="snow-journey-card__num">03</span>
+                  <span class="snow-journey-card__phase">SABEMOS CUÁNDO ESTÁS PREPARADO</span>
+                </div>
+                <h4 class="snow-journey-card__title" id="journey-step-3">Snow Readiness Score™</h4>
+                <p class="snow-journey-card__lead">
+                  La métrica diferencial del programa. Evaluamos objetivamente tu índice de preparación alpina para que sepas con absoluta certeza que tu cuerpo puede responder al ritmo de la montaña.
+                </p>
+              </div>
+
+              <!-- Medidor y Telemetría de Preparación -->
+              <div class="snow-readiness-meter" aria-label="Indicador Snow Readiness Score">
+                <div class="snow-readiness-meter__top">
+                  <div class="snow-readiness-meter__score-block">
+                    <span class="snow-readiness-meter__score-num">94</span>
+                    <span class="snow-readiness-meter__score-max">/ 100</span>
+                  </div>
+                  <div class="snow-readiness-meter__status">
+                    <div class="snow-readiness-meter__status-txt">
+                      <span class="snow-readiness-meter__status-dot" aria-hidden="true"></span>
+                      SNOW READY · CONDICIÓN ÓPTIMA
+                    </div>
+                    <span class="snow-readiness-meter__status-sub">Listo para jornadas completas en pista o fuera de pista</span>
+                  </div>
+                </div>
+
+                <!-- Barra de progreso segmentada -->
+                <div class="snow-readiness-meter__track" aria-hidden="true">
+                  <div class="snow-readiness-meter__zone snow-readiness-meter__zone--base">
+                    <span>BASE (0–59)</span>
+                  </div>
+                  <div class="snow-readiness-meter__zone snow-readiness-meter__zone--building">
+                    <span>CONDICIONAMIENTO (60–79)</span>
+                  </div>
+                  <div class="snow-readiness-meter__zone snow-readiness-meter__zone--ready is-active">
+                    <span>SNOW READY (80–100)</span>
+                    <div class="snow-readiness-meter__pin" style="left: 70%;"></div>
+                  </div>
+                </div>
+
+                <!-- 3 Métricas Clave de Control -->
+                <div class="snow-readiness-meter__telemetry">
+                  <div class="snow-telemetry-item">
+                    <span class="snow-telemetry-item__val">96%</span>
+                    <span class="snow-telemetry-item__lbl">Simetría bilateral L/R</span>
+                    <span class="snow-telemetry-item__note">Equilibrio biomecánico óptimo</span>
+                  </div>
+                  <div class="snow-telemetry-item">
+                    <span class="snow-telemetry-item__val">+38%</span>
+                    <span class="snow-telemetry-item__lbl">Tolerancia a la fatiga</span>
+                    <span class="snow-telemetry-item__note">Resistencia en bajadas largas</span>
+                  </div>
+                  <div class="snow-telemetry-item">
+                    <span class="snow-telemetry-item__val">NIVEL 4</span>
+                    <span class="snow-telemetry-item__lbl">Fuerza excéntrica reactiva</span>
+                    <span class="snow-telemetry-item__note">Protección de rodilla y ligamentos</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <!-- ETAPA 04 — LLEGAS PREPARADO A LA NIEVE (Calentamiento 7 minutos) -->
+          <article class="snow-journey-card snow-journey-card--mountain" aria-labelledby="journey-step-4">
+            <div class="snow-journey-card__main">
+              <div class="snow-journey-card__tag">
+                <span class="snow-journey-card__num">04</span>
+                <span class="snow-journey-card__phase">LLEGAS PREPARADO A LA NIEVE</span>
+              </div>
+              <h4 class="snow-journey-card__title" id="journey-step-4">Calentamiento 7 minutos</h4>
+              <p class="snow-journey-card__lead">
+                Protocolo específico de activación rápida antes de calzarte los esquís o la tabla. Despierta los estabilizadores articulares clave para rendir desde el primer metro y prevenir lesiones en frío.
+              </p>
+
+              <div class="snow-protocol-steps">
+                <div class="snow-protocol-step">
+                  <div class="snow-protocol-step__time">02 MIN</div>
+                  <div class="snow-protocol-step__desc">
+                    <strong>Movilidad articular con botas:</strong> Activación dinámica de tobillos, flexión de rodilla y rotación de pelvis.
+                  </div>
+                </div>
+                <div class="snow-protocol-step">
+                  <div class="snow-protocol-step__time">03 MIN</div>
+                  <div class="snow-protocol-step__desc">
+                    <strong>Fuerza y glúteos en carga:</strong> Activación isométrica de cuádriceps, glúteo medio y core estabilizador.
+                  </div>
+                </div>
+                <div class="snow-protocol-step">
+                  <div class="snow-protocol-step__time">02 MIN</div>
+                  <div class="snow-protocol-step__desc">
+                    <strong>Reactividad neuromuscular:</strong> Pequeños impulsos pliométricos y apoyos para afinar reflejos articulares.
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="snow-journey-card__visual snow-journey-card__visual--action">
+              <div class="snow-journey-hero-metric snow-journey-hero-metric--accent">
+                <span class="snow-journey-hero-metric__val">7</span>
+                <span class="snow-journey-hero-metric__unit">MIN</span>
+                <span class="snow-journey-hero-metric__label">ACTIVACIÓN ESPECÍFICA ANTES DE LA 1ª BAJADA</span>
+              </div>
+              <div class="snow-journey-action-photo">
+                <img src="../../src/assets/img/stock/snow-ski-720.webp" alt="Esquiador esquiando a alta velocidad con control biomecánico" width="720" height="538" loading="lazy">
+                <span class="snow-journey-photo-caption">EN PISTA // PREPARACIÓN CONVERTIDA EN RENDIMIENTO</span>
+              </div>
+            </div>
+          </article>
+
+          <!-- ETAPA 05 — RECUPERAS Y MEDIMOS TU EVOLUCIÓN (Recuperación post-esquí + Reevaluación final) -->
+          <article class="snow-journey-card snow-journey-card--recover" aria-labelledby="journey-step-5">
+            <div class="snow-journey-card__main">
+              <div class="snow-journey-card__tag">
+                <span class="snow-journey-card__num">05</span>
+                <span class="snow-journey-card__phase">RECUPERAS Y MEDIMOS TU EVOLUCIÓN</span>
+              </div>
+              <h4 class="snow-journey-card__title" id="journey-step-5">Recuperación post-esquí + Reevaluación final</h4>
+              <p class="snow-journey-card__lead">
+                El alto rendimiento no acaba al guardar las tablas. Aceleramos la recuperación tisular y comparamos tus datos finales frente a la valoración inicial.
+              </p>
+
+              <div class="snow-journey-duo">
+                <div class="snow-journey-duo__item">
+                  <span class="snow-journey-duo__tag">POST-MONTAÑA</span>
+                  <h5 class="snow-journey-duo__title">Recuperación post-esquí</h5>
+                  <p class="snow-journey-duo__desc">Rutina específica de descompresión articular, descarga miofascial y drenaje metabólico para esquiar al día siguiente sin sobrecarga muscular.</p>
+                </div>
+                <div class="snow-journey-duo__item">
+                  <span class="snow-journey-duo__tag">CIERRE DE PROGRAMA</span>
+                  <h5 class="snow-journey-duo__title">Reevaluación final</h5>
+                  <p class="snow-journey-duo__desc">Evaluación comparativa exhaustiva que cuantifica tus ganancias en fuerza excéntrica, simetría bilateral y resistencia neuromuscular.</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Caja Comparativa de Evolución -->
+            <div class="snow-journey-card__visual snow-journey-card__visual--delta" aria-hidden="true">
+              <div class="snow-delta-box">
+                <div class="snow-delta-box__head">
+                  <span class="snow-delta-box__badge">EVOLUCIÓN OBJETIVA</span>
+                  <span class="snow-delta-box__cycle">DÍA 01 ➔ SEMANA 08</span>
+                </div>
+                <div class="snow-delta-rows">
+                  <div class="snow-delta-row">
+                    <span class="snow-delta-row__label">Fuerza excéntrica</span>
+                    <span class="snow-delta-row__val">+42%</span>
+                  </div>
+                  <div class="snow-delta-row">
+                    <span class="snow-delta-row__label">Simetría bilateral L/R</span>
+                    <span class="snow-delta-row__val">98% equilibrado</span>
+                  </div>
+                  <div class="snow-delta-row">
+                    <span class="snow-delta-row__label">Fatiga en bajadas largas</span>
+                    <span class="snow-delta-row__val">-65% reducción</span>
+                  </div>
+                  <div class="snow-delta-row">
+                    <span class="snow-delta-row__label">Estabilidad reactiva</span>
+                    <span class="snow-delta-row__val">Óptima</span>
+                  </div>
+                </div>
+                <div class="snow-delta-box__foot">
+                  <span>Datos contrastados con tu valoración inicial</span>
+                </div>
+              </div>
+            </div>
+          </article>
         </div>
 
-        <div class="snow-includes__grid">
-          <div class="snow-include-item">
-            <span class="snow-include-item__num">01</span>
-            <div class="snow-include-item__body">
-              <h4 class="snow-include-item__title">Valoración 80+</h4>
-              <p class="snow-include-item__desc">Análisis clínico y biomecánico exhaustivo del movimiento para detectar asimetrías y capacidades de partida.</p>
-            </div>
+        <!-- CULMINACIÓN NATURAL DEL RECORRIDO (CTA FINAL INTEGRADO) -->
+        <footer class="snow-journey-culmination">
+          <div class="snow-journey-culmination__content">
+            <span class="snow-journey-culmination__eyebrow">EL PRIMER PASO DE TU TEMPORADA</span>
+            <h4 class="snow-journey-culmination__title">Comienza con tu valoración individual</h4>
+            <p class="snow-journey-culmination__lead">
+              Analizamos tu punto de partida, hablamos de tus objetivos y te recomendamos la duración adecuada (4 u 8 semanas) para llegar a la nieve con máxima confianza.
+            </p>
           </div>
-
-          <div class="snow-include-item">
-            <span class="snow-include-item__num">02</span>
-            <div class="snow-include-item__body">
-              <h4 class="snow-include-item__title">Plan personalizado</h4>
-              <p class="snow-include-item__desc">Programación específica adaptada a tu modalidad, nivel técnico y objetivos concretos en la nieve.</p>
-            </div>
+          <div class="snow-journey-culmination__buttons">
+            <a class="btn btn--primary" href="https://wa.me/34644678344?text=Hola,%20quiero%20reservar%20una%20valoraci%C3%B3n%20inicial%20para%20Snow%20Performance" target="_blank" rel="noopener">
+              Reservar valoración <span aria-hidden="true">→</span>
+            </a>
+            <a class="btn btn--outline-dark" href="https://wa.me/34644678344?text=Hola,%20quiero%20m%C3%A1s%20informaci%C3%B3n%20sobre%20Snow%20Performance" target="_blank" rel="noopener">
+              Consultar por WhatsApp
+            </a>
           </div>
-
-          <div class="snow-include-item">
-            <span class="snow-include-item__num">03</span>
-            <div class="snow-include-item__body">
-              <h4 class="snow-include-item__title">Programa digital</h4>
-              <p class="snow-include-item__desc">Rutinas digitales estructuradas, ejercicios de movilidad y sesiones complementarias disponibles donde quieras.</p>
-            </div>
-          </div>
-
-          <div class="snow-include-item">
-            <span class="snow-include-item__num">04</span>
-            <div class="snow-include-item__body">
-              <h4 class="snow-include-item__title">Snow Readiness Score</h4>
-              <p class="snow-include-item__desc">Métricas objetivas que miden tu índice de preparación alpina desde el primer día hasta el punto óptimo.</p>
-            </div>
-          </div>
-
-          <div class="snow-include-item">
-            <span class="snow-include-item__num">05</span>
-            <div class="snow-include-item__body">
-              <h4 class="snow-include-item__title">Calentamiento 7 minutos</h4>
-              <p class="snow-include-item__desc">Protocolo de activación antes de esquiar para despertar los estabilizadores articulares clave antes de la primera bajada.</p>
-            </div>
-          </div>
-
-          <div class="snow-include-item">
-            <span class="snow-include-item__num">06</span>
-            <div class="snow-include-item__body">
-              <h4 class="snow-include-item__title">Recuperación post-esquí</h4>
-              <p class="snow-include-item__desc">Rutina específica de descompresión y drenaje para aliviar sobrecargas y preparar el cuerpo para el día siguiente.</p>
-            </div>
-          </div>
-
-          <div class="snow-include-item">
-            <span class="snow-include-item__num">07</span>
-            <div class="snow-include-item__body">
-              <h4 class="snow-include-item__title">Reevaluación final</h4>
-              <p class="snow-include-item__desc">Evaluación comparativa final que cuantifica tus ganancias en fuerza excéntrica, equilibrio y resistencia.</p>
-            </div>
-          </div>
-        </div>
-
-        <div class="snow-includes__action">
-          <div class="snow-includes__cta-box">
-            <div>
-              <h4 class="snow-includes__cta-title">Comienza con tu valoración individual</h4>
-              <p class="snow-includes__cta-lead">Analizamos tu punto de partida, hablamos de tus objetivos y te recomendamos la duración adecuada.</p>
-            </div>
-            <div class="snow-includes__cta-buttons">
-              <a class="btn btn--primary" href="https://wa.me/34644678344?text=Hola,%20quiero%20reservar%20una%20valoraci%C3%B3n%20inicial%20para%20Snow%20Performance" target="_blank" rel="noopener">
-                Reservar valoración <span aria-hidden="true">→</span>
-              </a>
-              <a class="btn btn--outline-dark" href="https://wa.me/34644678344?text=Hola,%20quiero%20m%C3%A1s%20informaci%C3%B3n%20sobre%20Snow%20Performance" target="_blank" rel="noopener">
-                Consultar por WhatsApp
-              </a>
-            </div>
-          </div>
-        </div>
+        </footer>
       </div>
     </div>
   </section>

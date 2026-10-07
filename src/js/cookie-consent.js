@@ -44,7 +44,7 @@
       acceptAll: 'Acceptar-ho tot',
       rejectAll: 'Rebutjar-ho tot',
       closeModal: 'Tancar panell de cookies',
-      footerLink: 'Preferències de cookies'
+      footerLink: 'Configurar cookies'
     },
     es: {
       bannerTitle: 'Tu privacidad',
@@ -64,7 +64,7 @@
       acceptAll: 'Aceptar todo',
       rejectAll: 'Rechazar todo',
       closeModal: 'Cerrar panel de cookies',
-      footerLink: 'Preferencias de cookies'
+      footerLink: 'Configurar cookies'
     },
     en: {
       bannerTitle: 'Your privacy',
@@ -84,7 +84,7 @@
       acceptAll: 'Accept all',
       rejectAll: 'Reject all',
       closeModal: 'Close cookie panel',
-      footerLink: 'Cookie preferences'
+      footerLink: 'Cookie settings'
     }
   };
 
@@ -95,6 +95,31 @@
     lastFocusedEl: null,
     currentLang: 'es'
   };
+
+  /**
+   * Obté la decisió de consentiment des de PW_ANALYTICS o directament de localStorage
+   */
+  function getStoredConsent() {
+    if (typeof window !== 'undefined' && window.PW_ANALYTICS && typeof window.PW_ANALYTICS.getConsentStatus === 'function') {
+      return window.PW_ANALYTICS.getConsentStatus();
+    }
+    if (typeof window !== 'undefined' && window.localStorage) {
+      try {
+        var raw = window.localStorage.getItem('pw_cookie_consent');
+        if (raw) {
+          var parsed = JSON.parse(raw);
+          if (parsed && typeof parsed === 'object') {
+            return {
+              hasStoredDecision: true,
+              analytics: Boolean(parsed.analytics),
+              version: parsed.version
+            };
+          }
+        }
+      } catch (e) {}
+    }
+    return { hasStoredDecision: false, analytics: false };
+  }
 
   /**
    * Detecta l'idioma actiu a partir de document.documentElement.lang o la ruta
@@ -134,11 +159,12 @@
     banner.className = 'pw-cookie-banner';
     banner.id = 'pw-cookie-banner';
     banner.setAttribute('role', 'region');
-    banner.setAttribute('aria-label', t.modalTitle);
+    banner.setAttribute('aria-label', t.bannerTitle || t.modalTitle);
 
     banner.innerHTML =
       '<div class="pw-cookie-banner__inner">' +
         '<div class="pw-cookie-banner__content">' +
+          '<h2 class="pw-cookie-banner__title">' + t.bannerTitle + '</h2>' +
           '<p class="pw-cookie-banner__text">' + t.bannerText + '</p>' +
         '</div>' +
         '<div class="pw-cookie-banner__actions">' +
@@ -219,12 +245,17 @@
   function openSettings() {
     if (typeof document === 'undefined') return;
 
+    if (!state.modalEl) {
+      init();
+    }
+
     state.lastFocusedEl = document.activeElement;
 
     // Sincronitza l'estat del toggle amb el consentiment actual
     var analyticsCheck = document.getElementById('pw-cookie-analytics-check');
-    if (analyticsCheck && typeof window !== 'undefined' && window.PW_ANALYTICS) {
-      analyticsCheck.checked = Boolean(window.PW_ANALYTICS.hasConsent());
+    var consentStatus = getStoredConsent();
+    if (analyticsCheck) {
+      analyticsCheck.checked = Boolean(consentStatus && consentStatus.analytics);
     }
 
     if (state.bannerEl) {
@@ -253,6 +284,13 @@
     if (typeof document !== 'undefined') {
       document.body.style.overflow = '';
     }
+
+    // Si encara no hi ha decisió desada, mantenir el banner visible
+    var consentStatus = getStoredConsent();
+    if (state.bannerEl && (!consentStatus || !consentStatus.hasStoredDecision)) {
+      state.bannerEl.classList.add('is-visible');
+    }
+
     if (state.lastFocusedEl && typeof state.lastFocusedEl.focus === 'function') {
       state.lastFocusedEl.focus();
     }
@@ -264,6 +302,14 @@
   function acceptAll() {
     if (typeof window !== 'undefined' && window.PW_ANALYTICS && typeof window.PW_ANALYTICS.grantAnalyticsConsent === 'function') {
       window.PW_ANALYTICS.grantAnalyticsConsent();
+    } else if (typeof window !== 'undefined' && window.localStorage) {
+      try {
+        window.localStorage.setItem('pw_cookie_consent', JSON.stringify({
+          version: '1.0',
+          analytics: true,
+          timestamp: Date.now()
+        }));
+      } catch (e) {}
     }
     if (state.bannerEl) {
       state.bannerEl.classList.remove('is-visible');
@@ -277,6 +323,14 @@
   function rejectAll() {
     if (typeof window !== 'undefined' && window.PW_ANALYTICS && typeof window.PW_ANALYTICS.revokeAnalyticsConsent === 'function') {
       window.PW_ANALYTICS.revokeAnalyticsConsent();
+    } else if (typeof window !== 'undefined' && window.localStorage) {
+      try {
+        window.localStorage.setItem('pw_cookie_consent', JSON.stringify({
+          version: '1.0',
+          analytics: false,
+          timestamp: Date.now()
+        }));
+      } catch (e) {}
     }
     if (state.bannerEl) {
       state.bannerEl.classList.remove('is-visible');
@@ -368,12 +422,17 @@
    */
   function init() {
     if (typeof document === 'undefined') return;
-    if (state.initialized) return;
+    if (state.initialized && state.bannerEl && state.modalEl) return;
 
     if (document.readyState === 'loading') {
       document.addEventListener('DOMContentLoaded', init);
       return;
     }
+
+    var existingBanner = document.getElementById('pw-cookie-banner');
+    if (existingBanner) existingBanner.remove();
+    var existingModal = document.getElementById('pw-cookie-modal');
+    if (existingModal) existingModal.remove();
 
     var t = getI18n();
 
@@ -385,10 +444,7 @@
     document.body.appendChild(state.modalEl);
 
     // Comprovar si l'usuari ja té una decisió vàlida
-    var consentStatus = null;
-    if (typeof window !== 'undefined' && window.PW_ANALYTICS && typeof window.PW_ANALYTICS.getConsentStatus === 'function') {
-      consentStatus = window.PW_ANALYTICS.getConsentStatus();
-    }
+    var consentStatus = getStoredConsent();
 
     // Si no hi ha decisió prèvia desada o ha caducat, mostrem el banner
     if (!consentStatus || !consentStatus.hasStoredDecision) {

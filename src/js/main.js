@@ -20,7 +20,8 @@ var prefersReducedMotion = window.matchMedia && window.matchMedia('(prefers-redu
     var scriptEl = document.currentScript || document.querySelector('script[src*="main.js"]');
     var fullSrc = scriptEl ? scriptEl.src : '';
     var basePath = fullSrc ? fullSrc.substring(0, fullSrc.lastIndexOf('/')) : '';
-    var prefix = basePath ? basePath + '/' : '';
+    var prefix = basePath ? basePath + '/' : '/src/js/';
+    var v = 'v=4';
 
     function loadScript(src, cb) {
       var s = document.createElement('script');
@@ -33,15 +34,12 @@ var prefersReducedMotion = window.matchMedia && window.matchMedia('(prefers-redu
       document.head.appendChild(s);
     }
 
-    function setup() {
-      if (window.PW_ANALYTICS && typeof window.PW_ANALYTICS.init === 'function') {
-        window.PW_ANALYTICS.init();
-      }
-      // Inicialitzar el banner i panell de preferències de cookies
+    // 1. Inicialitzar immediatament el banner i modal de cookies en paral·lel
+    function initCookieConsent() {
       if (window.PW_COOKIE_CONSENT && typeof window.PW_COOKIE_CONSENT.init === 'function') {
         window.PW_COOKIE_CONSENT.init();
       } else {
-        loadScript(prefix + 'cookie-consent.js?v=1', function() {
+        loadScript(prefix + 'cookie-consent.js?' + v, function() {
           if (window.PW_COOKIE_CONSENT && typeof window.PW_COOKIE_CONSENT.init === 'function') {
             window.PW_COOKIE_CONSENT.init();
           }
@@ -49,22 +47,31 @@ var prefersReducedMotion = window.matchMedia && window.matchMedia('(prefers-redu
       }
     }
 
-    function loadAnalyticsModule() {
-      if (window.PW_ANALYTICS) {
-        setup();
+    // 2. Inicialitzar el mòdul analítica
+    function initAnalytics() {
+      function runAnalytics() {
+        if (window.PW_ANALYTICS && typeof window.PW_ANALYTICS.init === 'function') {
+          window.PW_ANALYTICS.init();
+        }
+      }
+
+      function loadAnalyticsModule() {
+        if (window.PW_ANALYTICS) {
+          runAnalytics();
+        } else {
+          loadScript(prefix + 'analytics.js?' + v, runAnalytics);
+        }
+      }
+
+      if (window.PW_CONFIG && window.PW_CONFIG.GA4_MEASUREMENT_ID !== undefined) {
+        loadAnalyticsModule();
       } else {
-        loadScript(prefix + 'analytics.js?v=1', setup);
+        loadScript(prefix + 'analytics-config.js?' + v, loadAnalyticsModule);
       }
     }
 
-    // Si window.PW_CONFIG ja està definit, carreguem directament el mòdul
-    if (window.PW_CONFIG && window.PW_CONFIG.GA4_MEASUREMENT_ID !== undefined) {
-      loadAnalyticsModule();
-    } else {
-      // Carrega primer analytics-config.js (generat en el deploy de GitHub Actions)
-      // Si no existeix en local, onerror crida loadAnalyticsModule igualment sense cap error
-      loadScript(prefix + 'analytics-config.js?v=1', loadAnalyticsModule);
-    }
+    initCookieConsent();
+    initAnalytics();
   } catch (e) {
     console.warn('[Analytics Integration]', e);
   }

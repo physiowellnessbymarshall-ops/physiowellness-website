@@ -11,18 +11,33 @@
 <link rel="alternate" hreflang="en" href="https://physiowellness.es/en/">
 <link rel="alternate" hreflang="x-default" href="https://physiowellness.es/">
 <link rel="icon" href="src/assets/img/logo-icon-black.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Jost:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="src/css/styles.css?v=4">
 <style>
   body {
     font-family: 'Jost', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
     display: flex;
+    flex-direction: column;
     min-height: 100vh;
     align-items: center;
-    justify-content: center;
+    justify-content: space-between;
     background: #0d0f11;
     color: #f5f5f7;
     margin: 0;
     text-align: center;
-    padding: 24px;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  .lang-select-wrap {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    padding: 40px 24px;
+    box-sizing: border-box;
   }
   .lang-select {
     max-width: 420px;
@@ -51,6 +66,38 @@
   }
   .lang-links a:hover {
     background: rgba(255,255,255,0.18);
+  }
+  .splash-footer {
+    width: 100%;
+    padding: 1.5rem 1.25rem;
+    border-top: 1px solid rgba(255,255,255,0.08);
+    font-size: 13px;
+    color: rgba(255,255,255,0.55);
+    box-sizing: border-box;
+    background: transparent;
+  }
+  .splash-footer__inner {
+    max-width: 900px;
+    margin: 0 auto;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+  }
+  .splash-footer__legal {
+    display: flex;
+    align-items: center;
+    gap: 1.25rem;
+    flex-wrap: wrap;
+  }
+  .splash-footer__legal a {
+    color: inherit;
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  .splash-footer__legal a:hover {
+    color: #fff;
   }
 </style>
 <!-- Open Graph / Facebook -->
@@ -203,15 +250,31 @@
 <meta name="twitter:image" content="https://physiowellness.es/src/assets/img/local/local-recepcion-1440.webp">
 </head>
 <body>
-  <div class="lang-select">
-    <img src="src/assets/img/logo-icon-white.png" alt="Physio Wellness by Marshall" width="60" height="69" style="margin-bottom: 20px;">
-    <h1>PHYSIO WELLNESS</h1>
-    <p style="color: rgba(255,255,255,0.6); margin: 0 0 28px; font-size: 15px; font-weight: 400;">Sitges · Fisioteràpia · Fisioterapia · Physiotherapy</p>
-    <div class="lang-links">
-      <a href="es/">Español</a>
-      <a href="ca/">Català</a>
-      <a href="en/">English</a>
+  <main class="lang-select-wrap">
+    <div class="lang-select">
+      <img src="src/assets/img/logo-icon-white.png" alt="Physio Wellness by Marshall" width="60" height="69" style="margin-bottom: 20px;">
+      <h1>PHYSIO WELLNESS</h1>
+      <p style="color: rgba(255,255,255,0.6); margin: 0 0 28px; font-size: 15px; font-weight: 400;">Sitges · Fisioteràpia · Fisioterapia · Physiotherapy</p>
+      <div class="lang-links">
+        <a href="es/">Español</a>
+        <a href="ca/">Català</a>
+        <a href="en/">English</a>
+      </div>
     </div>
-  </div>
+  </main>
+
+  <footer class="site-footer splash-footer">
+    <div class="splash-footer__inner">
+      <span>© 2026 Physio Wellness by Marshall.</span>
+      <nav class="site-footer__legal splash-footer__legal" aria-label="Enlaces legales">
+        <a href="es/aviso-legal/">Aviso legal</a>
+        <a href="es/privacidad/">Privacidad</a>
+        <a href="es/cookies/">Cookies</a>
+        <button type="button" class="site-footer__cookie-btn" data-open-cookie-settings>Configurar cookies</button>
+      </nav>
+    </div>
+  </footer>
+
+  <script src="src/js/main.js?v=4"></script>
 </body>
 </html>

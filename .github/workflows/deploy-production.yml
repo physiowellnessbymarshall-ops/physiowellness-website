@@ -4,8 +4,15 @@ on:
   push:
     branches:
       - antigravity/services-marshall-pacing
+      - main
     paths:
       - "production/**"
+      - "src/**"
+      - "ca/**"
+      - "es/**"
+      - "en/**"
+      - "index.html"
+      - ".htaccess"
   workflow_dispatch:
 
 permissions:
@@ -26,10 +33,53 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
 
-      - name: Generate production branch
+      - name: Generate GA4 configuration
+        env:
+          GA4_MEASUREMENT_ID: ${{ vars.GA4_MEASUREMENT_ID }}
         run: |
-          git subtree split --prefix=production -b deploy-production
+          GA4_VAL="${GA4_MEASUREMENT_ID:-}"
+          echo "Generant configuració de GA4 des de GitHub Actions variable..."
+          if [ -n "$GA4_VAL" ]; then
+            echo "✓ Variable GA4_MEASUREMENT_ID trobada: configurant ID al client."
+          else
+            echo "ℹ Variable GA4_MEASUREMENT_ID no definida o buida: GA4 romandrà desactivat de manera segura."
+          fi
+
+          # Generar al directori arrel src/js/
+          mkdir -p src/js
+          echo "window.PW_CONFIG = window.PW_CONFIG || {};" > src/js/analytics-config.js
+          echo "window.PW_CONFIG.GA4_MEASUREMENT_ID = '${GA4_VAL}';" >> src/js/analytics-config.js
+
+          # Si existeix el directori production/src/js/, generar-lo també allà
+          if [ -d "production/src/js" ]; then
+            echo "window.PW_CONFIG = window.PW_CONFIG || {};" > production/src/js/analytics-config.js
+            echo "window.PW_CONFIG.GA4_MEASUREMENT_ID = '${GA4_VAL}';" >> production/src/js/analytics-config.js
+          fi
+
+      - name: Generate production branch
+        env:
+          GA4_MEASUREMENT_ID: ${{ vars.GA4_MEASUREMENT_ID }}
+        run: |
+          GA4_VAL="${GA4_MEASUREMENT_ID:-}"
+          if [ -d "production" ]; then
+            git add -f production/src/js/analytics-config.js 2>/dev/null || true
+            git commit -m "ci: inject GA4 configuration [skip ci]" || true
+            git subtree split --prefix=production -b deploy-production
+            git checkout deploy-production
+            mkdir -p src/js
+            echo "window.PW_CONFIG = window.PW_CONFIG || {};" > src/js/analytics-config.js
+            echo "window.PW_CONFIG.GA4_MEASUREMENT_ID = '${GA4_VAL}';" >> src/js/analytics-config.js
+            git add -f src/js/analytics-config.js
+            git commit -m "ci: inject GA4 configuration into production branch [skip ci]" || true
+          else
+            git checkout -B deploy-production
+            mkdir -p src/js
+            echo "window.PW_CONFIG = window.PW_CONFIG || {};" > src/js/analytics-config.js
+            echo "window.PW_CONFIG.GA4_MEASUREMENT_ID = '${GA4_VAL}';" >> src/js/analytics-config.js
+            git add -f src/js/analytics-config.js
+            git commit -m "ci: inject GA4 configuration into production branch [skip ci]" || true
+          fi
 
       - name: Push production branch
         run: |
-          git push origin deploy-production:production
+          git push origin deploy-production:production --force

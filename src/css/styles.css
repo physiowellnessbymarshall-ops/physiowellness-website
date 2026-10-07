@@ -20124,6 +20124,17 @@ html:not(.js) .snow-hero__title .reveal-line > span {
   }
 }
 
+@media (prefers-reduced-motion: reduce){
+  .pw-cookie-banner{
+    animation: none !important;
+    transition: none !important;
+  }
+  .pw-cookie-modal__stage{
+    animation: none !important;
+    transition: none !important;
+  }
+}
+
 
 
 

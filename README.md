@@ -32,13 +32,16 @@ Sitio web de **Physio Wellness by Marshall**: fisioterapia clínica, fuerza, Pil
 │   └── (structure mirrors es/)
 ├── src/
 │   ├── css/styles.css          Sistema de diseño completo (único archivo CSS)
-│   ├── js/main.js              JavaScript vanilla (único archivo JS)
+│   ├── js/main.js              JavaScript vanilla de la aplicación
+│   ├── js/analytics.js         Capa centralizada de Google Analytics 4 (Consent Mode v2)
+│   ├── js/cookie-consent.js    Banner de cookies y panel de preferencias (CAT/ES/EN)
 │   ├── assets/img/             Imágenes optimizadas (WebP, AVIF)
 │   ├── components/             Plantillas de referencia de header/footer (no son SSI)
 │   └── content/                Datos editables de referencia
 ├── scratch/                    Utilidades de desarrollo (ignoradas en .gitignore)
 │   └── fix_catalan_hyphens.py  Herramienta de mantenimiento tipográfico catalan
-├── docs/                       Documentación de diseño y arquitectura
+├── docs/                       Documentación de diseño, arquitectura y analítica
+│   └── ANALYTICS.md            Guía de Google Analytics 4 y Consent Mode v2
 ├── sitemap.xml                 Sitemap XML multilingual (55 URLs canónicas)
 ├── robots.txt
 └── .nojekyll                   Deshabilita Jekyll en GitHub Pages

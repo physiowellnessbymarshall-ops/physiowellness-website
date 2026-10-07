@@ -31,6 +31,7 @@ npm-debug.log*
 contact-config.php
 api/contact-config.php
 api/.cache/
+src/js/analytics-config.js
 
 # Build output (si lo hay)
 dist/

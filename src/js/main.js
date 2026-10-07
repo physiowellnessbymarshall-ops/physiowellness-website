@@ -9,539 +9,74 @@ document.documentElement.classList.add('js');
 var prefersReducedMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
 /* ==========================================================================
-   PHYSIO WELLNESS — CONFIGURACIÓ GOOGLE ANALYTICS 4 & PRIVACITAT
-   Google Consent Mode v2 (Mode Bàsic) + Banner de Cookies + Panell
-   --------------------------------------------------------------------------
-   ÚNIC LLOC ON CAL CONFIGURAR EL MEASUREMENT ID DE GA4:
-   Modifica el valor de GA_MEASUREMENT_ID pel teu ID real de GA4 (ex: 'G-1234567890').
+   PHYSIO WELLNESS — INTEGRACIÓ CENTRALITZADA GOOGLE ANALYTICS 4
+   La lògica d'analítica i consentiment es gestiona al mòdul independent
+   src/js/analytics.js (Google Consent Mode v2 bàsic, privacitat per defecte,
+   sense Measurement ID hardcodejat, protecció de localhost i compatible amb
+   el domini provisional i definitiu).
    ========================================================================== */
-var GA_MEASUREMENT_ID = 'G-XXXXXXXXXX';
-var CONSENT_VERSION = '1.0';
-var CONSENT_STORAGE_KEY = 'pw_cookie_consent';
-
-// Configuració accessible globalment
-window.PW_GA_CONFIG = {
-  id: GA_MEASUREMENT_ID,
-  version: CONSENT_VERSION,
-  storageKey: CONSENT_STORAGE_KEY
-};
-
-// Funció global per disparar esdeveniments GA4 respectant el consentiment
-var pwTrackEvent = function(eventName, params) {
+(function initAnalyticsIntegration() {
   try {
-    var stored = null;
-    try {
-      var raw = localStorage.getItem(CONSENT_STORAGE_KEY);
-      if (raw) stored = JSON.parse(raw);
-    } catch(e) {}
-    if (!stored || stored.version !== CONSENT_VERSION || !stored.analytics) {
-      return; // Sense consentiment analític actiu, no s'envia res
-    }
-    if (typeof window.gtag === 'function') {
-      window.gtag('event', eventName, params || {});
-    }
-  } catch(err) {
-    console.warn('[GA4] trackEvent error:', err);
-  }
-};
-window.pwTrackEvent = pwTrackEvent;
+    var scriptEl = document.currentScript || document.querySelector('script[src*="main.js"]');
+    var fullSrc = scriptEl ? scriptEl.src : '';
+    var basePath = fullSrc ? fullSrc.substring(0, fullSrc.lastIndexOf('/')) : '';
+    var prefix = basePath ? basePath + '/' : '';
 
-(function initGoogleConsentAndBanner(){
-  try {
-    // 1. dataLayer i funció gtag
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){ window.dataLayer.push(arguments); }
-    window.gtag = gtag;
-
-    // 2. Google Consent Mode (Mode Bàsic): estat predeterminat denegat
-    // Abans de qualsevol decisió de l'usuari, tot romandrà en 'denied'
-    gtag('consent', 'default', {
-      'analytics_storage': 'denied',
-      'ad_storage': 'denied',
-      'ad_user_data': 'denied',
-      'ad_personalization': 'denied'
-    });
-
-    var TWELVE_MONTHS_MS = 365 * 24 * 60 * 60 * 1000;
-    var isGaLoaded = false;
-
-    // Llegir decisió prèvia desada
-    function getStoredConsent() {
-      try {
-        var raw = localStorage.getItem(CONSENT_STORAGE_KEY);
-        if (!raw) return null;
-        var data = JSON.parse(raw);
-        if (!data || typeof data !== 'object') return null;
-        if (data.version !== CONSENT_VERSION) return null;
-        if (typeof data.timestamp !== 'number' || (Date.now() - data.timestamp) > TWELVE_MONTHS_MS) return null;
-        return data;
-      } catch(e) {
-        return null;
+    function loadScript(src, cb) {
+      var s = document.createElement('script');
+      s.src = src;
+      s.async = true;
+      if (cb) {
+        s.onload = cb;
+        s.onerror = cb; // Continua de manera segura si el fitxer opcional no existeix
       }
+      document.head.appendChild(s);
     }
 
-    // Desar consentiment
-    function saveConsent(analyticsGranted) {
-      try {
-        var payload = {
-          version: CONSENT_VERSION,
-          analytics: !!analyticsGranted,
-          timestamp: Date.now()
-        };
-        localStorage.setItem(CONSENT_STORAGE_KEY, JSON.stringify(payload));
-      } catch(e) {
-        console.warn('[Consent] localStorage error', e);
+    function setup() {
+      if (window.PW_ANALYTICS && typeof window.PW_ANALYTICS.init === 'function') {
+        window.PW_ANALYTICS.init();
       }
-    }
-
-    // Carregar gtag.js dinàmicament (només quan hi hagi consentiment analític)
-    function loadGoogleAnalytics() {
-      if (isGaLoaded) return;
-      isGaLoaded = true;
-
-      // Actualitzar Consent Mode a granted per a analytics_storage
-      gtag('consent', 'update', {
-        'analytics_storage': 'granted'
-      });
-
-      // Retirar qualsevol flag de desactivació
-      if (window['ga-disable-' + GA_MEASUREMENT_ID]) {
-        delete window['ga-disable-' + GA_MEASUREMENT_ID];
-      }
-
-      // Inserir gtag.js de Google
-      var script = document.createElement('script');
-      script.async = true;
-      script.src = 'https://www.googletagmanager.com/gtag/js?id=' + encodeURIComponent(GA_MEASUREMENT_ID);
-      document.head.appendChild(script);
-
-      // Inicialitzar GA4 una sola vegada
-      gtag('js', new Date());
-      gtag('config', GA_MEASUREMENT_ID, {
-        'anonymize_ip': true,
-        'send_page_view': true,
-        'page_location': window.location.href,
-        'page_title': document.title
-      });
-    }
-
-    // Netejar cookies pròpies de GA4
-    function clearGaCookies() {
-      try {
-        var cookieList = document.cookie.split(';');
-        var host = window.location.hostname;
-        var domains = ['', host, '.' + host];
-        var parts = host.split('.');
-        if (parts.length > 2) {
-          domains.push('.' + parts.slice(-2).join('.'));
-        }
-        for (var i = 0; i < cookieList.length; i++) {
-          var c = cookieList[i].trim();
-          var name = c.split('=')[0];
-          if (name === '_ga' || name === '_gid' || name === '_gat' || name.indexOf('_ga_') === 0) {
-            for (var d = 0; d < domains.length; d++) {
-              var dom = domains[d];
-              var domStr = dom ? '; domain=' + dom : '';
-              document.cookie = name + '=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/' + domStr;
-              document.cookie = name + '=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=' + window.location.pathname + domStr;
-            }
-          }
-        }
-      } catch(e) {
-        console.warn('[Consent] cookie clear error', e);
-      }
-    }
-
-    // Revocar consentiment d'analítica
-    function revokeGoogleAnalytics() {
-      gtag('consent', 'update', {
-        'analytics_storage': 'denied'
-      });
-      window['ga-disable-' + GA_MEASUREMENT_ID] = true;
-      clearGaCookies();
-    }
-
-    // Detecció d'idioma (ca, es, en)
-    var docLang = (document.documentElement.lang || '').toLowerCase();
-    var path = window.location.pathname.toLowerCase();
-    var currentLang = 'es';
-    if (docLang.startsWith('ca') || path.indexOf('/ca/') !== -1) {
-      currentLang = 'ca';
-    } else if (docLang.startsWith('en') || path.indexOf('/en/') !== -1) {
-      currentLang = 'en';
-    } else if (docLang.startsWith('es') || path.indexOf('/es/') !== -1) {
-      currentLang = 'es';
-    }
-
-    var i18n = {
-      ca: {
-        bannerTitle: 'Utilitzem cookies analítiques?',
-        bannerText: 'Utilitzem Google Analytics per entendre com s’utilitza la web i poder-la millorar. Només activarem les cookies analítiques si ens dones permís. Pots canviar la teva elecció en qualsevol moment.',
-        accept: 'Acceptar analítica',
-        reject: 'Rebutjar',
-        settings: 'Configurar',
-        modalTitle: 'Configuració de cookies',
-        modalIntro: 'Respectem la teva privacitat. Pots triar quines cookies autoritzes. La teva selecció es recordarà durant 12 mesos i pots modificar-la en qualsevol moment.',
-        necessaryTitle: 'Necessàries',
-        necessaryBadge: 'Sempre actives',
-        necessaryDesc: 'Permeten funcionalitats imprescindibles com la navegació, la seguretat del lloc web i recordar la teva selecció de consentiment. No es poden desactivar.',
-        analyticsTitle: 'Analítica',
-        analyticsBadge: 'Google Analytics 4',
-        analyticsDesc: 'Serveix per obtenir estadístiques anònimes d’ús i entendre com s’utilitza la web per poder-la millorar. Desactivada per defecte.',
-        save: 'Desar preferències',
-        acceptAll: 'Acceptar-ho tot',
-        rejectAll: 'Rebutjar-ho tot',
-        closeModal: 'Tancar panell de cookies',
-        footerLink: 'Preferències de cookies'
-      },
-      es: {
-        bannerTitle: '¿Utilizamos cookies analíticas?',
-        bannerText: 'Utilizamos Google Analytics para entender cómo se utiliza la web y poder mejorarla. Solo activaremos las cookies analíticas si nos das permiso. Puedes cambiar tu elección en cualquier momento.',
-        accept: 'Aceptar analítica',
-        reject: 'Rechazar',
-        settings: 'Configurar',
-        modalTitle: 'Configuración de cookies',
-        modalIntro: 'Respetamos tu privacidad. Puedes elegir qué cookies autorizas. Tu selección se recordará durante 12 meses y puedes modificarla en cualquier momento.',
-        necessaryTitle: 'Necesarias',
-        necessaryBadge: 'Siempre activas',
-        necessaryDesc: 'Permiten funcionalidades imprescindibles como la navegación, la seguridad del sitio web y recordar tu selección de consentimiento. No se pueden desactivar.',
-        analyticsTitle: 'Analítica',
-        analyticsBadge: 'Google Analytics 4',
-        analyticsDesc: 'Sirve para obtener estadísticas anónimas de uso y entender cómo se utiliza la web para poder mejorarla. Desactivada por defecto.',
-        save: 'Guardar preferencias',
-        acceptAll: 'Aceptar todo',
-        rejectAll: 'Rechazar todo',
-        closeModal: 'Cerrar panel de cookies',
-        footerLink: 'Preferencias de cookies'
-      },
-      en: {
-        bannerTitle: 'Do we use analytical cookies?',
-        bannerText: 'We use Google Analytics to understand how the website is used and improve it. We will only activate analytical cookies if you give us permission. You can change your choice at any time.',
-        accept: 'Accept analytics',
-        reject: 'Reject',
-        settings: 'Settings',
-        modalTitle: 'Cookie settings',
-        modalIntro: 'We respect your privacy. You can choose which cookies you authorize. Your selection will be remembered for 12 months and can be changed at any time.',
-        necessaryTitle: 'Necessary',
-        necessaryBadge: 'Always active',
-        necessaryDesc: 'Enable essential features such as navigation, site security, and remembering your consent choice. They cannot be disabled.',
-        analyticsTitle: 'Analytics',
-        analyticsBadge: 'Google Analytics 4',
-        analyticsDesc: 'Used to gather anonymous usage statistics and understand how the website is used to improve it. Disabled by default.',
-        save: 'Save preferences',
-        acceptAll: 'Accept all',
-        rejectAll: 'Reject all',
-        closeModal: 'Close cookie panel',
-        footerLink: 'Cookie preferences'
-      }
-    };
-
-    var t = i18n[currentLang] || i18n.es;
-
-    // Comprovar si ja existeix consentiment previ vàlid
-    var currentConsent = getStoredConsent();
-    if (currentConsent && currentConsent.analytics) {
-      loadGoogleAnalytics();
-    }
-
-    var bannerEl = null;
-    var modalEl = null;
-    var lastFocusedEl = null;
-
-    function buildUI() {
-      // 1. Construir Banner
-      bannerEl = document.createElement('aside');
-      bannerEl.className = 'pw-cookie-banner';
-      bannerEl.id = 'pw-cookie-banner';
-      bannerEl.setAttribute('role', 'region');
-      bannerEl.setAttribute('aria-label', t.bannerTitle);
-
-      bannerEl.innerHTML =
-        '<div class="pw-cookie-banner__inner">' +
-          '<div class="pw-cookie-banner__content">' +
-            '<h2 class="pw-cookie-banner__title">' + t.bannerTitle + '</h2>' +
-            '<p class="pw-cookie-banner__text">' + t.bannerText + '</p>' +
-          '</div>' +
-          '<div class="pw-cookie-banner__actions">' +
-            '<button type="button" class="pw-cookie-banner__btn pw-cookie-banner__btn--accept" id="pw-cookie-accept">' + t.accept + '</button>' +
-            '<button type="button" class="pw-cookie-banner__btn pw-cookie-banner__btn--reject" id="pw-cookie-reject">' + t.reject + '</button>' +
-            '<button type="button" class="pw-cookie-banner__btn pw-cookie-banner__btn--settings" id="pw-cookie-config">' + t.settings + '</button>' +
-          '</div>' +
-        '</div>';
-
-      // 2. Construir Panell de Configuració (Modal Layer 2)
-      modalEl = document.createElement('div');
-      modalEl.className = 'pw-cookie-modal';
-      modalEl.id = 'pw-cookie-modal';
-      modalEl.setAttribute('role', 'dialog');
-      modalEl.setAttribute('aria-modal', 'true');
-      modalEl.setAttribute('aria-labelledby', 'pw-cookie-modal-title');
-      modalEl.setAttribute('aria-describedby', 'pw-cookie-modal-desc');
-
-      modalEl.innerHTML =
-        '<div class="pw-cookie-modal__backdrop" id="pw-cookie-backdrop" aria-hidden="true"></div>' +
-        '<div class="pw-cookie-modal__stage">' +
-          '<div class="pw-cookie-modal__header">' +
-            '<h2 class="pw-cookie-modal__title" id="pw-cookie-modal-title">' + t.modalTitle + '</h2>' +
-            '<button type="button" class="pw-cookie-modal__close" id="pw-cookie-close" aria-label="' + t.closeModal + '">✕</button>' +
-          '</div>' +
-          '<div class="pw-cookie-modal__body">' +
-            '<p class="pw-cookie-modal__intro" id="pw-cookie-modal-desc">' + t.modalIntro + '</p>' +
-            '<div class="pw-cookie-categories">' +
-              // Categoria 1: Necessàries (sempre actives)
-              '<div class="pw-cookie-card">' +
-                '<div class="pw-cookie-card__head">' +
-                  '<div class="pw-cookie-card__info">' +
-                    '<h3 class="pw-cookie-card__name">' + t.necessaryTitle + '</h3>' +
-                    '<span class="pw-cookie-card__badge pw-cookie-card__badge--always">' + t.necessaryBadge + '</span>' +
-                  '</div>' +
-                  '<label class="pw-toggle">' +
-                    '<input type="checkbox" checked disabled aria-label="' + t.necessaryTitle + ': ' + t.necessaryBadge + '">' +
-                    '<span class="pw-toggle__track"><span class="pw-toggle__thumb"></span></span>' +
-                  '</label>' +
-                '</div>' +
-                '<p class="pw-cookie-card__desc">' + t.necessaryDesc + '</p>' +
-              '</div>' +
-              // Categoria 2: Analítica (Google Analytics 4)
-              '<div class="pw-cookie-card">' +
-                '<div class="pw-cookie-card__head">' +
-                  '<div class="pw-cookie-card__info">' +
-                    '<h3 class="pw-cookie-card__name">' + t.analyticsTitle + '</h3>' +
-                    '<span class="pw-cookie-card__badge pw-cookie-card__badge--vendor">' + t.analyticsBadge + '</span>' +
-                  '</div>' +
-                  '<label class="pw-toggle" for="pw-cookie-analytics-check">' +
-                    '<input type="checkbox" id="pw-cookie-analytics-check" aria-label="' + t.analyticsTitle + ': ' + t.analyticsBadge + '">' +
-                    '<span class="pw-toggle__track"><span class="pw-toggle__thumb"></span></span>' +
-                  '</label>' +
-                '</div>' +
-                '<p class="pw-cookie-card__desc">' + t.analyticsDesc + '</p>' +
-              '</div>' +
-            '</div>' +
-          '</div>' +
-          '<div class="pw-cookie-modal__footer">' +
-            '<button type="button" class="pw-cookie-modal__btn pw-cookie-modal__btn--reject-all" id="pw-cookie-reject-all">' + t.rejectAll + '</button>' +
-            '<button type="button" class="pw-cookie-modal__btn pw-cookie-modal__btn--accept-all" id="pw-cookie-accept-all">' + t.acceptAll + '</button>' +
-            '<button type="button" class="pw-cookie-modal__btn pw-cookie-modal__btn--save" id="pw-cookie-save">' + t.save + '</button>' +
-          '</div>' +
-        '</div>';
-
-      document.body.appendChild(bannerEl);
-      document.body.appendChild(modalEl);
-
-      // Mostrar banner si no hi ha decisió prèvia vàlida
-      if (!currentConsent) {
-        bannerEl.classList.add('is-visible');
-      }
-
-      // Assegurar botó de preferències al footer
-      ensureFooterCookieButton();
-
-      // Enllaçar esdeveniments
-      bindUIEvents();
-    }
-
-    function ensureFooterCookieButton() {
-      var legalNavs = document.querySelectorAll('.site-footer__legal');
-      for (var i = 0; i < legalNavs.length; i++) {
-        var nav = legalNavs[i];
-        if (!nav.querySelector('[data-open-cookie-settings]')) {
-          var btn = document.createElement('button');
-          btn.type = 'button';
-          btn.className = 'site-footer__cookie-btn';
-          btn.setAttribute('data-open-cookie-settings', '');
-          btn.textContent = t.footerLink;
-          nav.appendChild(btn);
-        }
-      }
-    }
-
-    function openModal() {
-      lastFocusedEl = document.activeElement;
-      var stored = getStoredConsent();
-      var analyticsCheckbox = document.getElementById('pw-cookie-analytics-check');
-      if (analyticsCheckbox) {
-        analyticsCheckbox.checked = stored ? !!stored.analytics : false;
-      }
-      if (bannerEl) {
-        bannerEl.classList.remove('is-visible');
-      }
-      modalEl.classList.add('is-open');
-      document.body.style.overflow = 'hidden';
-
-      var closeBtn = document.getElementById('pw-cookie-close');
-      if (closeBtn) {
-        closeBtn.focus();
-      }
-    }
-
-    function closeModal() {
-      modalEl.classList.remove('is-open');
-      document.body.style.overflow = '';
-      if (lastFocusedEl && typeof lastFocusedEl.focus === 'function') {
-        lastFocusedEl.focus();
-      }
-    }
-
-    function handleAccept() {
-      saveConsent(true);
-      if (bannerEl) bannerEl.classList.remove('is-visible');
-      closeModal();
-      loadGoogleAnalytics();
-    }
-
-    function handleReject() {
-      var hadAnalytics = false;
-      var stored = getStoredConsent();
-      if (stored && stored.analytics) hadAnalytics = true;
-      saveConsent(false);
-      if (bannerEl) bannerEl.classList.remove('is-visible');
-      closeModal();
-      if (hadAnalytics || isGaLoaded) {
-        revokeGoogleAnalytics();
-      }
-    }
-
-    function handleSavePreferences() {
-      var analyticsCheckbox = document.getElementById('pw-cookie-analytics-check');
-      var isChecked = analyticsCheckbox ? analyticsCheckbox.checked : false;
-      if (isChecked) {
-        handleAccept();
+      // Inicialitzar el banner i panell de preferències de cookies
+      if (window.PW_COOKIE_CONSENT && typeof window.PW_COOKIE_CONSENT.init === 'function') {
+        window.PW_COOKIE_CONSENT.init();
       } else {
-        handleReject();
-      }
-    }
-
-    function bindUIEvents() {
-      var btnAccept = document.getElementById('pw-cookie-accept');
-      var btnReject = document.getElementById('pw-cookie-reject');
-      var btnConfig = document.getElementById('pw-cookie-config');
-      var btnClose = document.getElementById('pw-cookie-close');
-      var backdrop = document.getElementById('pw-cookie-backdrop');
-      var btnSave = document.getElementById('pw-cookie-save');
-      var btnAcceptAll = document.getElementById('pw-cookie-accept-all');
-      var btnRejectAll = document.getElementById('pw-cookie-reject-all');
-
-      if (btnAccept) btnAccept.addEventListener('click', handleAccept);
-      if (btnReject) btnReject.addEventListener('click', handleReject);
-      if (btnConfig) btnConfig.addEventListener('click', openModal);
-      if (btnClose) btnClose.addEventListener('click', closeModal);
-      if (backdrop) backdrop.addEventListener('click', closeModal);
-      if (btnSave) btnSave.addEventListener('click', handleSavePreferences);
-      if (btnAcceptAll) btnAcceptAll.addEventListener('click', handleAccept);
-      if (btnRejectAll) btnRejectAll.addEventListener('click', handleReject);
-
-      // Clics a "Preferències de cookies" al footer o enllaços similars
-      document.addEventListener('click', function(e){
-        var trigger = e.target.closest('[data-open-cookie-settings], [data-cookie-settings], a[href*="cookies#settings"]');
-        if (trigger) {
-          e.preventDefault();
-          openModal();
-        }
-      });
-
-      // Trap de focus i tecla Escape
-      document.addEventListener('keydown', function(e){
-        if (!modalEl || !modalEl.classList.contains('is-open')) return;
-
-        if (e.key === 'Escape') {
-          e.preventDefault();
-          closeModal();
-          return;
-        }
-
-        if (e.key === 'Tab') {
-          var focusables = modalEl.querySelectorAll('button:not([disabled]), input:not([disabled]), [tabindex]:not([tabindex="-1"])');
-          if (!focusables.length) return;
-          var firstEl = focusables[0];
-          var lastEl = focusables[focusables.length - 1];
-
-          if (e.shiftKey) {
-            if (document.activeElement === firstEl) {
-              e.preventDefault();
-              lastEl.focus();
-            }
-          } else {
-            if (document.activeElement === lastEl) {
-              e.preventDefault();
-              firstEl.focus();
-            }
+        loadScript(prefix + 'cookie-consent.js?v=1', function() {
+          if (window.PW_COOKIE_CONSENT && typeof window.PW_COOKIE_CONSENT.init === 'function') {
+            window.PW_COOKIE_CONSENT.init();
           }
-        }
-      });
+        });
+      }
     }
 
-    if (document.readyState === 'loading') {
-      document.addEventListener('DOMContentLoaded', buildUI);
+    function loadAnalyticsModule() {
+      if (window.PW_ANALYTICS) {
+        setup();
+      } else {
+        loadScript(prefix + 'analytics.js?v=1', setup);
+      }
+    }
+
+    // Si window.PW_CONFIG ja està definit, carreguem directament el mòdul
+    if (window.PW_CONFIG && window.PW_CONFIG.GA4_MEASUREMENT_ID !== undefined) {
+      loadAnalyticsModule();
     } else {
-      buildUI();
+      // Carrega primer analytics-config.js (generat en el deploy de GitHub Actions)
+      // Si no existeix en local, onerror crida loadAnalyticsModule igualment sense cap error
+      loadScript(prefix + 'analytics-config.js?v=1', loadAnalyticsModule);
     }
-
-    // 3. Esdeveniments GA4 mínims: booking_click, whatsapp_click, phone_click, email_click
-    function getCtaLocation(el) {
-      try {
-        var parent = el.closest('[id], section, header, footer, aside, .booking-panel');
-        if (!parent) return 'body';
-        if (parent.id) return parent.id;
-        if (parent.tagName.toLowerCase() === 'header') return 'header';
-        if (parent.tagName.toLowerCase() === 'footer') return 'footer';
-        var cls = parent.className;
-        if (typeof cls === 'string' && cls.trim().length > 0) {
-          return cls.trim().split(/\s+/)[0];
-        }
-        return parent.tagName.toLowerCase();
-      } catch(e) {
-        return 'unknown';
-      }
-    }
-
-    document.addEventListener('click', function(e){
-      var link = e.target.closest('a, button');
-      if (!link) return;
-
-      var href = (link.getAttribute('href') || '').trim();
-      var ctaLocation = getCtaLocation(link);
-
-      // WhatsApp click
-      if (href.indexOf('wa.me') !== -1 || href.indexOf('api.whatsapp.com') !== -1) {
-        pwTrackEvent('whatsapp_click', {
-          language: currentLang,
-          cta_location: ctaLocation
-        });
-        return;
-      }
-
-      // Phone click
-      if (href.indexOf('tel:') === 0) {
-        pwTrackEvent('phone_click', {
-          language: currentLang,
-          cta_location: ctaLocation
-        });
-        return;
-      }
-
-      // Email click
-      if (href.indexOf('mailto:') === 0) {
-        pwTrackEvent('email_click', {
-          language: currentLang,
-          cta_location: ctaLocation
-        });
-        return;
-      }
-
-      // Booking click
-      if (href.indexOf('docfav.com') !== -1 || link.classList.contains('booking__btn') || link.classList.contains('book-bar__btn')) {
-        pwTrackEvent('booking_click', {
-          language: currentLang,
-          cta_location: ctaLocation
-        });
-        return;
-      }
-    });
-
-  } catch(err) {
-    console.warn('[Consent] Error d\'inicialització:', err);
+  } catch (e) {
+    console.warn('[Analytics Integration]', e);
   }
 })();
+
+// Helper global per a compatibilitat amb codi existent
+window.pwTrackEvent = function(eventName, params) {
+  if (window.PW_ANALYTICS && typeof window.PW_ANALYTICS.trackEvent === 'function') {
+    return window.PW_ANALYTICS.trackEvent(eventName, params);
+  }
+  return false;
+};
 
 /* ---------- header: fondo sólido + ocultar/mostrar según dirección de scroll ----------
    Componente global (se sirve desde el único main.js compartido por todas las
@@ -3855,13 +3390,8 @@ var ANNOUNCEMENT_CONFIG = {
           if(btnTextEl){
             btnTextEl.textContent = tMsg.btnSubmit;
           }
-          // GA4: generate_lead (únicament amb enviament confirmat pel backend /api/contact.php)
-          if(typeof window.pwTrackEvent === 'function'){
-            window.pwTrackEvent('generate_lead', {
-              language: currentLang,
-              cta_location: 'contact_form'
-            });
-          }
+          // Pendent per a la fase d'esdeveniments de negoci:
+          // window.PW_ANALYTICS.trackEvent('generate_lead', { language: currentLang, cta_location: 'contact_form' });
         }else{
           // Error devuelto por el servidor
           if(submitBtn){

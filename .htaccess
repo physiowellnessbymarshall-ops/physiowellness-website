@@ -60,8 +60,8 @@ ErrorDocument 403 /404.html
     ExpiresActive On
     ExpiresDefault "access plus 1 month"
 
-    # HTML: Short cache / revalidate (1 hour)
-    ExpiresByType text/html "access plus 1 hour"
+    # HTML: Revalidate immediately on new deployments
+    ExpiresByType text/html "access plus 0 seconds"
 
     # Static CSS & JS: 1 year (immutable or version-controlled)
     ExpiresByType text/css "access plus 1 year"
@@ -103,6 +103,11 @@ ErrorDocument 403 /404.html
 
     # Content Security Policy (protects against XSS/injections while fully supporting existing assets, Google Maps embeds & GA4 after consent)
     Header always set Content-Security-Policy "default-src 'self'; script-src 'self' 'unsafe-inline' https://www.googletagmanager.com; style-src 'self' https://fonts.googleapis.com 'unsafe-inline'; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: https: https://*.google-analytics.com https://*.googletagmanager.com; media-src 'self'; frame-src 'self' https://www.google.com https://maps.google.com; connect-src 'self' https://*.google-analytics.com https://*.analytics.google.com https://*.googletagmanager.com; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'self'; upgrade-insecure-requests"
+
+    # HTML Caching: Always revalidate HTML so releases are immediately live
+    <FilesMatch "\.(html|htm)$">
+        Header set Cache-Control "no-cache, must-revalidate"
+    </FilesMatch>
 
     # HTTP Strict Transport Security (HSTS)
     # PENDENT PER AL DOMINI DEFINITIU: No s'activa durant el domini provisional/staging

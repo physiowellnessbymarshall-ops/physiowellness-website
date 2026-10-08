@@ -529,8 +529,10 @@
    */
   function getConsentStatus() {
     var stored = getStoredConsent();
+    var isConsented = state.consentGranted || Boolean(stored && stored.analytics);
     return {
-      consented: state.consentGranted,
+      consented: isConsented,
+      analytics: isConsented,
       hasStoredDecision: stored !== null,
       timestamp: stored ? stored.timestamp : null,
       version: stored ? stored.version : null

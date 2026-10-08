@@ -255,7 +255,7 @@
     var analyticsCheck = document.getElementById('pw-cookie-analytics-check');
     var consentStatus = getStoredConsent();
     if (analyticsCheck) {
-      analyticsCheck.checked = Boolean(consentStatus && consentStatus.analytics);
+      analyticsCheck.checked = Boolean(consentStatus && (consentStatus.analytics || consentStatus.consented));
     }
 
     if (state.bannerEl) {

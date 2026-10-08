@@ -3143,7 +3143,13 @@ var ANNOUNCEMENT_CONFIG = {
         bodyPhone: '\nTeléfono: ',
         bodyMsg: '\n\nMensaje:\n',
         waIntro: 'Hola Physio Wellness, soy ',
-        waConsult: ' Consulta: '
+        waConsult: ' Consulta: ',
+        directNoticeTitle: 'Canal de atención directa',
+        directNoticeText: 'Estamos configurando la nueva bandeja de correo corporativo. Para garantizar una atención inmediata y que tu consulta no se pierda, puedes contactarnos directamente por WhatsApp (+34 644 67 83 44) o llamada:',
+        transferTitle: 'Abriendo WhatsApp...',
+        transferMsg: 'Hemos preparado tu consulta en WhatsApp con tus datos para que puedas enviarla con un solo clic.',
+        btnDirectWa: 'Escribir por WhatsApp',
+        btnDirectCall: 'Llamar al centro'
       },
       ca: {
         errName: 'Si us plau, introdueix el teu nom.',
@@ -3166,7 +3172,13 @@ var ANNOUNCEMENT_CONFIG = {
         bodyPhone: '\nTelèfon: ',
         bodyMsg: '\n\nMissatge:\n',
         waIntro: 'Hola Physio Wellness, sóc ',
-        waConsult: ' Consulta: '
+        waConsult: ' Consulta: ',
+        directNoticeTitle: 'Canal d\'atenció directa',
+        directNoticeText: 'Estem configurant la nova bústia de correu corporatiu. Per garantir una atenció immediata i que la teva consulta no es perdi, pots contactar-nos directament per WhatsApp (+34 644 67 83 44) o trucada:',
+        transferTitle: 'Obrint WhatsApp...',
+        transferMsg: 'Hem preparat la teva consulta a WhatsApp amb les teves dades perquè puguis enviar-la en un sol clic.',
+        btnDirectWa: 'Escriure per WhatsApp',
+        btnDirectCall: 'Trucar al centre'
       },
       en: {
         errName: 'Please enter your name.',
@@ -3189,7 +3201,13 @@ var ANNOUNCEMENT_CONFIG = {
         bodyPhone: '\nPhone: ',
         bodyMsg: '\n\nMessage:\n',
         waIntro: 'Hello Physio Wellness, I am ',
-        waConsult: ' Enquiry: '
+        waConsult: ' Enquiry: ',
+        directNoticeTitle: 'Direct assistance channel',
+        directNoticeText: 'We are setting up the new corporate mailbox. To ensure immediate assistance and that no enquiry is lost, you can contact us directly via WhatsApp (+34 644 67 83 44) or phone:',
+        transferTitle: 'Opening WhatsApp...',
+        transferMsg: 'We have prepared your enquiry in WhatsApp with your details so you can send it in one click.',
+        btnDirectWa: 'Chat on WhatsApp',
+        btnDirectCall: 'Call the center'
       }
     };
     var tMsg = formI18n[currentLang];
@@ -3292,11 +3310,15 @@ var ANNOUNCEMENT_CONFIG = {
       noticeEl.classList.remove('form-notice--success', 'form-notice--error');
     }
 
+    var emailOperational = Boolean(window.PW_CONFIG && window.PW_CONFIG.EMAIL_OPERATIONAL === true);
+
     function showNotice(type, title, text, showFallbackActions, nameVal, emailVal, phoneVal, msgVal){
       if(!noticeEl) return;
       noticeEl.hidden = false;
-      noticeEl.classList.remove('form-notice--success', 'form-notice--error');
-      noticeEl.classList.add(type === 'success' ? 'form-notice--success' : 'form-notice--error');
+      noticeEl.classList.remove('form-notice--success', 'form-notice--error', 'form-notice--info');
+      if(type === 'success') noticeEl.classList.add('form-notice--success');
+      else if(type === 'info') noticeEl.classList.add('form-notice--info');
+      else noticeEl.classList.add('form-notice--error');
 
       if(noticeTitleEl) noticeTitleEl.textContent = title;
       if(noticeTextEl) noticeTextEl.textContent = text;
@@ -3306,7 +3328,7 @@ var ANNOUNCEMENT_CONFIG = {
           noticeActionsEl.hidden = false;
           var subject = tMsg.subject + (nameVal || '');
           var emailBody = tMsg.bodyName + (nameVal || '') + tMsg.bodyEmail + (emailVal || '') + (phoneVal ? (tMsg.bodyPhone + phoneVal) : '') + tMsg.bodyMsg + (msgVal || '');
-          var waBody = tMsg.waIntro + (nameVal || '') + '.' + (phoneVal ? (' (Tel: ' + phoneVal + ')') : '') + tMsg.waConsult + (msgVal || '');
+          var waBody = tMsg.waIntro + (nameVal || '') + '.' + (phoneVal ? (' (Tel: ' + phoneVal + ')') : '') + (emailVal ? (' (Email: ' + emailVal + ')') : '') + tMsg.waConsult + (msgVal || '');
 
           if(emailActionBtn){
             emailActionBtn.href = 'mailto:hola@physiowellness.es?subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(emailBody);
@@ -3320,6 +3342,11 @@ var ANNOUNCEMENT_CONFIG = {
       }
 
       noticeEl.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+
+    // Si el correu corporatiu està pendent de configuració, activar canal directe amb WhatsApp/Telèfon
+    if(!emailOperational){
+      showNotice('info', tMsg.directNoticeTitle, tMsg.directNoticeText, true);
     }
 
     form.addEventListener('submit', function(e){
@@ -3347,6 +3374,29 @@ var ANNOUNCEMENT_CONFIG = {
 
       isSubmitting = true;
       hideNotice();
+
+      // Si el correu corporatiu encara no està operatiu, canalitzar directament a WhatsApp preservant les dades
+      if(!emailOperational){
+        var waMsg = tMsg.waIntro + (nameVal || '') + '.' + (phoneVal ? (' (Tel: ' + phoneVal + ')') : '') + (emailVal ? (' (Email: ' + emailVal + ')') : '') + tMsg.waConsult + (msgVal || '');
+        var waUrl = 'https://wa.me/34644678344?text=' + encodeURIComponent(waMsg);
+        
+        showNotice('success', tMsg.transferTitle, tMsg.transferMsg, true, nameVal, emailVal, phoneVal, msgVal);
+        if(waActionBtn) waActionBtn.href = waUrl;
+        try {
+          window.open(waUrl, '_blank', 'noopener');
+        } catch(e) {}
+        
+        if(submitBtn){
+          submitBtn.disabled = false;
+          submitBtn.classList.remove('is-loading');
+          submitBtn.removeAttribute('aria-busy');
+        }
+        if(btnTextEl){
+          btnTextEl.textContent = tMsg.btnSubmit;
+        }
+        isSubmitting = false;
+        return;
+      }
 
       if(submitBtn){
         submitBtn.disabled = true;

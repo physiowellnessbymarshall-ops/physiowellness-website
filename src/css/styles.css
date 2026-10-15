@@ -1892,7 +1892,8 @@ a:focus-visible,button:focus-visible,input:focus-visible{
 @media (min-width:640px){ .team__grid{grid-template-columns:repeat(2,1fr);} }
 .team-card{display:flex;flex-direction:column;gap:var(--sp-4);}
 .team-card__media{aspect-ratio:3/4;overflow:hidden;background:var(--pw-mist);}
-.team-card__media img{width:100%;height:100%;object-fit:cover;}
+.team-card__media picture{display:block;width:100%;height:100%;}
+.team-card__media img{display:block;width:100%;height:100%;object-fit:cover;object-position:center 15%;}
 @media (min-width:640px){
   .team-card{flex-direction:row;align-items:flex-start;gap:var(--sp-6);}
   .team-card__media{flex:0 0 38%;}
@@ -2465,6 +2466,28 @@ a:focus-visible,button:focus-visible,input:focus-visible{
   object-fit:cover;
   object-position:var(--focal-point, center);
   display:block;
+}
+
+/* Framing individualizado y consistente por testimonio (móvil y desktop) */
+.testimonials__img--tamas,
+.testimonials__photo-layer img.testimonials__img--tamas,
+.testimonials__item-media img.testimonials__img--tamas{
+  object-fit:cover;
+  object-position:center 20%;
+}
+
+.testimonials__img--jorge,
+.testimonials__photo-layer img.testimonials__img--jorge,
+.testimonials__item-media img.testimonials__img--jorge{
+  object-fit:cover;
+  object-position:center 10%;
+}
+
+.testimonials__img--david,
+.testimonials__photo-layer img.testimonials__img--david,
+.testimonials__item-media img.testimonials__img--david{
+  object-fit:cover;
+  object-position:center 24%;
 }
 
 /* Columna 2: Contenido editorial */
@@ -4707,10 +4730,9 @@ a:focus-visible,button:focus-visible,input:focus-visible{
   object-fit:cover;object-position:center 30%;
   filter:saturate(1.05) contrast(1.04) brightness(.97);
 }
-/* FASE 7: fotografía real de Stretching (mismo archivo que el hero, otro
-   recorte). En 4/3 móvil el recorte es vertical: se prioriza el tercio
-   superior, igual que en el hero de esta misma página. */
-.page-stretching .service-photo img{object-position:center 24%;}
+/* Stretching: fotografía exclusiva de sesión guiada de movilidad (stretching-context).
+   En 4/3 móvil se prioriza el encuadre natural centrado; en 3/4 desktop encaja nativo. */
+.page-stretching .service-photo img{object-position:center 38%;}
 @media (min-width:860px){
   .service-context__grid{
     grid-template-columns:1.1fr .9fr;
@@ -4718,8 +4740,7 @@ a:focus-visible,button:focus-visible,input:focus-visible{
     align-items:center;
   }
   .service-photo{order:0;aspect-ratio:3/4;}
-  /* En 3/4 el recorte pasa a horizontal y mínimo (0.8 vs 0.75). */
-  .page-stretching .service-photo img{object-position:47% center;}
+  .page-stretching .service-photo img{object-position:center center;}
 }
 
 /* ----- Subespecialidades: lista editorial, no cuadrícula de tarjetas -----
@@ -7157,7 +7178,13 @@ a:not(.booking-panel__help):focus-visible,
   box-shadow:0 10px 30px -15px rgba(18,32,29,.12);
   margin:0;
 }
+.team-profile__figure picture{
+  display:block;
+  width:100%;
+  height:100%;
+}
 .team-profile__img{
+  display:block;
   width:100%;
   height:100%;
   object-fit:cover;
@@ -9783,8 +9810,34 @@ a:not(.booking-panel__help):focus-visible,
   color: var(--pw-primary);
   text-decoration: underline;
 }
+.form-privacy-label {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.55rem;
+  cursor: pointer;
+  font-size: 0.84rem;
+  color: var(--pw-ink-70);
+  line-height: 1.45;
+}
+.form-privacy-label input[type="checkbox"] {
+  accent-color: var(--pw-primary);
+  width: 1.05rem;
+  height: 1.05rem;
+  margin-top: 0.15rem;
+  flex-shrink: 0;
+  cursor: pointer;
+}
+.form-privacy.has-error .form-error-text {
+  display: block;
+}
+.contact-form__hint {
+  font-size: 0.84rem;
+  color: var(--pw-ink-70);
+  line-height: 1.45;
+  margin-top: var(--sp-2);
+}
 .contact-form__submit {
-  margin-top: var(--space-lg);
+  margin-top: var(--sp-3);
   width: 100%;
   justify-content: center;
   padding-block: 0.95rem;
@@ -9818,6 +9871,13 @@ a:not(.booking-panel__help):focus-visible,
   display: flex;
   flex-wrap: wrap;
   gap: var(--sp-3);
+}
+.form-notice--info {
+  border-left-color: var(--pw-primary);
+  background: rgba(35, 115, 105, 0.04);
+}
+.form-notice--info .form-notice__title {
+  color: var(--pw-primary);
 }
 .form-notice--success {
   border-left-color: var(--pw-primary);
@@ -13897,10 +13957,43 @@ html:not(.js) .snow-hero__title .reveal-line > span {
   --hero-watermark-opacity: 0.045;
 }
 
-/* 3. FUERZA (.service-hero--strength) - Preparado para fase posterior */
+/* 3. FUERZA (.service-hero--strength)
+   Integración tonal y espacial cinematográfica: fotografía a sangre
+   con degradado multidireccional y máscara suave hacia el fondo verde oscuro
+   (#0c1c1a), eliminando el efecto de tarjeta/rectángulo rígido y vacíos inferiores. */
 .service-hero--strength {
   --hero-bg: #0c1c1a;
   --hero-watermark-opacity: 0.07;
+  --hero-photo-pos: center top;
+  --hero-photo-scale: 1.04;
+}
+
+.service-hero--strength .service-hero__figure {
+  border-radius: 0;
+  background-color: transparent;
+}
+
+.service-hero--strength .service-hero__figure img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: var(--hero-photo-pos, center 12%);
+}
+
+.service-hero--strength .service-hero__media-gradient {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background:
+    /* Lateral izquierdo: fusión suave con la columna de texto */
+    linear-gradient(to right, rgba(12, 28, 26, 0.82) 0%, rgba(12, 28, 26, 0.28) 22%, transparent 45%),
+    /* Base inferior: degradado continuo profundo que funde la base con el fondo oscuro del hero */
+    linear-gradient(to top, #0c1c1a 0%, rgba(12, 28, 26, 0.94) 14%, rgba(12, 28, 26, 0.45) 28%, rgba(12, 28, 26, 0.1) 45%, transparent 60%),
+    /* Superior sutil para matizar la iluminación cenital */
+    linear-gradient(to bottom, rgba(12, 28, 26, 0.35) 0%, transparent 18%);
 }
 
 /* 4. PILATES REFORMER (.service-hero--pilates) - Preparado para fase posterior */
@@ -13946,7 +14039,6 @@ html:not(.js) .snow-hero__title .reveal-line > span {
   }
 
   .service-hero--wellness .service-hero__figure,
-  .service-hero--strength .service-hero__figure,
   .service-hero--pilates .service-hero__figure,
   .service-hero--stretching .service-hero__figure,
   .service-hero--domicilio .service-hero__figure {
@@ -13956,6 +14048,27 @@ html:not(.js) .snow-hero__title .reveal-line > span {
     min-height: clamp(520px, 72vh, 760px);
     max-height: 780px;
     aspect-ratio: auto;
+  }
+
+  .service-hero--strength .service-hero__media-col {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .service-hero--strength .service-hero__figure {
+    margin-right: calc(-1 * (max(0px, (100vw - var(--container)) / 2) + clamp(1.5rem, 4vw, 2.75rem)));
+    border-radius: 0;
+    height: 100%;
+    min-height: clamp(560px, 78vh, 840px);
+    max-height: none;
+    aspect-ratio: auto;
+    mask-image: linear-gradient(to bottom, black 0%, black 72%, rgba(0, 0, 0, 0.85) 82%, rgba(0, 0, 0, 0.3) 93%, transparent 100%);
+    -webkit-mask-image: linear-gradient(to bottom, black 0%, black 72%, rgba(0, 0, 0, 0.85) 82%, rgba(0, 0, 0, 0.3) 93%, transparent 100%);
+  }
+
+  .service-hero--strength .service-hero__tag {
+    display: inline-flex;
   }
 }
 
@@ -13990,6 +14103,22 @@ html:not(.js) .snow-hero__title .reveal-line > span {
   }
   .service-hero__figure img {
     object-position: center 18%;
+  }
+
+  .service-hero--strength .service-hero__figure {
+    aspect-ratio: 16 / 11;
+    max-height: 54vh;
+    border-radius: 0;
+    mask-image: linear-gradient(to bottom, black 0%, black 70%, rgba(0, 0, 0, 0.75) 85%, transparent 100%);
+    -webkit-mask-image: linear-gradient(to bottom, black 0%, black 70%, rgba(0, 0, 0, 0.75) 85%, transparent 100%);
+  }
+  .service-hero--strength .service-hero__figure img {
+    object-position: center top;
+  }
+  .service-hero--strength .service-hero__media-gradient {
+    background:
+      linear-gradient(to top, #0c1c1a 0%, rgba(12, 28, 26, 0.95) 15%, rgba(12, 28, 26, 0.4) 35%, transparent 60%),
+      linear-gradient(to bottom, rgba(12, 28, 26, 0.4) 0%, transparent 20%);
   }
 
   .service-hero__headline {
@@ -17112,6 +17241,7 @@ html:not(.js) .snow-hero__title .reveal-line > span {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  object-position: center 25%;
   display: block;
   transition: transform 1.2s cubic-bezier(0.16, 1, 0.3, 1);
 }
@@ -19303,14 +19433,15 @@ html:not(.js) .snow-hero__title .reveal-line > span {
 .equipment-showcase__stage {
   display: grid;
   grid-template-columns: minmax(0, 1fr);
-  gap: clamp(var(--sp-8), 4vw, var(--sp-12));
-  align-items: center;
+  gap: clamp(var(--sp-6), 3.5vw, var(--sp-10));
+  align-items: start;
 }
 
 @media (min-width: 960px) {
   .equipment-showcase__stage {
     grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr);
-    gap: clamp(var(--sp-10), 5vw, var(--sp-16));
+    gap: clamp(var(--sp-8), 4vw, var(--sp-14));
+    align-items: start;
   }
 }
 
@@ -19323,11 +19454,12 @@ html:not(.js) .snow-hero__title .reveal-line > span {
   background: transparent;
   border: none;
   border-radius: var(--radius);
-  padding: clamp(var(--sp-6), 3.5vw, var(--sp-10));
+  padding: clamp(var(--sp-3), 2vw, var(--sp-6));
   position: relative;
-  overflow: hidden;
-  min-height: 420px;
-  justify-content: space-between;
+  overflow: visible;
+  min-height: auto;
+  justify-content: flex-start;
+  gap: clamp(var(--sp-4), 2.5vw, var(--sp-6));
 }
 
 /* Contenedor de la imagen recortada sin fondo */
@@ -19336,18 +19468,21 @@ html:not(.js) .snow-hero__title .reveal-line > span {
   width: 100%;
   max-width: 100%;
   min-width: 0;
-  height: clamp(220px, 28vw, 320px);
+  height: clamp(260px, 32vw, 380px);
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-bottom: var(--sp-6);
-  padding: clamp(0.5rem, 1.5vw, 1rem);
+  margin-bottom: 0;
+  padding: clamp(0.75rem, 2vw, 1.5rem);
   box-sizing: border-box;
+  background: radial-gradient(ellipse 70% 60% at 50% 65%, rgba(35, 115, 105, 0.04) 0%, rgba(246, 247, 246, 0.5) 60%, transparent 100%);
+  border-radius: calc(var(--radius) * 2);
+  overflow: visible;
 }
 
 .equipment-showcase__img {
-  max-width: 90%;
-  max-height: 90%;
+  max-width: 100%;
+  max-height: 100%;
   width: auto;
   height: auto;
   object-fit: contain;
@@ -19355,11 +19490,12 @@ html:not(.js) .snow-hero__title .reveal-line > span {
   aspect-ratio: auto;
   transition: opacity var(--dur-med) var(--ease-out), transform var(--dur-med) var(--ease-out);
   will-change: opacity, transform;
+  filter: drop-shadow(0 10px 22px rgba(18, 32, 29, 0.06));
 }
 
 .equipment-showcase__media.is-changing .equipment-showcase__img {
   opacity: 0;
-  transform: scale(0.92) translateY(6px);
+  transform: scale(0.96) translateY(4px);
 }
 
 /* Información de la máquina protagonista */
@@ -19485,7 +19621,7 @@ html:not(.js) .snow-hero__title .reveal-line > span {
 
 .equipment-showcase__item-btn {
   display: grid;
-  grid-template-columns: 2.2ch 1fr 50px;
+  grid-template-columns: 2.2ch 1fr 56px;
   align-items: center;
   gap: var(--sp-4);
   padding: var(--sp-3) var(--sp-4);
@@ -19533,28 +19669,31 @@ html:not(.js) .snow-hero__title .reveal-line > span {
 }
 
 .equipment-showcase__item-thumb {
-  width: 50px;
-  height: 40px;
+  width: 56px;
+  height: 42px;
   display: flex;
   align-items: center;
   justify-content: center;
   padding: 2px;
   box-sizing: border-box;
+  border-radius: 2px;
+  background: rgba(35, 115, 105, 0.03);
 }
 
 .equipment-showcase__item-thumb img {
   width: 100%;
   height: 100%;
-  max-width: 92%;
-  max-height: 92%;
+  max-width: 100%;
+  max-height: 100%;
   object-fit: contain;
   object-position: center center;
   opacity: 0.85;
-  transition: opacity var(--dur-fast) var(--ease-out);
+  transition: opacity var(--dur-fast) var(--ease-out), transform var(--dur-fast) var(--ease-out);
 }
 
 .equipment-showcase__item-btn.is-active .equipment-showcase__item-thumb img {
   opacity: 1;
+  transform: scale(1.04);
 }
 
 /* Variant Single: Pilates Reformer Spotlight */
@@ -19579,17 +19718,41 @@ html:not(.js) .snow-hero__title .reveal-line > span {
   background: transparent;
   border: none;
   border-radius: var(--radius);
-  padding: clamp(var(--sp-6), 4vw, var(--sp-12));
-  min-height: 360px;
+  padding: var(--sp-4) 0;
+  min-height: auto;
+  width: 100%;
+  max-width: 100%;
+  overflow: visible;
+}
+
+@media (min-width: 640px) {
+  .equipment-showcase__single-visual {
+    padding: var(--sp-6) var(--sp-2);
+    min-height: 280px;
+  }
+}
+
+@media (min-width: 960px) {
+  .equipment-showcase__single-visual {
+    padding: clamp(var(--sp-4), 2.5vw, var(--sp-8)) var(--sp-2);
+    min-height: 360px;
+  }
 }
 
 .equipment-showcase__single-visual img {
   width: 100%;
-  height: 100%;
-  max-width: 90%;
-  max-height: 340px;
+  height: auto;
+  max-width: 100%;
+  max-height: 380px;
   object-fit: contain;
   object-position: center center;
+  display: block;
+  filter: drop-shadow(0 14px 28px rgba(0, 0, 0, 0.04));
+  transition: transform 0.4s var(--ease-out, ease-out);
+}
+
+.equipment-showcase__single-visual:hover img {
+  transform: translateY(-2px);
 }
 
 .equipment-showcase__single-content {
@@ -19639,6 +19802,10 @@ html:not(.js) .snow-hero__title .reveal-line > span {
 
 /* Mobile swipe & overflow adjustments */
 @media (max-width: 640px) {
+  .equipment-showcase__media {
+    height: clamp(220px, 58vw, 290px);
+    padding: 0.5rem;
+  }
   .equipment-showcase__track {
     flex-direction: row;
     overflow-x: auto;

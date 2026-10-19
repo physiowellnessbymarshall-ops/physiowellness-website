@@ -29,38 +29,29 @@ Aquest document detalla l'arquitectura, configuració i ús de la integració de
 
 ## 2. On posar el Measurement ID
 
-Per seguretat, mantenibilitat i coherència amb l'arquitectura estàtica del projecte, **no hi ha cap Measurement ID hardcodejat al repositori**.
+La propietat oficial de Google Analytics 4 de Physio Wellness by Marshall està configurada amb l'identificador:
 
-Com que aquesta web és una **MPA estàtica en HTML/CSS/JavaScript vanilla** (sense bundlers ni eines de compilació com Vite o Webpack), un fitxer `.env` local **NO arriba directament al navegador del client**. Per tant, la configuració està desacoblada i es gestiona mitjançant el següent sistema:
+> **Identificador de mesurament**: `G-C4CBYG7W5K`
 
-### Opció Principal: Desplegament a Producció (GitHub Actions → Hostinger)
-Quan tinguem el Measurement ID real de GA4, només caldrà:
+Com que aquesta web és una **MPA estàtica en HTML/CSS/JavaScript vanilla** (sense bundlers ni eines de compilació com Vite o Webpack), un fitxer `.env` local **NO arriba directament al navegador del client**. Per tant, la configuració està desacoblada i centralitzada a `src/js/analytics-config.js`:
 
-1. Anar al repositori a GitHub:
+```javascript
+window.PW_CONFIG = window.PW_CONFIG || {};
+window.PW_CONFIG.GA4_MEASUREMENT_ID = window.PW_CONFIG.GA4_MEASUREMENT_ID || 'G-C4CBYG7W5K';
+```
+
+### Desplegament a Producció (GitHub Actions → Hostinger)
+El workflow `.github/workflows/deploy-production.yml` inclou per defecte el valor oficial `G-C4CBYG7W5K`, permetent també sobreescriure'l des de les variables de repositori de GitHub (`vars.GA4_MEASUREMENT_ID`) si fos necessari en el futur:
+
+1. Repositori a GitHub:
    **Settings → Secrets and variables → Actions → Variables**
-2. Crear una nova variable de repositori:
+2. Variable de repositori (opcional com a override):
    - **Name**: `GA4_MEASUREMENT_ID`
-   - **Value**: `G-XXXXXXXXXX` (el teu Measurement ID real)
-3. Executar o esperar el següent desplegament (workflow `.github/workflows/deploy-production.yml`).
+   - **Value**: `G-C4CBYG7W5K`
+3. Execució automàtica en cada desplegament a `production`.
 
-**Com funciona internament en el desplegament**:
-- Durant el workflow de GitHub Actions, abans de publicar a la branca `production` que rep Hostinger, el runner llegeix `${{ vars.GA4_MEASUREMENT_ID }}` i genera automàticament `src/js/analytics-config.js`:
-  ```javascript
-  window.PW_CONFIG = window.PW_CONFIG || {};
-  window.PW_CONFIG.GA4_MEASUREMENT_ID = 'VALOR_DE_LA_VARIABLE';
-  ```
-- **Resiliència**: Si la variable `GA4_MEASUREMENT_ID` encara no existeix o està buida a GitHub, **el deploy NO falla**. El workflow genera `analytics-config.js` amb valor buit (`''`) i Google Analytics roman completament desactivat de manera segura.
-- El fitxer generat s'afegeix exclusivament a la branca de producció (`deploy-production` → `production`), mentre que a les branques de desenvolupament roman protegit i ignorat per `.gitignore`.
-
-### Opció Secundària: Proves Locals en Desenvolupament
-Per testejar localment sense dependre de GitHub Actions:
-1. Copia la plantilla `src/js/analytics-config.example.js` creant el fitxer `src/js/analytics-config.js`:
-   ```javascript
-   window.PW_CONFIG = window.PW_CONFIG || {};
-   window.PW_CONFIG.GA4_MEASUREMENT_ID = 'G-EL_TEU_ID_REAL';
-   ```
-2. Aquest fitxer està registrat a `.gitignore` i no es pujarà mai a GitHub.
-3. Si el fitxer no existeix localment, la web carrega igualment amb normalitat sense generar cap error de consola (l'intent de càrrega falla amb seguretat a l'error-handler i el sistema continua).
+### Proves Locals en Desenvolupament
+A `src/js/analytics-config.js` l'identificador `G-C4CBYG7W5K` ja ve configurat per defecte. A `localhost`, el mòdul `analytics.js` intercepta l'enviament real a xarxa per protegir les estadístiques de producció, mostrant els esdeveniments a la consola si s'activa el mode depuració (`window.PW_ANALYTICS_DEBUG = true`).
 
 ### Opció Alternativa: Etiqueta `<meta>` o Inicialització per Codi
 També es pot definir directament a la capçalera HTML:
@@ -120,34 +111,61 @@ Aquest mètode:
 
 ---
 
-## 5. Com registrar futurs esdeveniments de negoci
+## 5. Mesurament de Conversions i Auto-tracking (FASE P2-B)
 
-La capa d'analítica ofereix el mètode `trackEvent()` (i l'àlies global `pwTrackEvent()`):
+El mòdul `src/js/analytics.js` inclou un sistema d'**auto-tracking delegat** que s'inicialitza automàticament a totes les pàgines i captura les accions clau de conversió i contacte sense necessitat de codi addicional als enllaços HTML:
 
-```javascript
-// Sintaxi
-window.PW_ANALYTICS.trackEvent(nomEsdeveniment, parametresOpcionals);
+### 1. Clic a DocFav (`click_docfav`)
+- **Descripció**: Mesura la intenció de reserva quan l'usuari fa clic cap a la plataforma externa DocFav.
+- **IMPORTANT**: **Un clic a DocFav NO equival a una reserva confirmada** (`purchase` o `booking_confirmed`). Es registra estrictament com a intenció de reserva externa (`booking_intent`) per no distorsionar les conversions finals.
+- **Paràmetres enviats**:
+  - `event_category`: `'booking_intent'`
+  - `destination`: `'docfav'`
+  - `booking_channel`: `'docfav_portal'`
+  - `cta_text`: text visible del botó o enllaç (ex: *"Reservar primera visita"*)
+  - `cta_location`: context estructural (`booking_panel`, `sticky_mobile_bar`, `hero`, `pricing_section`, `footer`, etc.)
+  - `service`: servei deduït del context (`fisioterapia`, `pilates`, `forca`, `benestar`, `stretching`, `fisioterapia_domicili`, `primera_visita`, `general`)
+  - `page_path`: ruta actual
+  - `language`: `'ca' | 'es' | 'en'`
 
-// Exemples per a fases posteriors:
-window.PW_ANALYTICS.trackEvent('whatsapp_click', {
-  cta_location: 'hero',
-  language: 'ca'
-});
+### 2. Clic a WhatsApp (`click_whatsapp`)
+- **Descripció**: Mesura l'inici de consulta directa o resolució de dubtes via WhatsApp oficial (+34 644 67 83 44).
+- **Privacitat mèdica**: **Mai s'inclouen dades mèdiques sensibles**, símptomes ni diagnòstics en els paràmetres de l'esdeveniment.
+- **Paràmetres enviats**:
+  - `event_category`: `'contact_intent'`
+  - `contact_channel`: `'whatsapp'`
+  - `destination_number`: `'+34644678344'`
+  - `cta_text`: text del botó
+  - `cta_location`: context estructural
+  - `service`: servei associat
+  - `page_path`: ruta actual
+  - `language`: `'ca' | 'es' | 'en'`
 
-window.PW_ANALYTICS.trackEvent('booking_click', {
-  service: 'fisioterapia',
-  cta_location: 'nav_header'
-});
+### 3. Clic al Telèfon (`click_phone`)
+- **Descripció**: Mesura quan l'usuari prem un enllaç `tel:+34644678344`.
+- **Paràmetres enviats**:
+  - `event_category`: `'contact_intent'`
+  - `contact_channel`: `'phone'`
+  - `phone_number`: `'+34644678344'`
+  - `cta_text`: text del botó
+  - `cta_location`: context estructural
+  - `service`: servei associat
+  - `page_path`: ruta actual
+  - `language`: `'ca' | 'es' | 'en'`
 
-window.PW_ANALYTICS.trackEvent('generate_lead', {
-  form_type: 'contact_form',
-  cta_location: 'footer'
-});
-```
+### 4. Formulari de Contacte (`form_start` i `contact_whatsapp_initiated`)
+- **`form_start`**: Es dispara la primera vegada que l'usuari interactua amb el formulari de contacte (`event_category: 'form_interaction'`).
+- **`contact_whatsapp_initiated`**: Es dispara quan l'usuari completa la validació del formulari i prem "Continuar per WhatsApp".
+  - **Diferenciació de conversió real vs intenció (P2-C)**: No s'utilitza `generate_lead` per evitar que Google Ads comptabilitzi una conversió tancada quan l'usuari només obre l'aplicació externa de WhatsApp. S'envien els paràmetres `{ event_category: 'contact_intent', status: 'initiated_unconfirmed', method: 'whatsapp', contact_channel: 'whatsapp', cta_location: 'contact_form' }` per distingir amb rigor tècnic la intenció d'enviament del contacte confirmat.
 
-**Comportament segur**:
-- Si l'usuari **no ha donat consentiment**, `trackEvent()` s'omet silenciosament sense provocar cap error ni bloqueig.
-- Si estem a **localhost**, simula l'esdeveniment a la consola si el mode debug està actiu, sense enviar peticions de xarxa a Google.
+### Arquitectura Anti-duplicacions (GA4 vs GTM)
+A P2-C s'ha implementat una protecció activa contra duplicacions:
+1. **Mode Directe GA4 (gtag.js natiu, configuració actual)**: Els esdeveniments es transmeten exclusivament via `window.gtag('event', eventName, params)`, que ja s'encarrega d'encuar els arguments a `dataLayer` per a GA4. No es realitza un `dataLayer.push({ event: ... })` redundant per evitar dobles conversions en cas que s'afegeixin píxels addicionals.
+2. **Mode Google Tag Manager (GTM)**: Si es detecta la presència de `window.google_tag_manager`, `PW_ANALYTICS` commuta automàticament a enviar l'objecte `{ event: eventName, ...params }` a `dataLayer` i suspèn la crida directa a `gtag('event')`, garantint que cap esdeveniment es comptabilitzi per duplicat a GA4.
+
+**Protecció de privacitat i localhost**:
+- Si l'usuari **no ha atorgat consentiment analític**, els esdeveniments s'ometen completament sense crides de xarxa.
+- A `localhost` o entorns locals, els esdeveniments es mostren a la consola en mode debug sense transmetre dades a Google.
 
 ---
 

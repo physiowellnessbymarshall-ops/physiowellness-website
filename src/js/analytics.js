@@ -43,6 +43,7 @@
     scriptLoading: false,
     consentGranted: false,
     pageViewSent: false,
+    autoTrackingInitialized: false,
     debug: false
   };
 
@@ -307,6 +308,147 @@
   }
 
   // ============================================================================
+  // AUTO-TRACKING DE CONVERSIONS I ENLLAÇOS EXTERNS (P2-B)
+  // ============================================================================
+
+  /**
+   * Determina la ubicació contextual d'un element clicat (hero, panell, footer, etc.)
+   */
+  function detectCtaLocation(el) {
+    if (!el || typeof el.closest !== 'function') return 'in_page_content';
+    if (el.closest('#booking-panel') || el.closest('.booking-panel')) return 'booking_panel';
+    if (el.closest('.book-bar')) return 'sticky_mobile_bar';
+    if (el.closest('#site-header') || el.closest('.site-header') || el.closest('.header')) return 'header';
+    if (el.closest('.service-hero') || el.closest('.hero')) return 'hero';
+    if (el.closest('.site-footer') || el.closest('.footer') || el.closest('.footer-cta') || el.closest('.cta-final')) return 'footer';
+    if (el.closest('.contact-hero')) return 'contact_hero';
+    if (el.closest('.contact-guide')) return 'contact_guide';
+    if (el.closest('.contact-info')) return 'contact_info';
+    if (el.closest('.contact-form-card') || el.closest('#contact-form')) return 'contact_form';
+    if (el.closest('.stretching-rates') || el.closest('.strength-rate-card') || el.closest('.domicilio-plan') || el.closest('.pricing-table')) return 'pricing_section';
+    if (el.closest('.service-process') || el.closest('.visit-breakdown')) return 'service_process';
+    if (el.closest('.team-profile') || el.closest('.team-card') || el.closest('.equipo-explorador')) return 'team_section';
+    if (el.closest('.faq-section') || el.closest('.faq')) return 'faq';
+    return 'in_page_content';
+  }
+
+  /**
+   * Determina el servei associat a la pàgina o enllaç
+   */
+  function detectServiceContext(url, el) {
+    // 1. Targeta o secció pare amb id o data-service
+    if (el && typeof el.closest === 'function') {
+      var serviceEl = el.closest('[data-service], .service-panel, .service-card, .service-section, article[id]');
+      if (serviceEl) {
+        var sId = (serviceEl.getAttribute('data-service') || serviceEl.id || '').toLowerCase();
+        if (sId.indexOf('domicil') !== -1 || sId.indexOf('home') !== -1) return 'fisioterapia_domicili';
+        if (sId.indexOf('physio') !== -1 || sId.indexOf('fisio') !== -1) return 'fisioterapia';
+        if (sId.indexOf('pilates') !== -1) return 'pilates';
+        if (sId.indexOf('strength') !== -1 || sId.indexOf('forca') !== -1 || sId.indexOf('fuerza') !== -1) return 'forca';
+        if (sId.indexOf('wellness') !== -1 || sId.indexOf('benestar') !== -1 || sId.indexOf('bienestar') !== -1) return 'benestar';
+        if (sId.indexOf('stretching') !== -1) return 'stretching';
+        if (sId.indexOf('snow') !== -1) return 'snow_performance';
+      }
+    }
+
+    // 2. Text del missatge a l'enllaç de WhatsApp
+    if (url && typeof url === 'string') {
+      var decodedUrl = '';
+      try {
+        decodedUrl = decodeURIComponent(url).toLowerCase();
+      } catch (e) {
+        decodedUrl = url.toLowerCase();
+      }
+      if (decodedUrl.indexOf('domicili') !== -1 || decodedUrl.indexOf('domicilio') !== -1 || decodedUrl.indexOf('home physio') !== -1) return 'fisioterapia_domicili';
+      if (decodedUrl.indexOf('fisioterapia') !== -1 || decodedUrl.indexOf('physiotherapy') !== -1) return 'fisioterapia';
+      if (decodedUrl.indexOf('pilates') !== -1) return 'pilates';
+      if (decodedUrl.indexOf('força') !== -1 || decodedUrl.indexOf('forca') !== -1 || decodedUrl.indexOf('fuerza') !== -1 || decodedUrl.indexOf('strength') !== -1) return 'forca';
+      if (decodedUrl.indexOf('benestar') !== -1 || decodedUrl.indexOf('bienestar') !== -1 || decodedUrl.indexOf('wellness') !== -1) return 'benestar';
+      if (decodedUrl.indexOf('stretching') !== -1) return 'stretching';
+      if (decodedUrl.indexOf('snow') !== -1) return 'snow_performance';
+    }
+
+    // 3. Ruta de la pàgina (URL actual)
+    var path = (typeof window !== 'undefined' ? window.location.pathname.toLowerCase() : '');
+    if (path.indexOf('fisioterapia-a-domicili') !== -1 || path.indexOf('fisioterapia-a-domicilio') !== -1 || path.indexOf('home-physiotherapy') !== -1) return 'fisioterapia_domicili';
+    if (path.indexOf('fisioterapia') !== -1 || path.indexOf('physiotherapy') !== -1) return 'fisioterapia';
+    if (path.indexOf('pilates') !== -1) return 'pilates';
+    if (path.indexOf('forca') !== -1 || path.indexOf('fuerza') !== -1 || path.indexOf('strength') !== -1) return 'forca';
+    if (path.indexOf('benestar') !== -1 || path.indexOf('bienestar') !== -1 || path.indexOf('wellness') !== -1) return 'benestar';
+    if (path.indexOf('stretching') !== -1) return 'stretching';
+    if (path.indexOf('snow-performance') !== -1) return 'snow_performance';
+    if (path.indexOf('primera-visita') !== -1 || path.indexOf('first-visit') !== -1) return 'primera_visita';
+    if (path.indexOf('tarif') !== -1 || path.indexOf('rates') !== -1) return 'tarifes';
+    if (path.indexOf('equip') !== -1 || path.indexOf('equipo') !== -1 || path.indexOf('team') !== -1) return 'equip';
+    if (path.indexOf('contact') !== -1) return 'contacte';
+    return 'general';
+  }
+
+  /**
+   * Configura el seguiment automàtic delegat de clics a reserves (DocFav), WhatsApp i telèfon
+   */
+  function setupAutoTracking() {
+    if (typeof document === 'undefined' || typeof document.addEventListener !== 'function') return;
+    if (state.autoTrackingInitialized) return;
+    state.autoTrackingInitialized = true;
+
+    document.addEventListener('click', function (e) {
+      var link = e.target && typeof e.target.closest === 'function' ? e.target.closest('a') : null;
+      if (!link) return;
+
+      var href = (link.getAttribute('href') || '').trim();
+      if (!href) return;
+
+      var linkText = (link.textContent || '').trim().replace(/\s+/g, ' ').slice(0, 80);
+      var locationContext = detectCtaLocation(link);
+      var serviceContext = detectServiceContext(href, link);
+
+      // 1. Clics a DocFav (Reserva externa / Intenció de reserva)
+      // IMPORTANT: No equival a una reserva confirmada; es mesura com a intenció de reserva externa (booking_intent)
+      if (href.indexOf('docfav.com') !== -1) {
+        trackEvent('click_docfav', {
+          event_category: 'booking_intent',
+          destination: 'docfav',
+          booking_channel: 'docfav_portal',
+          cta_text: linkText,
+          cta_location: locationContext,
+          service: serviceContext,
+          page_path: (typeof window !== 'undefined' ? window.location.pathname : '')
+        });
+        return;
+      }
+
+      // 2. Clics a WhatsApp
+      if (href.indexOf('wa.me') !== -1 || href.indexOf('whatsapp.com') !== -1) {
+        trackEvent('click_whatsapp', {
+          event_category: 'contact_intent',
+          contact_channel: 'whatsapp',
+          destination_number: '+34644678344',
+          cta_text: linkText,
+          cta_location: locationContext,
+          service: serviceContext,
+          page_path: (typeof window !== 'undefined' ? window.location.pathname : '')
+        });
+        return;
+      }
+
+      // 3. Clics a Telèfon
+      if (href.indexOf('tel:') === 0) {
+        trackEvent('click_phone', {
+          event_category: 'contact_intent',
+          contact_channel: 'phone',
+          phone_number: '+34644678344',
+          cta_text: linkText,
+          cta_location: locationContext,
+          service: serviceContext,
+          page_path: (typeof window !== 'undefined' ? window.location.pathname : '')
+        });
+        return;
+      }
+    }, true);
+  }
+
+  // ============================================================================
   // API PÚBLICA
   // ============================================================================
 
@@ -330,6 +472,11 @@
     var stored = getStoredConsent();
     if (stored && stored.analytics === true) {
       state.consentGranted = true;
+      setupGtagShim();
+      // Actualitzem Consent Mode a 'granted' per a usuaris amb decisió prèvia
+      window.gtag('consent', 'update', {
+        'analytics_storage': 'granted'
+      });
       // Només si tenim un ID vàlid i no estem en localhost carreguem GA4
       if (state.measurementId && !isLocalhost()) {
         loadGoogleTag(function () {
@@ -342,6 +489,9 @@
     } else {
       state.consentGranted = false;
     }
+
+    // 3. Configurar seguiment automàtic delegat per a DocFav, WhatsApp i Telèfon
+    setupAutoTracking();
 
     state.initialized = true;
 
@@ -437,7 +587,25 @@
     }
 
     setupGtagShim();
-    window.gtag('event', eventName, params);
+    // Prevenim la duplicació d'esdeveniments si en el futur s'instal·la Google Tag Manager (GTM).
+    // Si GTM és present (window.google_tag_manager), canalitzem exclusivament a través de dataLayer
+    // per evitar que GTM i gtag() enviïn dues vegades el mateix esdeveniment a GA4.
+    // Si estem en mode directe gtag.js (l'arquitectura nativa actual), window.gtag('event', ...)
+    // ja registra l'esdeveniment i l'afegeix de forma estàndard al buffer dataLayer com a Arguments.
+    var hasGtm = typeof window !== 'undefined' && Boolean(window.google_tag_manager);
+    if (hasGtm) {
+      try {
+        var dlPayload = { event: eventName };
+        for (var k in params) {
+          if (Object.prototype.hasOwnProperty.call(params, k)) {
+            dlPayload[k] = params[k];
+          }
+        }
+        window.dataLayer.push(dlPayload);
+      } catch (e) {}
+    } else {
+      window.gtag('event', eventName, params);
+    }
 
     if (isDebug()) console.info('[PW_ANALYTICS] Event enviat:', eventName, params);
     return true;
@@ -565,6 +733,7 @@
   var publicApi = {
     init: initAnalytics,
     initAnalytics: initAnalytics,
+    setupAutoTracking: setupAutoTracking,
     trackPageView: trackPageView,
     trackEvent: trackEvent,
     grantAnalyticsConsent: grantAnalyticsConsent,

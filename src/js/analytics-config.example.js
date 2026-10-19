@@ -12,8 +12,8 @@
 
 window.PW_CONFIG = window.PW_CONFIG || {};
 
-// Exemple: 'G-1234567890' (substitueix amb el teu ID real obtingut a Google Analytics)
-window.PW_CONFIG.GA4_MEASUREMENT_ID = '';
+// Propietat oficial Physio Wellness by Marshall: 'G-C4CBYG7W5K'
+window.PW_CONFIG.GA4_MEASUREMENT_ID = 'G-C4CBYG7W5K';
 
-// Canviar a true quan el servei de correu hola@physiowellness.es i el DNSSEC estiguin operatius
+// Estat operatiu del formulari de contacte (false per defecte mentre la incidència DNS de correu està pendent de resolució)
 window.PW_CONFIG.EMAIL_OPERATIONAL = false;

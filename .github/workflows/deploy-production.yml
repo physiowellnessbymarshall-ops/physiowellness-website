@@ -44,11 +44,11 @@ jobs:
           GA4_MEASUREMENT_ID: ${{ vars.GA4_MEASUREMENT_ID }}
           EMAIL_OPERATIONAL: ${{ vars.EMAIL_OPERATIONAL }}
         run: |
-          GA4_VAL="${GA4_MEASUREMENT_ID:-}"
+          GA4_VAL="${GA4_MEASUREMENT_ID:-G-C4CBYG7W5K}"
           EMAIL_OP="${EMAIL_OPERATIONAL:-false}"
           echo "Generant configuració de client des de GitHub Actions variables..."
           if [ -n "$GA4_VAL" ]; then
-            echo "✓ Variable GA4_MEASUREMENT_ID trobada: configurant ID al client."
+            echo "✓ Variable GA4_MEASUREMENT_ID trobada (${GA4_VAL}): configurant ID al client."
           else
             echo "ℹ Variable GA4_MEASUREMENT_ID no definida o buida: GA4 romandrà desactivat de manera segura."
           fi
@@ -71,7 +71,7 @@ jobs:
           GA4_MEASUREMENT_ID: ${{ vars.GA4_MEASUREMENT_ID }}
           EMAIL_OPERATIONAL: ${{ vars.EMAIL_OPERATIONAL }}
         run: |
-          GA4_VAL="${GA4_MEASUREMENT_ID:-}"
+          GA4_VAL="${GA4_MEASUREMENT_ID:-G-C4CBYG7W5K}"
           EMAIL_OP="${EMAIL_OPERATIONAL:-false}"
           if [ -d "production" ]; then
             git add -f production/src/js/analytics-config.js 2>/dev/null || true

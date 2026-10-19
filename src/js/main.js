@@ -21,7 +21,7 @@ var prefersReducedMotion = window.matchMedia && window.matchMedia('(prefers-redu
     var fullSrc = scriptEl ? scriptEl.src : '';
     var basePath = fullSrc ? fullSrc.substring(0, fullSrc.lastIndexOf('/')) : '';
     var prefix = basePath ? basePath + '/' : '/src/js/';
-    var v = 'v=4';
+    var v = 'v=6';
 
     function loadScript(src, cb) {
       var s = document.createElement('script');

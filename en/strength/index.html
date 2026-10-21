@@ -29,7 +29,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,300;0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="../../src/css/styles.css?v=4">
+<link rel="stylesheet" href="../../src/css/styles.css?v=5">
 
 <!-- Schema.org JSON-LD Structured Data -->
 <script type="application/ld+json">
@@ -76,18 +76,6 @@
             "Friday"
           ],
           "opens": "09:00",
-          "closes": "13:00"
-        },
-        {
-          "@type": "OpeningHoursSpecification",
-          "dayOfWeek": [
-            "Monday",
-            "Tuesday",
-            "Wednesday",
-            "Thursday",
-            "Friday"
-          ],
-          "opens": "15:00",
           "closes": "19:00"
         }
       ],
@@ -109,7 +97,7 @@
           "name": "Physio Wellness - Strength & Pilates Studio",
           "address": {
             "@type": "PostalAddress",
-            "streetAddress": "Carrer de Sant Honorat, 26, local 2",
+            "streetAddress": "Avinguda Camí dels Capellans, 81",
             "addressLocality": "Sitges",
             "postalCode": "08870",
             "addressRegion": "Barcelona",
@@ -418,7 +406,7 @@
               sizes="(min-width: 1200px) 54vw, (min-width: 860px) 52vw, 100vw"
               alt="Guided strength training session in the strength studio at Physio Wellness Sitges."
               width="1440"
-              height="1799"
+              height="1080"
               loading="eager"
               fetchpriority="high"
             >
@@ -921,18 +909,18 @@
       <div class="strength-rates__head" data-reveal>
         <p class="eyebrow section-eyebrow">Rates · Transparency and flexibility</p>
         <h2 class="section-heading">In-clinic training options</h2>
-        <p class="section-lead">Same in-clinic rates as Physiotherapy, Pilates, and Stretching. No sign-up fees or minimum contracts.</p>
+        <p class="section-lead">Same in-clinic rates as Physiotherapy, Pilates and Stretching. No sign-up fees or long-term commitments.</p>
       </div>
 
       <div class="strength-rates__grid" data-reveal style="--i:1">
-        <!-- Card 1: First visit -->
+        <!-- Card 1: Initial consultation -->
         <article class="strength-rate-card strength-rate-card--entry">
           <div class="strength-rate-card__top">
             <span class="strength-rate-card__badge">STARTING POINT</span>
             <p class="strength-rate-card__duration">60 minutes</p>
           </div>
-          <h3 class="strength-rate-card__title">First visit and assessment</h3>
-          <p class="strength-rate-card__desc">Clinical anamnesis, functional mobility and movement pattern assessment, 1st guided session, and individualised goal setting.</p>
+          <h3 class="strength-rate-card__title">Initial consultation &amp; assessment</h3>
+          <p class="strength-rate-card__desc">Clinical history, functional mobility and movement pattern assessment, 1st guided session, and individualised goal setting.</p>
           <div class="strength-rate-card__price-wrap">
             <span class="strength-rate-card__price">100 €</span>
             <span class="strength-rate-card__unit">complete initial consultation</span>
@@ -943,93 +931,90 @@
             <li>Required before starting follow-up sessions</li>
           </ul>
           <a class="btn btn--outline strength-rate-card__btn" href="https://www.docfav.com/portal/physio-wellness-by-marshall" target="_blank" rel="noopener">
-            <span>Book first visit</span>
+            <span>Book initial consultation</span>
             <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M1 6h10M7 2l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
           </a>
         </article>
 
-        <!-- Card 2: Single session 50 min -->
-        <article class="strength-rate-card">
+        <!-- Card 2: 50 min session (Main format) -->
+        <article class="strength-rate-card strength-rate-card--featured">
           <div class="strength-rate-card__top">
-            <span class="strength-rate-card__badge">SINGLE SESSION</span>
+            <span class="strength-rate-card__badge strength-rate-card__badge--accent">RECOMMENDED · FULL SESSION</span>
             <p class="strength-rate-card__duration">50 minutes</p>
           </div>
-          <h3 class="strength-rate-card__title">Follow-up session</h3>
-          <p class="strength-rate-card__desc">Individual guided session with progressive loading, technique coaching, and continuous adaptation to your evolution.</p>
+          <h3 class="strength-rate-card__title">Individual Strength Session</h3>
+          <p class="strength-rate-card__desc">Guided training with progressive overload, meticulous technical coaching, and continuous stimulus adaptation.</p>
           <div class="strength-rate-card__price-wrap">
-            <span class="strength-rate-card__price">70 €</span>
-            <span class="strength-rate-card__unit">per session</span>
+            <span class="strength-rate-card__price">80 €</span>
+            <span class="strength-rate-card__unit">single session</span>
           </div>
-          <ul class="strength-rate-card__features">
-            <li>100% individual guidance</li>
-            <li>Load and technical progression tracking</li>
-            <li>Same rate across all clinical disciplines</li>
-          </ul>
-          <a class="btn btn--outline strength-rate-card__btn" href="https://www.docfav.com/portal/physio-wellness-by-marshall" target="_blank" rel="noopener">
+          <div class="strength-rate-card__bonos">
+            <p class="strength-rate-card__bonos-title">Savings packs:</p>
+            <ul class="strength-rate-bonos-list">
+              <li><span>4 sessions:</span> <strong>304 €</strong> <small>(76 €/session)</small></li>
+              <li><span>8 sessions:</span> <strong>576 €</strong> <small>(72 €/session)</small></li>
+            </ul>
+          </div>
+          <a class="btn btn--primary strength-rate-card__btn" href="https://www.docfav.com/portal/physio-wellness-by-marshall" target="_blank" rel="noopener">
             <span>Book 50-minute session</span>
             <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M1 6h10M7 2l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
           </a>
         </article>
 
-        <!-- Card 3: 5-session Pack -->
-        <article class="strength-rate-card strength-rate-card--pack">
+        <!-- Card 3: 30 min session -->
+        <article class="strength-rate-card">
           <div class="strength-rate-card__top">
-            <span class="strength-rate-card__badge">PACK 5</span>
-            <p class="strength-rate-card__duration">5 × 50 minutes</p>
+            <span class="strength-rate-card__badge">FOCUSED APPROACH</span>
+            <p class="strength-rate-card__duration">30 minutes</p>
           </div>
-          <h3 class="strength-rate-card__title">5-session pack</h3>
-          <p class="strength-rate-card__desc">Ideal for consolidating a progressive strength block, returning steadily after an injury, or establishing an active routine.</p>
+          <h3 class="strength-rate-card__title">Concentrated session</h3>
+          <p class="strength-rate-card__desc">Ideal for focused rehabilitation, technical reinforcement, or dynamic functional maintenance sessions.</p>
           <div class="strength-rate-card__price-wrap">
-            <span class="strength-rate-card__price">325 €</span>
-            <span class="strength-rate-card__unit">65 € / session</span>
+            <span class="strength-rate-card__price">50 €</span>
+            <span class="strength-rate-card__unit">single session</span>
           </div>
-          <ul class="strength-rate-card__features">
-            <li>50-minute sessions</li>
-            <li>Valid across Strength, Pilates &amp; Stretching</li>
-            <li>Flexible scheduling</li>
-          </ul>
+          <div class="strength-rate-card__bonos">
+            <p class="strength-rate-card__bonos-title">Savings packs:</p>
+            <ul class="strength-rate-bonos-list">
+              <li><span>4 sessions:</span> <strong>190 €</strong> <small>(47.50 €/session)</small></li>
+              <li><span>8 sessions:</span> <strong>360 €</strong> <small>(45 €/session)</small></li>
+            </ul>
+          </div>
           <a class="btn btn--outline strength-rate-card__btn" href="https://wa.me/34644678344" target="_blank" rel="noopener">
-            <span>Book pack via WhatsApp</span>
-            <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M1 6h10M7 2l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </a>
-        </article>
-
-        <!-- Card 4: 10-session Pack -->
-        <article class="strength-rate-card strength-rate-card--pack strength-rate-card--pack10">
-          <div class="strength-rate-card__top">
-            <span class="strength-rate-card__badge">PACK 10</span>
-            <p class="strength-rate-card__duration">10 × 50 minutes</p>
-          </div>
-          <h3 class="strength-rate-card__title">10-session pack</h3>
-          <p class="strength-rate-card__desc">Maximum continuity and clinical monitoring for mid-to-long term strength, motor control, and athletic conditioning.</p>
-          <div class="strength-rate-card__price-wrap">
-            <span class="strength-rate-card__price">600 €</span>
-            <span class="strength-rate-card__unit">60 € / session</span>
-          </div>
-          <ul class="strength-rate-card__features">
-            <li>50-minute sessions</li>
-            <li>Best rate per session (60 €)</li>
-            <li>Valid across Strength, Pilates &amp; Stretching</li>
-          </ul>
-          <a class="btn btn--outline strength-rate-card__btn" href="https://wa.me/34644678344" target="_blank" rel="noopener">
-            <span>Book pack via WhatsApp</span>
-            <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M1 6h10M7 2l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <span>Enquire on WhatsApp</span>
+            <svg width="11" height="11" viewBox="0 0 11 11" fill="none" aria-hidden="true"><path d="M1 10L10 1M10 1H3M10 1V8" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
           </a>
         </article>
       </div>
 
-      <div class="strength-rates__footer" data-reveal style="--i:2">
-        <p class="strength-rates__note">Looking for 30-minute sessions or home visits? Check all our rates and conditions.</p>
-        <a class="strength-rates__link" href="../../en/rates/">
-          <span>View all rates</span>
-          <span aria-hidden="true">→</span>
-        </a>
+      <!-- Conditions and transparency strip -->
+      <div class="strength-rates__strip" data-reveal style="--i:2">
+        <div class="strength-rates__strip-items">
+          <div class="strength-rates__strip-item">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><circle cx="8" cy="8" r="7" stroke="var(--pw-primary)" stroke-width="1.5"/><path d="M5 8l2 2 4-4" stroke="var(--pw-primary)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <span><strong>Packs combinable</strong> with Physiotherapy, Pilates and Stretching</span>
+          </div>
+          <div class="strength-rates__strip-item">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><circle cx="8" cy="8" r="7" stroke="var(--pw-primary)" stroke-width="1.5"/><path d="M5 8l2 2 4-4" stroke="var(--pw-primary)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <span><strong>No fixed fees</strong> or long-term commitments</span>
+          </div>
+          <div class="strength-rates__strip-item">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><circle cx="8" cy="8" r="7" stroke="var(--pw-primary)" stroke-width="1.5"/><path d="M5 8l2 2 4-4" stroke="var(--pw-primary)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <span><strong>2-month validity</strong> on all packs</span>
+          </div>
+        </div>
+        <div class="strength-rates__strip-action">
+          <a class="strength-rates__more-link" href="../../en/rates/#en-la-clinica">
+            <span>View all rates and full conditions</span>
+            <span aria-hidden="true">→</span>
+          </a>
+        </div>
       </div>
     </div>
   </section>
 
-  <!-- ============ 10. Strength & Biofeedback Equipment ============ -->
   <section class="equipment-showcase" id="tecnologia" aria-label="Strength and biofeedback equipment">
+    <span id="technology" class="anchor-target" aria-hidden="true"></span>
     <div class="container">
       <div class="equipment-showcase__head" data-reveal>
         <p class="eyebrow section-eyebrow">Strength equipment &amp; biofeedback</p>
@@ -1378,6 +1363,6 @@
   </div>
 </footer>
 
-<script src="../../src/js/main.js?v=4"></script>
+<script src="../../src/js/main.js?v=5"></script>
 </body>
 </html>

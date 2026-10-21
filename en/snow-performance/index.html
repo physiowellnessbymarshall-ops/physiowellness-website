@@ -29,7 +29,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Jost:wght@400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="../../src/css/styles.css?v=4">
+<link rel="stylesheet" href="../../src/css/styles.css?v=5">
 <noscript><style>
 [data-reveal]{opacity:1!important;transform:none!important;}
 </style></noscript>
@@ -79,18 +79,6 @@
             "Friday"
           ],
           "opens": "09:00",
-          "closes": "13:00"
-        },
-        {
-          "@type": "OpeningHoursSpecification",
-          "dayOfWeek": [
-            "Monday",
-            "Tuesday",
-            "Wednesday",
-            "Thursday",
-            "Friday"
-          ],
-          "opens": "15:00",
           "closes": "19:00"
         }
       ],
@@ -112,7 +100,7 @@
           "name": "Physio Wellness - Strength & Pilates Studio",
           "address": {
             "@type": "PostalAddress",
-            "streetAddress": "Carrer de Sant Honorat, 26, local 2",
+            "streetAddress": "Avinguda Camí dels Capellans, 81",
             "addressLocality": "Sitges",
             "postalCode": "08870",
             "addressRegion": "Barcelona",
@@ -474,6 +462,7 @@
             <span>ENDURANCE</span>
           </div>
         </div>
+      </div>
     </div>
   </section>
 
@@ -489,8 +478,8 @@
         </div>
       </div>
 
-      <!-- Representación visual: PRIMERA BAJADA → MÁS BAJADAS → FATIGA → MENOS CONTROL -->
-      <div class="fatigue-progression" aria-label="Evolución del esfuerzo durante una jornada de nieve" data-reveal style="--i:1">
+      <!-- Visual representation: FIRST RUN → MORE RUNS → FATIGUE → COMPROMISED CONTROL -->
+      <div class="fatigue-progression" aria-label="Physical effort progression during a mountain ski day" data-reveal style="--i:1">
         <article class="fatigue-step fatigue-step--1">
           <span class="fatigue-step__num">01 · Morning</span>
           <h3 class="fatigue-step__title">First run</h3>
@@ -532,8 +521,8 @@
       </div>
 
       <div class="capacities-matrix" data-reveal style="--i:1">
-        <!-- Navegación interactiva -->
-        <div class="capacities-nav" role="tablist" aria-label="Capacidades de Snow Performance">
+        <!-- Interactive navigation -->
+        <div class="capacities-nav" role="tablist" aria-label="Snow Performance physical capacities">
           <button class="capacity-btn is-active" type="button" role="tab" id="tab-strength" aria-selected="true" aria-controls="panel-strength" data-capacity-tab="panel-strength">
             <span>Strength</span>
             <span class="capacity-btn__tag">01 / 05</span>
@@ -655,7 +644,7 @@
   </section>
 
   <!-- ============ SECCIÓN 05 — FOUR PHASES TO PERFORMANCE ============ -->
-  <section class="snow-timeline-sec" id="programmea-semanas">
+  <section class="snow-timeline-sec" id="programa-semanas">
     <div class="container">
       <div class="snow-timeline-sec__head" data-reveal>
         <div>
@@ -692,66 +681,82 @@
     </div>
   </section>
 
-  <!-- ============ SECCIÓN 06 — SNOW READINESS SCORE ============ -->
+  <!-- ============ SECTION 06 — SNOW READINESS SCORE ============ -->
   <section class="snow-score-sec" id="snow-readiness-score">
     <div class="container snow-score-sec__grid">
       <div class="snow-score-sec__content" data-reveal>
         <p class="snow-score-sec__sub">Snow Readiness Score</p>
-        <h2 class="snow-score-sec__headline">Are you better prepared than when you started?</h2>
+        <h2 class="snow-score-sec__headline">How do we assess your readiness for the mountain?</h2>
         <div class="snow-score-sec__text">
-          <p>We assess your starting point at the beginning of the programme and re-evaluate at the end to visualize your progress.</p>
-          <p>Through measurable parameters of relative strength, dynamic stability, and fatigue resistance, we derive your technical mountain readiness index.</p>
+          <p>The Snow Readiness Score is our functional assessment framework tailored specifically for skiing and snowboarding. We evaluate neuromuscular response, joint stability, and endurance under sustained loading.</p>
+          <p>Through clinical and biomechanical testing, we analyse your baseline, tailor progressive training loads, and track your individual progress before you hit the slopes.</p>
         </div>
 
         <p class="snow-score-sec__disclaimer">
-          The Snow Readiness Score measures your progression within the programme. It does not predict injury risk.
+          This assessment guides training progression and identifies biomechanical risk factors; it does not constitute a medical diagnosis nor guarantee immunity against accidental injuries.
         </p>
       </div>
 
-      <!-- Visual comparativo: BEFORE -> AFTER -->
+      <!-- Specific capacities evaluation framework -->
       <div class="score-visual-card" data-reveal style="--i:1">
-        <div class="score-metrics" aria-label="Comparativa de evolución del Snow Readiness Score">
+        <div class="score-metrics" aria-label="Snow Readiness Score functional capacities evaluation">
           <div class="score-metric">
             <div class="score-metric__head">
               <span>Eccentric strength & braking</span>
-              <span>+38%</span>
+              <span class="score-metric__tag">Load Deceleration</span>
             </div>
-            <div class="score-metric__bars">
-              <div class="score-bar score-bar--before" style="width: 52%;" title="Baseline: 52%"></div>
-              <div class="score-bar score-bar--after" style="width: 90%;" title="Final: 90%"></div>
-            </div>
-          </div>
-
-          <div class="score-metric">
-            <div class="score-metric__head">
-              <span>Single-leg stability & ankle control</span>
-              <span>+45%</span>
-            </div>
-            <div class="score-metric__bars">
-              <div class="score-bar score-bar--before" style="width: 45%;" title="Baseline: 45%"></div>
-              <div class="score-bar score-bar--after" style="width: 90%;" title="Final: 90%"></div>
+            <p class="score-metric__desc">Assessment of deceleration capacity in quadriceps and glutes during high-inertia turns. Essential for protecting the anterior cruciate ligament (ACL) and stabilising the knee under impact forces.</p>
+            <div class="score-metric__flow">
+              <span class="score-metric__flow-step"><span class="score-metric__flow-dot"></span>Baseline test</span>
+              <span class="score-metric__flow-arrow">→</span>
+              <span class="score-metric__flow-step"><span class="score-metric__flow-dot"></span>Progressive overload</span>
+              <span class="score-metric__flow-arrow">→</span>
+              <span class="score-metric__flow-step"><span class="score-metric__flow-dot"></span>Turn transfer</span>
             </div>
           </div>
 
           <div class="score-metric">
             <div class="score-metric__head">
-              <span>Continuous fatigue tolerance</span>
-              <span>+32%</span>
+              <span>Single-leg stability & ankle complex</span>
+              <span class="score-metric__tag">Joint Alignment</span>
             </div>
-            <div class="score-metric__bars">
-              <div class="score-bar score-bar--before" style="width: 60%;" title="Baseline: 60%"></div>
-              <div class="score-bar score-bar--after" style="width: 92%;" title="Final: 92%"></div>
+            <p class="score-metric__desc">Reactive control of the ankle-knee-hip axis across uneven snow and abrupt gradient changes. We train reflexive stability to minimise risky joint compensations.</p>
+            <div class="score-metric__flow">
+              <span class="score-metric__flow-step"><span class="score-metric__flow-dot"></span>Static balance</span>
+              <span class="score-metric__flow-arrow">→</span>
+              <span class="score-metric__flow-step"><span class="score-metric__flow-dot"></span>Dynamic perturbation</span>
+              <span class="score-metric__flow-arrow">→</span>
+              <span class="score-metric__flow-step"><span class="score-metric__flow-dot"></span>Edge control</span>
             </div>
           </div>
 
           <div class="score-metric">
             <div class="score-metric__head">
-              <span>Core rotational control</span>
-              <span>+40%</span>
+              <span>Lumbopelvic rotational control (Core)</span>
+              <span class="score-metric__tag">Motor Dissociation</span>
             </div>
-            <div class="score-metric__bars">
-              <div class="score-bar score-bar--before" style="width: 48%;" title="Baseline: 48%"></div>
-              <div class="score-bar score-bar--after" style="width: 88%;" title="Final: 88%"></div>
+            <p class="score-metric__desc">Measurement of pelvis-torso dissociation to hold the fall line without transferring excessive torsion to the lumbar spine. Optimises edge control and power transmission.</p>
+            <div class="score-metric__flow">
+              <span class="score-metric__flow-step"><span class="score-metric__flow-dot"></span>Postural control</span>
+              <span class="score-metric__flow-arrow">→</span>
+              <span class="score-metric__flow-step"><span class="score-metric__flow-dot"></span>Anti-rotational strength</span>
+              <span class="score-metric__flow-arrow">→</span>
+              <span class="score-metric__flow-step"><span class="score-metric__flow-dot"></span>Carving power</span>
+            </div>
+          </div>
+
+          <div class="score-metric">
+            <div class="score-metric__head">
+              <span>Sustained neuromuscular endurance</span>
+              <span class="score-metric__tag">Fatigue Resistance</span>
+            </div>
+            <p class="score-metric__desc">Isometric and dynamic testing to maintain technical precision and reaction times as fatigue accumulates in the afternoon or during long descents.</p>
+            <div class="score-metric__flow">
+              <span class="score-metric__flow-step"><span class="score-metric__flow-dot"></span>Aerobic base</span>
+              <span class="score-metric__flow-arrow">→</span>
+              <span class="score-metric__flow-step"><span class="score-metric__flow-dot"></span>Lactate tolerance sets</span>
+              <span class="score-metric__flow-arrow">→</span>
+              <span class="score-metric__flow-step"><span class="score-metric__flow-dot"></span>Consistent runs</span>
             </div>
           </div>
         </div>
@@ -759,11 +764,11 @@
         <div class="score-legend">
           <span class="score-legend__item">
             <span class="score-legend__dot score-legend__dot--before"></span>
-            <span>Baseline (Start)</span>
+            <span>Initial functional assessment</span>
           </span>
           <span class="score-legend__item">
             <span class="score-legend__dot score-legend__dot--after"></span>
-            <span>Final result (Evaluation)</span>
+            <span>Re-evaluation & progress tracking</span>
           </span>
         </div>
       </div>
@@ -1045,58 +1050,54 @@
                   <span class="snow-journey-card__num">03</span>
                   <span class="snow-journey-card__phase">WE KNOW WHEN YOU'RE READY</span>
                 </div>
-                <h4 class="snow-journey-card__title" id="journey-step-3">Snow Readiness Score™</h4>
+                <h4 class="snow-journey-card__title" id="journey-step-3">Snow Readiness Score</h4>
                 <p class="snow-journey-card__lead">
-                  The programme's signature metric. We objectively evaluate your alpine readiness index so you know with absolute certainty that your body is conditioned for mountain demands.
+                  Our comprehensive evaluation methodology. We objectively track your functional readiness progression through validated tests so you step onto the slopes with confidence.
                 </p>
               </div>
 
-              <!-- Readiness Gauge & Telemetry -->
+              <!-- Readiness Assessment & Key Telemetry -->
               <div class="snow-readiness-meter" aria-label="Snow Readiness Score indicator">
                 <div class="snow-readiness-meter__top">
-                  <div class="snow-readiness-meter__score-block">
-                    <span class="snow-readiness-meter__score-num">94</span>
-                    <span class="snow-readiness-meter__score-max">/ 100</span>
-                  </div>
                   <div class="snow-readiness-meter__status">
                     <div class="snow-readiness-meter__status-txt">
                       <span class="snow-readiness-meter__status-dot" aria-hidden="true"></span>
-                      SNOW READY · OPTIMAL CONDITION
+                      CUSTOM CLINICAL EVALUATION
                     </div>
-                    <span class="snow-readiness-meter__status-sub">Fully prepared for high-demand on and off-piste ski days</span>
+                    <h5 class="snow-readiness-meter__heading">ALPINE READINESS CRITERIA</h5>
+                    <span class="snow-readiness-meter__status-sub">We determine your progression using specific biomechanical parameters, without generic scores or arbitrary estimates.</span>
                   </div>
                 </div>
 
-                <!-- Segmented Progress Track -->
+                <!-- Segmented Progress Track by Phase -->
                 <div class="snow-readiness-meter__track" aria-hidden="true">
                   <div class="snow-readiness-meter__zone snow-readiness-meter__zone--base">
-                    <span>BASE (0–59)</span>
+                    <span>1. INITIAL ASSESSMENT</span>
                   </div>
                   <div class="snow-readiness-meter__zone snow-readiness-meter__zone--building">
-                    <span>CONDITIONING (60–79)</span>
+                    <span>2. CONDITIONING</span>
                   </div>
                   <div class="snow-readiness-meter__zone snow-readiness-meter__zone--ready is-active">
-                    <span>SNOW READY (80–100)</span>
-                    <div class="snow-readiness-meter__pin" style="left: 70%;"></div>
+                    <span>3. ON-SNOW TRANSFER</span>
                   </div>
                 </div>
 
                 <!-- 3 Key Evaluative Telemetry Cells -->
                 <div class="snow-readiness-meter__telemetry">
                   <div class="snow-telemetry-item">
-                    <span class="snow-telemetry-item__val">96%</span>
-                    <span class="snow-telemetry-item__lbl">Bilateral L/R Symmetry</span>
-                    <span class="snow-telemetry-item__note">Optimal biomechanical balance</span>
+                    <span class="snow-telemetry-item__val">L/R SYMMETRY</span>
+                    <span class="snow-telemetry-item__lbl">Bilateral load balance</span>
+                    <span class="snow-telemetry-item__note">Detection and correction of weight-bearing asymmetries to protect both knees equally.</span>
                   </div>
                   <div class="snow-telemetry-item">
-                    <span class="snow-telemetry-item__val">+38%</span>
-                    <span class="snow-telemetry-item__lbl">Fatigue Tolerance</span>
-                    <span class="snow-telemetry-item__note">Stamina on extended descents</span>
+                    <span class="snow-telemetry-item__val">ECCENTRIC CONTROL</span>
+                    <span class="snow-telemetry-item__lbl">Deceleration & shock absorption</span>
+                    <span class="snow-telemetry-item__note">Muscular absorption of compressive forces to reduce joint stress during turns.</span>
                   </div>
                   <div class="snow-telemetry-item">
-                    <span class="snow-telemetry-item__val">LEVEL 4</span>
-                    <span class="snow-telemetry-item__lbl">Reactive Eccentric Strength</span>
-                    <span class="snow-telemetry-item__note">Knee joint & ligament protection</span>
+                    <span class="snow-telemetry-item__val">ENDURANCE</span>
+                    <span class="snow-telemetry-item__lbl">Consistency under fatigue</span>
+                    <span class="snow-telemetry-item__note">Sustained joint stability and reflexes through the final run of the day.</span>
                   </div>
                 </div>
               </div>
@@ -1180,29 +1181,29 @@
             <div class="snow-journey-card__visual snow-journey-card__visual--delta" aria-hidden="true">
               <div class="snow-delta-box">
                 <div class="snow-delta-box__head">
-                  <span class="snow-delta-box__badge">OBJECTIVE EVOLUTION</span>
-                  <span class="snow-delta-box__cycle">DAY 01 ➔ WEEK 08</span>
+                  <span class="snow-delta-box__badge">COMPARATIVE EVALUATION</span>
+                  <span class="snow-delta-box__cycle">BASELINE ➔ FINAL REASSESSMENT</span>
                 </div>
                 <div class="snow-delta-rows">
                   <div class="snow-delta-row">
-                    <span class="snow-delta-row__label">Eccentric strength</span>
-                    <span class="snow-delta-row__val">+42%</span>
+                    <span class="snow-delta-row__label">Eccentric strength & deceleration</span>
+                    <span class="snow-delta-row__val">Progressive absorption</span>
                   </div>
                   <div class="snow-delta-row">
                     <span class="snow-delta-row__label">Bilateral L/R symmetry</span>
-                    <span class="snow-delta-row__val">98% balanced</span>
+                    <span class="snow-delta-row__val">Balanced pattern</span>
                   </div>
                   <div class="snow-delta-row">
-                    <span class="snow-delta-row__label">Fatigue on long descents</span>
-                    <span class="snow-delta-row__val">-65% reduction</span>
+                    <span class="snow-delta-row__label">Stamina on extended descents</span>
+                    <span class="snow-delta-row__val">Sustained endurance</span>
                   </div>
                   <div class="snow-delta-row">
-                    <span class="snow-delta-row__label">Reactive stability</span>
-                    <span class="snow-delta-row__val">Optimal</span>
+                    <span class="snow-delta-row__label">Reactive joint stability</span>
+                    <span class="snow-delta-row__val">Dynamic control</span>
                   </div>
                 </div>
                 <div class="snow-delta-box__foot">
-                  <span>Data benchmarked against your initial baseline</span>
+                  <span>Progression benchmarked directly against your initial functional assessment</span>
                 </div>
               </div>
             </div>
@@ -1306,7 +1307,7 @@
 </footer>
 
 
-<script src="../../src/js/main.js?v=4"></script>
+<script src="../../src/js/main.js?v=5"></script>
 <script>
 /* Interacción de matriz de capacidades físicas */
 (function initCapacities(){

@@ -9,7 +9,7 @@
 <link rel="alternate" hreflang="es" href="https://physiowellness.es/es/">
 <link rel="alternate" hreflang="ca" href="https://physiowellness.es/ca/">
 <link rel="alternate" hreflang="en" href="https://physiowellness.es/en/">
-<link rel="alternate" hreflang="x-default" href="https://physiowellness.es/">
+<link rel="alternate" hreflang="x-default" href="https://physiowellness.es/es/">
 
 <!-- Open Graph / Facebook -->
 <meta property="og:type" content="website">
@@ -29,7 +29,8 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Jost:wght@400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="../src/css/styles.css?v=4">
+<link rel="preload" as="image" href="../src/assets/img/hero-clinic.webp" fetchpriority="high">
+<link rel="stylesheet" href="../src/css/styles.css?v=5">
 
 <!-- Schema.org JSON-LD Structured Data -->
 <script type="application/ld+json">
@@ -76,18 +77,6 @@
             "Friday"
           ],
           "opens": "09:00",
-          "closes": "13:00"
-        },
-        {
-          "@type": "OpeningHoursSpecification",
-          "dayOfWeek": [
-            "Monday",
-            "Tuesday",
-            "Wednesday",
-            "Thursday",
-            "Friday"
-          ],
-          "opens": "15:00",
           "closes": "19:00"
         }
       ],
@@ -109,7 +98,7 @@
           "name": "Physio Wellness - Strength & Pilates Studio",
           "address": {
             "@type": "PostalAddress",
-            "streetAddress": "Carrer de Sant Honorat, 26, local 2",
+            "streetAddress": "Avinguda Camí dels Capellans, 81",
             "addressLocality": "Sitges",
             "postalCode": "08870",
             "addressRegion": "Barcelona",
@@ -590,11 +579,11 @@
   <!-- ============ Programa de temporada: Snow Performance by Marshall (Seasonal Takeover) ============
        Gran momento cinematográfico de temporada (80-100vh). Ubicado tras Servicios como
        campaña estacional de máxima visibilidad antes de profundizar en el Método Marshall.
-       Desacoplado y controlable vía .seasonal-programme--hidden. -->
-  <section class="seasonal-programme seasonal-takeover" id="programmea-temporada" aria-label="Seasonal programme: Snow Performance by Marshall">
+       Desacoplado y controlable vía .seasonal-program--hidden. -->
+  <section class="seasonal-program seasonal-takeover" id="programa-temporada" aria-label="Seasonal programme: Snow Performance by Marshall">
     <!-- Marca de agua tipográfica gigante de fondo -->
-    <div class="seasonal-programme__watermark" aria-hidden="true">
-      <span class="seasonal-programme__watermark-text">SNOW PERFORMANCE</span>
+    <div class="seasonal-program__watermark" aria-hidden="true">
+      <span class="seasonal-program__watermark-text">SNOW PERFORMANCE</span>
     </div>
 
     <!-- Vídeo cinematográfico full-bleed (POV esquí/snowboard) con parallax sutil.
@@ -606,15 +595,15 @@
          sin ninguna pérdida de información. Fuentes de vídeo reales
          pendientes de incorporar por el usuario — ver aviso en el chat;
          hasta entonces el poster cubre el fondo sin regresión visual. -->
-    <div class="seasonal-programme__bg" data-snow-bg aria-hidden="true">
+    <div class="seasonal-program__bg" data-snow-bg aria-hidden="true">
       <video
-        class="seasonal-programme__bg-media"
+        class="seasonal-program__bg-media"
         data-snow-video
         muted
         loop
         playsinline
         preload="none"
-        poster="src/assets/img/stock/snow-takeover-1440.webp"
+        poster="../src/assets/img/stock/snow-takeover-720.webp"
       >
         <source data-src="../src/assets/video/snow-performance-desktop.webm" data-breakpoint="desktop" type="video/webm">
         <source data-src="../src/assets/video/snow-performance-desktop.mp4" data-breakpoint="desktop" type="video/mp4">
@@ -622,91 +611,91 @@
         <source data-src="../src/assets/video/snow-performance-mobile.mp4" data-breakpoint="mobile" type="video/mp4">
         <picture>
           <source srcset="../src/assets/img/stock/snow-takeover-720.webp 720w, ../src/assets/img/stock/snow-takeover-1440.webp 1440w" sizes="100vw" type="image/webp">
-          <img src="../src/assets/img/stock/snow-takeover-1440.webp" alt="" loading="lazy" width="1440" height="803" class="seasonal-programme__bg-img">
+          <img src="../src/assets/img/stock/snow-takeover-1440.webp" alt="" loading="lazy" width="1440" height="803" class="seasonal-program__bg-img">
         </picture>
       </video>
     </div>
 
     <!-- Veladuras de profundidad y viñeta ambiental alpina -->
-    <div class="seasonal-programme__overlay" aria-hidden="true"></div>
-    <div class="seasonal-programme__glow" aria-hidden="true"></div>
+    <div class="seasonal-program__overlay" aria-hidden="true"></div>
+    <div class="seasonal-program__glow" aria-hidden="true"></div>
 
     <!-- Transición superior desde Servicios -->
-    <div class="seasonal-programme__fade-top" aria-hidden="true"></div>
+    <div class="seasonal-program__fade-top" aria-hidden="true"></div>
 
-    <div class="container seasonal-programme__inner">
-      <div class="seasonal-programme__content">
+    <div class="container seasonal-program__inner">
+      <div class="seasonal-program__content">
         <!-- Eyebrow de temporada -->
-        <div class="seasonal-programme__eyebrow-row" data-reveal style="--i:3.3">
-          <span class="seasonal-programme__badge">Seasonal programme</span>
-          <span class="seasonal-programme__season">Ski + Snowboard · Winter 26/27</span>
+        <div class="seasonal-program__eyebrow-row" data-reveal style="--i:3.3">
+          <span class="seasonal-program__badge">Seasonal programme</span>
+          <span class="seasonal-program__season">Skiing + Snowboarding · Winter 26/27</span>
         </div>
 
         <!-- Frase de posicionamiento de Snow Performance -->
-        <p class="seasonal-programme__bridge-narrative" data-reveal style="--i:4.4">
-          Bringing our principles of strength, control, and performance to the snow.
+        <p class="seasonal-program__bridge-narrative" data-reveal style="--i:4.4">
+          We bring our approach to strength, control and performance to the slopes.
         </p>
 
         <!-- Titular colosal editorial: revelado línea a línea (mismo patrón de
              máscara que .hero__title .reveal-line, ver styles.css), en vez del
              fade genérico de [data-reveal] — entrada más coreografiada. -->
-        <h2 class="seasonal-programme__headline" data-reveal>
+        <h2 class="seasonal-program__headline" data-reveal>
           <span class="reveal-line" style="--i:5.6"><span>READY</span></span>
           <span class="reveal-line" style="--i:7.2"><span>FOR THE</span></span>
           <span class="reveal-line" style="--i:8.9"><span>MOUNTAIN?</span></span>
         </h2>
 
-        <!-- Identificador de marca / programmea -->
-        <div class="seasonal-programme__brand-row" data-reveal style="--i:10.6">
-          <span class="seasonal-programme__brand-title">Snow Performance</span>
-          <span class="seasonal-programme__brand-by">by Marshall</span>
+        <!-- Identificador de marca / programa -->
+        <div class="seasonal-program__brand-row" data-reveal style="--i:10.6">
+          <span class="seasonal-program__brand-title">Snow Performance</span>
+          <span class="seasonal-program__brand-by">by Marshall</span>
         </div>
 
         <!-- Conceptos esenciales, presentados como una trayectoria de descenso:
              línea SVG muy fina que conecta las cuatro fases, se dibuja una sola
              vez (stroke-dashoffset) al entrar en viewport y queda estática. -->
-        <div class="seasonal-programme__pillars" data-reveal style="--i:12.8" aria-label="Snow Performance performance pillars">
-          <svg class="seasonal-programme__trajectory" viewBox="0 0 400 32" preserveAspectRatio="none" aria-hidden="true" focusable="false">
+        <div class="seasonal-program__pillars" data-reveal style="--i:12.8" aria-label="Snow Performance pillars">
+          <svg class="seasonal-program__trajectory" viewBox="0 0 400 32" preserveAspectRatio="none" aria-hidden="true" focusable="false">
             <path d="M2,7 C110,2 190,29 398,19"></path>
           </svg>
-          <div class="seasonal-programme__pillar">
-            <span class="seasonal-programme__pillar-tag">01</span>
-            <span class="seasonal-programme__pillar-name">Preparation</span>
+          <div class="seasonal-program__pillar">
+            <span class="seasonal-program__pillar-tag">01</span>
+            <span class="seasonal-program__pillar-name">Preparation</span>
           </div>
-          <span class="seasonal-programme__pillar-sep" aria-hidden="true">/</span>
-          <div class="seasonal-programme__pillar">
-            <span class="seasonal-programme__pillar-tag">02</span>
-            <span class="seasonal-programme__pillar-name">Prevention</span>
+          <span class="seasonal-program__pillar-sep" aria-hidden="true">/</span>
+          <div class="seasonal-program__pillar">
+            <span class="seasonal-program__pillar-tag">02</span>
+            <span class="seasonal-program__pillar-name">Injury Prevention</span>
           </div>
-          <span class="seasonal-programme__pillar-sep" aria-hidden="true">/</span>
-          <div class="seasonal-programme__pillar">
-            <span class="seasonal-programme__pillar-tag">03</span>
-            <span class="seasonal-programme__pillar-name">Performance</span>
+          <span class="seasonal-program__pillar-sep" aria-hidden="true">/</span>
+          <div class="seasonal-program__pillar">
+            <span class="seasonal-program__pillar-tag">03</span>
+            <span class="seasonal-program__pillar-name">Performance</span>
           </div>
-          <span class="seasonal-programme__pillar-sep" aria-hidden="true">/</span>
-          <div class="seasonal-programme__pillar">
-            <span class="seasonal-programme__pillar-tag">04</span>
-            <span class="seasonal-programme__pillar-name">Recovery</span>
+          <span class="seasonal-program__pillar-sep" aria-hidden="true">/</span>
+          <div class="seasonal-program__pillar">
+            <span class="seasonal-program__pillar-tag">04</span>
+            <span class="seasonal-program__pillar-name">Recovery</span>
           </div>
         </div>
 
         <!-- CTA protagonista con presencia editorial -->
-        <div class="seasonal-programme__actions" data-reveal style="--i:15">
-          <a class="seasonal-programme__cta" href="../en/snow-performance/">
-            <span class="seasonal-programme__cta-text">Discover Snow Performance</span>
-            <span class="seasonal-programme__cta-icon" aria-hidden="true">
+        <div class="seasonal-program__actions" data-reveal style="--i:15">
+          <a class="seasonal-program__cta" href="../en/snow-performance/">
+            <span class="seasonal-program__cta-text">Discover Snow Performance</span>
+            <span class="seasonal-program__cta-icon" aria-hidden="true">
               <svg width="18" height="14" viewBox="0 0 18 14" fill="none">
                 <path d="M1 7h16M11 1l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
               </svg>
             </span>
           </a>
-          <span class="seasonal-programme__meta-note">4 or 8 weeks · Ski + Snowboard</span>
+          <span class="seasonal-program__meta-note">4 or 8 weeks · Skiing + Snowboarding</span>
         </div>
       </div>
     </div>
 
     <!-- Transición lumínica inferior hacia Método Marshall -->
-    <div class="seasonal-programme__fade-bottom" aria-hidden="true"></div>
+    <div class="seasonal-program__fade-bottom" aria-hidden="true"></div>
   </section>
 
   <!-- Transición editorial: puente conector hacia Método Marshall -->
@@ -907,7 +896,10 @@
       <div class="team__grid">
         <article class="team-card" data-reveal style="--i:0">
           <div class="team-card__media">
-            <img src="../src/assets/img/team/marcal-ramirez.jpg" alt="Portrait of Marçal Ramirez Roig, physiotherapist at Physio Wellness by Marshall." width="1363" height="2048">
+            <picture>
+              <source srcset="../src/assets/img/team/marcal-ramirez-720.webp 720w, ../src/assets/img/team/marcal-ramirez.webp 1363w" sizes="(max-width: 768px) 100vw, 400px" type="image/webp">
+              <img src="../src/assets/img/team/marcal-ramirez.jpg" alt="Portrait of Marçal Ramirez Roig, physiotherapist at Physio Wellness by Marshall." width="1363" height="2048" loading="lazy" decoding="async">
+            </picture>
           </div>
           <div class="team-card__body">
             <h3 class="team-card__name">Marçal Ramirez Roig</h3>
@@ -921,7 +913,10 @@
         </article>
         <article class="team-card" data-reveal style="--i:1">
           <div class="team-card__media">
-            <img src="../src/assets/img/team/abril-rodriguez.jpg" alt="Abril Rodríguez, reception, patient care, and coordination at Physio Wellness." width="1400" height="1400">
+            <picture>
+              <source srcset="../src/assets/img/team/abril-rodriguez-720.webp 720w, ../src/assets/img/team/abril-rodriguez.webp 1400w" sizes="(max-width: 768px) 100vw, 400px" type="image/webp">
+              <img src="../src/assets/img/team/abril-rodriguez.jpg" alt="Abril Rodríguez, reception, patient care, and coordination at Physio Wellness." width="1400" height="1400" loading="lazy" decoding="async">
+            </picture>
           </div>
           <div class="team-card__body">
             <h3 class="team-card__name">Abril Rodríguez</h3>
@@ -1120,7 +1115,9 @@
       <!-- Testimonio 1: Tamás Náray -->
       <article class="testimonials__item">
         <div class="testimonials__item-media">
-          <img src="../reseñas/naray_tamas.jpg"
+          <img class="testimonials__img testimonials__img--tamas"
+               src="../src/assets/img/reviews/naray-tamas-720.webp"
+               srcset="../src/assets/img/reviews/naray-tamas-720.webp 720w, ../src/assets/img/reviews/naray-tamas-1200.webp 1200w"
                sizes="(min-width: 860px) 46vw, 92vw"
                alt="Tamás Náray, patient of Physio Wellness sharing his experience with the treatment received"
                width="720" height="900" loading="lazy"
@@ -1142,11 +1139,13 @@
       <!-- Testimonio 2: Jorge Díaz -->
       <article class="testimonials__item">
         <div class="testimonials__item-media">
-          <img src="../src/assets/img/reviews/jorge-diaz-720.webp"
+          <img class="testimonials__img testimonials__img--jorge"
+               src="../src/assets/img/reviews/jorge-diaz-720.webp"
                srcset="../src/assets/img/reviews/jorge-diaz-720.webp 720w, ../src/assets/img/reviews/jorge-diaz-1200.webp 1200w"
                sizes="(min-width: 860px) 46vw, 92vw"
                alt="Jorge Díaz, patient of Physio Wellness sharing his experience with the treatment received"
-               width="720" height="900" loading="lazy">
+               width="720" height="900" loading="lazy"
+               style="object-fit: cover; object-position: center 10%;">
         </div>
         <div class="testimonials__item-text">
           <blockquote class="testimonials__quote-wrap">
@@ -1163,12 +1162,13 @@
       <!-- Testimonio 3 -->
       <article class="testimonials__item">
         <div class="testimonials__item-media">
-          <img src="../src/assets/img/reviews/david-johnson-720.webp"
+          <img class="testimonials__img testimonials__img--david"
+               src="../src/assets/img/reviews/david-johnson-720.webp"
                srcset="../src/assets/img/reviews/david-johnson-720.webp 720w, ../src/assets/img/reviews/david-johnson-1200.webp 1200w"
                sizes="(min-width: 860px) 46vw, 92vw"
                alt="David Johnson, patient of Physio Wellness sharing his experience with the treatment received"
                width="720" height="900" loading="lazy"
-               style="object-position: center 20%;">
+               style="object-fit: cover; object-position: center 24%;">
         </div>
         <div class="testimonials__item-text">
           <blockquote class="testimonials__quote-wrap">
@@ -1191,7 +1191,7 @@
       <div class="testimonial-modal__stage">
         <div class="testimonial-modal__header">
           <div class="testimonial-modal__author-group">
-            <img src="../reseñas/naray_tamas.jpg" alt="Tamás Náray" class="testimonial-modal__avatar" width="52" height="52" loading="lazy">
+            <img src="../src/assets/img/reviews/naray-tamas-720.webp" alt="Tamás Náray" class="testimonial-modal__avatar" width="52" height="52" loading="lazy">
             <div>
               <h3 class="testimonial-modal__name">Tamás Náray</h3>
               <p class="testimonial-modal__role">Patient testimonial</p>
@@ -1230,7 +1230,7 @@
           </div>
           <div class="contact__detail">
             <strong>Hours</strong>
-            <span>Monday to Friday, 09:00 to 13:00 and 15:00 to 19:00. Outside these hours, by appointment.</span>
+            <span>Monday to Friday, 09:00 to 19:00. Hours by arrangement.</span>
           </div>
           <div class="contact__detail">
             <strong>Phone</strong>
@@ -1310,6 +1310,6 @@
   </div>
 </footer>
 
-<script src="../src/js/main.js?v=4"></script>
+<script src="../src/js/main.js?v=5"></script>
 </body>
 </html>

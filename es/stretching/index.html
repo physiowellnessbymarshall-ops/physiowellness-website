@@ -29,7 +29,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Jost:wght@400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="../../src/css/styles.css?v=4">
+<link rel="stylesheet" href="../../src/css/styles.css?v=5">
 <!-- [data-reveal] (§7 de styles.css) parte de opacity:0 y depende de main.js
 para mostrarse. Si JavaScript está desactivado del todo, nunca se añade
 la clase .is-visible y el contenido quedaría invisible. Mismo override
@@ -86,18 +86,6 @@ página reutiliza el mismo mecanismo de revelado. -->
             "Friday"
           ],
           "opens": "09:00",
-          "closes": "13:00"
-        },
-        {
-          "@type": "OpeningHoursSpecification",
-          "dayOfWeek": [
-            "Monday",
-            "Tuesday",
-            "Wednesday",
-            "Thursday",
-            "Friday"
-          ],
-          "opens": "15:00",
           "closes": "19:00"
         }
       ],
@@ -119,7 +107,7 @@ página reutiliza el mismo mecanismo de revelado. -->
           "name": "Physio Wellness - Estudio de Fuerza y Pilates",
           "address": {
             "@type": "PostalAddress",
-            "streetAddress": "Carrer de Sant Honorat, 26, local 2",
+            "streetAddress": "Avinguda Camí dels Capellans, 81",
             "addressLocality": "Sitges",
             "postalCode": "08870",
             "addressRegion": "Barcelona",
@@ -257,10 +245,10 @@ página reutiliza el mismo mecanismo de revelado. -->
           <svg class="nav-item__chevron" width="9" height="6" viewBox="0 0 9 6" fill="none" aria-hidden="true"><path d="M1 1l3.5 3.5L8 1" stroke="currentColor" stroke-width="1.3" stroke-linecap="square"/></svg>
         </button>
         <div class="nav-dropdown" id="nav-servicios" hidden>
-          <a href="../../es/fisioterapia/">Fisioterapia</a>
-          <a href="../../es/fuerza/">Fuerza</a>
+          <a href="../../es/fisioterapia/">Physiotherapy</a>
+          <a href="../../es/fuerza/">Strength</a>
           <a href="../../es/pilates/">Pilates</a>
-          <a href="../../es/bienestar/">Bienestar</a>
+          <a href="../../es/bienestar/">Wellness</a>
           <a href="../../es/stretching/" aria-current="page">Stretching</a>
           <a class="nav-dropdown__all" href="../../es/servicios/">Ver todos los servicios</a>
         </div>
@@ -343,10 +331,10 @@ página reutiliza el mismo mecanismo de revelado. -->
         <svg class="m-acc__chevron" width="14" height="9" viewBox="0 0 14 9" fill="none" aria-hidden="true"><path d="M1 1l6 6 6-6" stroke="currentColor" stroke-width="1.4" stroke-linecap="square"/></svg>
       </button>
       <div class="m-acc__panel" id="m-servicios" hidden>
-        <a href="../../es/fisioterapia/">Fisioterapia</a>
-        <a href="../../es/fuerza/">Fuerza</a>
+        <a href="../../es/fisioterapia/">Physiotherapy</a>
+        <a href="../../es/fuerza/">Strength</a>
         <a href="../../es/pilates/">Pilates</a>
-        <a href="../../es/bienestar/">Bienestar</a>
+        <a href="../../es/bienestar/">Wellness</a>
         <a href="../../es/stretching/" aria-current="page">Stretching</a>
         <a class="m-acc__all" href="../../es/servicios/">Ver todos los servicios</a>
       </div>
@@ -511,12 +499,8 @@ página reutiliza el mismo mecanismo de revelado. -->
   </section>
 
   <!-- ============ Qué es el Stretching ============
-       Mismo bloque editorial a dos columnas que "Cuándo empezar por
-       Fisioterapia" (.service-context), reutilizando la misma fotografía
-       real que el hero (mismo archivo, distinto recorte por
-       object-position) en vez de sumar un segundo archivo de stock sin
-       necesidad real. Incluye la idea conceptual de enfoque pedida para
-       esta fase ("no forzar, sino recuperar espacio para moverse"). -->
+       Bloque editorial a dos columnas con fotografía exclusiva de movilidad asistida
+       (stretching-context), evitando duplicidad visual con el hero. -->
   <section class="service-context" id="que-es-el-stretching">
     <div class="container service-context__grid">
       <div class="service-context__text" data-reveal>
@@ -527,8 +511,8 @@ página reutiliza el mismo mecanismo de revelado. -->
           <p>No se trata de forzar el cuerpo, sino de recuperar espacio para moverse.</p>
         </div>
       </div>
-      <figure class="service-photo" data-reveal style="--i:1" aria-hidden="true">
-        <img src="../../src/assets/img/stock/stretching-1440.webp" srcset="../../src/assets/img/stock/stretching-720.webp 720w, ../../src/assets/img/stock/stretching-1440.webp 1440w" sizes="(min-width:860px) 42vw, 100vw" alt="" loading="lazy" width="1440" height="1799">
+      <figure class="service-photo" data-reveal style="--i:1">
+        <img src="../../src/assets/img/disciplines/stretching/stretching-context-1440.webp" srcset="../../src/assets/img/disciplines/stretching/stretching-context-720.webp 720w, ../../src/assets/img/disciplines/stretching/stretching-context-1440.webp 1440w" sizes="(min-width:860px) 42vw, 100vw" alt="Profesional guiando una sesión de movilidad articular y estiramiento asistido" loading="lazy" width="1440" height="1929">
       </figure>
     </div>
   </section>
@@ -847,13 +831,13 @@ página reutiliza el mismo mecanismo de revelado. -->
           <div class="stretching-work__card">
             <figure class="stretching-work__figure">
               <img
-                src="../../src/assets/img/stock/stretching-1440.webp"
-                srcset="../../src/assets/img/stock/stretching-720.webp 720w, ../../src/assets/img/stock/stretching-1440.webp 1440w"
+                src="../../src/assets/img/disciplines/stretching/stretching-work-1440.webp"
+                srcset="../../src/assets/img/disciplines/stretching/stretching-work-720.webp 720w, ../../src/assets/img/disciplines/stretching/stretching-work-1440.webp 1440w"
                 sizes="(min-width: 960px) 38vw, 100vw"
-                alt="Detalle de trabajo guiado de movilidad y amplitud en Physio Wellness"
+                alt="Profesional realizando una sesión guiada de estiramiento y descompresión en Physio Wellness"
                 loading="lazy"
                 width="1440"
-                height="1799"
+                height="1929"
               >
               <div class="stretching-work__badge">
                 <span class="stretching-work__badge-tag">Sesión guiada individual</span>
@@ -982,7 +966,7 @@ página reutiliza el mismo mecanismo de revelado. -->
             data-eco-target="fisio"
           >
             <span class="stretching-eco-tab__num">03</span>
-            <span class="stretching-eco-tab__title">Fisioterapia</span>
+            <span class="stretching-eco-tab__title">Physiotherapy</span>
           </button>
         </div>
 
@@ -1028,11 +1012,11 @@ página reutiliza el mismo mecanismo de revelado. -->
               <div class="stretching-eco-panel__content">
                 <div class="stretching-eco-panel__synergy">
                   <span class="stretching-eco-panel__tag">Sinergia activa</span>
-                  <h3 class="stretching-eco-panel__headline">Stretching + Fisioterapia</h3>
+                  <h3 class="stretching-eco-panel__headline">Stretching + Physiotherapy</h3>
                 </div>
                 <p class="stretching-eco-panel__desc">Puede dar continuidad al trabajo de movimiento dentro de determinados procesos.</p>
                 <p class="stretching-eco-panel__detail">Tras completar una fase clínica de tratamiento en fisioterapia, el Stretching asistido permite reintroducir movimiento progresivo y reducir el riesgo de recaídas al mantener el espacio articular ganado.</p>
-                <a class="stretching-eco-panel__link" href="../../es/fisioterapia/">Ver área de Fisioterapia <span aria-hidden="true">→</span></a>
+                <a class="stretching-eco-panel__link" href="../../es/fisioterapia/">Ver área de Physiotherapy <span aria-hidden="true">→</span></a>
               </div>
               <div class="stretching-eco-panel__badge" aria-hidden="true">
                 <span class="stretching-eco-badge__title">Propósito</span>
@@ -1117,7 +1101,7 @@ página reutiliza el mismo mecanismo de revelado. -->
             Stretching comparte la misma estructura de valoración inicial y sesiones que las demás áreas clínicas de Physio Wellness.
           </p>
           <p class="stretching-rates__note">
-            Misma tarifa de sesión individual en clínica que Fisioterapia, Bienestar, Fuerza y Pilates.
+            Misma tarifa de sesión individual en clínica que Physiotherapy, Bienestar, Fuerza y Pilates.
           </p>
         </div>
         <div class="stretching-rates__action">
@@ -1327,6 +1311,6 @@ página reutiliza el mismo mecanismo de revelado. -->
   </div>
 </footer>
 
-<script src="../../src/js/main.js?v=4"></script>
+<script src="../../src/js/main.js?v=5"></script>
 </body>
 </html>

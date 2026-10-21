@@ -29,7 +29,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Jost:wght@400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="../../src/css/styles.css?v=4">
+<link rel="stylesheet" href="../../src/css/styles.css?v=5">
 <!-- [data-reveal] (§7 de styles.css) parte de opacity:0 y depende de main.js
 para mostrarse; override preventivo para no dejar contenido invisible
 si JavaScript está desactivado. -->
@@ -83,18 +83,6 @@ si JavaScript está desactivado. -->
             "Friday"
           ],
           "opens": "09:00",
-          "closes": "13:00"
-        },
-        {
-          "@type": "OpeningHoursSpecification",
-          "dayOfWeek": [
-            "Monday",
-            "Tuesday",
-            "Wednesday",
-            "Thursday",
-            "Friday"
-          ],
-          "opens": "15:00",
           "closes": "19:00"
         }
       ],
@@ -116,7 +104,7 @@ si JavaScript está desactivado. -->
           "name": "Physio Wellness - Estudi de Força i Pilates",
           "address": {
             "@type": "PostalAddress",
-            "streetAddress": "Carrer de Sant Honorat, 26, local 2",
+            "streetAddress": "Avinguda Camí dels Capellans, 81",
             "addressLocality": "Sitges",
             "postalCode": "08870",
             "addressRegion": "Barcelona",
@@ -254,10 +242,10 @@ si JavaScript está desactivado. -->
           <svg class="nav-item__chevron" width="9" height="6" viewBox="0 0 9 6" fill="none" aria-hidden="true"><path d="M1 1l3.5 3.5L8 1" stroke="currentColor" stroke-width="1.3" stroke-linecap="square"/></svg>
         </button>
         <div class="nav-dropdown" id="nav-serveis" hidden>
-          <a href="../../ca/fisioterapia/">Fisioteràpia</a>
-          <a href="../../ca/forca/">Força</a>
+          <a href="../../ca/fisioterapia/">Physiotherapy</a>
+          <a href="../../ca/forca/">Strength</a>
           <a href="../../ca/pilates/">Pilates</a>
-          <a href="../../ca/benestar/">Benestar</a>
+          <a href="../../ca/benestar/">Wellness</a>
           <a href="../../ca/stretching/">Stretching</a>
           <a class="nav-dropdown__all" href="../../ca/serveis/">Veure tots els serveis</a>
         </div>
@@ -340,10 +328,10 @@ si JavaScript está desactivado. -->
         <svg class="m-acc__chevron" width="14" height="9" viewBox="0 0 14 9" fill="none" aria-hidden="true"><path d="M1 1l6 6 6-6" stroke="currentColor" stroke-width="1.4" stroke-linecap="square"/></svg>
       </button>
       <div class="m-acc__panel" id="m-serveis" hidden>
-        <a href="../../ca/fisioterapia/">Fisioteràpia</a>
-        <a href="../../ca/forca/">Força</a>
+        <a href="../../ca/fisioterapia/">Physiotherapy</a>
+        <a href="../../ca/forca/">Strength</a>
         <a href="../../ca/pilates/">Pilates</a>
-        <a href="../../ca/benestar/">Benestar</a>
+        <a href="../../ca/benestar/">Wellness</a>
         <a href="../../ca/stretching/">Stretching</a>
         <a class="m-acc__all" href="../../ca/serveis/">Veure tots els serveis</a>
       </div>
@@ -614,7 +602,7 @@ si JavaScript está desactivado. -->
             data-photo-alt="Recuperació i treball complementari a terra a Physio Wellness"
             data-badge-index="04"
             data-badge-title="Complementar"
-            data-badge-focus="Coordinació amb Fisioteràpia i Força"
+            data-badge-focus="Coordinació amb Physiotherapy i Força"
           >
             <div class="wellness-need-item__top">
               <span class="wellness-need-item__num">04</span>
@@ -876,9 +864,9 @@ si JavaScript está desactivado. -->
             <span class="wellness-node__dot"></span>
             <span class="wellness-node__index">01</span>
           </div>
-          <h3 class="wellness-node__title">Fisioteràpia</h3>
+          <h3 class="wellness-node__title">Physiotherapy</h3>
           <p class="wellness-node__desc">Valoració clínica inicial, abordatge del dolor agut i tractament de lesions musculoesquelètiques.</p>
-          <a class="wellness-node__link" href="../../ca/fisioterapia/">Veure Fisioteràpia <span aria-hidden="true">→</span></a>
+          <a class="wellness-node__link" href="../../ca/fisioterapia/">Veure Physiotherapy <span aria-hidden="true">→</span></a>
         </div>
 
         <!-- Conector A: Fisioterapia <-> Bienestar -->
@@ -899,7 +887,7 @@ si JavaScript está desactivado. -->
             <span class="wellness-node__dot"></span>
             <span class="wellness-node__index">02</span>
           </div>
-          <h3 class="wellness-node__title">Benestar</h3>
+          <h3 class="wellness-node__title">Wellness</h3>
           <p class="wellness-node__desc">Descàrrega muscular, drenatge, pressoteràpia i optimització corporal per assimilar l'esforç i reiniciar el cos.</p>
           <span class="wellness-node__current">Ets en aquesta àrea</span>
         </div>
@@ -921,9 +909,9 @@ si JavaScript está desactivado. -->
             <span class="wellness-node__dot"></span>
             <span class="wellness-node__index">03</span>
           </div>
-          <h3 class="wellness-node__title">Força</h3>
+          <h3 class="wellness-node__title">Strength</h3>
           <p class="wellness-node__desc">Desenvolupament de capacitat física, control motor amb Pilates Reformer i readaptació per moure't amb confiança.</p>
-          <a class="wellness-node__link" href="../../ca/forca/">Veure Força <span aria-hidden="true">→</span></a>
+          <a class="wellness-node__link" href="../../ca/forca/">Veure Strength <span aria-hidden="true">→</span></a>
         </div>
 
       </div>
@@ -1344,6 +1332,6 @@ si JavaScript está desactivado. -->
 </footer>
 
 
-<script src="../../src/js/main.js?v=4"></script>
+<script src="../../src/js/main.js?v=5"></script>
 </body>
 </html>

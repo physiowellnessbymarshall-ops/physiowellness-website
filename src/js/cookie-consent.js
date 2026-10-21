@@ -28,7 +28,9 @@
   var i18n = {
     ca: {
       bannerTitle: 'La teva privacitat',
-      bannerText: 'Utilitzem cookies necessàries perquè la web funcioni i, si ens dones permís, cookies analítiques per entendre com s’utilitza i millorar-la.',
+      bannerText: 'Utilitzem cookies necessàries perquè la web funcioni i analítiques per entendre com s’utilitza i millorar la teva experiència.',
+      policyLinkText: 'Política de cookies',
+      policyUrl: '/ca/cookies/',
       accept: 'Acceptar',
       reject: 'Rebutjar',
       settings: 'Configurar',
@@ -48,7 +50,9 @@
     },
     es: {
       bannerTitle: 'Tu privacidad',
-      bannerText: 'Utilizamos cookies necesarias para que la web funcione y, si nos das permiso, cookies analíticas para entender cómo se utiliza y mejorarla.',
+      bannerText: 'Utilizamos cookies necesarias para que la web funcione y analíticas para entender cómo se utiliza y mejorar tu experiencia.',
+      policyLinkText: 'Política de cookies',
+      policyUrl: '/es/cookies/',
       accept: 'Aceptar',
       reject: 'Rechazar',
       settings: 'Configurar',
@@ -68,7 +72,9 @@
     },
     en: {
       bannerTitle: 'Your privacy',
-      bannerText: 'We use necessary cookies for the website to work and, with your permission, analytics cookies to understand how it is used and improve it.',
+      bannerText: 'We use necessary cookies for the website to work and analytics to understand usage and enhance your experience.',
+      policyLinkText: 'Cookie policy',
+      policyUrl: '/en/cookie-policy/',
       accept: 'Accept',
       reject: 'Reject',
       settings: 'Settings',
@@ -164,7 +170,17 @@
     banner.innerHTML =
       '<div class="pw-cookie-banner__inner">' +
         '<div class="pw-cookie-banner__content">' +
-          '<h2 class="pw-cookie-banner__title">' + t.bannerTitle + '</h2>' +
+          '<div class="pw-cookie-banner__header">' +
+            '<h2 class="pw-cookie-banner__title">' +
+              '<svg class="pw-cookie-banner__icon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' +
+                '<circle cx="12" cy="12" r="10"/>' +
+                '<path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/>' +
+                '<path d="M2 12h20"/>' +
+              '</svg>' +
+              t.bannerTitle +
+            '</h2>' +
+            '<a href="' + t.policyUrl + '" class="pw-cookie-banner__policy-link" id="pw-cookie-policy-link">' + t.policyLinkText + ' &rarr;</a>' +
+          '</div>' +
           '<p class="pw-cookie-banner__text">' + t.bannerText + '</p>' +
         '</div>' +
         '<div class="pw-cookie-banner__actions">' +
@@ -314,6 +330,9 @@
     if (state.bannerEl) {
       state.bannerEl.classList.remove('is-visible');
     }
+    if (typeof document !== 'undefined') {
+      document.body.classList.remove('has-cookie-banner');
+    }
     closeSettings();
   }
 
@@ -334,6 +353,9 @@
     }
     if (state.bannerEl) {
       state.bannerEl.classList.remove('is-visible');
+    }
+    if (typeof document !== 'undefined') {
+      document.body.classList.remove('has-cookie-banner');
     }
     closeSettings();
   }
@@ -449,6 +471,9 @@
     // Si no hi ha decisió prèvia desada o ha caducat, mostrem el banner
     if (!consentStatus || !consentStatus.hasStoredDecision) {
       state.bannerEl.classList.add('is-visible');
+      if (typeof document !== 'undefined' && document.body) {
+        document.body.classList.add('has-cookie-banner');
+      }
     }
 
     bindEvents();

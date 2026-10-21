@@ -29,7 +29,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Jost:wght@400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="../../src/css/styles.css?v=4">
+<link rel="stylesheet" href="../../src/css/styles.css?v=5">
 <noscript><style>
 [data-reveal]{opacity:1!important;transform:none!important;}
 </style></noscript>
@@ -79,18 +79,6 @@
             "Friday"
           ],
           "opens": "09:00",
-          "closes": "13:00"
-        },
-        {
-          "@type": "OpeningHoursSpecification",
-          "dayOfWeek": [
-            "Monday",
-            "Tuesday",
-            "Wednesday",
-            "Thursday",
-            "Friday"
-          ],
-          "opens": "15:00",
           "closes": "19:00"
         }
       ],
@@ -112,7 +100,7 @@
           "name": "Physio Wellness - Estudio de Fuerza y Pilates",
           "address": {
             "@type": "PostalAddress",
-            "streetAddress": "Carrer de Sant Honorat, 26, local 2",
+            "streetAddress": "Avinguda Camí dels Capellans, 81",
             "addressLocality": "Sitges",
             "postalCode": "08870",
             "addressRegion": "Barcelona",
@@ -250,10 +238,10 @@
           <svg class="nav-item__chevron" width="9" height="6" viewBox="0 0 9 6" fill="none" aria-hidden="true"><path d="M1 1l3.5 3.5L8 1" stroke="currentColor" stroke-width="1.3" stroke-linecap="square"/></svg>
         </button>
         <div class="nav-dropdown" id="nav-servicios" hidden>
-          <a href="../../es/fisioterapia/">Fisioterapia</a>
-          <a href="../../es/fuerza/">Fuerza</a>
+          <a href="../../es/fisioterapia/">Physiotherapy</a>
+          <a href="../../es/fuerza/">Strength</a>
           <a href="../../es/pilates/">Pilates</a>
-          <a href="../../es/bienestar/">Bienestar</a>
+          <a href="../../es/bienestar/">Wellness</a>
           <a href="../../es/stretching/">Stretching</a>
           <a class="nav-dropdown__all" href="../../es/servicios/">Ver todos los servicios</a>
         </div>
@@ -336,10 +324,10 @@
         <svg class="m-acc__chevron" width="14" height="9" viewBox="0 0 14 9" fill="none" aria-hidden="true"><path d="M1 1l6 6 6-6" stroke="currentColor" stroke-width="1.4" stroke-linecap="square"/></svg>
       </button>
       <div class="m-acc__panel" id="m-servicios" hidden>
-        <a href="../../es/fisioterapia/">Fisioterapia</a>
-        <a href="../../es/fuerza/">Fuerza</a>
+        <a href="../../es/fisioterapia/">Physiotherapy</a>
+        <a href="../../es/fuerza/">Strength</a>
         <a href="../../es/pilates/">Pilates</a>
-        <a href="../../es/bienestar/">Bienestar</a>
+        <a href="../../es/bienestar/">Wellness</a>
         <a href="../../es/stretching/">Stretching</a>
         <a class="m-acc__all" href="../../es/servicios/">Ver todos los servicios</a>
       </div>
@@ -392,7 +380,7 @@
         <nav class="breadcrumb snow-hero__breadcrumb" aria-label="Ruta de navegación">
           <ol>
             <li><a href="../../es/">Inicio</a></li>
-            <li><a href="../../es/fuerza/">Fuerza</a></li>
+            <li><a href="../../es/fuerza/">Strength</a></li>
             <li aria-current="page">Snow Performance</li>
           </ol>
         </nav>
@@ -698,61 +686,77 @@
     <div class="container snow-score-sec__grid">
       <div class="snow-score-sec__content" data-reveal>
         <p class="snow-score-sec__sub">Snow Readiness Score</p>
-        <h2 class="snow-score-sec__headline">¿Estás más preparado que cuando empezaste?</h2>
+        <h2 class="snow-score-sec__headline">¿Cómo evaluamos tu preparación para la montaña?</h2>
         <div class="snow-score-sec__text">
-          <p>Valoramos tu punto de partida al inicio del programa y repetimos la evaluación al terminar para visualizar tu evolución.</p>
-          <p>A través de parámetros medibles de fuerza relativa, estabilidad dinámica y resistencia al cansancio, obtenemos tu índice de preparación técnica para la montaña.</p>
+          <p>El Snow Readiness Score es nuestro marco de evaluación funcional de la condición física específica para esquí y snowboard. Evaluamos la respuesta neuromuscular, el control articular y la resistencia al esfuerzo continuado.</p>
+          <p>A través de pruebas clínicas y biomecánicas, analizamos tu punto de partida, adaptamos las cargas de trabajo y medimos tu evolución de forma individualizada antes de subir a pistas.</p>
         </div>
 
         <p class="snow-score-sec__disclaimer">
-          El Snow Readiness Score mide tu evolución dentro del programa. No predice el riesgo de lesión.
+          La evaluación orienta la progresión del entrenamiento e identifica factores de riesgo biomecánicos; no constituye un diagnóstico médico ni garantiza la inmunidad ante lesiones accidentales.
         </p>
       </div>
 
-      <!-- Visual comparativo: BEFORE -> AFTER -->
+      <!-- Marco de evaluación de capacidades específicas -->
       <div class="score-visual-card" data-reveal style="--i:1">
-        <div class="score-metrics" aria-label="Comparativa de evolución del Snow Readiness Score">
+        <div class="score-metrics" aria-label="Evaluación de capacidades del Snow Readiness Score">
           <div class="score-metric">
             <div class="score-metric__head">
               <span>Fuerza excéntrica & frenado</span>
-              <span>+38%</span>
+              <span class="score-metric__tag">Control de carga</span>
             </div>
-            <div class="score-metric__bars">
-              <div class="score-bar score-bar--before" style="width: 52%;" title="Inicio: 52%"></div>
-              <div class="score-bar score-bar--after" style="width: 90%;" title="Final: 90%"></div>
+            <p class="score-metric__desc">Evaluación de la capacidad de desaceleración en cuádriceps y glúteos durante virajes de alta inercia. Fundamental para proteger el ligamento cruzado anterior (LCA) y estabilizar la rodilla en recepciones.</p>
+            <div class="score-metric__flow">
+              <span class="score-metric__flow-step"><span class="score-metric__flow-dot"></span>Test inicial</span>
+              <span class="score-metric__flow-arrow">→</span>
+              <span class="score-metric__flow-step"><span class="score-metric__flow-dot"></span>Sobrecarga progresiva</span>
+              <span class="score-metric__flow-arrow">→</span>
+              <span class="score-metric__flow-step"><span class="score-metric__flow-dot"></span>Transferencia a virajes</span>
             </div>
           </div>
 
           <div class="score-metric">
             <div class="score-metric__head">
               <span>Estabilidad monopodal & tobillo</span>
-              <span>+45%</span>
+              <span class="score-metric__tag">Alineación articular</span>
             </div>
-            <div class="score-metric__bars">
-              <div class="score-bar score-bar--before" style="width: 45%;" title="Inicio: 45%"></div>
-              <div class="score-bar score-bar--after" style="width: 90%;" title="Final: 90%"></div>
+            <p class="score-metric__desc">Control reactivo del eje tobillo-rodilla-cadera ante irregularidades de la nieve o cambios imprevistos de pendiente. Trabajamos la estabilidad refleja para minimizar compensaciones articulares lesivas.</p>
+            <div class="score-metric__flow">
+              <span class="score-metric__flow-step"><span class="score-metric__flow-dot"></span>Equilibrio estático</span>
+              <span class="score-metric__flow-arrow">→</span>
+              <span class="score-metric__flow-step"><span class="score-metric__flow-dot"></span>Perturbaciones dinámicas</span>
+              <span class="score-metric__flow-arrow">→</span>
+              <span class="score-metric__flow-step"><span class="score-metric__flow-dot"></span>Control sobre cantos</span>
+            </div>
+          </div>
+
+          <div class="score-metric">
+            <div class="score-metric__head">
+              <span>Control rotacional lumbopélvico (Core)</span>
+              <span class="score-metric__tag">Disociación motora</span>
+            </div>
+            <p class="score-metric__desc">Medición de la disociación entre pelvis y tronco para sostener la línea de máxima pendiente sin transmitir torsión excesiva a la columna lumbar. Optimiza la presión sobre las tablas.</p>
+            <div class="score-metric__flow">
+              <span class="score-metric__flow-step"><span class="score-metric__flow-dot"></span>Control postural</span>
+              <span class="score-metric__flow-arrow">→</span>
+              <span class="score-metric__flow-step"><span class="score-metric__flow-dot"></span>Fuerza antirrotacional</span>
+              <span class="score-metric__flow-arrow">→</span>
+              <span class="score-metric__flow-step"><span class="score-metric__flow-dot"></span>Potencia en curvas</span>
             </div>
           </div>
 
           <div class="score-metric">
             <div class="score-metric__head">
               <span>Tolerancia a la fatiga continua</span>
-              <span>+32%</span>
+              <span class="score-metric__tag">Resistencia neuromuscular</span>
             </div>
-            <div class="score-metric__bars">
-              <div class="score-bar score-bar--before" style="width: 60%;" title="Inicio: 60%"></div>
-              <div class="score-bar score-bar--after" style="width: 92%;" title="Final: 92%"></div>
-            </div>
-          </div>
-
-          <div class="score-metric">
-            <div class="score-metric__head">
-              <span>Control rotacional de core</span>
-              <span>+40%</span>
-            </div>
-            <div class="score-metric__bars">
-              <div class="score-bar score-bar--before" style="width: 48%;" title="Inicio: 48%"></div>
-              <div class="score-bar score-bar--after" style="width: 88%;" title="Final: 88%"></div>
+            <p class="score-metric__desc">Test de esfuerzo isométrico y dinámico para mantener la calidad del gesto técnico y los tiempos de reacción cuando aparece la fatiga acumulada por la tarde o en descensos prolongados.</p>
+            <div class="score-metric__flow">
+              <span class="score-metric__flow-step"><span class="score-metric__flow-dot"></span>Capacidad aeróbica</span>
+              <span class="score-metric__flow-arrow">→</span>
+              <span class="score-metric__flow-step"><span class="score-metric__flow-dot"></span>Series lácticas guiadas</span>
+              <span class="score-metric__flow-arrow">→</span>
+              <span class="score-metric__flow-step"><span class="score-metric__flow-dot"></span>Rendimiento constante</span>
             </div>
           </div>
         </div>
@@ -760,11 +764,11 @@
         <div class="score-legend">
           <span class="score-legend__item">
             <span class="score-legend__dot score-legend__dot--before"></span>
-            <span>Punto de partida (Inicio)</span>
+            <span>Valoración funcional inicial</span>
           </span>
           <span class="score-legend__item">
             <span class="score-legend__dot score-legend__dot--after"></span>
-            <span>Resultado final (Evaluación)</span>
+            <span>Reevaluación y control de progreso</span>
           </span>
         </div>
       </div>
@@ -1045,58 +1049,54 @@
                   <span class="snow-journey-card__num">03</span>
                   <span class="snow-journey-card__phase">SABEMOS CUÁNDO ESTÁS PREPARADO</span>
                 </div>
-                <h4 class="snow-journey-card__title" id="journey-step-3">Snow Readiness Score™</h4>
+                <h4 class="snow-journey-card__title" id="journey-step-3">Snow Readiness Score</h4>
                 <p class="snow-journey-card__lead">
-                  La métrica diferencial del programa. Evaluamos objetivamente tu índice de preparación alpina para que sepas con absoluta certeza que tu cuerpo puede responder al ritmo de la montaña.
+                  Nuestro sistema estructurado de evaluación funcional. Evaluamos objetivamente los patrones biomecánicos determinantes para que tu cuerpo responda con solidez a las exigencias de la montaña.
                 </p>
               </div>
 
               <!-- Medidor y Telemetría de Preparación -->
               <div class="snow-readiness-meter" aria-label="Indicador Snow Readiness Score">
                 <div class="snow-readiness-meter__top">
-                  <div class="snow-readiness-meter__score-block">
-                    <span class="snow-readiness-meter__score-num">94</span>
-                    <span class="snow-readiness-meter__score-max">/ 100</span>
-                  </div>
                   <div class="snow-readiness-meter__status">
                     <div class="snow-readiness-meter__status-txt">
                       <span class="snow-readiness-meter__status-dot" aria-hidden="true"></span>
-                      SNOW READY · CONDICIÓN ÓPTIMA
+                      EVALUACIÓN CLÍNICA PERSONALIZADA
                     </div>
-                    <span class="snow-readiness-meter__status-sub">Listo para jornadas completas en pista o fuera de pista</span>
+                    <h5 class="snow-readiness-meter__heading">CRITERIOS DE APTITUD ALPINA</h5>
+                    <span class="snow-readiness-meter__status-sub">Determinamos tu evolución a partir de parámetros biomecánicos específicos, sin puntuaciones genéricas ni estimaciones arbitrarias.</span>
                   </div>
                 </div>
 
-                <!-- Barra de progreso segmentada -->
+                <!-- Barra de progreso segmentada por fases -->
                 <div class="snow-readiness-meter__track" aria-hidden="true">
                   <div class="snow-readiness-meter__zone snow-readiness-meter__zone--base">
-                    <span>BASE (0–59)</span>
+                    <span>1. VALORACIÓN INICIAL</span>
                   </div>
                   <div class="snow-readiness-meter__zone snow-readiness-meter__zone--building">
-                    <span>CONDICIONAMIENTO (60–79)</span>
+                    <span>2. CONDICIONAMIENTO</span>
                   </div>
                   <div class="snow-readiness-meter__zone snow-readiness-meter__zone--ready is-active">
-                    <span>SNOW READY (80–100)</span>
-                    <div class="snow-readiness-meter__pin" style="left: 70%;"></div>
+                    <span>3. TRANSFERENCIA A PISTAS</span>
                   </div>
                 </div>
 
                 <!-- 3 Métricas Clave de Control -->
                 <div class="snow-readiness-meter__telemetry">
                   <div class="snow-telemetry-item">
-                    <span class="snow-telemetry-item__val">96%</span>
-                    <span class="snow-telemetry-item__lbl">Simetría bilateral L/R</span>
-                    <span class="snow-telemetry-item__note">Equilibrio biomecánico óptimo</span>
+                    <span class="snow-telemetry-item__val">SIMETRÍA L/R</span>
+                    <span class="snow-telemetry-item__lbl">Equilibrio bilateral de carga</span>
+                    <span class="snow-telemetry-item__note">Detección y corrección de asimetrías de apoyo para proteger ambas rodillas por igual.</span>
                   </div>
                   <div class="snow-telemetry-item">
-                    <span class="snow-telemetry-item__val">+38%</span>
-                    <span class="snow-telemetry-item__lbl">Tolerancia a la fatiga</span>
-                    <span class="snow-telemetry-item__note">Resistencia en bajadas largas</span>
+                    <span class="snow-telemetry-item__val">CONTROL EXCÉNTRICO</span>
+                    <span class="snow-telemetry-item__lbl">Capacidad de frenado y choque</span>
+                    <span class="snow-telemetry-item__note">Absorción muscular de fuerzas de compresión para reducir el estrés articular en virajes.</span>
                   </div>
                   <div class="snow-telemetry-item">
-                    <span class="snow-telemetry-item__val">NIVEL 4</span>
-                    <span class="snow-telemetry-item__lbl">Fuerza excéntrica reactiva</span>
-                    <span class="snow-telemetry-item__note">Protección de rodilla y ligamentos</span>
+                    <span class="snow-telemetry-item__val">RESISTENCIA</span>
+                    <span class="snow-telemetry-item__lbl">Consistencia bajo fatiga</span>
+                    <span class="snow-telemetry-item__note">Mantenimiento de la estabilidad y los reflejos articulares hasta la última bajada.</span>
                   </div>
                 </div>
               </div>
@@ -1180,29 +1180,29 @@
             <div class="snow-journey-card__visual snow-journey-card__visual--delta" aria-hidden="true">
               <div class="snow-delta-box">
                 <div class="snow-delta-box__head">
-                  <span class="snow-delta-box__badge">EVOLUCIÓN OBJETIVA</span>
-                  <span class="snow-delta-box__cycle">DÍA 01 ➔ SEMANA 08</span>
+                  <span class="snow-delta-box__badge">EVALUACIÓN COMPARATIVA</span>
+                  <span class="snow-delta-box__cycle">INICIO ➔ REEVALUACIÓN FINAL</span>
                 </div>
                 <div class="snow-delta-rows">
                   <div class="snow-delta-row">
-                    <span class="snow-delta-row__label">Fuerza excéntrica</span>
-                    <span class="snow-delta-row__val">+42%</span>
+                    <span class="snow-delta-row__label">Fuerza excéntrica y desaceleración</span>
+                    <span class="snow-delta-row__val">Absorción progresiva</span>
                   </div>
                   <div class="snow-delta-row">
                     <span class="snow-delta-row__label">Simetría bilateral L/R</span>
-                    <span class="snow-delta-row__val">98% equilibrado</span>
+                    <span class="snow-delta-row__val">Patrón equilibrado</span>
                   </div>
                   <div class="snow-delta-row">
-                    <span class="snow-delta-row__label">Fatiga en bajadas largas</span>
-                    <span class="snow-delta-row__val">-65% reducción</span>
+                    <span class="snow-delta-row__label">Tolerancia en descensos prolongados</span>
+                    <span class="snow-delta-row__val">Resistencia sostenida</span>
                   </div>
                   <div class="snow-delta-row">
-                    <span class="snow-delta-row__label">Estabilidad reactiva</span>
-                    <span class="snow-delta-row__val">Óptima</span>
+                    <span class="snow-delta-row__label">Estabilidad articular reactiva</span>
+                    <span class="snow-delta-row__val">Control dinámico</span>
                   </div>
                 </div>
                 <div class="snow-delta-box__foot">
-                  <span>Datos contrastados con tu valoración inicial</span>
+                  <span>Evolución contrastada directamente con tu valoración funcional inicial</span>
                 </div>
               </div>
             </div>
@@ -1276,7 +1276,7 @@
         <div class="site-footer__list">
           <a href="../../es/#metodo">El Método</a>
           <a href="../../es/servicios/">Servicios</a>
-          <a href="../../es/fuerza/">Fuerza</a>
+          <a href="../../es/fuerza/">Strength</a>
           <a href="../../es/#equipo">Equipo</a>
           <a href="../../es/tarifas/">Tarifas</a>
         </div>
@@ -1305,7 +1305,7 @@
   </div>
 </footer>
 
-<script src="../../src/js/main.js?v=4"></script>
+<script src="../../src/js/main.js?v=5"></script>
 <script>
 /* Interacción de matriz de capacidades físicas */
 (function initCapacities(){

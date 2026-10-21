@@ -29,7 +29,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Jost:wght@400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="../../src/css/styles.css?v=4">
+<link rel="stylesheet" href="../../src/css/styles.css?v=5">
 <!-- FASE 4: [data-reveal] (§7 de styles.css, compartido con Home) parte de
 opacity:0 y depende de main.js para mostrarse. Si JavaScript está
 desactivado del todo (no solo falla), nunca se añade la clase
@@ -92,18 +92,6 @@ inaccesible. Se muestra siempre en ese caso; los acordeones nativos
             "Friday"
           ],
           "opens": "09:00",
-          "closes": "13:00"
-        },
-        {
-          "@type": "OpeningHoursSpecification",
-          "dayOfWeek": [
-            "Monday",
-            "Tuesday",
-            "Wednesday",
-            "Thursday",
-            "Friday"
-          ],
-          "opens": "15:00",
           "closes": "19:00"
         }
       ],
@@ -125,7 +113,7 @@ inaccesible. Se muestra siempre en ese caso; los acordeones nativos
           "name": "Physio Wellness - Estudi de Força i Pilates",
           "address": {
             "@type": "PostalAddress",
-            "streetAddress": "Carrer de Sant Honorat, 26, local 2",
+            "streetAddress": "Avinguda Camí dels Capellans, 81",
             "addressLocality": "Sitges",
             "postalCode": "08870",
             "addressRegion": "Barcelona",
@@ -230,10 +218,10 @@ inaccesible. Se muestra siempre en ese caso; los acordeones nativos
           <svg class="nav-item__chevron" width="9" height="6" viewBox="0 0 9 6" fill="none" aria-hidden="true"><path d="M1 1l3.5 3.5L8 1" stroke="currentColor" stroke-width="1.3" stroke-linecap="square"/></svg>
         </button>
         <div class="nav-dropdown" id="nav-serveis" hidden>
-          <a href="../../ca/fisioterapia/">Fisioteràpia</a>
-          <a href="../../ca/forca/">Força</a>
+          <a href="../../ca/fisioterapia/">Physiotherapy</a>
+          <a href="../../ca/forca/">Strength</a>
           <a href="../../ca/pilates/">Pilates</a>
-          <a href="../../ca/benestar/">Benestar</a>
+          <a href="../../ca/benestar/">Wellness</a>
           <a href="../../ca/stretching/">Stretching</a>
           <a class="nav-dropdown__all" href="../../ca/serveis/">Veure tots els serveis</a>
         </div>
@@ -316,10 +304,10 @@ inaccesible. Se muestra siempre en ese caso; los acordeones nativos
         <svg class="m-acc__chevron" width="14" height="9" viewBox="0 0 14 9" fill="none" aria-hidden="true"><path d="M1 1l6 6 6-6" stroke="currentColor" stroke-width="1.4" stroke-linecap="square"/></svg>
       </button>
       <div class="m-acc__panel" id="m-serveis" hidden>
-        <a href="../../ca/fisioterapia/">Fisioteràpia</a>
-        <a href="../../ca/forca/">Força</a>
+        <a href="../../ca/fisioterapia/">Physiotherapy</a>
+        <a href="../../ca/forca/">Strength</a>
         <a href="../../ca/pilates/">Pilates</a>
-        <a href="../../ca/benestar/">Benestar</a>
+        <a href="../../ca/benestar/">Wellness</a>
         <a href="../../ca/stretching/">Stretching</a>
         <a class="m-acc__all" href="../../ca/serveis/">Veure tots els serveis</a>
       </div>
@@ -472,14 +460,14 @@ inaccesible. Se muestra siempre en ese caso; los acordeones nativos
 
       <div class="area-select__layout">
         <div class="area-select__grid" role="group" aria-label="Tria la teva àrea">
-          <div class="area-tile is-selected" data-area="Fisioteràpia" data-desc="Recuperar, tractar i tornar a funcionar millor." data-reveal style="--i:0">
+          <div class="area-tile is-selected" data-area="Physiotherapy" data-desc="Recuperar, tractar i tornar a funcionar millor." data-reveal style="--i:0">
             <span class="area-tile__media" aria-hidden="true">
               <img src="../../src/assets/img/stock/area-physio-1440.webp" srcset="../../src/assets/img/stock/area-physio-720.webp 720w, ../../src/assets/img/stock/area-physio-1440.webp 1440w" sizes="(min-width: 700px) 50vw, 100vw" alt="" loading="lazy" width="1440" height="960">
             </span>
             <span class="area-tile__body">
               <button type="button" class="area-tile__select" aria-pressed="true" aria-controls="area-context">
                 <span class="area-tile__eyebrow">01</span>
-                <span class="area-tile__title">Fisioteràpia</span>
+                <span class="area-tile__title">Physiotherapy</span>
               </button>
               <span class="area-tile__badge">
                 <svg width="12" height="10" viewBox="0 0 12 10" fill="none" aria-hidden="true"><path d="M1 5l3 3 7-7" stroke="currentColor" stroke-width="1.6"/></svg>
@@ -490,14 +478,14 @@ inaccesible. Se muestra siempre en ese caso; los acordeones nativos
             </span>
           </div>
 
-          <div class="area-tile" data-area="Benestar" data-desc="Cuidar, recuperar i optimitzar el cos." data-reveal style="--i:1">
+          <div class="area-tile" data-area="Wellness" data-desc="Cuidar, recuperar i optimitzar el cos." data-reveal style="--i:1">
             <span class="area-tile__media" aria-hidden="true">
               <img src="../../src/assets/img/stock/area-wellness-1440.webp" srcset="../../src/assets/img/stock/area-wellness-720.webp 720w, ../../src/assets/img/stock/area-wellness-1440.webp 1440w" sizes="(min-width: 700px) 50vw, 100vw" alt="" loading="lazy" width="1440" height="960">
             </span>
             <span class="area-tile__body">
               <button type="button" class="area-tile__select" aria-pressed="false" aria-controls="area-context">
                 <span class="area-tile__eyebrow">02</span>
-                <span class="area-tile__title">Benestar</span>
+                <span class="area-tile__title">Wellness</span>
               </button>
               <span class="area-tile__badge">
                 <svg width="12" height="10" viewBox="0 0 12 10" fill="none" aria-hidden="true"><path d="M1 5l3 3 7-7" stroke="currentColor" stroke-width="1.6"/></svg>
@@ -508,14 +496,14 @@ inaccesible. Se muestra siempre en ese caso; los acordeones nativos
             </span>
           </div>
 
-          <div class="area-tile" data-area="Força" data-desc="Desenvolupar força, capacitat física i rendiment." data-reveal style="--i:2">
+          <div class="area-tile" data-area="Strength" data-desc="Desenvolupar força, capacitat física i rendiment." data-reveal style="--i:2">
             <span class="area-tile__media" aria-hidden="true">
               <img src="../../src/assets/img/stock/area-strength-1440.webp" srcset="../../src/assets/img/stock/area-strength-720.webp 720w, ../../src/assets/img/stock/area-strength-1440.webp 1440w" sizes="(min-width: 700px) 50vw, 100vw" alt="" loading="lazy" width="1440" height="810">
             </span>
             <span class="area-tile__body">
               <button type="button" class="area-tile__select" aria-pressed="false" aria-controls="area-context">
                 <span class="area-tile__eyebrow">03</span>
-                <span class="area-tile__title">Força</span>
+                <span class="area-tile__title">Strength</span>
               </button>
               <span class="area-tile__badge">
                 <svg width="12" height="10" viewBox="0 0 12 10" fill="none" aria-hidden="true"><path d="M1 5l3 3 7-7" stroke="currentColor" stroke-width="1.6"/></svg>
@@ -565,7 +553,7 @@ inaccesible. Se muestra siempre en ese caso; los acordeones nativos
 
         <aside class="area-context" id="area-context" aria-live="polite" data-reveal style="--i:5">
           <p class="area-context__eyebrow">Àrea seleccionada</p>
-          <h3 class="area-context__title">Fisioteràpia</h3>
+          <h3 class="area-context__title">Physiotherapy</h3>
           <p class="area-context__text">Recuperar, tractar i tornar a funcionar millor.</p>
           <a class="btn btn--primary area-context__cta" href="#en-la-clinica">Veure tarifes de Fisioteràpia</a>
         </aside>
@@ -585,7 +573,7 @@ inaccesible. Se muestra siempre en ese caso; los acordeones nativos
       <div class="rates__head" data-reveal>
         <p class="eyebrow section-eyebrow">01 — A la clínica</p>
         <h2 class="section-heading">Sessions presencials</h2>
-        <p class="section-lead rates__lead">Mateixa tarifa per a Fisioteràpia, Benestar, Força, Pilates i Stretching.</p>
+        <p class="section-lead rates__lead">Mateixa tarifa per a Physiotherapy, Wellness, Strength, Pilates i Stretching.</p>
         <p class="rates__selected" id="area-selected-label">
           <svg width="12" height="10" viewBox="0 0 12 10" fill="none" aria-hidden="true"><path d="M1 5l3 3 7-7" stroke="currentColor" stroke-width="1.6"/></svg>
           <span class="rates__selected-text">Tarifa a la clínica compartida per les cinc àrees.</span>
@@ -612,7 +600,7 @@ inaccesible. Se muestra siempre en ese caso; los acordeones nativos
 
         <!-- Seguimiento: una sola modalidad con dos duraciones, escalonadas.
              Cada duración es un <details> propio: el precio se lee sin abrir
-             nada y los bonos de 4/8/12 sesiones quedan un paso más allá, para
+             nada y los bonos de 4/8 sesiones quedan un paso más allá, para
              no sobrecargar el primer vistazo. -->
         <section class="follow" data-reveal style="--i:2" aria-labelledby="follow-title">
           <h3 class="follow__title" id="follow-title">Sessió individual</h3>
@@ -631,7 +619,6 @@ inaccesible. Se muestra siempre en ese caso; los acordeones nativos
                   <ul class="bonos-list">
                     <li class="bonos-list__row"><span class="bonos-list__n">4 sessions</span><span class="bonos-list__unit">47,50 €/sessió</span><span class="bonos-list__total">190 €</span></li>
                     <li class="bonos-list__row"><span class="bonos-list__n">8 sessions</span><span class="bonos-list__unit">45 €/sessió</span><span class="bonos-list__total">360 €</span></li>
-                    <li class="bonos-list__row"><span class="bonos-list__n">12 sessions</span><span class="bonos-list__unit">43,75 €/sessió</span><span class="bonos-list__total">525 €</span></li>
                   </ul>
                 </div>
               </details>
@@ -650,7 +637,6 @@ inaccesible. Se muestra siempre en ese caso; los acordeones nativos
                   <ul class="bonos-list">
                     <li class="bonos-list__row"><span class="bonos-list__n">4 sessions</span><span class="bonos-list__unit">76 €/sessió</span><span class="bonos-list__total">304 €</span></li>
                     <li class="bonos-list__row"><span class="bonos-list__n">8 sessions</span><span class="bonos-list__unit">72 €/sessió</span><span class="bonos-list__total">576 €</span></li>
-                    <li class="bonos-list__row"><span class="bonos-list__n">12 sessions</span><span class="bonos-list__unit">70 €/sessió</span><span class="bonos-list__total">840 €</span></li>
                   </ul>
                 </div>
               </details>
@@ -664,7 +650,7 @@ inaccesible. Se muestra siempre en ese caso; los acordeones nativos
           <details class="cond__item" name="cond-clinica">
             <summary class="cond__q">Bons: condicions</summary>
             <div class="cond__a">
-              <p>Els bons són combinables entre Fisioteràpia, Força, Pilates i Stretching, de manera que pots adaptar cada sessió al que necessitis a cada moment.</p>
+              <p>Els bons són combinables entre Physiotherapy, Strength, Pilates i Stretching, de manera que pots adaptar cada sessió al que necessitis a cada moment.</p>
               <p>Són vàlids únicament per a sessions a la clínica, tenen una validesa de 2 mesos des de la data de compra i s'abonen íntegrament en el moment de la compra. Són personals i intransferibles i no admeten devolució un cop iniciats (s'entén iniciat un bo en consumir la primera sessió).</p>
             </div>
           </details>
@@ -712,7 +698,8 @@ inaccesible. Se muestra siempre en ese caso; los acordeones nativos
        se encontró ningún candidato con licencia verificable que encajara;
        se mantiene foto, tal y como prevé el criterio de esta fase para ese
        caso. -->
-  <section class="rates rates--home" id="a-domicilio">
+  <section class="rates rates--home" id="a-domicili">
+    <span id="a-domicilio" class="anchor-target" aria-hidden="true"></span>
     <svg class="rates--home__motif" viewBox="0 0 200 200" fill="none" aria-hidden="true" focusable="false">
       <path d="M20 110 L100 40 L180 110" stroke="currentColor" stroke-width="1.4"/>
       <path d="M40 95 V170 H160 V95" stroke="currentColor" stroke-width="1.4"/>
@@ -723,7 +710,7 @@ inaccesible. Se muestra siempre en ese caso; los acordeones nativos
         <p class="eyebrow eyebrow--on-dark section-eyebrow">02 — A domicili</p>
         <h2 class="section-heading">Ens desplacem fins a tu</h2>
         <p class="section-lead rates__lead">També pots realitzar la teva primera visita o un seguiment de fisioteràpia a domicili.</p>
-        <p class="rates__note">Disponible per a Fisioteràpia, Benestar i Força. Els serveis de Pilates i Stretching no estan disponibles a domicili.</p>
+        <p class="rates__note">Disponible per a Physiotherapy, Wellness i Strength. Els serveis de Pilates i Stretching no estan disponibles a domicili.</p>
         <!-- FASE 7B: foto con licencia verificable, documentada en
              ASSET_SOURCES.md. Puramente ambiental (aria-hidden): no ilustra
              un servicio ni sustituye al texto de precios. -->
@@ -956,6 +943,6 @@ inaccesible. Se muestra siempre en ese caso; los acordeones nativos
 </footer>
 
 
-<script src="../../src/js/main.js?v=4"></script>
+<script src="../../src/js/main.js?v=5"></script>
 </body>
 </html>

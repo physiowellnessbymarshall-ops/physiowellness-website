@@ -21,7 +21,7 @@ var prefersReducedMotion = window.matchMedia && window.matchMedia('(prefers-redu
     var fullSrc = scriptEl ? scriptEl.src : '';
     var basePath = fullSrc ? fullSrc.substring(0, fullSrc.lastIndexOf('/')) : '';
     var prefix = basePath ? basePath + '/' : '/src/js/';
-    var v = 'v=6';
+    var v = 'v=5';
 
     function loadScript(src, cb) {
       var s = document.createElement('script');
@@ -583,7 +583,11 @@ var ANNOUNCEMENT_CONFIG = {
       if(contextText) contextText.textContent = desc;
       if(contextCta){
         var docLang = (document.documentElement.lang || 'es').toLowerCase();
-        var ctaText = docLang.startsWith('ca') ? ('Veure tarifes de ' + area) : (docLang.startsWith('en') ? ('View rates for ' + area) : ('Ver tarifas de ' + area));
+        var displayArea = area;
+        if(area === 'Physiotherapy'){
+          displayArea = docLang.startsWith('ca') ? 'Fisioteràpia' : (docLang.startsWith('en') ? 'Physiotherapy' : 'Fisioterapia');
+        }
+        var ctaText = docLang.startsWith('ca') ? ('Veure tarifes de ' + displayArea) : (docLang.startsWith('en') ? ('View rates for ' + displayArea) : ('Ver tarifas de ' + displayArea));
         contextCta.textContent = ctaText;
         contextCta.href = '#en-la-clinica';
         contextCta.removeAttribute('target');
@@ -3070,10 +3074,10 @@ var ANNOUNCEMENT_CONFIG = {
   }catch(e){ console.warn('visitJourneySystem', e); }
 })();
 
-/* ---------- Formulario de contacto: validación en tiempo real y envío por PHP/SMTP ----------
-   Gestiona la validación accesible en tiempo real y el envío asíncrono seguro vía endpoint PHP + SMTP.
-   Mantiene el diseño intacto, deshabilita el botón con indicador de carga, previene doble clic,
-   y muestra la confirmación o el error en el propio componente sin recargas ni pérdida de datos. */
+/* ---------- Formulario de contacto: tramitación directa por WhatsApp (+34 644 67 83 44) ----------
+   Valida en tiempo real los campos obligatorios (nombre, mensaje, política de privacidad),
+   permite email y teléfono opcionales, y abre WhatsApp con un mensaje estructurado y codificado
+   vía encodeURIComponent, manteniendo la integridad del diseño y sin mostrar "Mensaje enviado". */
 (function contactFormHandler(){
   try{
     var form = document.getElementById('contact-form');
@@ -3083,23 +3087,21 @@ var ANNOUNCEMENT_CONFIG = {
     var emailInput = document.getElementById('contact-email');
     var phoneInput = document.getElementById('contact-phone');
     var messageInput = document.getElementById('contact-message');
+    var privacyInput = document.getElementById('contact-privacy');
     var hpInput = document.getElementById('hp-website');
     var submitBtn = document.getElementById('contact-submit-btn') || form.querySelector('button[type="submit"]');
-    var btnTextEl = submitBtn ? (submitBtn.querySelector('.btn__text') || submitBtn.querySelector('span:not(.btn__arrow):not(.btn__spinner)')) : null;
     var noticeEl = document.getElementById('contact-form-notice');
     var noticeTitleEl = document.getElementById('contact-notice-title');
     var noticeTextEl = document.getElementById('contact-notice-text');
     var noticeActionsEl = document.getElementById('contact-notice-actions');
-    var emailActionBtn = document.getElementById('form-action-email');
     var waActionBtn = document.getElementById('form-action-wa');
 
     var emailRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)+$/;
     var phoneRegex = /^[0-9+\s\-().]{6,30}$/;
-    var isSubmitting = false;
 
     function setFieldError(input, errorId, errorMsg){
       if(!input) return;
-      var group = input.closest('.form-group');
+      var group = input.closest('.form-group') || input.closest('.form-privacy');
       var errorEl = document.getElementById(errorId);
       if(errorMsg){
         input.setAttribute('aria-invalid', 'true');
@@ -3125,89 +3127,56 @@ var ANNOUNCEMENT_CONFIG = {
       es: {
         errName: 'Por favor, introduce tu nombre.',
         errNameLength: 'El nombre debe tener entre 2 y 100 caracteres.',
-        errEmailEmpty: 'Por favor, introduce tu correo electrónico.',
-        errEmailInvalid: 'Por favor, introduce un correo electrónico válido.',
+        errEmailInvalid: 'Por favor, introduce un correo electrónico válido o déjalo vacío.',
         errPhoneInvalid: 'Por favor, introduce un número de teléfono válido o déjalo vacío.',
         errMessageEmpty: 'Por favor, escribe tu mensaje o consulta.',
         errMessageShort: 'El mensaje es demasiado corto (mínimo 5 caracteres).',
         errMessageLong: 'El mensaje es demasiado largo (máximo 3000 caracteres).',
-        errGeneral: 'No hemos podido enviar tu mensaje. Inténtalo de nuevo en unos minutos.',
-        errTitle: 'No se pudo enviar el mensaje',
-        successTitle: 'Mensaje enviado correctamente',
-        successMsg: 'Gracias. Hemos recibido tu mensaje y te responderemos lo antes posible.',
-        btnSending: 'Enviando...',
-        btnSubmit: 'Enviar mensaje',
-        subject: 'Consulta web: ',
-        bodyName: 'Nombre: ',
-        bodyEmail: '\nEmail: ',
-        bodyPhone: '\nTeléfono: ',
-        bodyMsg: '\n\nMensaje:\n',
-        waIntro: 'Hola Physio Wellness, soy ',
-        waConsult: ' Consulta: ',
-        directNoticeTitle: 'Canal de atención directa',
-        directNoticeText: 'Estamos configurando la nueva bandeja de correo corporativo. Para garantizar una atención inmediata y que tu consulta no se pierda, puedes contactarnos directamente por WhatsApp (+34 644 67 83 44) o llamada:',
-        transferTitle: 'Abriendo WhatsApp...',
-        transferMsg: 'Hemos preparado tu consulta en WhatsApp con tus datos para que puedas enviarla con un solo clic.',
-        btnDirectWa: 'Escribir por WhatsApp',
-        btnDirectCall: 'Llamar al centro'
+        errPrivacy: 'Debes aceptar la política de privacidad para continuar.',
+        btnSubmit: 'Continuar por WhatsApp',
+        noticeTitle: 'Abriendo WhatsApp...',
+        noticeText: 'Se abrirá WhatsApp con tu mensaje preparado. Si no se abre automáticamente, pulsa el botón siguiente. Recuerda pulsar «Enviar» en WhatsApp para completar la consulta.',
+        waGreeting: 'Hola Physio Wellness, os envío una consulta desde la web:',
+        waLabelName: 'Nombre',
+        waLabelPhone: 'Teléfono',
+        waLabelEmail: 'Email',
+        waLabelMsg: 'Mensaje'
       },
       ca: {
         errName: 'Si us plau, introdueix el teu nom.',
         errNameLength: 'El nom ha de tenir entre 2 i 100 caràcters.',
-        errEmailEmpty: 'Si us plau, introdueix el teu correu electrònic.',
-        errEmailInvalid: 'Si us plau, introdueix un correu electrònic vàlid.',
+        errEmailInvalid: 'Si us plau, introdueix un correu electrònic vàlid o deixa\'l buit.',
         errPhoneInvalid: 'Si us plau, introdueix un número de telèfon vàlid o deixa\'l buit.',
         errMessageEmpty: 'Si us plau, escriu el teu missatge o consulta.',
         errMessageShort: 'El missatge és massa curt (mínim 5 caràcters).',
         errMessageLong: 'El missatge és massa llarg (màxim 3000 caràcters).',
-        errGeneral: 'No hem pogut enviar el teu missatge. Torna-ho a provar d\'aquí a uns minuts.',
-        errTitle: 'No s\'ha pogut enviar el missatge',
-        successTitle: 'Missatge enviat correctament',
-        successMsg: 'Gràcies. Hem rebut el teu missatge i et respondrem al més aviat possible.',
-        btnSending: 'Enviant...',
-        btnSubmit: 'Enviar missatge',
-        subject: 'Consulta web: ',
-        bodyName: 'Nom: ',
-        bodyEmail: '\nEmail: ',
-        bodyPhone: '\nTelèfon: ',
-        bodyMsg: '\n\nMissatge:\n',
-        waIntro: 'Hola Physio Wellness, sóc ',
-        waConsult: ' Consulta: ',
-        directNoticeTitle: 'Canal d\'atenció directa',
-        directNoticeText: 'Estem configurant la nova bústia de correu corporatiu. Per garantir una atenció immediata i que la teva consulta no es perdi, pots contactar-nos directament per WhatsApp (+34 644 67 83 44) o trucada:',
-        transferTitle: 'Obrint WhatsApp...',
-        transferMsg: 'Hem preparat la teva consulta a WhatsApp amb les teves dades perquè puguis enviar-la en un sol clic.',
-        btnDirectWa: 'Escriure per WhatsApp',
-        btnDirectCall: 'Trucar al centre'
+        errPrivacy: 'Has d\'acceptar la política de privacitat per continuar.',
+        btnSubmit: 'Continuar per WhatsApp',
+        noticeTitle: 'Obrint WhatsApp...',
+        noticeText: 'S’obrirà WhatsApp amb el teu missatge preparat. Si no s’obre automàticament, prem el botó següent. Recorda prémer «Enviar» a WhatsApp per completar la consulta.',
+        waGreeting: 'Hola Physio Wellness, us envio una consulta des de la web:',
+        waLabelName: 'Nom',
+        waLabelPhone: 'Telèfon',
+        waLabelEmail: 'Email',
+        waLabelMsg: 'Missatge'
       },
       en: {
         errName: 'Please enter your name.',
         errNameLength: 'Name must be between 2 and 100 characters.',
-        errEmailEmpty: 'Please enter your email address.',
-        errEmailInvalid: 'Please enter a valid email address.',
+        errEmailInvalid: 'Please enter a valid email address or leave it empty.',
         errPhoneInvalid: 'Please enter a valid phone number or leave it empty.',
         errMessageEmpty: 'Please write your message or enquiry.',
         errMessageShort: 'The message is too short (at least 5 characters).',
         errMessageLong: 'The message is too long (maximum 3000 characters).',
-        errGeneral: 'We could not send your message. Please try again in a few minutes.',
-        errTitle: 'Could not send message',
-        successTitle: 'Message sent successfully',
-        successMsg: 'Thank you. We\'ve received your message and will get back to you as soon as possible.',
-        btnSending: 'Sending...',
-        btnSubmit: 'Send message',
-        subject: 'Web enquiry: ',
-        bodyName: 'Name: ',
-        bodyEmail: '\nEmail: ',
-        bodyPhone: '\nPhone: ',
-        bodyMsg: '\n\nMessage:\n',
-        waIntro: 'Hello Physio Wellness, I am ',
-        waConsult: ' Enquiry: ',
-        directNoticeTitle: 'Direct assistance channel',
-        directNoticeText: 'We are setting up the new corporate mailbox. To ensure immediate assistance and that no enquiry is lost, you can contact us directly via WhatsApp (+34 644 67 83 44) or phone:',
-        transferTitle: 'Opening WhatsApp...',
-        transferMsg: 'We have prepared your enquiry in WhatsApp with your details so you can send it in one click.',
-        btnDirectWa: 'Chat on WhatsApp',
-        btnDirectCall: 'Call the center'
+        errPrivacy: 'You must accept the privacy policy to continue.',
+        btnSubmit: 'Continue on WhatsApp',
+        noticeTitle: 'Opening WhatsApp...',
+        noticeText: 'WhatsApp will open with your prepared message. If it did not open automatically, click the button below. Remember to press "Send" in WhatsApp to complete your enquiry.',
+        waGreeting: 'Hello Physio Wellness, I am sending an enquiry from the website:',
+        waLabelName: 'Name',
+        waLabelPhone: 'Phone',
+        waLabelEmail: 'Email',
+        waLabelMsg: 'Message'
       }
     };
     var tMsg = formI18n[currentLang];
@@ -3231,8 +3200,8 @@ var ANNOUNCEMENT_CONFIG = {
       if(!emailInput) return true;
       var val = emailInput.value.trim();
       if(!val){
-        setFieldError(emailInput, 'error-email', tMsg.errEmailEmpty);
-        return false;
+        setFieldError(emailInput, 'error-email', '');
+        return true;
       }
       if(val.length > 254 || !emailRegex.test(val)){
         setFieldError(emailInput, 'error-email', tMsg.errEmailInvalid);
@@ -3276,6 +3245,16 @@ var ANNOUNCEMENT_CONFIG = {
       return true;
     }
 
+    function validatePrivacy(){
+      if(!privacyInput) return true;
+      if(!privacyInput.checked){
+        setFieldError(privacyInput, 'error-privacy', tMsg.errPrivacy);
+        return false;
+      }
+      setFieldError(privacyInput, 'error-privacy', '');
+      return true;
+    }
+
     if(nameInput){
       nameInput.addEventListener('blur', validateName);
       nameInput.addEventListener('input', function(){
@@ -3304,65 +3283,32 @@ var ANNOUNCEMENT_CONFIG = {
       });
     }
 
-    function hideNotice(){
-      if(!noticeEl) return;
-      noticeEl.hidden = true;
-      noticeEl.classList.remove('form-notice--success', 'form-notice--error');
-    }
-
-    var emailOperational = Boolean(window.PW_CONFIG && window.PW_CONFIG.EMAIL_OPERATIONAL === true);
-
-    function showNotice(type, title, text, showFallbackActions, nameVal, emailVal, phoneVal, msgVal){
-      if(!noticeEl) return;
-      noticeEl.hidden = false;
-      noticeEl.classList.remove('form-notice--success', 'form-notice--error', 'form-notice--info');
-      if(type === 'success') noticeEl.classList.add('form-notice--success');
-      else if(type === 'info') noticeEl.classList.add('form-notice--info');
-      else noticeEl.classList.add('form-notice--error');
-
-      if(noticeTitleEl) noticeTitleEl.textContent = title;
-      if(noticeTextEl) noticeTextEl.textContent = text;
-
-      if(noticeActionsEl){
-        if(showFallbackActions){
-          noticeActionsEl.hidden = false;
-          var subject = tMsg.subject + (nameVal || '');
-          var emailBody = tMsg.bodyName + (nameVal || '') + tMsg.bodyEmail + (emailVal || '') + (phoneVal ? (tMsg.bodyPhone + phoneVal) : '') + tMsg.bodyMsg + (msgVal || '');
-          var waBody = tMsg.waIntro + (nameVal || '') + '.' + (phoneVal ? (' (Tel: ' + phoneVal + ')') : '') + (emailVal ? (' (Email: ' + emailVal + ')') : '') + tMsg.waConsult + (msgVal || '');
-
-          if(emailActionBtn){
-            emailActionBtn.href = 'mailto:hola@physiowellness.es?subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(emailBody);
-          }
-          if(waActionBtn){
-            waActionBtn.href = 'https://wa.me/34644678344?text=' + encodeURIComponent(waBody);
-          }
-        }else{
-          noticeActionsEl.hidden = true;
-        }
-      }
-
-      noticeEl.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-    }
-
-    // Si el correu corporatiu està pendent de configuració, activar canal directe amb WhatsApp/Telèfon
-    if(!emailOperational){
-      showNotice('info', tMsg.directNoticeTitle, tMsg.directNoticeText, true);
+    if(privacyInput){
+      privacyInput.addEventListener('change', function(){
+        if(privacyInput.checked) validatePrivacy();
+      });
     }
 
     form.addEventListener('submit', function(e){
       e.preventDefault();
-      if(isSubmitting) return;
 
       var isNameValid = validateName();
       var isEmailValid = validateEmail();
       var isPhoneValid = validatePhone();
       var isMsgValid = validateMessage();
+      var isPrivacyValid = validatePrivacy();
 
-      if(!isNameValid || !isEmailValid || !isPhoneValid || !isMsgValid){
+      if(!isNameValid || !isEmailValid || !isPhoneValid || !isMsgValid || !isPrivacyValid){
         if(!isNameValid && nameInput) nameInput.focus();
         else if(!isEmailValid && emailInput) emailInput.focus();
         else if(!isPhoneValid && phoneInput) phoneInput.focus();
         else if(!isMsgValid && messageInput) messageInput.focus();
+        else if(!isPrivacyValid && privacyInput) privacyInput.focus();
+        return;
+      }
+
+      // Honeypot anti-spam para bots
+      if(hpInput && hpInput.value.trim()){
         return;
       }
 
@@ -3370,122 +3316,56 @@ var ANNOUNCEMENT_CONFIG = {
       var emailVal = emailInput ? emailInput.value.trim() : '';
       var phoneVal = phoneInput ? phoneInput.value.trim() : '';
       var msgVal = messageInput ? messageInput.value.trim() : '';
-      var hpVal = hpInput ? hpInput.value.trim() : '';
 
-      isSubmitting = true;
-      hideNotice();
+      // Formato ordenado, legible y profesional para el mensaje de WhatsApp
+      var lines = [
+        tMsg.waGreeting,
+        '',
+        '• ' + tMsg.waLabelName + ': ' + nameVal
+      ];
+      if(phoneVal){
+        lines.push('• ' + tMsg.waLabelPhone + ': ' + phoneVal);
+      }
+      if(emailVal){
+        lines.push('• ' + tMsg.waLabelEmail + ': ' + emailVal);
+      }
+      lines.push('');
+      lines.push('• ' + tMsg.waLabelMsg + ':');
+      lines.push(msgVal);
 
-      // Si el correu corporatiu encara no està operatiu, canalitzar directament a WhatsApp preservant les dades
-      if(!emailOperational){
-        var waMsg = tMsg.waIntro + (nameVal || '') + '.' + (phoneVal ? (' (Tel: ' + phoneVal + ')') : '') + (emailVal ? (' (Email: ' + emailVal + ')') : '') + tMsg.waConsult + (msgVal || '');
-        var waUrl = 'https://wa.me/34644678344?text=' + encodeURIComponent(waMsg);
-        
-        showNotice('success', tMsg.transferTitle, tMsg.transferMsg, true, nameVal, emailVal, phoneVal, msgVal);
-        if(waActionBtn) waActionBtn.href = waUrl;
-        try {
-          window.open(waUrl, '_blank', 'noopener');
-        } catch(e) {}
-        
-        if(submitBtn){
-          submitBtn.disabled = false;
-          submitBtn.classList.remove('is-loading');
-          submitBtn.removeAttribute('aria-busy');
+      var fullMessage = lines.join('\n');
+      var waUrl = 'https://wa.me/34644678344?text=' + encodeURIComponent(fullMessage);
+
+      // Abrir WhatsApp en nueva pestaña o aplicación nativa
+      window.open(waUrl, '_blank', 'noopener,noreferrer');
+
+      // Notificación informativa de estado (sin afirmar "Mensaje enviado" antes de que el usuario pulse Enviar en WhatsApp)
+      if(noticeEl){
+        noticeEl.hidden = false;
+        noticeEl.classList.remove('form-notice--success', 'form-notice--error');
+        noticeEl.classList.add('form-notice--info');
+
+        if(noticeTitleEl) noticeTitleEl.textContent = tMsg.noticeTitle;
+        if(noticeTextEl) noticeTextEl.textContent = tMsg.noticeText;
+
+        if(noticeActionsEl){
+          noticeActionsEl.hidden = false;
+          if(waActionBtn){
+            waActionBtn.href = waUrl;
+            waActionBtn.textContent = tMsg.btnSubmit;
+          }
         }
-        if(btnTextEl){
-          btnTextEl.textContent = tMsg.btnSubmit;
-        }
-        isSubmitting = false;
-        return;
+
+        noticeEl.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
       }
 
-      if(submitBtn){
-        submitBtn.disabled = true;
-        submitBtn.classList.add('is-loading');
-        submitBtn.setAttribute('aria-busy', 'true');
-      }
-      if(btnTextEl){
-        btnTextEl.textContent = tMsg.btnSending;
-      }
-
-      var payload = {
-        name: nameVal,
-        email: emailVal,
-        phone: phoneVal,
-        message: msgVal,
-        lang: currentLang,
-        website: hpVal
-      };
-
-      var endpointUrl = (window.__PW_API_URL__ || '/api/contact.php');
-
-      fetch(endpointUrl, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'X-Requested-With': 'XMLHttpRequest'
-        },
-        body: JSON.stringify(payload)
-      })
-      .then(function(res){
-        return res.json().then(function(data){
-          return { ok: res.ok, status: res.status, data: data };
-        }).catch(function(){
-          return { ok: res.ok, status: res.status, data: null };
+      if(typeof window.pwTrackEvent === 'function'){
+        window.pwTrackEvent('generate_lead', {
+          language: currentLang,
+          method: 'whatsapp',
+          cta_location: 'contact_form'
         });
-      })
-      .then(function(result){
-        var data = result.data;
-        if(result.ok && data && data.success){
-          // Envío con éxito confirmado
-          showNotice('success', tMsg.successTitle, tMsg.successMsg, false);
-          form.reset();
-          if(submitBtn){
-            submitBtn.disabled = false;
-            submitBtn.classList.remove('is-loading');
-            submitBtn.removeAttribute('aria-busy');
-          }
-          if(btnTextEl){
-            btnTextEl.textContent = tMsg.btnSubmit;
-          }
-          // Pendent per a la fase d'esdeveniments de negoci:
-          // window.PW_ANALYTICS.trackEvent('generate_lead', { language: currentLang, cta_location: 'contact_form' });
-        }else{
-          // Error devuelto por el servidor
-          if(submitBtn){
-            submitBtn.disabled = false;
-            submitBtn.classList.remove('is-loading');
-            submitBtn.removeAttribute('aria-busy');
-          }
-          if(btnTextEl){
-            btnTextEl.textContent = tMsg.btnSubmit;
-          }
-
-          if(data && data.errors){
-            if(data.errors.name && nameInput) setFieldError(nameInput, 'error-name', data.errors.name);
-            if(data.errors.email && emailInput) setFieldError(emailInput, 'error-email', data.errors.email);
-            if(data.errors.phone && phoneInput) setFieldError(phoneInput, 'error-phone', data.errors.phone);
-            if(data.errors.message && messageInput) setFieldError(messageInput, 'error-message', data.errors.message);
-          }
-
-          var errorMsg = (data && data.message) ? data.message : tMsg.errGeneral;
-          showNotice('error', tMsg.errTitle, errorMsg, true, nameVal, emailVal, phoneVal, msgVal);
-        }
-      })
-      .catch(function(err){
-        if(submitBtn){
-          submitBtn.disabled = false;
-          submitBtn.classList.remove('is-loading');
-          submitBtn.removeAttribute('aria-busy');
-        }
-        if(btnTextEl){
-          btnTextEl.textContent = tMsg.btnSubmit;
-        }
-        showNotice('error', tMsg.errTitle, tMsg.errGeneral, true, nameVal, emailVal, phoneVal, msgVal);
-      })
-      .finally(function(){
-        isSubmitting = false;
-      });
-
+      }
     });
 
   }catch(e){ console.warn('contactFormHandler', e); }
@@ -4531,12 +4411,24 @@ var ANNOUNCEMENT_CONFIG = {
         var newRole = targetItem.getAttribute('data-role') || '';
         var newDesc = targetItem.getAttribute('data-desc') || '';
 
+        var itemThumbImg = targetItem.querySelector('.equipment-showcase__item-thumb img');
+        var newWidth = targetItem.getAttribute('data-img-width') || (itemThumbImg ? itemThumbImg.getAttribute('width') : '') || '1200';
+        var newHeight = targetItem.getAttribute('data-img-height') || (itemThumbImg ? itemThumbImg.getAttribute('height') : '') || '900';
+
         function applyData(){
           if(heroImg){
             heroImg.src = newSrc;
             heroImg.alt = newAlt;
-            heroImg.removeAttribute('width');
-            heroImg.removeAttribute('height');
+            if(newWidth) {
+              heroImg.setAttribute('width', newWidth);
+            } else {
+              heroImg.removeAttribute('width');
+            }
+            if(newHeight) {
+              heroImg.setAttribute('height', newHeight);
+            } else {
+              heroImg.removeAttribute('height');
+            }
           }
           if(badgeEl) badgeEl.textContent = newBadge;
           if(nameEl) nameEl.textContent = newName;

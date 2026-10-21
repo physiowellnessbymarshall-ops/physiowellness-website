@@ -235,19 +235,53 @@
   }
 
   /**
-   * Construeix els paràmetres de la vista de pàgina actual
+   * Construeix els paràmetres de la vista de pàgina actual,
+   * garantint la neteja de qualsevol dada sensible o PII a la URL (query string).
    */
   function buildPageViewParams(customParams) {
+    var pagePath = (typeof window !== 'undefined' ? window.location.pathname : '');
+    var pageSearch = (typeof window !== 'undefined' ? window.location.search : '');
+    var cleanSearch = '';
+
+    if (pageSearch && pageSearch.length > 1) {
+      var pairs = pageSearch.substring(1).split('&');
+      var safePairs = [];
+      var sensitiveQueryKeys = [
+        'name', 'nom', 'nombre', 'email', 'mail', 'phone', 'tel', 'telefon', 'telefono',
+        'msg', 'message', 'missatge', 'mensaje', 'text', 'consulta', 'dni', 'nif', 'token', 'pass'
+      ];
+      for (var i = 0; i < pairs.length; i++) {
+        var pair = pairs[i].split('=');
+        var k = decodeURIComponent(pair[0] || '').toLowerCase();
+        var isSensitive = false;
+        for (var sk = 0; sk < sensitiveQueryKeys.length; sk++) {
+          if (k.indexOf(sensitiveQueryKeys[sk]) !== -1) {
+            isSensitive = true;
+            break;
+          }
+        }
+        if (!isSensitive) {
+          safePairs.push(pairs[i]);
+        }
+      }
+      if (safePairs.length > 0) {
+        cleanSearch = '?' + safePairs.join('&');
+      }
+    }
+
+    var cleanPath = pagePath + cleanSearch;
+    var cleanLocation = (typeof window !== 'undefined' ? (window.location.protocol + '//' + window.location.host + cleanPath) : '');
+
     var params = {
       page_title: (typeof document !== 'undefined' ? document.title : ''),
-      page_location: (typeof window !== 'undefined' ? window.location.href : ''),
-      page_path: (typeof window !== 'undefined' ? (window.location.pathname + window.location.search) : ''),
+      page_location: cleanLocation,
+      page_path: cleanPath,
       page_language: detectLanguage()
     };
     if (customParams && typeof customParams === 'object') {
-      for (var k in customParams) {
-        if (Object.prototype.hasOwnProperty.call(customParams, k)) {
-          params[k] = customParams[k];
+      for (var p in customParams) {
+        if (Object.prototype.hasOwnProperty.call(customParams, p)) {
+          params[p] = customParams[p];
         }
       }
     }

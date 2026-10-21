@@ -102,10 +102,10 @@ ErrorDocument 403 /404.html
     Header always set Permissions-Policy "geolocation=(), camera=(), microphone=(), payment=(), usb=()"
 
     # Content Security Policy (protects against XSS/injections while fully supporting existing assets, Google Maps embeds & GA4 after consent)
-    Header always set Content-Security-Policy "default-src 'self'; script-src 'self' 'unsafe-inline' https://www.googletagmanager.com; style-src 'self' https://fonts.googleapis.com 'unsafe-inline'; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: https: https://*.google-analytics.com https://*.googletagmanager.com; media-src 'self'; frame-src 'self' https://www.google.com https://maps.google.com; connect-src 'self' https://*.google-analytics.com https://*.analytics.google.com https://*.googletagmanager.com; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'self'; upgrade-insecure-requests"
+    Header always set Content-Security-Policy "default-src 'self'; script-src 'self' 'unsafe-inline' https://www.googletagmanager.com; style-src 'self' https://fonts.googleapis.com 'unsafe-inline'; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: https: https://*.google-analytics.com https://*.googletagmanager.com; media-src 'self'; frame-src 'self' https://www.google.com https://maps.google.com; connect-src 'self' https://*.google-analytics.com https://*.analytics.google.com https://*.googletagmanager.com; object-src 'none'; base-uri 'self'; form-action 'self' https://wa.me https://api.whatsapp.com; frame-ancestors 'self'; upgrade-insecure-requests"
 
     # HTML & Client Runtime Config Caching: Always revalidate so releases are immediately live
-    <FilesMatch "(analytics-config\.js|\.(html|htm))$">
+    <FilesMatch "(analytics(-config)?\.js|\.(html|htm))$">
         Header set Cache-Control "no-cache, must-revalidate"
     </FilesMatch>
 

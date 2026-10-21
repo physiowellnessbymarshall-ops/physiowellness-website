@@ -11,6 +11,9 @@
  * - Sense dominis hardcodejats: compatible amb dominis temporals de Hostinger i domini definitiu.
  * - Resolució dinàmica del Measurement ID (sense IDs hardcodejats al codi).
  * - Multi-idioma: distingeix automàticament visites en CA, ES i EN.
+ * - Gestió robusta de visitants recurrents (Consent Mode actualitzat a 'granted' automàticament).
+ * - Prevenció de duplicació de page_view i cua segura de callbacks de càrrega.
+ * - Sanitització estricta contra dades personals (PII) o informació clínica sensible.
  * ==============================================================================
  */
 
@@ -41,8 +44,10 @@
     measurementId: '',
     scriptLoaded: false,
     scriptLoading: false,
+    pendingCallbacks: [],
     consentGranted: false,
     pageViewSent: false,
+    autoTrackingInitialized: false,
     debug: false
   };
 
@@ -260,6 +265,10 @@
       return;
     }
 
+    if (typeof callback === 'function') {
+      state.pendingCallbacks.push(callback);
+    }
+
     if (state.scriptLoading) {
       return;
     }
@@ -296,14 +305,199 @@
         send_page_view: false
       });
       if (isDebug()) console.info('[PW_ANALYTICS] Google Analytics 4 carregat amb èxit (' + state.measurementId + ')');
-      if (typeof callback === 'function') callback();
+
+      var cbs = state.pendingCallbacks.slice();
+      state.pendingCallbacks = [];
+      for (var i = 0; i < cbs.length; i++) {
+        try {
+          cbs[i]();
+        } catch (e) {
+          if (isDebug()) console.error('[PW_ANALYTICS] Error executant callback de càrrega:', e);
+        }
+      }
     };
     script.onerror = function (err) {
       state.scriptLoading = false;
+      state.pendingCallbacks = [];
       if (isDebug()) console.error('[PW_ANALYTICS] Error carregant script de Google Tag:', err);
     };
 
     document.head.appendChild(script);
+  }
+
+  // ============================================================================
+  // AUTO-TRACKING DE CONVERSIONS I ENLLAÇOS EXTERNS
+  // ============================================================================
+
+  /**
+   * Determina la ubicació contextual d'un element clicat (hero, panell, footer, etc.)
+   */
+  function detectCtaLocation(el) {
+    if (!el || typeof el.closest !== 'function') return 'in_page_content';
+    if (el.closest('#booking-panel') || el.closest('.booking-panel')) return 'booking_panel';
+    if (el.closest('.book-bar')) return 'sticky_mobile_bar';
+    if (el.closest('#site-header') || el.closest('.site-header') || el.closest('.header')) return 'header';
+    if (el.closest('.service-hero') || el.closest('.hero')) return 'hero';
+    if (el.closest('.site-footer') || el.closest('.footer') || el.closest('.footer-cta') || el.closest('.cta-final')) return 'footer';
+    if (el.closest('.contact-hero')) return 'contact_hero';
+    if (el.closest('.contact-guide')) return 'contact_guide';
+    if (el.closest('.contact-info')) return 'contact_info';
+    if (el.closest('.contact-form-card') || el.closest('#contact-form')) return 'contact_form';
+    if (el.closest('.stretching-rates') || el.closest('.strength-rate-card') || el.closest('.domicilio-plan') || el.closest('.pricing-table')) return 'pricing_section';
+    if (el.closest('.service-process') || el.closest('.visit-breakdown')) return 'service_process';
+    if (el.closest('.team-profile') || el.closest('.team-card') || el.closest('.equipo-explorador')) return 'team_section';
+    if (el.closest('.faq-section') || el.closest('.faq')) return 'faq';
+    return 'in_page_content';
+  }
+
+  /**
+   * Determina el servei associat a la pàgina o enllaç
+   */
+  function detectServiceContext(url, el) {
+    // 1. Targeta o secció pare amb id o data-service
+    if (el && typeof el.closest === 'function') {
+      var serviceEl = el.closest('[data-service], .service-panel, .service-card, .service-section, article[id]');
+      if (serviceEl) {
+        var sId = (serviceEl.getAttribute('data-service') || serviceEl.id || '').toLowerCase();
+        if (sId.indexOf('domicil') !== -1 || sId.indexOf('home') !== -1) return 'fisioterapia_domicili';
+        if (sId.indexOf('physio') !== -1 || sId.indexOf('fisio') !== -1) return 'fisioterapia';
+        if (sId.indexOf('pilates') !== -1) return 'pilates';
+        if (sId.indexOf('strength') !== -1 || sId.indexOf('forca') !== -1 || sId.indexOf('fuerza') !== -1) return 'forca';
+        if (sId.indexOf('wellness') !== -1 || sId.indexOf('benestar') !== -1 || sId.indexOf('bienestar') !== -1) return 'benestar';
+        if (sId.indexOf('stretching') !== -1) return 'stretching';
+        if (sId.indexOf('snow') !== -1) return 'snow_performance';
+      }
+    }
+
+    // 2. Text del missatge a l'enllaç de WhatsApp
+    if (url && typeof url === 'string') {
+      var decodedUrl = '';
+      try {
+        decodedUrl = decodeURIComponent(url).toLowerCase();
+      } catch (e) {
+        decodedUrl = url.toLowerCase();
+      }
+      if (decodedUrl.indexOf('domicili') !== -1 || decodedUrl.indexOf('domicilio') !== -1 || decodedUrl.indexOf('home physio') !== -1) return 'fisioterapia_domicili';
+      if (decodedUrl.indexOf('fisioterapia') !== -1 || decodedUrl.indexOf('physiotherapy') !== -1) return 'fisioterapia';
+      if (decodedUrl.indexOf('pilates') !== -1) return 'pilates';
+      if (decodedUrl.indexOf('força') !== -1 || decodedUrl.indexOf('forca') !== -1 || decodedUrl.indexOf('fuerza') !== -1 || decodedUrl.indexOf('strength') !== -1) return 'forca';
+      if (decodedUrl.indexOf('benestar') !== -1 || decodedUrl.indexOf('bienestar') !== -1 || decodedUrl.indexOf('wellness') !== -1) return 'benestar';
+      if (decodedUrl.indexOf('stretching') !== -1) return 'stretching';
+      if (decodedUrl.indexOf('snow') !== -1) return 'snow_performance';
+    }
+
+    // 3. Ruta de la pàgina (URL actual)
+    var path = (typeof window !== 'undefined' ? window.location.pathname.toLowerCase() : '');
+    if (path.indexOf('fisioterapia-a-domicili') !== -1 || path.indexOf('fisioterapia-a-domicilio') !== -1 || path.indexOf('home-physiotherapy') !== -1) return 'fisioterapia_domicili';
+    if (path.indexOf('fisioterapia') !== -1 || path.indexOf('physiotherapy') !== -1) return 'fisioterapia';
+    if (path.indexOf('pilates') !== -1) return 'pilates';
+    if (path.indexOf('forca') !== -1 || path.indexOf('fuerza') !== -1 || path.indexOf('strength') !== -1) return 'forca';
+    if (path.indexOf('benestar') !== -1 || path.indexOf('bienestar') !== -1 || path.indexOf('wellness') !== -1) return 'benestar';
+    if (path.indexOf('stretching') !== -1) return 'stretching';
+    if (path.indexOf('snow-performance') !== -1) return 'snow_performance';
+    if (path.indexOf('primera-visita') !== -1 || path.indexOf('first-visit') !== -1) return 'primera_visita';
+    if (path.indexOf('tarif') !== -1 || path.indexOf('rates') !== -1) return 'tarifes';
+    if (path.indexOf('equip') !== -1 || path.indexOf('equipo') !== -1 || path.indexOf('team') !== -1) return 'equip';
+    if (path.indexOf('contact') !== -1) return 'contacte';
+    return 'general';
+  }
+
+  /**
+   * Configura el seguiment automàtic delegat de clics a reserves (DocFav), WhatsApp i telèfon
+   */
+  function setupAutoTracking() {
+    if (typeof document === 'undefined' || typeof document.addEventListener !== 'function') return;
+    if (state.autoTrackingInitialized) return;
+    state.autoTrackingInitialized = true;
+
+    document.addEventListener('click', function (e) {
+      var link = e.target && typeof e.target.closest === 'function' ? e.target.closest('a') : null;
+      if (!link) return;
+
+      var href = (link.getAttribute('href') || '').trim();
+      if (!href) return;
+
+      var linkText = (link.textContent || '').trim().replace(/\s+/g, ' ').slice(0, 80);
+      var locationContext = detectCtaLocation(link);
+      var serviceContext = detectServiceContext(href, link);
+
+      // 1. Clics a DocFav (Reserva externa / Intenció de reserva)
+      if (href.indexOf('docfav.com') !== -1) {
+        trackEvent('click_docfav', {
+          event_category: 'booking_intent',
+          destination: 'docfav',
+          booking_channel: 'docfav_portal',
+          cta_text: linkText,
+          cta_location: locationContext,
+          service: serviceContext,
+          page_path: (typeof window !== 'undefined' ? window.location.pathname : '')
+        });
+        return;
+      }
+
+      // 2. Clics a WhatsApp
+      if (href.indexOf('wa.me') !== -1 || href.indexOf('whatsapp.com') !== -1) {
+        trackEvent('click_whatsapp', {
+          event_category: 'contact_intent',
+          contact_channel: 'whatsapp',
+          destination_number: '+34644678344',
+          cta_text: linkText,
+          cta_location: locationContext,
+          service: serviceContext,
+          page_path: (typeof window !== 'undefined' ? window.location.pathname : '')
+        });
+        return;
+      }
+
+      // 3. Clics a Telèfon
+      if (href.indexOf('tel:') === 0) {
+        trackEvent('click_phone', {
+          event_category: 'contact_intent',
+          contact_channel: 'phone',
+          phone_number: '+34644678344',
+          cta_text: linkText,
+          cta_location: locationContext,
+          service: serviceContext,
+          page_path: (typeof window !== 'undefined' ? window.location.pathname : '')
+        });
+        return;
+      }
+    }, true);
+  }
+
+  /**
+   * Sanititza els paràmetres d'esdeveniments per garantir l'absència de dades personals (PII)
+   * o informació clínica sensible.
+   */
+  function sanitizeEventParams(params) {
+    if (!params || typeof params !== 'object') return {};
+    var sanitized = {};
+    var sensitiveKeys = [
+      'name', 'nom', 'nombre', 'email', 'mail', 'phone', 'tel', 'telefon', 'telefono',
+      'message', 'missatge', 'mensaje', 'consulta', 'medical', 'clinical', 'symptom',
+      'simptoma', 'sintoma', 'dni', 'nif', 'password', 'pass', 'address', 'adreca', 'direccion'
+    ];
+    for (var k in params) {
+      if (Object.prototype.hasOwnProperty.call(params, k)) {
+        var lower = k.toLowerCase();
+        // Permetem exclusivament els identificadors oficials del centre
+        if (lower === 'destination_number' || lower === 'phone_number') {
+          sanitized[k] = params[k];
+          continue;
+        }
+        var isSensitive = false;
+        for (var i = 0; i < sensitiveKeys.length; i++) {
+          if (lower.indexOf(sensitiveKeys[i]) !== -1) {
+            isSensitive = true;
+            break;
+          }
+        }
+        if (!isSensitive) {
+          sanitized[k] = params[k];
+        }
+      }
+    }
+    return sanitized;
   }
 
   // ============================================================================
@@ -323,17 +517,22 @@
 
     state.measurementId = resolveMeasurementId(options.measurementId);
 
-    // 1. Aplicar estat de Consent Mode per defecte ('denied')
+    // 1. Aplicar estat de Consent Mode per defecte ('denied' a tot)
     setDefaultConsentState();
 
     // 2. Comprovar si ja hi ha consentiment previ desat
     var stored = getStoredConsent();
     if (stored && stored.analytics === true) {
       state.consentGranted = true;
+      setupGtagShim();
+      // Actualitzem Consent Mode a 'granted' per a usuaris amb decisió prèvia
+      window.gtag('consent', 'update', {
+        'analytics_storage': 'granted'
+      });
       // Només si tenim un ID vàlid i no estem en localhost carreguem GA4
       if (state.measurementId && !isLocalhost()) {
         loadGoogleTag(function () {
-          // Registrar page view inicial un cop carregat
+          // Registrar un únic page view inicial un cop carregat
           trackPageView();
         });
       } else if (isDebug()) {
@@ -342,6 +541,9 @@
     } else {
       state.consentGranted = false;
     }
+
+    // 3. Configurar seguiment automàtic delegat per a DocFav, WhatsApp i Telèfon
+    setupAutoTracking();
 
     state.initialized = true;
 
@@ -368,10 +570,17 @@
       return false;
     }
 
+    // Evita duplicació de page_view inicial a la mateixa càrrega de pàgina
+    if (state.pageViewSent && !customParams) {
+      if (isDebug()) console.info('[PW_ANALYTICS] trackPageView omès: vista de pàgina ja enviada');
+      return true;
+    }
+
     var params = buildPageViewParams(customParams);
 
     if (isLocalhost()) {
       if (isDebug()) console.info('[PW_ANALYTICS:localhost] Simulant page_view (bloquejat enviament real):', params);
+      state.pageViewSent = true;
       return true;
     }
 
@@ -398,7 +607,7 @@
   /**
    * Registra un esdeveniment personalitzat a GA4
    *
-   * @param {string} eventName Nom de l'esdeveniment (ex: 'generate_lead')
+   * @param {string} eventName Nom de l'esdeveniment (ex: 'click_whatsapp')
    * @param {Object} [params] Paràmetres addicionals de l'esdeveniment
    * @returns {boolean} True si s'ha processat, false si s'ha omès
    */
@@ -419,6 +628,9 @@
       params.language = detectLanguage();
     }
 
+    // Filtre de seguretat RGPD
+    params = sanitizeEventParams(params);
+
     if (isLocalhost()) {
       if (isDebug()) console.info('[PW_ANALYTICS:localhost] Simulant event "' + eventName + '" (bloquejat enviament real):', params);
       return true;
@@ -437,7 +649,21 @@
     }
 
     setupGtagShim();
-    window.gtag('event', eventName, params);
+    // Prevenim duplicació si GTM està present
+    var hasGtm = typeof window !== 'undefined' && Boolean(window.google_tag_manager);
+    if (hasGtm) {
+      try {
+        var dlPayload = { event: eventName };
+        for (var k in params) {
+          if (Object.prototype.hasOwnProperty.call(params, k)) {
+            dlPayload[k] = params[k];
+          }
+        }
+        window.dataLayer.push(dlPayload);
+      } catch (e) {}
+    } else {
+      window.gtag('event', eventName, params);
+    }
 
     if (isDebug()) console.info('[PW_ANALYTICS] Event enviat:', eventName, params);
     return true;
@@ -469,7 +695,6 @@
     }
 
     if (!state.measurementId) {
-      // Intenta resoldre de nou per si s'ha definit després
       state.measurementId = resolveMeasurementId();
     }
 
@@ -497,6 +722,7 @@
     var persist = options.persist !== false;
 
     state.consentGranted = false;
+    state.pageViewSent = false;
 
     setupGtagShim();
     window.gtag('consent', 'update', {
@@ -565,6 +791,7 @@
   var publicApi = {
     init: initAnalytics,
     initAnalytics: initAnalytics,
+    setupAutoTracking: setupAutoTracking,
     trackPageView: trackPageView,
     trackEvent: trackEvent,
     grantAnalyticsConsent: grantAnalyticsConsent,

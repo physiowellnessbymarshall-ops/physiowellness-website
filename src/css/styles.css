@@ -1889,12 +1889,15 @@ a:focus-visible,button:focus-visible,input:focus-visible{
 .team{padding-block:clamp(7.5rem,11vw,10.5rem) var(--sp-24);background:var(--pw-white);}
 .team__head{max-width:40rem;margin-bottom:var(--sp-12);}
 .team__grid{display:grid;gap:var(--sp-10);grid-template-columns:1fr;}
-@media (min-width:640px){ .team__grid{grid-template-columns:repeat(2,1fr);} }
+/* Tres profesionales (nov. 2026): tres columnas en escritorio con el retrato
+   encima del texto; en tablet, una columna de fichas horizontales (retrato
+   38% + texto) para que las fotos no queden pequeñas; en móvil, apilado. */
+@media (min-width:1024px){ .team__grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:var(--sp-8);} }
 .team-card{display:flex;flex-direction:column;gap:var(--sp-4);}
 .team-card__media{aspect-ratio:3/4;overflow:hidden;background:var(--pw-mist);}
 .team-card__media picture{display:block;width:100%;height:100%;}
 .team-card__media img{display:block;width:100%;height:100%;object-fit:cover;object-position:center 15%;}
-@media (min-width:640px){
+@media (min-width:640px) and (max-width:1023px){
   .team-card{flex-direction:row;align-items:flex-start;gap:var(--sp-6);}
   .team-card__media{flex:0 0 38%;}
   .team-card__body{flex:1 1 auto;padding-top:.2rem;}
@@ -7866,10 +7869,14 @@ a:not(.booking-panel__help):focus-visible,
   grid-template-columns:1fr;
   gap:var(--sp-3);
 }
+/* Tres profesionales (nov. 2026): una fila de tres en tablet, sin dejar una
+   pestaña huérfana; el rol puede pasar a dos líneas en vez de recortarse. */
 @media (min-width:640px) and (max-width:859px){
   .team-explorer__nav{
-    grid-template-columns:1fr 1fr;
+    grid-template-columns:repeat(3,minmax(0,1fr));
   }
+  .team-explorer__nav .team-explorer__tab{align-items:flex-start;}
+  .team-explorer__nav .team-explorer__tab-role{white-space:normal;}
 }
 @media (min-width:860px){
   .team-explorer__nav{

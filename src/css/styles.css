@@ -2473,21 +2473,21 @@ a:focus-visible,button:focus-visible,input:focus-visible{
 .testimonials__photo-layer img.testimonials__img--tamas,
 .testimonials__item-media img.testimonials__img--tamas{
   object-fit:cover;
-  object-position:center 20%;
+  object-position:center 15%;
 }
 
 .testimonials__img--jorge,
 .testimonials__photo-layer img.testimonials__img--jorge,
 .testimonials__item-media img.testimonials__img--jorge{
   object-fit:cover;
-  object-position:center 10%;
+  object-position:center 12%;
 }
 
 .testimonials__img--david,
 .testimonials__photo-layer img.testimonials__img--david,
 .testimonials__item-media img.testimonials__img--david{
   object-fit:cover;
-  object-position:center 24%;
+  object-position:center 10%;
 }
 
 /* Columna 2: Contenido editorial */
@@ -2887,12 +2887,15 @@ a:focus-visible,button:focus-visible,input:focus-visible{
   .testimonials__sticky{
     align-items:center;
     justify-content:center;
-    padding-bottom:calc(72px + env(safe-area-inset-bottom, 0px)); /* Reserva espacio para .book-bar fijo */
+    padding-top:clamp(0.5rem, 2svh, 1rem);
+    padding-bottom:calc(76px + env(safe-area-inset-bottom, 0px)); /* Reserva espacio para .book-bar fijo */
   }
 
   .testimonials__layout{
     display:flex;
     flex-direction:column;
+    max-width:440px;
+    margin-inline:auto;
     gap:var(--sp-3);
   }
 
@@ -2902,22 +2905,25 @@ a:focus-visible,button:focus-visible,input:focus-visible{
   }
 
   .testimonials__stage{
-    aspect-ratio:auto;
-    height:clamp(135px, 22svh, 210px);
-    width:100%;
+    aspect-ratio:4 / 4.6;
+    width:clamp(210px, 58vw, 250px);
+    height:auto;
+    max-height:clamp(210px, 30svh, 260px);
+    margin-inline:auto;
+    border-radius:var(--radius, 2px);
   }
 
   .testimonials__text-stage{
-    min-height:190px;
+    min-height:180px;
   }
 
   .testimonials__quote-wrap{
-    margin:0 0 var(--sp-3);
+    margin:0 0 var(--sp-2);
   }
 
   .testimonials__quote{
-    font-size:clamp(.92rem, 3.2vw, 1.05rem);
-    line-height:1.46;
+    font-size:clamp(.90rem, 3.1vw, 1.02rem);
+    line-height:1.45;
   }
 
   .testimonials__quote[data-clamped]{
@@ -2928,12 +2934,12 @@ a:focus-visible,button:focus-visible,input:focus-visible{
   .testimonials__meta{
     font-size:.75rem;
     flex-wrap:wrap;
-    padding-top:var(--sp-3);
+    padding-top:var(--sp-2);
   }
 
   .testimonials__footer{
-    margin-top:var(--sp-3);
-    padding-top:var(--sp-3);
+    margin-top:var(--sp-2);
+    padding-top:var(--sp-2);
   }
 
   .testimonials__item{
@@ -2943,9 +2949,12 @@ a:focus-visible,button:focus-visible,input:focus-visible{
   }
 
   .testimonials__item-media{
-    aspect-ratio:auto;
-    height:clamp(135px, 22svh, 210px);
-    width:100%;
+    aspect-ratio:4 / 4.6;
+    width:clamp(210px, 58vw, 250px);
+    height:auto;
+    max-height:clamp(210px, 30svh, 260px);
+    margin-inline:auto;
+    border-radius:var(--radius, 2px);
   }
 }
 

@@ -21,7 +21,7 @@ var prefersReducedMotion = window.matchMedia && window.matchMedia('(prefers-redu
     var fullSrc = scriptEl ? scriptEl.src : '';
     var basePath = fullSrc ? fullSrc.substring(0, fullSrc.lastIndexOf('/')) : '';
     var prefix = basePath ? basePath + '/' : '/src/js/';
-    var v = 'v=7';
+    var v = 'v=5';
 
     function loadScript(src, cb) {
       var s = document.createElement('script');
@@ -579,15 +579,28 @@ var ANNOUNCEMENT_CONFIG = {
         if(btn) btn.setAttribute('aria-pressed', selected ? 'true' : 'false');
       });
 
-      if(contextTitle) contextTitle.textContent = area;
+      var docLang = (document.documentElement.lang || 'es').toLowerCase();
+      var displayArea = area;
+      if(area === 'Physiotherapy' || area === 'Fisioteràpia' || area === 'Fisioterapia'){
+        displayArea = docLang.startsWith('ca') ? 'Fisioteràpia' : (docLang.startsWith('en') ? 'Physiotherapy' : 'Fisioterapia');
+      } else if(area === 'Strength' || area === 'Força' || area === 'Fuerza'){
+        displayArea = docLang.startsWith('ca') ? 'Força' : (docLang.startsWith('en') ? 'Strength' : 'Fuerza');
+      } else if(area === 'Wellness' || area === 'Benestar' || area === 'Bienestar'){
+        displayArea = docLang.startsWith('ca') ? 'Benestar' : (docLang.startsWith('en') ? 'Wellness' : 'Bienestar');
+      } else if(area === 'Stretching' || area === 'Estiraments' || area === 'Estiramientos'){
+        displayArea = 'Stretching';
+      } else if(area === 'Pilates'){
+        displayArea = 'Pilates';
+      }
+
+      if(contextTitle) contextTitle.textContent = displayArea;
       if(contextText) contextText.textContent = desc;
       if(contextCta){
-        var docLang = (document.documentElement.lang || 'es').toLowerCase();
-        var displayArea = area;
-        if(area === 'Physiotherapy'){
-          displayArea = docLang.startsWith('ca') ? 'Fisioteràpia' : (docLang.startsWith('en') ? 'Physiotherapy' : 'Fisioterapia');
+        var prep = ' de ';
+        if(docLang.startsWith('ca') && (displayArea.startsWith('E') || displayArea.startsWith('A') || displayArea.startsWith('I') || displayArea.startsWith('O') || displayArea.startsWith('U'))){
+          prep = " d'";
         }
-        var ctaText = docLang.startsWith('ca') ? ('Veure tarifes de ' + displayArea) : (docLang.startsWith('en') ? ('View rates for ' + displayArea) : ('Ver tarifas de ' + displayArea));
+        var ctaText = docLang.startsWith('ca') ? ('Veure tarifes' + prep + displayArea) : (docLang.startsWith('en') ? ('View rates for ' + displayArea) : ('Ver tarifas de ' + displayArea));
         contextCta.textContent = ctaText;
         contextCta.href = '#en-la-clinica';
         contextCta.removeAttribute('target');

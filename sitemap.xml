@@ -2,21 +2,11 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
         xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>https://physiowellness.es/</loc>
-    <xhtml:link rel="alternate" hreflang="es" href="https://physiowellness.es/es/"/>
-    <xhtml:link rel="alternate" hreflang="ca" href="https://physiowellness.es/ca/"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://physiowellness.es/en/"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://physiowellness.es/"/>
-    <lastmod>2026-09-24</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>1.0</priority>
-  </url>
-  <url>
     <loc>https://physiowellness.es/es/</loc>
     <xhtml:link rel="alternate" hreflang="es" href="https://physiowellness.es/es/"/>
     <xhtml:link rel="alternate" hreflang="ca" href="https://physiowellness.es/ca/"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://physiowellness.es/en/"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://physiowellness.es/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://physiowellness.es/es/"/>
     <lastmod>2026-09-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
@@ -26,7 +16,7 @@
     <xhtml:link rel="alternate" hreflang="es" href="https://physiowellness.es/es/"/>
     <xhtml:link rel="alternate" hreflang="ca" href="https://physiowellness.es/ca/"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://physiowellness.es/en/"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://physiowellness.es/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://physiowellness.es/es/"/>
     <lastmod>2026-09-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
@@ -36,7 +26,7 @@
     <xhtml:link rel="alternate" hreflang="es" href="https://physiowellness.es/es/"/>
     <xhtml:link rel="alternate" hreflang="ca" href="https://physiowellness.es/ca/"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://physiowellness.es/en/"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://physiowellness.es/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://physiowellness.es/es/"/>
     <lastmod>2026-09-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>

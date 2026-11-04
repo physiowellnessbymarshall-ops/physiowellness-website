@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Tarifes de Fisioteràpia i Moviment a Sitges | Physio Wellness</title>
-<meta name="description" content="Tarifes transparents de Physio Wellness a Sitges: sessió inicial de 60 min i seguiments de 30 o 50 min, a la clínica o a domicili. Sense sorpreses.">
+<title>Tarifes de Fisioteràpia i Pilates Reformer a Sitges | Physio Wellness</title>
+<meta name="description" content="Tarifes de Physio Wellness a Sitges: fisioteràpia a la clínica o a domicili i Pilates Reformer 1:1 i Duo de 45 min, amb bons propis. Sense sorpreses.">
 <link rel="canonical" href="https://physiowellness.es/ca/tarifes/">
 <link rel="alternate" hreflang="es" href="https://physiowellness.es/es/tarifas/">
 <link rel="alternate" hreflang="ca" href="https://physiowellness.es/ca/tarifes/">
@@ -14,22 +14,22 @@
 <!-- Open Graph / Facebook -->
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Physio Wellness by Marshall">
-<meta property="og:title" content="Tarifes de Fisioteràpia i Moviment a Sitges | Physio Wellness">
-<meta property="og:description" content="Tarifes transparents de Physio Wellness a Sitges: sessió inicial de 60 min i seguiments de 30 o 50 min, a la clínica o a domicili. Sense sorpreses.">
+<meta property="og:title" content="Tarifes de Fisioteràpia i Pilates Reformer a Sitges | Physio Wellness">
+<meta property="og:description" content="Tarifes de Physio Wellness a Sitges: fisioteràpia a la clínica o a domicili i Pilates Reformer 1:1 i Duo de 45 min, amb bons propis. Sense sorpreses.">
 <meta property="og:url" content="https://physiowellness.es/ca/tarifes/">
 <meta property="og:image" content="https://physiowellness.es/src/assets/img/local/local-recepcion-1440.webp">
 <meta property="og:locale" content="ca_ES">
 
 <!-- Twitter / X -->
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Tarifes de Fisioteràpia i Moviment a Sitges | Physio Wellness">
-<meta name="twitter:description" content="Tarifes transparents de Physio Wellness a Sitges: sessió inicial de 60 min i seguiments de 30 o 50 min, a la clínica o a domicili. Sense sorpreses.">
+<meta name="twitter:title" content="Tarifes de Fisioteràpia i Pilates Reformer a Sitges | Physio Wellness">
+<meta name="twitter:description" content="Tarifes de Physio Wellness a Sitges: fisioteràpia a la clínica o a domicili i Pilates Reformer 1:1 i Duo de 45 min, amb bons propis. Sense sorpreses.">
 <meta name="twitter:image" content="https://physiowellness.es/src/assets/img/local/local-recepcion-1440.webp">
 <link rel="icon" href="../../src/assets/img/logo-icon-black.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Jost:wght@400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="../../src/css/styles.css?v=6">
+<link rel="stylesheet" href="../../src/css/styles.css?v=8">
 <!-- FASE 4: [data-reveal] (§7 de styles.css, compartido con Home) parte de
 opacity:0 y depende de main.js para mostrarse. Si JavaScript está
 desactivado del todo (no solo falla), nunca se añade la clase
@@ -169,8 +169,8 @@ inaccesible. Se muestra siempre en ese caso; los acordeones nativos
       "@type": "WebPage",
       "@id": "https://physiowellness.es/ca/tarifes/#webpage",
       "url": "https://physiowellness.es/ca/tarifes/",
-      "name": "Tarifes de Fisioteràpia i Moviment a Sitges | Physio Wellness",
-      "description": "Tarifes transparents de Physio Wellness a Sitges: sessió inicial de 60 min i seguiments de 30 o 50 min, a la clínica o a domicili. Sense sorpreses.",
+      "name": "Tarifes de Fisioteràpia i Pilates Reformer a Sitges | Physio Wellness",
+      "description": "Tarifes de Physio Wellness a Sitges: fisioteràpia a la clínica o a domicili i Pilates Reformer 1:1 i Duo de 45 min, amb bons propis. Sense sorpreses.",
       "inLanguage": "ca",
       "isPartOf": {
         "@id": "https://physiowellness.es/#website"
@@ -438,16 +438,18 @@ inaccesible. Se muestra siempre en ese caso; los acordeones nativos
           </ul>
         </article>
       </div>
+
+      <!-- Pilates Reformer no requiere primera visita. -->
+      <p class="pre-choice__note" data-reveal style="--i:2">Vens a Pilates Reformer? No cal primera visita: reserva directament una sessió o un bo. <a href="#pilates-reformer">Veure tarifes de Pilates Reformer</a></p>
     </div>
   </section>
 
   <!-- ============ Elige tu área ============
-       Selector accesible: Fisioterapia, Bienestar, Fuerza, Pilates y
-       Stretching comparten la misma tarifa en clínica (confirmado por el
-       cliente; pendiente de reflejarse en el PDF oficial "PRECIOS 2026"
-       cuando se actualice — ver src/content/tarifas.md). Las cinco tarjetas
-       funcionan de forma idéntica: mismo CTA ("Ver tarifas", enlazando a
-       #en-la-clinica). Cada panel es un botón (aria-pressed) que marca el
+       Selector accesible: Fisioterapia, Bienestar, Fuerza y Stretching
+       comparten la misma tarifa en clínica (ver src/content/tarifas.md);
+       Pilates Reformer tiene tarifa propia (nov. 2026). Las tarjetas
+       enlazan a #en-la-clinica, salvo Pilates, que enlaza a
+       #pilates-reformer (main.js lee el href de cada tarjeta). Cada panel es un botón (aria-pressed) que marca el
        área activa y actualiza el panel de contexto lateral/apilado; los
        enlaces de cada panel siguen siendo <a> reales, así que funcionan sin
        JavaScript. -->
@@ -455,7 +457,7 @@ inaccesible. Se muestra siempre en ese caso; los acordeones nativos
     <div class="container">
       <div class="area-select__head" data-reveal>
         <h2 class="section-heading">Tria la teva àrea</h2>
-        <p class="section-lead">Fisioteràpia, Benestar, Força, Pilates i Stretching comparteixen la mateixa tarifa a la clínica. Tria la teva àrea per veure els preus.</p>
+        <p class="section-lead">Fisioteràpia, Benestar, Força i Stretching comparteixen la mateixa tarifa a la clínica. Pilates Reformer té tarifes pròpies. Tria la teva àrea per veure els preus.</p>
       </div>
 
       <div class="area-select__layout">
@@ -528,7 +530,7 @@ inaccesible. Se muestra siempre en ese caso; los acordeones nativos
                 Seleccionada
               </span>
               <span class="area-tile__text">Millorar control, mobilitat, estabilitat i alineació.</span>
-              <a class="area-tile__cta" href="#en-la-clinica">Veure tarifes <svg width="14" height="10" viewBox="0 0 14 10" fill="none" aria-hidden="true"><path d="M1 5h12M8 1l4 4-4 4" stroke="currentColor" stroke-width="1.4"/></svg></a>
+              <a class="area-tile__cta" href="#pilates-reformer">Veure tarifes <svg width="14" height="10" viewBox="0 0 14 10" fill="none" aria-hidden="true"><path d="M1 5h12M8 1l4 4-4 4" stroke="currentColor" stroke-width="1.4"/></svg></a>
             </span>
           </div>
 
@@ -563,8 +565,8 @@ inaccesible. Se muestra siempre en ese caso; los acordeones nativos
 
   <!-- ============ 01 — En la clínica ============
        Panel único de tarifas en clínica: fuente de los precios que enlazan
-       las cinco tarjetas de "Elige tu área" (Fisioterapia, Bienestar,
-       Fuerza, Pilates y Stretching). Cifras y condiciones según PRECIOS
+       cuatro tarjetas de "Elige tu área" (Fisioterapia, Bienestar, Fuerza
+       y Stretching). Pilates Reformer tiene su propia sección (02). Cifras y condiciones según PRECIOS
        2026 (src/content/tarifas.md); la inclusión de Stretching en esta
        misma tarifa es una decisión de negocio confirmada por el cliente,
        pendiente de reflejarse en el PDF oficial cuando se actualice. -->
@@ -573,10 +575,10 @@ inaccesible. Se muestra siempre en ese caso; los acordeones nativos
       <div class="rates__head" data-reveal>
         <p class="eyebrow section-eyebrow">01 — A la clínica</p>
         <h2 class="section-heading">Sessions presencials</h2>
-        <p class="section-lead rates__lead">Mateixa tarifa per a Fisioteràpia, Benestar, Força, Pilates i Stretching.</p>
+        <p class="section-lead rates__lead">Mateixa tarifa per a Fisioteràpia, Benestar, Força i Stretching.</p>
         <p class="rates__selected" id="area-selected-label">
           <svg width="12" height="10" viewBox="0 0 12 10" fill="none" aria-hidden="true"><path d="M1 5l3 3 7-7" stroke="currentColor" stroke-width="1.6"/></svg>
-          <span class="rates__selected-text">Tarifa a la clínica compartida per les cinc àrees.</span>
+          <span class="rates__selected-text">Tarifa a la clínica compartida per les quatre àrees.</span>
         </p>
       </div>
 
@@ -594,7 +596,7 @@ inaccesible. Se muestra siempre en ese caso; los acordeones nativos
           </p>
           <h3 class="entry__title">Primera visita</h3>
           <p class="entry__price">100 €</p>
-          <p class="entry__note">Inclou la valoració inicial i la primera sessió de tractament. És obligatòria abans de qualsevol seguiment, amb independència de l'àrea, i es factura a part, sense descomptar&#8209;se dels bons.</p>
+          <p class="entry__note">Inclou la valoració inicial i la primera sessió de tractament. És obligatòria abans de qualsevol seguiment de Fisioteràpia, Benestar, Força o Stretching, i es factura a part, sense descomptar&#8209;se dels bons. No és necessària per a Pilates Reformer.</p>
           <a class="btn btn--outline btn--sm entry__cta" href="https://www.docfav.com/portal/physio-wellness-by-marshall" target="_blank" rel="noopener">Reservar primera visita</a>
         </article>
 
@@ -650,7 +652,7 @@ inaccesible. Se muestra siempre en ese caso; los acordeones nativos
           <details class="cond__item" name="cond-clinica">
             <summary class="cond__q">Bons: condicions</summary>
             <div class="cond__a">
-              <p>Els bons són combinables entre Fisioteràpia, Força, Pilates i Stretching, de manera que pots adaptar cada sessió al que necessitis a cada moment.</p>
+              <p>Els bons són combinables entre Fisioteràpia, Força i Stretching, de manera que pots adaptar cada sessió al que necessitis a cada moment. Els bons de Pilates Reformer són independents i tenen condicions pròpies.</p>
               <p>Són vàlids únicament per a sessions a la clínica, tenen una validesa de 2 mesos des de la data de compra i s'abonen íntegrament en el moment de la compra. Són personals i intransferibles i no admeten devolució un cop iniciats (s'entén iniciat un bo en consumir la primera sessió).</p>
             </div>
           </details>
@@ -680,7 +682,102 @@ inaccesible. Se muestra siempre en ese caso; los acordeones nativos
     </div>
   </section>
 
-  <!-- ============ 02 — A domicilio ============
+  <!-- ============ 02 — Pilates Reformer ============
+       Tarifa propia de Pilates Reformer (nov. 2026), separada de la tarifa
+       general en clínica. Importes idénticos a los folletos oficiales
+       "Pilates Reformer" ES/EN. Todas las sesiones son de 45 min, solo
+       entre semana y sin recargos. Los bonos son exclusivos de Pilates
+       (no combinables con otros servicios) y válidos 2 meses desde la
+       fecha de compra. No requiere primera visita. Cada opción muestra
+       precio total y coste por sesión; en Dúo, precio por persona, coste
+       por persona y sesión y total de la pareja. Filas etiqueta/precio
+       (no tablas) para que no desborden en móvil. -->
+  <section class="rates rates--pilates" id="pilates-reformer" aria-labelledby="pilates-reformer-title">
+    <div class="container rates__inner">
+      <div class="rates__head" data-reveal>
+        <p class="eyebrow section-eyebrow">02 — Pilates Reformer</p>
+        <h2 class="section-heading" id="pilates-reformer-title">El teu moviment, el teu ritme, el teu progrés</h2>
+        <p class="section-lead rates__lead">Sessions individuals o en parella, adaptades al nivell, als objectius i a les necessitats de cada persona.</p>
+        <ul class="rates__chips">
+          <li class="rates__selected">45 minuts per sessió</li>
+          <li class="rates__selected">Entre setmana</li>
+          <li class="rates__selected">Sense primera visita obligatòria</li>
+        </ul>
+        <figure class="rates__portrait rates__portrait--pilates" aria-hidden="true">
+          <img src="../../src/assets/img/local/local-pilates-1440.webp" srcset="../../src/assets/img/local/local-pilates-720.webp 720w, ../../src/assets/img/local/local-pilates-1440.webp 1440w" sizes="(min-width: 960px) 38vw, 100vw" alt="" loading="lazy" width="1440" height="960">
+        </figure>
+      </div>
+
+      <div class="rates__body">
+        <!-- A · Pilates Reformer 1:1 -->
+        <article class="plan" data-reveal style="--i:1" aria-labelledby="plan-individual-title">
+          <div class="plan__head">
+            <p class="plan__eyebrow">Una persona · 45 min</p>
+            <h3 class="plan__title" id="plan-individual-title">Pilates Reformer 1:1</h3>
+            <p class="plan__text">Tota la sessió per a tu: el treball al Reformer s'ajusta a com et mous, al teu nivell i als teus objectius.</p>
+          </div>
+          <ul class="plan__list">
+            <li class="plan__row">
+              <span class="plan__label">Sessió individual<span class="plan__meta">1 sessió · 45 min</span></span>
+              <span class="plan__price"><span class="plan__amount">48 €</span><span class="plan__unit">48 € per sessió</span></span>
+            </li>
+            <li class="plan__row">
+              <span class="plan__label">Bo de 4 sessions<span class="plan__meta">4 sessions · 45 min</span></span>
+              <span class="plan__price"><span class="plan__amount">180 €</span><span class="plan__unit">45 € per sessió</span></span>
+            </li>
+            <li class="plan__row plan__row--feature">
+              <span class="plan__label">Bo de 8 sessions<span class="plan__meta">8 sessions · 45 min</span></span>
+              <span class="plan__price"><span class="plan__amount">340 €</span><span class="plan__unit">42,50 € per sessió</span></span>
+            </li>
+          </ul>
+        </article>
+
+        <!-- B · Pilates Reformer Dúo -->
+        <article class="plan plan--duo" data-reveal style="--i:2" aria-labelledby="plan-duo-title">
+          <div class="plan__head">
+            <p class="plan__eyebrow">Dues persones · 45 min</p>
+            <h3 class="plan__title" id="plan-duo-title">Pilates Reformer Duo</h3>
+            <p class="plan__text">Dues persones comparteixen la mateixa sessió, amb exercicis adaptats a les necessitats i als objectius de cadascuna.</p>
+            <p class="plan__notice">Preu per persona, cost per persona i sessió i, a sota, el total per a les dues persones.</p>
+          </div>
+          <ul class="plan__list">
+            <li class="plan__row">
+              <span class="plan__label">Sessió Duo<span class="plan__meta">1 sessió · 45 min</span></span>
+              <span class="plan__price"><span class="plan__amount">42 €</span><span class="plan__per">per persona</span><span class="plan__unit">42 € per persona i sessió</span><span class="plan__total"><strong>84 €</strong> en total · les dues persones</span></span>
+            </li>
+            <li class="plan__row">
+              <span class="plan__label">Bo de 4 sessions<span class="plan__meta">4 sessions · 45 min</span></span>
+              <span class="plan__price"><span class="plan__amount">152 €</span><span class="plan__per">per persona</span><span class="plan__unit">38 € per persona i sessió</span><span class="plan__total"><strong>304 €</strong> en total · les dues persones</span></span>
+            </li>
+            <li class="plan__row">
+              <span class="plan__label">Bo de 8 sessions<span class="plan__meta">8 sessions · 45 min</span></span>
+              <span class="plan__price"><span class="plan__amount">280 €</span><span class="plan__per">per persona</span><span class="plan__unit">35 € per persona i sessió</span><span class="plan__total"><strong>560 €</strong> en total · les dues persones</span></span>
+            </li>
+          </ul>
+          <p class="plan__foot">Els bons Duo s'utilitzen conjuntament per les dues persones.</p>
+        </article>
+
+        <!-- C · Condiciones (solo las confirmadas por el cliente) -->
+        <section class="pilates-terms" data-reveal style="--i:3" aria-labelledby="pilates-terms-title">
+          <h3 class="follow__title" id="pilates-terms-title">Condicions de Pilates Reformer</h3>
+          <ul class="pilates-terms__list">
+            <li><strong>Validesa de 2 mesos des de la compra</strong>Els bons de Pilates Reformer tenen una validesa de 2 mesos des de la data de compra. No es poden utilitzar un cop finalitzada la validesa.</li>
+            <li><strong>Tarifes i bons exclusius</strong>Les tarifes i els bons de Pilates Reformer són independents: no es combinen ni s'intercanvien amb Fisioteràpia, Força, Stretching ni altres serveis del centre.</li>
+            <li><strong>Sense primera visita obligatòria</strong>No cal fer la primera visita de fisioteràpia: pots començar directament amb una sessió individual o amb un bo de 4 o 8 sessions.</li>
+            <li><strong>Sessions entre setmana</strong>Pilates Reformer s'ofereix només entre setmana, sense recàrrecs nocturns ni de cap de setmana.</li>
+          </ul>
+        </section>
+
+        <!-- D · Reserva: DocFav y WhatsApp -->
+        <div class="rates__actions" data-reveal style="--i:4">
+          <a class="btn btn--primary" href="https://www.docfav.com/portal/physio-wellness-by-marshall" target="_blank" rel="noopener">Reservar Pilates Reformer</a>
+          <a class="btn btn--outline" href="https://wa.me/34644678344?text=Hola,%20vull%20informaci%C3%B3%20sobre%20Pilates%20Reformer" target="_blank" rel="noopener">Consultar per WhatsApp</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 03 — A domicilio ============
        Modalidad independiente: no es una sexta área junto a Fisioterapia,
        Bienestar, Fuerza, Pilates y Stretching. Según PRECIOS 2026, el
        servicio a domicilio cubre Fisioterapia, Bienestar y Fuerza; no
@@ -707,7 +804,7 @@ inaccesible. Se muestra siempre en ese caso; los acordeones nativos
     </svg>
     <div class="container rates__inner">
       <div class="rates__head" data-reveal>
-        <p class="eyebrow eyebrow--on-dark section-eyebrow">02 — A domicili</p>
+        <p class="eyebrow eyebrow--on-dark section-eyebrow">03 — A domicili</p>
         <h2 class="section-heading">Ens desplacem fins a tu</h2>
         <p class="section-lead rates__lead">També pots realitzar la teva primera visita o un seguiment de fisioteràpia a domicili.</p>
         <p class="rates__note">Disponible per a Fisioteràpia, Benestar i Força. Els serveis de Pilates i Stretching no estan disponibles a domicili.</p>
@@ -877,7 +974,16 @@ inaccesible. Se muestra siempre en ese caso; los acordeones nativos
             <button type="button" class="faq__q" aria-expanded="false" aria-controls="faq-a-4" id="faq-q-4">On es completa la reserva?</button>
           </h3>
           <div class="faq__a" id="faq-a-4" role="region" aria-labelledby="faq-q-4" hidden>
-            <p>La reserva es completa a DocFav, on pots consultar les opcions disponibles i triar la sessió. Si necessites ajuda per decidir quina correspon al teu cas, escriu&#8209;nos per WhatsApp abans de reservar.</p>
+            <p>La reserva es completa a DocFav, on pots consultar les opcions disponibles i triar la sessió. Si necessites ajuda per decidir quina correspon al teu cas, escriu&#8209;nos per WhatsApp abans de reservar. Pilates Reformer també es pot reservar directament per WhatsApp.</p>
+          </div>
+        </div>
+
+        <div class="faq__item">
+          <h3 class="faq__item-heading">
+            <button type="button" class="faq__q" aria-expanded="false" aria-controls="faq-a-5" id="faq-q-5">Cal fer una primera visita per començar Pilates Reformer?</button>
+          </h3>
+          <div class="faq__a" id="faq-a-5" role="region" aria-labelledby="faq-q-5" hidden>
+            <p>No. Per a Pilates Reformer pots reservar directament una sessió individual o un bo de 4 o 8 sessions, en modalitat 1:1 o Duo. La primera visita de 60 minuts s'aplica a Fisioteràpia, Benestar, Força i Stretching.</p>
           </div>
         </div>
       </div>
@@ -943,6 +1049,6 @@ inaccesible. Se muestra siempre en ese caso; los acordeones nativos
 </footer>
 
 
-<script src="../../src/js/main.js?v=6"></script>
+<script src="../../src/js/main.js?v=8"></script>
 </body>
 </html>

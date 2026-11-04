@@ -15,13 +15,19 @@ las páginas lo reflejan (proceso manual, sin herramientas ni build).
 
 Vigencia: precios confirmados para 2026.
 
+> ℹ️ Las páginas publicadas que reflejan este archivo son
+> `es/tarifas/index.html`, `ca/tarifes/index.html` y `en/rates/index.html`
+> (`src/pages/tarifas.html` es una copia antigua de referencia).
+
 ---
 
-## Tarifa en clínica — Physiotherapy · Wellness · Strength · Pilates · Stretching
+## Tarifa en clínica — Physiotherapy · Wellness · Strength · Stretching
 
 Sección `01 — En la clínica` (`#en-la-clinica`). Es una **tarifa única y
-transversal**: no hay un precio distinto por área. Las cinco tarjetas de
-`#areas` enlazan a este mismo panel; los precios no se repiten en el HTML.
+transversal**: no hay un precio distinto por área. Cuatro tarjetas de
+`#areas` enlazan a este mismo panel; la de Pilates enlaza a
+`#pilates-reformer`, porque Pilates Reformer tiene tarifa propia desde
+noviembre de 2026 (ver sección siguiente).
 
 > ℹ️ **Stretching confirmado a la misma tarifa (2026-09-03):** el PDF
 > "PRECIOS 2026" todavía no menciona Stretching en ningún título de tarifa
@@ -39,13 +45,13 @@ transversal**: no hay un precio distinto por área. Las cinco tarjetas de
 | Sesión individual 50'            | 80 €             | 4 ses. 76 €/ses. (304 €) · 8 ses. 72 €/ses. (576 €) · 12 ses. 70 €/ses. (840 €) |
 | Sesión individual 30'            | 50 €             | 4 ses. 47,50 €/ses. (190 €) · 8 ses. 45 €/ses. (360 €) · 12 ses. 43,75 €/ses. (525 €) |
 
-**Valoración inicial:** obligatoria para todos los usuarios, con
-independencia del área. No se realizan sesiones sin valoración previa. Se
+**Valoración inicial:** obligatoria en Fisioterapia, Wellness, Strength y
+Stretching. **No se aplica a Pilates Reformer** (ver su sección). No se realizan sesiones sin valoración previa. Se
 factura como acto independiente y no se descuenta de los bonos. Un informe
 médico o una derivación no la sustituye.
 
-**Bonos:** combinables entre **Fisioterapia, Strength, Pilates y
-Stretching**. Válidos únicamente en clínica, con validez de 2 meses desde la
+**Bonos:** combinables entre **Fisioterapia, Strength y Stretching** (los
+bonos de Pilates Reformer son independientes, ver su sección). Válidos únicamente en clínica, con validez de 2 meses desde la
 compra. Se abonan íntegros en el momento de la compra, son personales e
 intransferibles y no admiten devolución una vez iniciados (se entiende
 iniciado al consumir la primera sesión).
@@ -53,6 +59,7 @@ iniciado al consumir la primera sesión).
 > ⚠️ **Pendiente de confirmar:** el PDF titula la tarifa "PHYSIO · WELLNESS ·
 > STRENGTH · PILATES", pero el párrafo de combinabilidad de bonos solo cita
 > **Fisioterapia, Strength y Pilates** — no menciona Wellness explícitamente.
+> (Desde nov. 2026 Pilates sale de esta tarifa y de esta combinabilidad.)
 > La página **no afirma** que Wellness esté incluido en esa combinabilidad,
 > para no inventar una condición. Si Marshall confirma que Wellness sí
 > aplica, añádelo en esta lista y en el accordion "Bonos: condiciones" de
@@ -67,9 +74,51 @@ viernes, excepto festivos) o 48 h en fin de semana y festivos. Fuera de
 plazo, o sin aviso, la sesión se considera realizada salvo causa médica o de
 fuerza mayor acreditada.
 
+## Pilates Reformer — tarifa propia (nov. 2026)
+
+Sección `02 — Pilates Reformer` (`#pilates-reformer`). Tarifa **independiente**
+de la tarifa en clínica. Fuente: folletos oficiales
+`~/Desktop/Pilates/Pilates_Reformer_Marshall_ES_PREVIEW.pdf` y `_EN_PREVIEW.pdf`
+y confirmación del cliente (04/11/2026). Todas las sesiones duran **45 min**.
+
+**Pilates Reformer 1:1**
+
+| Opción          | Total  | Por sesión |
+| --------------- | ------ | ---------- |
+| Sesión individual | 48 €  | 48 €       |
+| Bono 4 sesiones | 180 €  | 45 €       |
+| Bono 8 sesiones | 340 €  | 42,50 €    |
+
+**Pilates Reformer Dúo** (dos personas en la misma sesión; precios **por persona**)
+
+| Opción          | Por persona | Por persona y sesión | Total pareja |
+| --------------- | ----------- | -------------------- | ------------ |
+| Sesión Dúo      | 42 €        | 42 €                 | 84 €         |
+| Bono 4 sesiones | 152 €       | 38 €                 | 304 €        |
+| Bono 8 sesiones | 280 €       | 35 €                 | 560 €        |
+
+Los bonos Dúo se utilizan conjuntamente por las dos personas.
+
+**Condiciones confirmadas** (no añadir otras sin confirmación):
+
+- Validez de los bonos (1:1 y Dúo, 4 y 8 sesiones): **2 meses desde la fecha
+  de compra** (meses, no 60 días). No se pueden usar una vez vencidos.
+- Tarifas y bonos **exclusivos de Pilates Reformer**: no se combinan ni se
+  intercambian con Fisioterapia, Strength, Stretching ni otros servicios, y se
+  gestionan aparte de los bonos generales del centro.
+- **No requiere primera visita** de fisioterapia (100 €): se puede empezar
+  directamente con una sesión o un bono.
+- Solo **entre semana**; **sin** recargos nocturnos ni de fin de semana.
+- Reserva por **DocFav** o **WhatsApp** (ambos canales visibles).
+
+Textos de validez acordados: ES "Los bonos de Pilates Reformer tienen una
+validez de 2 meses desde la fecha de compra." · CA "Els bons de Pilates
+Reformer tenen una validesa de 2 mesos des de la data de compra." · EN
+"Pilates Reformer packages are valid for 2 months from the date of purchase."
+
 ## Tarifa a domicilio — Physiotherapy · Wellness · Strength (sin Pilates ni Stretching)
 
-Sección `02 — A domicilio` (`#a-domicilio`) + `Condiciones del
+Sección `03 — A domicilio` (`#a-domicilio`) + `Condiciones del
 desplazamiento` (`#desplazamiento`). Es una **modalidad independiente**, no
 una sexta área junto a Physiotherapy, Wellness, Strength, Pilates y
 Stretching.
@@ -115,7 +164,7 @@ esta página. No hay ninguna URL pendiente ni inventada.
 | Canal        | URL                                                          | Uso                  |
 | ------------ | ------------------------------------------------------------ | -------------------- |
 | DocFav       | `https://www.docfav.com/portal/physio-wellness-by-marshall`   | Todos los CTA de reserva |
-| WhatsApp     | `https://wa.me/34644678344`                                   | Ayuda secundaria     |
+| WhatsApp     | `https://wa.me/34644678344`                                   | Ayuda secundaria; en Pilates Reformer, también canal de reserva (con texto predefinido) |
 
 La reserva se completa siempre en DocFav. No existe ni debe crearse una
 página intermedia ni un formulario de reserva propio.

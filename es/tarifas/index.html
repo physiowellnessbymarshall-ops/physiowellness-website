@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Tarifas de Fisioterapia y Movimiento en Sitges | Physio Wellness</title>
-<meta name="description" content="Tarifas transparentes de Physio Wellness en Sitges: sesión inicial de 60 min y seguimientos de 30 o 50 min, en clínica o a domicilio. Sin sorpresas.">
+<title>Tarifas de Fisioterapia y Pilates Reformer en Sitges | Physio Wellness</title>
+<meta name="description" content="Tarifas de Physio Wellness en Sitges: fisioterapia en clínica o a domicilio y Pilates Reformer 1:1 y Dúo de 45 min, con bonos propios. Sin sorpresas.">
 <link rel="canonical" href="https://physiowellness.es/es/tarifas/">
 <link rel="alternate" hreflang="es" href="https://physiowellness.es/es/tarifas/">
 <link rel="alternate" hreflang="ca" href="https://physiowellness.es/ca/tarifes/">
@@ -14,22 +14,22 @@
 <!-- Open Graph / Facebook -->
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Physio Wellness by Marshall">
-<meta property="og:title" content="Tarifas de Fisioterapia y Movimiento en Sitges | Physio Wellness">
-<meta property="og:description" content="Tarifas transparentes de Physio Wellness en Sitges: sesión inicial de 60 min y seguimientos de 30 o 50 min, en clínica o a domicilio. Sin sorpresas.">
+<meta property="og:title" content="Tarifas de Fisioterapia y Pilates Reformer en Sitges | Physio Wellness">
+<meta property="og:description" content="Tarifas de Physio Wellness en Sitges: fisioterapia en clínica o a domicilio y Pilates Reformer 1:1 y Dúo de 45 min, con bonos propios. Sin sorpresas.">
 <meta property="og:url" content="https://physiowellness.es/es/tarifas/">
 <meta property="og:image" content="https://physiowellness.es/src/assets/img/local/local-recepcion-1440.webp">
 <meta property="og:locale" content="es_ES">
 
 <!-- Twitter / X -->
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Tarifas de Fisioterapia y Movimiento en Sitges | Physio Wellness">
-<meta name="twitter:description" content="Tarifas transparentes de Physio Wellness en Sitges: sesión inicial de 60 min y seguimientos de 30 o 50 min, en clínica o a domicilio. Sin sorpresas.">
+<meta name="twitter:title" content="Tarifas de Fisioterapia y Pilates Reformer en Sitges | Physio Wellness">
+<meta name="twitter:description" content="Tarifas de Physio Wellness en Sitges: fisioterapia en clínica o a domicilio y Pilates Reformer 1:1 y Dúo de 45 min, con bonos propios. Sin sorpresas.">
 <meta name="twitter:image" content="https://physiowellness.es/src/assets/img/local/local-recepcion-1440.webp">
 <link rel="icon" href="../../src/assets/img/logo-icon-black.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Jost:wght@400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="../../src/css/styles.css?v=6">
+<link rel="stylesheet" href="../../src/css/styles.css?v=8">
 <!-- FASE 4: [data-reveal] (§7 de styles.css, compartido con Home) parte de
 opacity:0 y depende de main.js para mostrarse. Si JavaScript está
 desactivado del todo (no solo falla), nunca se añade la clase
@@ -169,8 +169,8 @@ inaccesible. Se muestra siempre en ese caso; los acordeones nativos
       "@type": "WebPage",
       "@id": "https://physiowellness.es/es/tarifas/#webpage",
       "url": "https://physiowellness.es/es/tarifas/",
-      "name": "Tarifas de Fisioterapia y Movimiento en Sitges | Physio Wellness",
-      "description": "Tarifas transparentes de Physio Wellness en Sitges: sesión inicial de 60 min y seguimientos de 30 o 50 min, en clínica o a domicilio. Sin sorpresas.",
+      "name": "Tarifas de Fisioterapia y Pilates Reformer en Sitges | Physio Wellness",
+      "description": "Tarifas de Physio Wellness en Sitges: fisioterapia en clínica o a domicilio y Pilates Reformer 1:1 y Dúo de 45 min, con bonos propios. Sin sorpresas.",
       "inLanguage": "es",
       "isPartOf": {
         "@id": "https://physiowellness.es/#website"
@@ -438,16 +438,20 @@ inaccesible. Se muestra siempre en ese caso; los acordeones nativos
           </ul>
         </article>
       </div>
+
+      <!-- Pilates Reformer no requiere primera visita: se aclara aquí para
+           que las dos tarjetas anteriores no se lean como obligatorias
+           también para Pilates. -->
+      <p class="pre-choice__note" data-reveal style="--i:2">¿Vienes a Pilates Reformer? No necesitas primera visita: reserva directamente una sesión o un bono. <a href="#pilates-reformer">Ver tarifas de Pilates Reformer</a></p>
     </div>
   </section>
 
   <!-- ============ Elige tu área ============
-       Selector accesible: Fisioterapia, Bienestar, Fuerza, Pilates y
-       Stretching comparten la misma tarifa en clínica (confirmado por el
-       cliente; pendiente de reflejarse en el PDF oficial "PRECIOS 2026"
-       cuando se actualice — ver src/content/tarifas.md). Las cinco tarjetas
-       funcionan de forma idéntica: mismo CTA ("Ver tarifas", enlazando a
-       #en-la-clinica). Cada panel es un botón (aria-pressed) que marca el
+       Selector accesible: Fisioterapia, Bienestar, Fuerza y Stretching
+       comparten la misma tarifa en clínica (ver src/content/tarifas.md);
+       Pilates Reformer tiene tarifa propia (nov. 2026). Las tarjetas
+       enlazan a #en-la-clinica, salvo Pilates, que enlaza a
+       #pilates-reformer (main.js lee el href de cada tarjeta). Cada panel es un botón (aria-pressed) que marca el
        área activa y actualiza el panel de contexto lateral/apilado; los
        enlaces de cada panel siguen siendo <a> reales, así que funcionan sin
        JavaScript. -->
@@ -455,7 +459,7 @@ inaccesible. Se muestra siempre en ese caso; los acordeones nativos
     <div class="container">
       <div class="area-select__head" data-reveal>
         <h2 class="section-heading">Elige tu área</h2>
-        <p class="section-lead">Fisioterapia, Bienestar, Fuerza, Pilates y Stretching comparten la misma tarifa en clínica. Elige tu área para ver los precios.</p>
+        <p class="section-lead">Fisioterapia, Bienestar, Fuerza y Stretching comparten la misma tarifa en clínica. Pilates Reformer tiene tarifas propias. Elige tu área para ver los precios.</p>
       </div>
 
       <div class="area-select__layout">
@@ -528,7 +532,7 @@ inaccesible. Se muestra siempre en ese caso; los acordeones nativos
                 Seleccionada
               </span>
               <span class="area-tile__text">Mejorar control, movilidad, estabilidad y alineación.</span>
-              <a class="area-tile__cta" href="#en-la-clinica">Ver tarifas <svg width="14" height="10" viewBox="0 0 14 10" fill="none" aria-hidden="true"><path d="M1 5h12M8 1l4 4-4 4" stroke="currentColor" stroke-width="1.4"/></svg></a>
+              <a class="area-tile__cta" href="#pilates-reformer">Ver tarifas <svg width="14" height="10" viewBox="0 0 14 10" fill="none" aria-hidden="true"><path d="M1 5h12M8 1l4 4-4 4" stroke="currentColor" stroke-width="1.4"/></svg></a>
             </span>
           </div>
 
@@ -563,8 +567,8 @@ inaccesible. Se muestra siempre en ese caso; los acordeones nativos
 
   <!-- ============ 01 — En la clínica ============
        Panel único de tarifas en clínica: fuente de los precios que enlazan
-       las cinco tarjetas de "Elige tu área" (Fisioterapia, Bienestar,
-       Fuerza, Pilates y Stretching). Cifras y condiciones según PRECIOS
+       cuatro tarjetas de "Elige tu área" (Fisioterapia, Bienestar, Fuerza
+       y Stretching). Pilates Reformer tiene su propia sección (02). Cifras y condiciones según PRECIOS
        2026 (src/content/tarifas.md); la inclusión de Stretching en esta
        misma tarifa es una decisión de negocio confirmada por el cliente,
        pendiente de reflejarse en el PDF oficial cuando se actualice. -->
@@ -573,10 +577,10 @@ inaccesible. Se muestra siempre en ese caso; los acordeones nativos
       <div class="rates__head" data-reveal>
         <p class="eyebrow section-eyebrow">01 — En la clínica</p>
         <h2 class="section-heading">Sesiones presenciales</h2>
-        <p class="section-lead rates__lead">Misma tarifa para Fisioterapia, Bienestar, Fuerza, Pilates y Stretching.</p>
+        <p class="section-lead rates__lead">Misma tarifa para Fisioterapia, Bienestar, Fuerza y Stretching.</p>
         <p class="rates__selected" id="area-selected-label">
           <svg width="12" height="10" viewBox="0 0 12 10" fill="none" aria-hidden="true"><path d="M1 5l3 3 7-7" stroke="currentColor" stroke-width="1.6"/></svg>
-          <span class="rates__selected-text">Tarifa en clínica compartida por las cinco áreas.</span>
+          <span class="rates__selected-text">Tarifa en clínica compartida por las cuatro áreas.</span>
         </p>
       </div>
 
@@ -594,7 +598,7 @@ inaccesible. Se muestra siempre en ese caso; los acordeones nativos
           </p>
           <h3 class="entry__title">Primera visita</h3>
           <p class="entry__price">100 €</p>
-          <p class="entry__note">Incluye la valoración inicial y la primera sesión de tratamiento. Es obligatoria antes de cualquier seguimiento, con independencia del área, y se factura aparte, sin descontarse de los bonos.</p>
+          <p class="entry__note">Incluye la valoración inicial y la primera sesión de tratamiento. Es obligatoria antes de cualquier seguimiento de Fisioterapia, Bienestar, Fuerza o Stretching, y se factura aparte, sin descontarse de los bonos. No es necesaria para Pilates Reformer.</p>
           <a class="btn btn--outline btn--sm entry__cta" href="https://www.docfav.com/portal/physio-wellness-by-marshall" target="_blank" rel="noopener">Reservar primera visita</a>
         </article>
 
@@ -650,7 +654,7 @@ inaccesible. Se muestra siempre en ese caso; los acordeones nativos
           <details class="cond__item" name="cond-clinica">
             <summary class="cond__q">Bonos: condiciones</summary>
             <div class="cond__a">
-              <p>Los bonos son combinables entre Fisioterapia, Fuerza, Pilates y Stretching, de modo que puedes adaptar cada sesión a lo que necesites en cada momento.</p>
+              <p>Los bonos son combinables entre Fisioterapia, Fuerza y Stretching, de modo que puedes adaptar cada sesión a lo que necesites en cada momento. Los bonos de Pilates Reformer son independientes y tienen sus propias condiciones.</p>
               <p>Son válidos únicamente para sesiones en clínica, tienen una validez de 2 meses desde la fecha de compra y se abonan íntegramente en el momento de la compra. Son personales e intransferibles y no admiten devolución una vez iniciados (se entiende iniciado un bono al consumir la primera sesión).</p>
             </div>
           </details>
@@ -680,7 +684,102 @@ inaccesible. Se muestra siempre en ese caso; los acordeones nativos
     </div>
   </section>
 
-  <!-- ============ 02 — A domicilio ============
+  <!-- ============ 02 — Pilates Reformer ============
+       Tarifa propia de Pilates Reformer (nov. 2026), separada de la tarifa
+       general en clínica. Importes idénticos a los folletos oficiales
+       "Pilates Reformer" ES/EN. Todas las sesiones son de 45 min, solo
+       entre semana y sin recargos. Los bonos son exclusivos de Pilates
+       (no combinables con otros servicios) y válidos 2 meses desde la
+       fecha de compra. No requiere primera visita. Cada opción muestra
+       precio total y coste por sesión; en Dúo, precio por persona, coste
+       por persona y sesión y total de la pareja. Filas etiqueta/precio
+       (no tablas) para que no desborden en móvil. -->
+  <section class="rates rates--pilates" id="pilates-reformer" aria-labelledby="pilates-reformer-title">
+    <div class="container rates__inner">
+      <div class="rates__head" data-reveal>
+        <p class="eyebrow section-eyebrow">02 — Pilates Reformer</p>
+        <h2 class="section-heading" id="pilates-reformer-title">Tu movimiento, tu ritmo, tu progreso</h2>
+        <p class="section-lead rates__lead">Sesiones individuales o en pareja, adaptadas al nivel, a los objetivos y a las necesidades de cada persona.</p>
+        <ul class="rates__chips">
+          <li class="rates__selected">45 minutos por sesión</li>
+          <li class="rates__selected">Entre semana</li>
+          <li class="rates__selected">Sin primera visita obligatoria</li>
+        </ul>
+        <figure class="rates__portrait rates__portrait--pilates" aria-hidden="true">
+          <img src="../../src/assets/img/local/local-pilates-1440.webp" srcset="../../src/assets/img/local/local-pilates-720.webp 720w, ../../src/assets/img/local/local-pilates-1440.webp 1440w" sizes="(min-width: 960px) 38vw, 100vw" alt="" loading="lazy" width="1440" height="960">
+        </figure>
+      </div>
+
+      <div class="rates__body">
+        <!-- A · Pilates Reformer 1:1 -->
+        <article class="plan" data-reveal style="--i:1" aria-labelledby="plan-individual-title">
+          <div class="plan__head">
+            <p class="plan__eyebrow">Una persona · 45 min</p>
+            <h3 class="plan__title" id="plan-individual-title">Pilates Reformer 1:1</h3>
+            <p class="plan__text">Toda la sesión para ti: el trabajo en el Reformer se ajusta a cómo te mueves, a tu nivel y a tus objetivos.</p>
+          </div>
+          <ul class="plan__list">
+            <li class="plan__row">
+              <span class="plan__label">Sesión individual<span class="plan__meta">1 sesión · 45 min</span></span>
+              <span class="plan__price"><span class="plan__amount">48 €</span><span class="plan__unit">48 € por sesión</span></span>
+            </li>
+            <li class="plan__row">
+              <span class="plan__label">Bono 4 sesiones<span class="plan__meta">4 sesiones · 45 min</span></span>
+              <span class="plan__price"><span class="plan__amount">180 €</span><span class="plan__unit">45 € por sesión</span></span>
+            </li>
+            <li class="plan__row plan__row--feature">
+              <span class="plan__label">Bono 8 sesiones<span class="plan__meta">8 sesiones · 45 min</span></span>
+              <span class="plan__price"><span class="plan__amount">340 €</span><span class="plan__unit">42,50 € por sesión</span></span>
+            </li>
+          </ul>
+        </article>
+
+        <!-- B · Pilates Reformer Dúo -->
+        <article class="plan plan--duo" data-reveal style="--i:2" aria-labelledby="plan-duo-title">
+          <div class="plan__head">
+            <p class="plan__eyebrow">Dos personas · 45 min</p>
+            <h3 class="plan__title" id="plan-duo-title">Pilates Reformer Dúo</h3>
+            <p class="plan__text">Dos personas comparten la misma sesión, con ejercicios adaptados a las necesidades y objetivos de cada una.</p>
+            <p class="plan__notice">Precio por persona, coste por persona y sesión y, debajo, el total para las dos personas.</p>
+          </div>
+          <ul class="plan__list">
+            <li class="plan__row">
+              <span class="plan__label">Sesión Dúo<span class="plan__meta">1 sesión · 45 min</span></span>
+              <span class="plan__price"><span class="plan__amount">42 €</span><span class="plan__per">por persona</span><span class="plan__unit">42 € por persona y sesión</span><span class="plan__total"><strong>84 €</strong> en total · las dos personas</span></span>
+            </li>
+            <li class="plan__row">
+              <span class="plan__label">Bono 4 sesiones<span class="plan__meta">4 sesiones · 45 min</span></span>
+              <span class="plan__price"><span class="plan__amount">152 €</span><span class="plan__per">por persona</span><span class="plan__unit">38 € por persona y sesión</span><span class="plan__total"><strong>304 €</strong> en total · las dos personas</span></span>
+            </li>
+            <li class="plan__row">
+              <span class="plan__label">Bono 8 sesiones<span class="plan__meta">8 sesiones · 45 min</span></span>
+              <span class="plan__price"><span class="plan__amount">280 €</span><span class="plan__per">por persona</span><span class="plan__unit">35 € por persona y sesión</span><span class="plan__total"><strong>560 €</strong> en total · las dos personas</span></span>
+            </li>
+          </ul>
+          <p class="plan__foot">Los bonos Dúo se utilizan conjuntamente por las dos personas.</p>
+        </article>
+
+        <!-- C · Condiciones (solo las confirmadas por el cliente) -->
+        <section class="pilates-terms" data-reveal style="--i:3" aria-labelledby="pilates-terms-title">
+          <h3 class="follow__title" id="pilates-terms-title">Condiciones de Pilates Reformer</h3>
+          <ul class="pilates-terms__list">
+            <li><strong>Validez de 2 meses desde la compra</strong>Los bonos de Pilates Reformer tienen una validez de 2 meses desde la fecha de compra. No pueden utilizarse una vez finalizada su validez.</li>
+            <li><strong>Tarifas y bonos exclusivos</strong>Las tarifas y los bonos de Pilates Reformer son independientes: no se combinan ni se intercambian con Fisioterapia, Fuerza, Stretching ni otros servicios del centro.</li>
+            <li><strong>Sin primera visita obligatoria</strong>No necesitas la primera visita de fisioterapia: puedes empezar directamente con una sesión individual o con un bono de 4 u 8 sesiones.</li>
+            <li><strong>Sesiones entre semana</strong>Pilates Reformer se ofrece solo entre semana, sin recargos nocturnos ni de fin de semana.</li>
+          </ul>
+        </section>
+
+        <!-- D · Reserva: DocFav y WhatsApp -->
+        <div class="rates__actions" data-reveal style="--i:4">
+          <a class="btn btn--primary" href="https://www.docfav.com/portal/physio-wellness-by-marshall" target="_blank" rel="noopener">Reservar Pilates Reformer</a>
+          <a class="btn btn--outline" href="https://wa.me/34644678344?text=Hola,%20quiero%20informaci%C3%B3n%20sobre%20Pilates%20Reformer" target="_blank" rel="noopener">Consultar por WhatsApp</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 03 — A domicilio ============
        Modalidad independiente: no es una sexta área junto a Fisioterapia,
        Bienestar, Fuerza, Pilates y Stretching. Según PRECIOS 2026, el
        servicio a domicilio cubre Fisioterapia, Bienestar y Fuerza; no
@@ -706,7 +805,7 @@ inaccesible. Se muestra siempre en ese caso; los acordeones nativos
     </svg>
     <div class="container rates__inner">
       <div class="rates__head" data-reveal>
-        <p class="eyebrow eyebrow--on-dark section-eyebrow">02 — A domicilio</p>
+        <p class="eyebrow eyebrow--on-dark section-eyebrow">03 — A domicilio</p>
         <h2 class="section-heading">Nos desplazamos hasta ti</h2>
         <p class="section-lead rates__lead">También puedes realizar tu primera visita o un seguimiento de fisioterapia a domicilio.</p>
         <p class="rates__note">Disponible para Fisioterapia, Bienestar y Fuerza. Los servicios de Pilates y Stretching no están disponibles a domicilio.</p>
@@ -876,7 +975,16 @@ inaccesible. Se muestra siempre en ese caso; los acordeones nativos
             <button type="button" class="faq__q" aria-expanded="false" aria-controls="faq-a-4" id="faq-q-4">¿Dónde se completa la reserva?</button>
           </h3>
           <div class="faq__a" id="faq-a-4" role="region" aria-labelledby="faq-q-4" hidden>
-            <p>La reserva se completa en DocFav, donde puedes consultar las opciones disponibles y elegir la sesión. Si necesitas ayuda para decidir cuál corresponde a tu caso, escríbenos por WhatsApp antes de reservar.</p>
+            <p>La reserva se completa en DocFav, donde puedes consultar las opciones disponibles y elegir la sesión. Si necesitas ayuda para decidir cuál corresponde a tu caso, escríbenos por WhatsApp antes de reservar. Pilates Reformer también puede reservarse directamente por WhatsApp.</p>
+          </div>
+        </div>
+
+        <div class="faq__item">
+          <h3 class="faq__item-heading">
+            <button type="button" class="faq__q" aria-expanded="false" aria-controls="faq-a-5" id="faq-q-5">¿Necesito una primera visita para empezar Pilates Reformer?</button>
+          </h3>
+          <div class="faq__a" id="faq-a-5" role="region" aria-labelledby="faq-q-5" hidden>
+            <p>No. Para Pilates Reformer puedes reservar directamente una sesión individual o un bono de 4 u 8 sesiones, en modalidad 1:1 o Dúo. La primera visita de 60 minutos se aplica a Fisioterapia, Bienestar, Fuerza y Stretching.</p>
           </div>
         </div>
       </div>
@@ -941,6 +1049,6 @@ inaccesible. Se muestra siempre en ese caso; los acordeones nativos
   </div>
 </footer>
 
-<script src="../../src/js/main.js?v=6"></script>
+<script src="../../src/js/main.js?v=8"></script>
 </body>
 </html>

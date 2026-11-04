@@ -25,12 +25,13 @@ por área, comprobado en el repositorio:
 | Fisioterapia | Sí (`#physiotherapy`) | Sí — `physiotherapy.html` | Sí, tarifa transversal en clínica |
 | Bienestar | Sí (`#wellness`) | No — el enlace del nav a `wellness.html` es un placeholder (el archivo no existe) | Sí, misma tarifa transversal |
 | Fuerza | Sí (`#strength`) | No — el enlace del nav a `strength.html` es un placeholder | Sí, misma tarifa transversal |
-| Pilates Reformer | Sí (`#pilates`) | No — el enlace del nav a `pilates.html` es un placeholder | Sí, misma tarifa transversal |
+| Pilates Reformer | Sí (`#pilates`) | No — el enlace del nav a `pilates.html` es un placeholder | Sí, **tarifa propia** desde nov. 2026 (1:1 y Dúo, 45 min, bonos exclusivos; ver `src/content/tarifas.md`) |
 | Stretching | Sí (`#stretching`) | Sí — `stretching.html` (añadida como quinto servicio principal en el trabajo más reciente) | Sí, misma tarifa transversal |
 
-Las cuatro áreas originales (Fisioterapia, Bienestar, Fuerza, Pilates)
-comparten una **tarifa única en clínica** (no hay precio distinto por
-área); Stretching se ha sumado a esa misma estructura. La sesión "a
+Fisioterapia, Bienestar, Fuerza y Stretching comparten una **tarifa única
+en clínica** (no hay precio distinto por área). Desde noviembre de 2026,
+Pilates Reformer tiene **tarifa propia e independiente** (sección
+`#pilates-reformer` de Tarifas). La sesión "a
 domicilio" es una modalidad aparte (fisioterapia a domicilio), con su
 propia tarifa y su propio enlace de nav (`fisioterapia-a-domicilio.html`),
 que tampoco existe todavía como página propia.

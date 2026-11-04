@@ -4479,11 +4479,13 @@ a:focus-visible,button:focus-visible,input:focus-visible{
 
 /* Botón secundario sobre fondo claro. El .btn--outline base está pensado para
    fondo oscuro (borde blanco), así que aquí se reescribe. */
-.page-tarifas .help .btn--outline{
+.page-tarifas .help .btn--outline,
+.page-tarifas .rates--pilates .btn--outline{
   border-color:var(--pw-line);
   color:var(--pw-primary-900);
 }
-.page-tarifas .help .btn--outline:hover{
+.page-tarifas .help .btn--outline:hover,
+.page-tarifas .rates--pilates .btn--outline:hover{
   border-color:var(--pw-accent);
   background:rgba(38,152,136,.08);
 }
@@ -4504,6 +4506,18 @@ a:focus-visible,button:focus-visible,input:focus-visible{
 @media (min-width:860px){
   .pre-choice__grid{grid-template-columns:1.4fr .6fr;gap:var(--sp-16);align-items:start;}
 }
+/* Aviso "Pilates Reformer sin primera visita" bajo las dos tarjetas. */
+.pre-choice__note{
+  margin-top:var(--sp-10);padding-top:var(--sp-5);
+  border-top:1px solid var(--pw-line);
+  max-width:72ch;
+  font-size:var(--fs-small);color:var(--pw-ink-70);
+}
+.pre-choice__note a{
+  color:var(--pw-primary);font-weight:500;
+  text-decoration:underline;text-underline-offset:.2em;
+}
+.pre-choice__note a:hover{color:var(--pw-primary-600);}
 
 .choice-card{
   padding-top:var(--sp-6);
@@ -5297,6 +5311,138 @@ a:focus-visible,button:focus-visible,input:focus-visible{
 @media (min-width:960px){
   .page-tarifas .rates__portrait{margin-top:var(--sp-10);}
 }
+
+/* ==========================================================================
+   Pilates Reformer — tarifa propia (nov. 2026)
+   Sección independiente de "En la clínica", con fondo mist entre el blanco
+   de clínica y el oscuro de "A domicilio". Reutiliza la retícula y el
+   sticky de .rates__inner/.rates__head, el chip .rates__selected y el
+   título .follow__title. Las tarjetas .plan son filas etiqueta/precio
+   (no tablas) para que no desborden en móvil. 1:1 en claro con el bono 8
+   destacado en oscuro y Dúo en oscuro, como en el folleto oficial.
+   ========================================================================== */
+.page-tarifas .rates--pilates{background:var(--pw-mist);}
+.page-tarifas .rates__chips{display:flex;flex-wrap:wrap;gap:var(--sp-2);margin-top:var(--sp-5);}
+.page-tarifas .rates__chips .rates__selected{margin-top:0;background:var(--pw-white);}
+.page-tarifas .rates__portrait--pilates{aspect-ratio:16/10;margin-inline:0;}
+.page-tarifas .rates__portrait--pilates img{object-position:30% center;}
+@media (min-width:960px){
+  .page-tarifas .rates__portrait--pilates{aspect-ratio:1/1;}
+}
+
+.plan{
+  display:grid;gap:var(--sp-6);
+  padding:var(--sp-8) var(--sp-5);
+  background:var(--pw-white);
+  border-top:2px solid var(--pw-primary);
+  border-radius:var(--radius);
+}
+@media (min-width:640px){
+  .plan{padding:var(--sp-10) var(--sp-8);}
+}
+.plan__eyebrow{
+  font-size:var(--fs-label);letter-spacing:.16em;text-transform:uppercase;
+  font-weight:600;color:var(--pw-primary);
+}
+.plan__title{margin-top:var(--sp-3);font-size:var(--fs-h3);font-weight:500;}
+.plan__text{margin-top:var(--sp-3);color:var(--pw-ink-70);max-width:52ch;}
+.plan__notice{margin-top:var(--sp-4);font-size:var(--fs-small);font-weight:500;color:var(--pw-ink);}
+
+.plan__list{display:grid;}
+.plan__row{
+  display:grid;
+  grid-template-columns:minmax(0,1fr) auto;
+  align-items:baseline;
+  gap:var(--sp-2) var(--sp-4);
+  padding-block:var(--sp-5);
+  border-top:1px solid var(--pw-line);
+}
+.plan__label{display:grid;gap:var(--sp-1);font-weight:500;color:var(--pw-ink);}
+.plan__meta{
+  font-size:var(--fs-small);font-weight:400;color:var(--pw-ink-70);
+  font-variant-numeric:tabular-nums;
+}
+.plan__price{display:grid;justify-items:end;text-align:right;}
+.plan__amount{
+  font-size:clamp(1.75rem,4.5vw,2.5rem);
+  line-height:1;font-weight:500;letter-spacing:-.02em;
+  color:var(--pw-primary);
+  font-variant-numeric:tabular-nums;
+  white-space:nowrap;
+}
+.plan__per{
+  margin-top:var(--sp-1);
+  font-size:var(--fs-label);letter-spacing:.08em;text-transform:uppercase;
+  font-weight:600;color:var(--pw-ink-50);
+}
+/* Coste real por sesión: segundo nivel de jerarquía, siempre visible. */
+.plan__unit{
+  margin-top:var(--sp-2);
+  font-size:.9375rem;font-weight:500;
+  color:var(--pw-primary);
+  white-space:nowrap;font-variant-numeric:tabular-nums;
+}
+.plan__row--feature .plan__unit,
+.plan--duo .plan__unit{color:#8fd9c9;}
+.plan__total{
+  margin-top:var(--sp-2);
+  font-size:var(--fs-small);color:var(--pw-ink-70);
+  white-space:nowrap;font-variant-numeric:tabular-nums;
+}
+.plan__total strong{font-weight:500;color:var(--pw-ink);}
+
+/* Bono 8 sesiones destacado: banda oscura. */
+.plan__row--feature{
+  margin-top:var(--sp-2);
+  padding:var(--sp-6) var(--sp-5);
+  border-top:0;border-radius:var(--radius);
+  background:var(--pw-primary-900);
+}
+.plan__row--feature .plan__label{color:var(--pw-white);}
+.plan__row--feature .plan__meta{color:rgba(255,255,255,.7);}
+.plan__row--feature .plan__amount{color:var(--pw-white);}
+
+/* Dúo: panel oscuro, precio por persona destacado y total de pareja debajo. */
+.plan--duo{background:var(--pw-primary-900);color:var(--pw-white);border-top-color:#8fd9c9;}
+.plan--duo .plan__eyebrow{color:#8fd9c9;}
+.plan--duo .plan__title,
+.plan--duo .plan__notice,
+.plan--duo .plan__label,
+.plan--duo .plan__amount,
+.plan--duo .plan__total strong{color:var(--pw-white);}
+.plan--duo .plan__text,
+.plan--duo .plan__meta,
+.plan--duo .plan__total,
+.plan--duo .plan__foot{color:rgba(255,255,255,.72);}
+.plan--duo .plan__per{color:rgba(255,255,255,.6);}
+.plan--duo .plan__row{border-top-color:var(--pw-line-on-dark);}
+.plan__foot{
+  padding-top:var(--sp-4);
+  border-top:1px solid var(--pw-line-on-dark);
+  font-size:var(--fs-small);
+}
+/* Móvil estrecho: en Dúo el precio pasa debajo de la etiqueta para que el
+   total de la pareja no comprima el texto de la izquierda. */
+@media (max-width:479px){
+  .plan--duo .plan__row{grid-template-columns:1fr;}
+  .plan--duo .plan__price{justify-items:start;text-align:left;}
+}
+
+/* Condiciones de Pilates: visibles, en dos columnas desde tablet. */
+.pilates-terms{padding-top:var(--sp-6);border-top:1px solid var(--pw-line);}
+.pilates-terms__list{display:grid;gap:var(--sp-5);margin-top:var(--sp-4);}
+@media (min-width:640px){
+  .pilates-terms__list{grid-template-columns:1fr 1fr;gap:var(--sp-6) var(--sp-8);}
+}
+.pilates-terms__list li{
+  position:relative;padding-left:var(--sp-5);
+  font-size:var(--fs-small);color:var(--pw-ink-70);
+}
+.pilates-terms__list li::before{
+  content:"";position:absolute;left:0;top:.7em;
+  width:8px;height:1px;background:var(--pw-accent);
+}
+.pilates-terms__list strong{display:block;margin-bottom:var(--sp-1);font-weight:600;color:var(--pw-ink);}
 
 /* ----- Bloque de ayuda: dos columnas con imagen -----
    FASE 6: banner de texto centrado → dos columnas con imagen.

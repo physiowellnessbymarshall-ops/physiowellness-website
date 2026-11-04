@@ -602,7 +602,11 @@ var ANNOUNCEMENT_CONFIG = {
         }
         var ctaText = docLang.startsWith('ca') ? ('Veure tarifes' + prep + displayArea) : (docLang.startsWith('en') ? ('View rates for ' + displayArea) : ('Ver tarifas de ' + displayArea));
         contextCta.textContent = ctaText;
-        contextCta.href = '#en-la-clinica';
+        /* Destino según la tarjeta: Pilates Reformer tiene sección propia
+           (#pilates-reformer); el resto mantiene #en-la-clinica. */
+        var tileCta = tile.querySelector('.area-tile__cta');
+        var tileCtaHref = tileCta ? (tileCta.getAttribute('href') || '') : '';
+        contextCta.href = (tileCtaHref && tileCtaHref.charAt(0) === '#') ? tileCtaHref : '#en-la-clinica';
         contextCta.removeAttribute('target');
         contextCta.removeAttribute('rel');
       }

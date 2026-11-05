@@ -502,3 +502,13 @@ Nou bloc «Així ens reconeixeràs des del carrer» dins de `#ubicacion`, sota e
 | Aparador «It's time for a 1:1» | `local-escaparate-strength-480/960.webp` | `fotos local 2/noves/15-…jpg` | Local 2 |
 
 No utilitzades (disponibles): `fotos local 2/noves/09` (aparador «Learn to move»), `12` (detall rètol Pilates) i `21` (vinil «Tendinitis / Back pain»): primers plans de rètols que ja es veuen a la façana 11.
+
+## Equip — correcció Abril i foto de grup (05/11/2026)
+
+| Fitxer web | Origen | Tractament |
+|---|---|---|
+| `src/assets/img/team/abril-rodriguez-retrat.{jpg,webp}`, `-720.webp` | `~/Downloads/Entrega Team portraits Physio Wellness by Marshall/Fotos alta qualitat per imprimir/3-Team portraits….jpg` (mateixa presa ja aprovada) | Fotograma complet 2:3 (1363×2048), igual que Marçal i Lotte. Substitueix el retall quadrat que es veia massa ampliat. |
+| `src/assets/img/team/equip-grup-{960,1600,2400}.webp`, `equip-grup.jpg` | `physiowellness-website/imatges equip/02-Marshall Physio Wellness 2026.jpg` (horitzontal) | Retall 16:9 (cap fins a mig cuixa). Tauleta i escriptori. |
+| `src/assets/img/team/equip-grup-vertical-{720,1080}.webp` | `physiowellness-website/imatges equip/03-Marshall Physio Wellness 2026.jpg` (vertical) | Retall 4:5. Només mòbil (<640 px). |
+
+Els fitxers antics `abril-rodriguez.{jpg,webp}` i `-720.webp` es mantenen al servidor (JSON-LD i rollback).

@@ -29,7 +29,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Jost:wght@400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="../../../src/css/styles.css?v=8">
+<link rel="stylesheet" href="../../../src/css/styles.css?v=10">
 <!-- [data-reveal] (§7 de styles.css) requiere este fallback en caso de no tener JS activado -->
 <noscript><style>
 [data-reveal]{opacity:1!important;transform:none!important;}
@@ -644,17 +644,20 @@
               <!-- Gran fotografía del profesional -->
               <div class="team-profile__media">
                 <!-- FOTOGRAFÍA PROVISIONAL / REAL:
-                     Foto real actual disponible en: ../../assets/img/team/abril-rodriguez.jpg
+                     Foto real actual disponible en: ../../assets/img/team/abril-rodriguez-retrat.jpg
                      Foto de stock editorial alternativa en: ../../assets/img/stock/team/stock-abril.webp
                      Por defecto mostramos la fotografía real de Abril aportada en la home. -->
                 <figure class="team-profile__figure">
-                  <img src="../../../src/assets/img/team/abril-rodriguez.jpg"
-                       alt="Retrat d'Abril Rodríguez, recepció, atenció i coordinació a Physio Wellness Sitges"
-                       class="team-profile__img"
-                       width="1400" height="1400"
-                       loading="lazy"
-                       data-real-src="../../../src/assets/img/team/abril-rodriguez.jpg"
-                       data-stock-src="../../../src/assets/img/stock/team/stock-abril.webp">
+                  <picture>
+                    <source type="image/webp" srcset="../../../src/assets/img/team/abril-rodriguez-retrat-720.webp 720w, ../../../src/assets/img/team/abril-rodriguez-retrat.webp 1363w" sizes="(min-width: 1141px) 360px, (min-width: 860px) 240px, (min-width: 640px) 360px, 100vw">
+                    <img src="../../../src/assets/img/team/abril-rodriguez-retrat.jpg"
+                         alt="Retrat d'Abril Rodríguez, recepció, atenció i coordinació a Physio Wellness Sitges"
+                         class="team-profile__img"
+                         width="1363" height="2048"
+                         loading="lazy"
+                         data-real-src="../../../src/assets/img/team/abril-rodriguez-retrat.jpg"
+                         data-stock-src="../../../src/assets/img/stock/team/stock-abril.webp">
+                  </picture>
                   <figcaption class="team-profile__badge">Atenció i coordinació</figcaption>
                 </figure>
               </div>
@@ -711,6 +714,18 @@
         </div>
 
       </div>
+
+      <!-- FOTOGRAFIA DE GRUP DE L'EQUIP (sessió 2026) -->
+      <figure class="team-group" data-reveal>
+        <div class="team-group__media">
+          <picture>
+            <source media="(max-width: 639px)" type="image/webp" srcset="../../../src/assets/img/team/equip-grup-vertical-720.webp 720w, ../../../src/assets/img/team/equip-grup-vertical-1080.webp 1080w" sizes="calc(100vw - 2.5rem)" width="1080" height="1350">
+            <source type="image/webp" srcset="../../../src/assets/img/team/equip-grup-960.webp 960w, ../../../src/assets/img/team/equip-grup-1600.webp 1600w, ../../../src/assets/img/team/equip-grup-2400.webp 2400w" sizes="(min-width: 1320px) 1240px, calc(100vw - 4rem)">
+            <img src="../../../src/assets/img/team/equip-grup.jpg" alt="Abril Rodríguez, Marçal Ramírez Roig i Lotte Sophie van der Weijden, l'equip de Physio Wellness by Marshall, somrient amb els braços creuats." width="1600" height="900" loading="lazy" decoding="async">
+          </picture>
+        </div>
+        <figcaption class="team-group__caption"><span class="team-group__label">L'equip</span> D'esquerra a dreta: Abril Rodríguez, Marçal Ramírez Roig i Lotte Sophie van der Weijden.</figcaption>
+      </figure>
     </div>
   </section>
 

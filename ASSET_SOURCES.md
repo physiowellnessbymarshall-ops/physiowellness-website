@@ -488,3 +488,17 @@ Actualización de la sección «El espacio de entrenamiento» (`#espacio-entrena
 
 
 
+
+## Façanes dels dos locals (fotos 2026) · El centre / El centro / The center (05/11/2026)
+
+Nou bloc «Així ens reconeixeràs des del carrer» dins de `#ubicacion`, sota el mapa, a `es/conocenos/el-centro/`, `ca/coneix-nos/el-centre/` i `en/about-us/the-center/`. Cada local té la seva targeta; no es barregen.
+
+| Ús | Fitxer | Origen | Local |
+|---|---|---|---|
+| Panoràmica de les dues entrades | `src/assets/img/local/local-exterior-dos-espacios-720/1440/2160.webp` | `physiowellness-website/fotos local 1/noves/25-Marshall Physio Wellness 2026.jpg` | Tots dos (rètols «Physio · Wellness» i «Physio · Strength · Pilates») |
+| Façana Fisioteràpia | `local-fachada-fisio-720/1440.webp` | `fotos local 1/noves/29-…jpg` | Local 1 · Camí dels Capellans, 79 |
+| Placa de la porta | `local-placa-fisio-480/960.webp` | `fotos local 1/noves/27-…jpg` | Local 1 |
+| Façana Strength & Pilates | `local-fachada-strength-720/1440.webp` | `fotos local 2/noves/11-…jpg` | Local 2 · Camí dels Capellans, 81 |
+| Aparador «It's time for a 1:1» | `local-escaparate-strength-480/960.webp` | `fotos local 2/noves/15-…jpg` | Local 2 |
+
+No utilitzades (disponibles): `fotos local 2/noves/09` (aparador «Learn to move»), `12` (detall rètol Pilates) i `21` (vinil «Tendinitis / Back pain»): primers plans de rètols que ja es veuen a la façana 11.

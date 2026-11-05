@@ -21308,3 +21308,99 @@ body:has(#pw-cookie-banner.is-visible) .book-bar{
 
 
 
+
+/* 7b. UBICACIÓ — Façanes dels dos locals (fotos exteriors 2026)
+   Cada local té la seva targeta: façana (3:2) + detall vertical (2:3).
+   Les dues imatges comparteixen alçada sense deformar-se. */
+.center-entrances{
+  margin-top:var(--sp-16);
+  padding-top:var(--sp-12);
+  border-top:1px solid var(--pw-line);
+}
+.center-entrances__head{max-width:680px;margin-bottom:var(--sp-8);}
+.center-entrances__title{
+  font-size:clamp(1.5rem,1.2rem + 1.2vw,2.1rem);
+  font-weight:500;
+  line-height:1.2;
+  letter-spacing:-.01em;
+  color:var(--pw-ink);
+  margin:var(--sp-2) 0 0;
+}
+.center-entrances__sub{
+  font-size:var(--fs-body);
+  color:var(--pw-ink-70);
+  line-height:1.6;
+  margin:var(--sp-3) 0 0;
+}
+.center-entrances__pano{
+  margin:0 0 var(--sp-10);
+}
+.center-entrances__pano img{
+  width:100%;
+  aspect-ratio:3/2;
+  height:auto;
+  object-fit:cover;
+  object-position:50% 62%;
+  display:block;
+  border-radius:var(--radius-tile, 20px);
+  background:var(--pw-mist);
+  box-shadow:0 8px 24px rgba(18,32,29,.06);
+}
+@media (min-width:768px){
+  /* Retall panoràmic: només treu pisos superiors i vorera; rètols i portes queden sencers */
+  .center-entrances__pano img{aspect-ratio:21/9;}
+}
+.center-entrances__caption{
+  font-size:var(--fs-label);
+  color:var(--pw-ink-50);
+  margin-top:var(--sp-2);
+  text-align:right;
+}
+.center-entrances__grid{
+  display:grid;
+  gap:var(--sp-10);
+}
+@media (min-width:768px){
+  .center-entrances__grid{grid-template-columns:1fr 1fr;gap:var(--sp-8);}
+}
+.center-entrances__media{
+  display:grid;
+  grid-template-columns:2.25fr 1fr;
+  gap:var(--sp-3);
+  align-items:stretch;
+}
+.center-entrances__main,
+.center-entrances__detail{
+  margin:0;
+  overflow:hidden;
+  background:var(--pw-mist);
+}
+.center-entrances__main{border-radius:14px;aspect-ratio:3/2;}
+.center-entrances__detail{border-radius:12px;}
+.center-entrances__main img,
+.center-entrances__detail img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  display:block;
+}
+.center-entrances__tag{
+  font-size:var(--fs-label);
+  font-weight:500;
+  letter-spacing:.08em;
+  text-transform:uppercase;
+  color:var(--pw-primary);
+  margin:var(--sp-4) 0 0;
+}
+.center-entrances__name{
+  font-size:1.25rem;
+  font-weight:500;
+  color:var(--pw-ink);
+  margin:var(--sp-1) 0 0;
+}
+.center-entrances__meta{
+  font-size:var(--fs-small);
+  color:var(--pw-ink-70);
+  line-height:1.5;
+  margin:var(--sp-1) 0 0;
+}

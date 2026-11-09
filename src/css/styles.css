@@ -21445,3 +21445,119 @@ body:has(#pw-cookie-banner.is-visible) .book-bar{
   color:var(--pw-primary);
   margin-right:.5rem;
 }
+
+/* ============================================================
+   Strength & Motion: entrenamiento personalizado con app
+   (páginas de Fuerza, entre tarifas y Tecnología).
+   Fondo verde profundo para distinguirlo de las sesiones en
+   clínica. .strength-motion__logo ya está preparado para el
+   logotipo oficial cuando llegue.
+   ============================================================ */
+.strength-motion{
+  position:relative;
+  padding-block:var(--space-section);
+  background:var(--pw-primary-900);
+  color:var(--pw-white);
+  overflow:hidden;
+}
+.strength-motion::before{
+  content:"";position:absolute;inset:0;pointer-events:none;
+  background:radial-gradient(60% 80% at 100% 0%, rgba(38,152,136,.22), transparent 70%);
+}
+.strength-motion__inner{
+  position:relative;
+  display:grid;
+  grid-template-columns:1fr;
+  gap:clamp(2.5rem,5vw,4rem);
+}
+@media (min-width:960px){
+  .strength-motion__inner{
+    grid-template-columns:minmax(0,1fr) minmax(0,1.05fr);
+    gap:clamp(3rem,6vw,6rem);
+    align-items:start;
+  }
+  .strength-motion__intro{position:sticky;top:7rem;}
+}
+.strength-motion__brand{
+  margin-top:var(--space-lg);
+  margin-bottom:var(--space-md);
+}
+.strength-motion__wordmark{
+  display:inline-block;
+  font-size:var(--fs-label);
+  font-weight:600;
+  letter-spacing:.22em;
+  text-transform:uppercase;
+  color:var(--pw-white);
+  padding:.55rem .9rem;
+  border:1px solid var(--pw-line-on-dark);
+  border-radius:var(--radius);
+}
+.strength-motion__logo{
+  display:block;
+  height:clamp(2.5rem,4vw,3.25rem);
+  width:auto;
+  max-width:100%;
+}
+.strength-motion__heading{color:var(--pw-white);}
+.strength-motion__lead{color:rgba(255,255,255,.78);}
+.strength-motion__actions{
+  display:flex;
+  flex-direction:column;
+  align-items:flex-start;
+  gap:var(--space-sm-md);
+}
+.strength-motion__cta{
+  background:var(--pw-white);
+  color:var(--pw-primary-900);
+  font-weight:600;
+  white-space:normal;
+}
+.strength-motion__cta:hover,
+.strength-motion__cta:focus-visible{
+  background:var(--pw-accent-accessible);
+  color:var(--pw-primary-900);
+  transform:translateY(-2px);
+  box-shadow:0 16px 32px -16px rgba(0,0,0,.45);
+}
+.strength-motion__note{
+  font-size:var(--fs-small);
+  color:rgba(255,255,255,.65);
+}
+.strength-motion__list{
+  list-style:none;
+  margin:0;
+  padding:0;
+  border-top:1px solid var(--pw-line-on-dark);
+}
+.strength-motion__item{
+  display:grid;
+  grid-template-columns:2.75rem 1fr;
+  gap:var(--sp-4);
+  padding-block:clamp(1.25rem,2.4vw,1.75rem);
+  border-bottom:1px solid var(--pw-line-on-dark);
+}
+.strength-motion__num{
+  font-size:var(--fs-label);
+  font-weight:600;
+  letter-spacing:.14em;
+  color:var(--pw-accent-accessible);
+  padding-top:.35rem;
+}
+.strength-motion__item-title{
+  font-size:var(--fs-h3);
+  font-weight:500;
+  line-height:1.25;
+  color:var(--pw-white);
+  margin:0 0 var(--space-sm);
+}
+.strength-motion__item-text{
+  font-size:var(--fs-body);
+  line-height:1.6;
+  color:rgba(255,255,255,.72);
+  max-width:48ch;
+}
+@media (prefers-reduced-motion:reduce){
+  .strength-motion__cta:hover,
+  .strength-motion__cta:focus-visible{transform:none;}
+}

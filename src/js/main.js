@@ -421,24 +421,24 @@ var ANNOUNCEMENT_CONFIG = {
   active: true,
   es: {
     label: "Nuevo",
-    title: "Ski & Snow",
-    description: "Preparación, prevención y recuperación para tu temporada de esquí.",
+    title: "Pilates Reformer",
+    description: "Sesiones privadas y en pareja, adaptadas a ti y a tus objetivos.",
     cta: "Descubrir",
-    href: "../es/snow-performance/"
+    href: "../es/pilates/"
   },
   ca: {
     label: "Nou",
-    title: "Ski & Snow",
-    description: "Preparació, prevenció i recuperació per a la teva temporada d'esquí.",
+    title: "Pilates Reformer",
+    description: "Sessions privades i en parella, adaptades a tu i als teus objectius.",
     cta: "Descobrir",
-    href: "../ca/snow-performance/"
+    href: "../ca/pilates/"
   },
   en: {
     label: "New",
-    title: "Ski & Snow",
-    description: "Preparation, prevention and recovery for your ski season.",
+    title: "Pilates Reformer",
+    description: "Private and duo sessions, tailored to you and your goals.",
     cta: "Discover",
-    href: "../en/snow-performance/"
+    href: "../en/pilates/"
   }
 };
 

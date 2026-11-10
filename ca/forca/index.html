@@ -29,7 +29,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Jost:wght@400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="../../src/css/styles.css?v=11">
+<link rel="stylesheet" href="../../src/css/styles.css?v=17">
 <noscript><style>
 [data-reveal]{opacity:1!important;transform:none!important;}
 </style></noscript>
@@ -1032,65 +1032,139 @@
     </div>
   </section>
 
-  <!-- ============ Strength &amp; Motion · Entrenament personalitzat amb app ============ -->
-  <section class="strength-motion" id="strength-motion" aria-label="Strength &amp; Motion: entrenament personalitzat a través d'una aplicació">
-    <div class="container strength-motion__inner">
-      <div class="strength-motion__intro" data-reveal>
-        <p class="eyebrow eyebrow--on-dark section-eyebrow">Nou servei · Entrenament amb app</p>
-        <!-- Logotipo oficial pendiente. Cuando esté disponible, sustituir el <span>
-             por: <img class="strength-motion__logo" src="../../src/assets/img/brand/strength-motion-logo.svg" alt="Strength &amp; Motion" width="..." height="...">
-             El CSS ya reserva tamaño y posición para la imagen. -->
-        <div class="strength-motion__brand">
-          <span class="strength-motion__wordmark">Strength &amp; Motion</span>
-        </div>
-        <h2 class="section-heading strength-motion__heading">El teu entrenament personalitzat, també fora del centre.</h2>
-        <p class="section-lead strength-motion__lead">Dissenyem la teva rutina de força a partir dels teus objectius i necessitats, i la portes amb tu a l'aplicació per entrenar quan i on vulguis.</p>
-        <div class="strength-motion__actions">
-          <a class="btn strength-motion__cta" href="https://wa.me/34644678344?text=Hola%2C%20m%27agradaria%20rebre%20informaci%C3%B3%20sobre%20Strength%20%26%20Motion." target="_blank" rel="noopener">
-            <span>Demanar informació per WhatsApp</span>
-            <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M1 6h10M7 2l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </a>
-          <p class="strength-motion__note">Escriu-nos i t'expliquem com començar.</p>
+  <!-- ============ Entrenamiento personalizado con Muscle &amp; Motion (plataforma externa; sin logotipo).
+       La maqueta de móvil es una ilustración genérica hecha con HTML/CSS: no reproduce pantallas reales de la app. ============ -->
+  <section class="app-training" id="muscle-motion" aria-label="Entrenament personalitzat amb l'aplicació Muscle &amp; Motion">
+    <div class="container app-training__inner">
+      <div class="app-training__intro" data-reveal>
+        <p class="eyebrow eyebrow--on-dark section-eyebrow">Entrenament personalitzat amb Muscle &amp; Motion</p>
+        <h2 class="section-heading app-training__heading">El teu entrenament, adaptat a tu.</h2>
+        <p class="section-lead app-training__lead">A Physio Wellness by Marshall dissenyem rutines d'entrenament personalitzades segons les teves necessitats i objectius, perquè puguis entrenar de manera constant durant la setmana amb el suport de l'aplicació Muscle &amp; Motion.</p>
+        <ul class="app-training__badges" aria-label="Claus del servei">
+          <li class="app-training__badge"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><circle cx="12" cy="12" r="4.5"/><circle cx="12" cy="12" r="1"/></svg><span>Pla personalitzat</span></li>
+          <li class="app-training__badge"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="6.5" y="2.75" width="11" height="18.5" rx="2.25"/><path d="M10.5 18h3"/></svg><span>Amb app</span></li>
+          <li class="app-training__badge"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 5.5h16v10.5H10l-4.5 3.5V16H4z"/><path d="M8 9.5h8M8 12.5h5"/></svg><span>Seguiment setmanal</span></li>
+          <li class="app-training__badge"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.75" y="5" width="16.5" height="15.25" rx="1.75"/><path d="M8 3v4M16 3v4M3.75 10h16.5"/><path d="M9 15.25l2.1 2.1 3.9-3.9"/></svg><span>Actualització mensual</span></li>
+        </ul>
+      </div>
+
+      <div class="app-training__visual" data-reveal style="--i:1" aria-hidden="true">
+        <div class="app-mock">
+          <div class="app-mock__phone">
+            <div class="app-mock__screen">
+              <div class="app-mock__status"><span>9:41</span><span class="app-mock__status-icons"><i></i><i></i><i></i><b></b></span></div>
+              <div class="app-mock__head">
+                <span class="app-mock__kicker">El teu pla · Mes 2</span>
+                <span class="app-mock__title">Setmana 3 · Dia A</span>
+                <span class="app-mock__subtitle">Tren inferior + core</span>
+                <span class="app-mock__meta">4 exercicis · 35 min</span>
+              </div>
+              <div class="app-mock__progress">
+                <div class="app-mock__progress-row"><span>Progrés setmanal</span><strong>68%</strong></div>
+                <div class="app-mock__bar"><span class="app-mock__bar-fill"></span></div>
+              </div>
+              <ul class="app-mock__list">
+                <li class="app-mock__ex is-done" style="--k:0">
+                  <span class="app-mock__ex-thumb"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6.5 8.5v7M17.5 8.5v7M3.75 10.25v3.5M20.25 10.25v3.5M6.5 12h11"/></svg></span>
+                  <span class="app-mock__ex-info"><span class="app-mock__ex-name">Esquat goblet</span><span class="app-mock__ex-meta">3 × 10 · Descans 75 s</span></span>
+                  <span class="app-mock__ex-check"><svg width="10" height="10" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M2.5 6.25l2.25 2.25L9.5 3.75" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+                </li>
+                <li class="app-mock__ex is-done" style="--k:1">
+                  <span class="app-mock__ex-thumb"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6.5 8.5v7M17.5 8.5v7M3.75 10.25v3.5M20.25 10.25v3.5M6.5 12h11"/></svg></span>
+                  <span class="app-mock__ex-info"><span class="app-mock__ex-name">Rem amb banda</span><span class="app-mock__ex-meta">3 × 12 · Descans 60 s</span></span>
+                  <span class="app-mock__ex-check"><svg width="10" height="10" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M2.5 6.25l2.25 2.25L9.5 3.75" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+                </li>
+                <li class="app-mock__ex is-next" style="--k:2">
+                  <span class="app-mock__ex-thumb"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6.5 8.5v7M17.5 8.5v7M3.75 10.25v3.5M20.25 10.25v3.5M6.5 12h11"/></svg></span>
+                  <span class="app-mock__ex-info"><span class="app-mock__ex-name">Pont de glutis</span><span class="app-mock__ex-meta">3 × 15 · Descans 60 s</span></span>
+                  <span class="app-mock__ex-pill">Següent</span>
+                </li>
+                <li class="app-mock__ex " style="--k:3">
+                  <span class="app-mock__ex-thumb"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6.5 8.5v7M17.5 8.5v7M3.75 10.25v3.5M20.25 10.25v3.5M6.5 12h11"/></svg></span>
+                  <span class="app-mock__ex-info"><span class="app-mock__ex-name">Planxa frontal</span><span class="app-mock__ex-meta">3 × 30 s · Descans 45 s</span></span>
+                  <span class="app-mock__ex-check"><svg width="10" height="10" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M2.5 6.25l2.25 2.25L9.5 3.75" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+                </li>
+              </ul>
+              <div class="app-mock__coach">
+                <span class="app-mock__coach-avatar">PW</span>
+                <span class="app-mock__coach-text"><strong>Nota del teu entrenador</strong><span>Baixa en 3 segons a l'esquat i mantén el core actiu.</span></span>
+              </div>
+              <span class="app-mock__start">Continuar l'entrenament</span>
+            </div>
+          </div>
+          <div class="app-mock__floats">
+            <div class="app-mock__float app-mock__float--weekly">
+              <span class="app-mock__float-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 5.5h16v10.5H10l-4.5 3.5V16H4z"/><path d="M8 9.5h8M8 12.5h5"/></svg></span>
+              <span class="app-mock__float-text"><strong>Check-in setmanal</strong><span>Com t'has trobat aquesta setmana?</span></span>
+            </div>
+            <div class="app-mock__float app-mock__float--updated">
+              <span class="app-mock__float-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19.5 12a7.5 7.5 0 1 1-2.2-5.3"/><path d="M19.75 4v4.75H15"/></svg></span>
+              <span class="app-mock__float-text"><strong>Rutina actualitzada</strong><span>Nou bloc · Mes 2</span></span>
+            </div>
+            <div class="app-mock__float app-mock__float--adjusted">
+              <span class="app-mock__float-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3.5 17l5.5-5.5 4 4 7.5-7.5"/><path d="M15 8h5.5v5.5"/></svg></span>
+              <span class="app-mock__float-text"><strong>Ajustada segons l'evolució</strong><span>Esquat goblet: +2 kg</span></span>
+            </div>
+          </div>
         </div>
       </div>
 
-      <ol class="strength-motion__list" aria-label="Què inclou Strength &amp; Motion" data-reveal style="--i:1">
-          <li class="strength-motion__item">
-            <span class="strength-motion__num" aria-hidden="true">01</span>
-            <div>
-              <h3 class="strength-motion__item-title">Rutines personalitzades</h3>
-              <p class="strength-motion__item-text">Cada rutina es dissenya per a tu: exercicis, càrregues i progressió pensats per al teu punt de partida.</p>
+      <div class="app-training__how">
+        <h3 class="app-training__how-title">Com funciona?</h3>
+        <ol class="app-steps">
+          <li class="app-step" data-reveal style="--i:0">
+            <div class="app-step__top">
+              <span class="app-step__icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><circle cx="12" cy="12" r="4.5"/><circle cx="12" cy="12" r="1"/></svg></span>
+              <span class="app-step__num" aria-hidden="true">01</span>
             </div>
+            <h4 class="app-step__title">Rutina personalitzada</h4>
+            <p class="app-step__text">Creem un programa adaptat al teu nivell, a les teves necessitats i als teus objectius.</p>
           </li>
-          <li class="strength-motion__item">
-            <span class="strength-motion__num" aria-hidden="true">02</span>
-            <div>
-              <h3 class="strength-motion__item-title">Adaptat als teus objectius</h3>
-              <p class="strength-motion__item-text">Programes ajustats al que necessites: guanyar força, moure't millor, prevenir lesions o rendir més en el teu esport.</p>
+          <li class="app-step" data-reveal style="--i:1">
+            <div class="app-step__top">
+              <span class="app-step__icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="6.5" y="2.75" width="11" height="18.5" rx="2.25"/><path d="M10.5 18h3"/></svg></span>
+              <span class="app-step__num" aria-hidden="true">02</span>
             </div>
+            <h4 class="app-step__title">Entrenament amb app</h4>
+            <p class="app-step__text">Accedeix al teu programa i consulta els exercicis.</p>
           </li>
-          <li class="strength-motion__item">
-            <span class="strength-motion__num" aria-hidden="true">03</span>
-            <div>
-              <h3 class="strength-motion__item-title">Tot a l'aplicació</h3>
-              <p class="strength-motion__item-text">Accedeixes a les teves rutines i a cada exercici des de l'app, amb indicacions clares per fer-los bé.</p>
+          <li class="app-step" data-reveal style="--i:2">
+            <div class="app-step__top">
+              <span class="app-step__icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.75" y="5" width="16.5" height="15.25" rx="1.75"/><path d="M8 3v4M16 3v4M3.75 10h16.5"/><path d="M9 15.25l2.1 2.1 3.9-3.9"/></svg></span>
+              <span class="app-step__num" aria-hidden="true">03</span>
             </div>
+            <h4 class="app-step__title">Actualització mensual</h4>
+            <p class="app-step__text">Cada mes revisem i adaptem la teva rutina segons la teva evolució.</p>
           </li>
-          <li class="strength-motion__item">
-            <span class="strength-motion__num" aria-hidden="true">04</span>
-            <div>
-              <h3 class="strength-motion__item-title">Seguiment setmanal</h3>
-              <p class="strength-motion__item-text">Revisem el teu progrés cada setmana per mantenir el rumb i ajustar el que calgui.</p>
+          <li class="app-step" data-reveal style="--i:3">
+            <div class="app-step__top">
+              <span class="app-step__icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 5.5h16v10.5H10l-4.5 3.5V16H4z"/><path d="M8 9.5h8M8 12.5h5"/></svg></span>
+              <span class="app-step__num" aria-hidden="true">04</span>
             </div>
+            <h4 class="app-step__title">Seguiment setmanal</h4>
+            <p class="app-step__text">Cada setmana ens expliques com et trobes, com van els exercicis i si notes dificultats o molèsties.</p>
           </li>
-          <li class="strength-motion__item">
-            <span class="strength-motion__num" aria-hidden="true">05</span>
-            <div>
-              <h3 class="strength-motion__item-title">Rutines renovades</h3>
-              <p class="strength-motion__item-text">Actualitzem el teu programa aproximadament cada dos mesos perquè continuïs progressant.</p>
+          <li class="app-step" data-reveal style="--i:4">
+            <div class="app-step__top">
+              <span class="app-step__icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3.5 17l5.5-5.5 4 4 7.5-7.5"/><path d="M15 8h5.5v5.5"/></svg></span>
+              <span class="app-step__num" aria-hidden="true">05</span>
             </div>
+            <h4 class="app-step__title">Adaptació contínua</h4>
+            <p class="app-step__text">Ajustem l'entrenament quan calgui perquè puguis continuar progressant de manera gradual.</p>
           </li>
-      </ol>
+        </ol>
+      </div>
+
+      <div class="app-training__outro" data-reveal>
+        <p class="app-training__closing">Un programa personalitzat amb seguiment professional, també quan entrenes fora del centre.</p>
+        <div class="app-training__actions">
+          <a class="btn app-training__cta" href="https://wa.me/34644678344?text=Hola%2C%20m%27agradaria%20rebre%20informaci%C3%B3%20sobre%20l%27entrenament%20personalitzat%20amb%20Muscle%20%26%20Motion." target="_blank" rel="noopener">
+            <span>Demanar informació per WhatsApp</span>
+            <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M1 6h10M7 2l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+          <p class="app-training__note">Accedeix a les teves rutines a través de l'aplicació <a href="https://www.muscleandmotion.com/strength-training-app/" target="_blank" rel="noopener">Muscle &amp; Motion</a>, mitjançant una invitació del nostre equip. L'accés a l'app està inclòs en el servei.</p>
+        </div>
+      </div>
     </div>
   </section>
 
